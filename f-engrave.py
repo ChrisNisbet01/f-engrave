@@ -1,7 +1,7 @@
 #!/usr/bin/python
 """
     f-engrave G-Code Generator
-    
+
     Copyright (C) <2011-2019>  <Scorch>
     Source was used from the following works:
               engrave-11.py G-Code Generator -- Lawrence Glaister --
@@ -210,7 +210,7 @@
                  - Fixed some Python 3 incompatibilities with reading configuration files
 
     Version 1.52 - Fixed potential divide by zero error in DXF reader
-                 - Text mode now includes space for leading carriage returns (i.e. Carriage returns before text characters)                 
+                 - Text mode now includes space for leading carriage returns (i.e. Carriage returns before text characters)
 
     Version 1.53 - Changed space for leading carriage returns to only apply at 0,90,270 and 180 degree rotations.
                  - Added floating tool tips to the options on the main window (hover over the option labels to see the tool tip text)
@@ -226,30 +226,30 @@
     Version 1.55 - Fixed error in line/curve fitting that resulted in bad output with high Accuracy settings
                  - Fixed missing parentheses on file close commands (resulted in problems when using PyPy
                  - Suppress comments in g-code should now suppress all full line g-code comments
-                 - Fixed error that resulted in cutting outside the lines with large Accuracy settings 
+                 - Fixed error that resulted in cutting outside the lines with large Accuracy settings
 
     Version 1.56 - Changed line/curve fitting to use Douglas-Peucker curve fitting routine originally from LinuxCNC image2gcode
                  - Re-enabled the use of #2 variable when engraving with variable enabled (was broken in previous version)
                  - Fixed SVG export (was broken in previous version)
-                 
+
     Version 1.57 - Fixed feed rate. Changes in 1.56 resulted in feed rate not being written to g-code file.
-                     
+
     Version 1.58 - Fixed some special cases which resulted in errors being thrown (v-carve single lines)
                  - Changed the default settings to be more compatible with incomplete g-code interpretors like GRBL
-				 
+
     Version 1.59 - Fixed bug in arc fitting
                  - Rewrote Cleanup operation calculations (fixes a bug that resulted in some areas not being cleaned up
                  - Changed flip normals behavior, There are now two options: Flip Normals and Add Box (Flip Normals)
                  - Changed prismatic cut to allow the use of either of the two Flip normals options (one of the two
                    Flip normals options must be selected for the inlay cuts to be performed properly
                  - Added DXF Export option (with and without auto closed loops)
-				 
+
     Version 1.60 - Fixed divide by zero error in some cleanup sceneries.
 
     Version 1.61 - Fixed a bug that prevented opening DXF files that contain no features with positive Y coordinates
 
     Version 1.62 - Fixed a bug that resulted in bad cleanup tool paths in some situations
-    
+
     Version 1.63 - Removed code that loaded _imaging module.  The module is not needed
                  - Changed "Open F-Engrave G-Code File" "Read Settings From File"
                  - Added "Save Setting to File" file option in File menu
@@ -258,7 +258,7 @@
                  - Added console version of application to windows distribution. For batch mode in Windows.
     Version 1.64 - Fixed bug that created erroneous lines in some circumstances during v-carving.
                  - Mapped save function to Control-S for easier g-code saving
-    
+
     Version 1.65 - Fixed bug in sort_for_v_carve that resulted in an error for certain designs.
 
     Version 1.66 - Fixed a problem with the origin when wrapping text in some cases.
@@ -267,7 +267,7 @@
 
 
     Version 1.67 - Improved DXF import for DXF files with some incomplete data
-                 - Fixed curve fitting upon g-code export.  Limited curve fitting angle to avoid curve fitting sharp corners. 
+                 - Fixed curve fitting upon g-code export.  Limited curve fitting angle to avoid curve fitting sharp corners.
 
     Version 1.68 - Fixed typo in code introduced in v1.67 that broke curve fitting.
 
@@ -275,16 +275,16 @@
                  - Added ability to disable ploting of v-carve toolpath and area
                  - Fixed problem causing v-carve path to go outside of design bounds for very thin design sections.
     Version 1.70 - Fixed a bug introduced in V1.69 that caused v-carving cleanup calculations to fail sometimes.
-    
+
     Version 1.71 - Changed Potrace version that is distributed with F-Engrave from 1.10 to 1.16
                  - Fixed problem with cleanup cutting wrong area for some cases
-    
+
     Version 1.72 - Fixed a bug that resulted in bad cleanup tool paths in some situations
                  - Explicitly set the font for the GUI
 
     Version 1.73 - Made importing png images with clear backgrounds work better
                  - Added PNG and TIF to the image file types that show up by default
-    
+
     """
 
 version = '1.73'
@@ -971,7 +971,7 @@ class DXF_CLASS:
                      "Kilometers",
                      "Microinches",
                      "Mils"]
-                
+
         self.POLY_FLAG   = None
         self.POLY_CLOSED = None
 
@@ -1236,7 +1236,7 @@ class DXF_CLASS:
             kmax = max(self.Knots)
             for i in range(len(self.Knots)):
                 self.Knots[i] = (self.Knots[i]-kmin)/(kmax-kmin)
-                
+
             try:
                 xy_data = zip(e.data["10"], e.data["20"])
             except:
@@ -1246,7 +1246,7 @@ class DXF_CLASS:
             if xy_data!=[]:
                 for x,y in xy_data:
                     self.CPoints.append(PointClass(float(x), float(y)))
-                    
+
             self.MYNURBS=NURBSClass(degree=self.degree, \
                                      Knots=self.Knots,  \
                                    Weights=self.Weights,\
@@ -1373,13 +1373,13 @@ class DXF_CLASS:
         ########### LEADER ###########
         elif e.type == "LEADER":
             flag=0
-            
+
             try:
                 xy_data = zip(e.data["10"], e.data["20"])
             except:
                 fmessage("DXF Import zero length %s Ignored" %(e.type))
                 xy_data = []
-                
+
             for x,y in xy_data:
                 x1 = x
                 y1 = y
@@ -1391,7 +1391,7 @@ class DXF_CLASS:
                     self.add_coords([x0,y0,x1,y1],offset,scale,rotate)
                     x0=x1
                     y0=y1
-                    
+
         ########### POLYLINE ###########
         elif e.type == "POLYLINE":
             self.POLY_CLOSED =  0
@@ -1513,7 +1513,7 @@ class DXF_CLASS:
 
             xoff = xoff - x_block_ref
             yoff = yoff - y_block_ref
-            
+
 
             for e in bl.blocks[key].entities:
                 self.eval_entity(e,bl,tol_deg,offset=[xoff,yoff],scale=[xscale,yscale],rotate=rotate)
@@ -1537,7 +1537,7 @@ class DXF_CLASS:
             self.add_coords([x1,y1,x3,y3],offset,scale,rotate,color,layer)
             self.add_coords([x3,y3,x2,y2],offset,scale,rotate,color,layer)
             self.add_coords([x2,y2,x0,y0],offset,scale,rotate,color,layer)
-            
+
         elif e.type == "HATCH":
             #quietly ignore HATCH
             pass
@@ -1656,7 +1656,7 @@ The ToolTip class provides a flexible tooltip widget for Tkinter; it is based on
 module which unfortunately seems to be broken (at least the version I saw).
 INITIALIZATION OPTIONS:
 anchor :        where the text should be positioned inside the widget, must be on of "n", "s", "e", "w", "nw" and so on;
-                default is 
+                default is
 bd :            borderwidth of the widget; default is 1 (NOTE: don't use "borderwidth" here)
 bg :            background color to use for the widget; default is "lightyellow" (NOTE: don't use "background")
 delay :         time in ms that it takes for the widget to appear on the screen when the mouse pointer has
@@ -1707,7 +1707,7 @@ class ToolTip:
         if self._opts['follow_mouse']:
             self._id4 = self.master.bind("<Motion>", self.motion, '+')
             self._follow_mouse = 1
-    
+
     def configure(self, **opts):
         for key in opts:
             if self._opts.has_key(key):
@@ -1715,24 +1715,24 @@ class ToolTip:
             else:
                 KeyError = 'KeyError: Unknown option: "%s"' %key
                 raise KeyError
-    
+
     ##----these methods handle the callbacks on "<Enter>", "<Leave>" and "<Motion>"---------------##
     ##----events on the parent widget; override them if you want to change the widget's behavior--##
-    
+
     def enter(self, event=None):
         self._schedule()
-        
+
     def leave(self, event=None):
         self._unschedule()
         self._hide()
-    
+
     def motion(self, event=None):
         if self._tipwindow and self._follow_mouse:
             x, y = self.coords()
             self._tipwindow.wm_geometry("+%d+%d" % (x, y))
-    
+
     ##------the methods that do the work:---------------------------------------------------------##
-    
+
     def _schedule(self):
         self._unschedule()
         if self._opts['state'] == 'disabled':
@@ -1763,15 +1763,15 @@ class ToolTip:
             x, y = self.coords()
             tw.wm_geometry("+%d+%d" % (x, y))
             tw.deiconify()
-    
+
     def _hide(self):
         tw = self._tipwindow
         self._tipwindow = None
         if tw:
             tw.destroy()
-                
+
     ##----these methods might be overridden in derived classes:----------------------------------##
-    
+
     def coords(self):
         # The tip window must be completely outside the master widget;
         # otherwise when the mouse enters the tip window we get
@@ -2237,7 +2237,7 @@ class Application(Frame):
 
         # Left Column #
         self.Label_font_prop = Label(self.master,text="Text Font Properties:", anchor=W)
-        
+
         self.Label_Yscale = Label(self.master,text="Text Height", anchor=CENTER)
         self.Label_Yscale_u = Label(self.master,textvariable=self.units, anchor=W)
         self.Label_Yscale_pct = Label(self.master,text="%", anchor=W)
@@ -2248,8 +2248,8 @@ class Application(Frame):
         self.Label_Yscale_ToolTip = ToolTip(self.Label_Yscale, text= \
         'Character height of a single line of text.')
         #or the height of an imported image. (DXF, BMP, etc.)')
-        
-        
+
+
         self.NormalColor =  self.Entry_Yscale.cget('bg')
 
         self.Label_Sthick = Label(self.master,text="Line Thickness")
@@ -2391,7 +2391,7 @@ class Application(Frame):
         self.FEED.trace_variable("w", self.Entry_Feed_Callback)
         self.Label_Feed_ToolTip = ToolTip(self.Label_Feed, text= \
         'Specify the tool feed rate that is output in the g-code output file.')
-        
+
 
         self.Label_Plunge = Label(self.master,text="Plunge Rate")
         self.Label_Plunge_u = Label(self.master,textvariable=self.funits, anchor=W)
@@ -2401,7 +2401,7 @@ class Application(Frame):
         self.PLUNGE.trace_variable("w", self.Entry_Plunge_Callback)
         self.Label_Plunge_ToolTip = ToolTip(self.Label_Plunge, text= \
         'Plunge Rate sets the feed rate for vertical moves into the material being cut.\n\nWhen Plunge Rate is set to zero plunge feeds are equal to Feed Rate.')
-        
+
 
         self.Label_Zsafe = Label(self.master,text="Z Safe")
         self.Label_Zsafe_u = Label(self.master,textvariable=self.units, anchor=W)
@@ -2716,20 +2716,20 @@ class Application(Frame):
 
         current_name = event.widget.winfo_parent()
         win_id = event.widget.nametowidget(current_name)
-        
+
         if ( os.path.isfile(configname_full) ):
             try:
                 win_id.withdraw()
             except:
                 pass
-            
+
             if not message_ask_ok_cancel("Replace", "Replace Exiting Configuration File?\n"+configname_full):
                 try:
                     win_id.deiconify()
                 except:
                     pass
                 return
-            
+
         try:
             fout = open(configname_full,'w')
         except:
@@ -2769,11 +2769,11 @@ class Application(Frame):
             String_short = String[0:max_len] + '___'
 
         Acc    =   float(self.accuracy.get())
-        
+
         if (self.no_comments.get() != True) or (config_file == True):
             self.gcode.append('( Code generated by f-engrave-'+version+'.py )')
             self.gcode.append('( by Scorch - 2017 )')
-        
+
             self.gcode.append('(Settings used in f-engrave when this file was created)')
             if self.input_type.get() == "text":
                 self.gcode.append("(Engrave Text:" + re.sub(r'\W+', ' ', String_short) + " )" )
@@ -2860,7 +2860,7 @@ class Application(Frame):
             clean_out = ("%d,%d,%d,%d,%d,%d" %(self.clean_P.get(),self.clean_X.get(),self.clean_Y.get(),\
                 self.v_clean_P.get(),self.v_clean_Y.get(),self.v_clean_X.get()) )
             self.gcode.append('(fengrave_set clean_paths  %s )' %( clean_out ))
-            
+
             str_data=''
             cnt = 0
             for char in String:
@@ -2883,14 +2883,14 @@ class Application(Frame):
 
         if (config_file == True):
             return
-        
+
         if self.units.get() == "in":
             dp=4
             dpfeed=2
         else:
             dp=3
             dpfeed=1
-            
+
         g_target = lambda s: sys.stdout.write(s + "\n")
         g = Gcode(safetyheight = SafeZ,
                  tolerance=Acc,
@@ -2935,7 +2935,7 @@ class Application(Frame):
 
         #Set Feed rate
         self.gcode.append("F%s" %feed_str)
-        
+
         if plunge_str==zero_feed:
             plunge_str = feed_str
 
@@ -2980,7 +2980,7 @@ class Application(Frame):
                     rough_again = True
                 if ((rough_stock > 0) and(-maxDZ < rough_stock)):
                     rough_stock = -maxDZ
-                    
+
             else:
                 ##########################
                 ###   Create ECOORDS   ###
@@ -3005,7 +3005,7 @@ class Application(Frame):
 
             order_out=self.Sort_Paths(ecoords)
             ###########################
-            
+
             while (rough_again == True or roughing == True):
                 if (rough_again == False):
                     roughing = False
@@ -3024,14 +3024,14 @@ class Application(Frame):
                 if (self.bit_shape.get() == "FLAT") and (self.cut_type.get() != "engrave"):
                     FORMAT = '%%.%df' %(dp)
                     depth_val = FORMAT %(z1)
-                
+
                 dist = 999
                 lastx=-999
                 lasty=-999
                 lastz= 0
                 z1   = 0
                 nextz= 0
-                
+
                 #self.gcode.append("G0 Z%s" %(safe_val))
                 for line in order_out:
                     temp=line
@@ -3048,7 +3048,7 @@ class Application(Frame):
                     code=" "
 
                     loop_old = -1
-                    
+
                     for i in range(temp[0],temp[1]+step,step):
                         x1   = ecoords[i][0]
                         y1   = ecoords[i][1]
@@ -3089,7 +3089,7 @@ class Application(Frame):
                             g.cut(x1,y1)
                             lastx = x1
                             lasty = y1
-                            
+
                         loop_old = loop
                     g.flush()
                 g.flush()
@@ -3242,7 +3242,7 @@ class Application(Frame):
                             # drop cutter to z depth
                             FORMAT = 'G1 Z%%.%df'  %(dp)
                             self.gcode.append(FORMAT %(z1))
-                                
+
                             lastx = x1
                             lasty = y1
                             lastz = z1
@@ -3267,20 +3267,20 @@ class Application(Frame):
             FORMAT = 'G0 X%%.%df Y%%.%df' %(dp,dp)
             self.gcode.append(FORMAT  %(-Radius_plot - self.Xzero + XOrigin, YOrigin - self.Yzero))
 
-            
+
             if (feed_str == plunge_str):
                 FEED_STRING = ""
             else:
                 FEED_STRING = " F" + plunge_str
                 g.set_feed(feed_str)
-                
+
             self.gcode.append('G1 Z%s' %(depth_val) + FEED_STRING)
 
             if (feed_str == plunge_str):
                 FEED_STRING = ""
             else:
                 FEED_STRING = " F" + feed_str
-            
+
             FORMAT = 'G2 I%%.%df J%%.%df' %(dp,dp)
             self.gcode.append(FORMAT %( Radius_plot, 0.0) + FEED_STRING)
         # End Circle
@@ -3317,7 +3317,7 @@ class Application(Frame):
             coords_out = self.clean_coords_sort
         else:
             coords_out = self.v_clean_coords_sort
-            
+
         if (self.no_comments.get() != True):
             self.gcode.append('( Code generated by f-engrave-'+version+'.py )')
             self.gcode.append('( by Scorch - 2017 )')
@@ -3342,7 +3342,7 @@ class Application(Frame):
         else:
             dp=3
             dpfeed=1
-        
+
 
         if not self.var_dis.get():
             FORMAT = '#1 = %%.%df  ( Safe Z )' %(dp)
@@ -3368,11 +3368,11 @@ class Application(Frame):
 
         for line in self.gpre.get().split('|'):
             self.gcode.append(line)
-            
+
         #self.gcode.append( 'G0 Z%s' %(safe_val))
-        
+
         FORMAT = '%%.%df' %(dp)
-        feed_str     = FORMAT %(float(self.FEED.get()))    
+        feed_str     = FORMAT %(float(self.FEED.get()))
         plunge_str   = FORMAT %(float(self.PLUNGE.get()))
         feed_current = FORMAT %(float(0.0))
         #fmessage(feed_str +" "+plunge_str)
@@ -3465,7 +3465,7 @@ class Application(Frame):
                         else:
                             FEED_STRING = " F" + plunge_str
                             feed_current = plunge_str
-                            
+
                         self.gcode.append("G1 Z%s" %(depth_val) + FEED_STRING)
 
                         lastx=x1
@@ -3476,7 +3476,7 @@ class Application(Frame):
                         else:
                             FEED_STRING = " F" + feed_str
                             feed_current = feed_str
-                        
+
                         FORMAT = 'G1 X%%.%df Y%%.%df' %(dp,dp)
                         self.gcode.append(FORMAT %(x1,y1) + FEED_STRING)
                         lastx=x1
@@ -3580,7 +3580,7 @@ class Application(Frame):
 
         if close_loops:
             self.V_Carve_It(clean_flag=0,DXF_FLAG = close_loops)
-        
+
         dxf_code = []
         # Create a header section just in case the reading software needs it
         dxf_code.append("999")
@@ -3596,11 +3596,11 @@ class Application(Frame):
         dxf_code.append("0")
         dxf_code.append("ENDSEC")
 
-        #         
+        #
         #Tables Section
-        #These can be used to specify predefined constants, line styles, text styles, view 
-        #tables, user coordinate systems, etc. We will only use tables to define some layers 
-        #for use later on. Note: not all programs that support DXF import will support 
+        #These can be used to specify predefined constants, line styles, text styles, view
+        #tables, user coordinate systems, etc. We will only use tables to define some layers
+        #for use later on. Note: not all programs that support DXF import will support
         #layers and those that do usually insist on the layers being defined before use
         #
         # The following will initialise layers 1 and 2 for use with moves and rapid moves.
@@ -3668,7 +3668,7 @@ class Application(Frame):
         dxf_code.append("ENDTAB")
         dxf_code.append("0")
         dxf_code.append("ENDSEC")
-        
+
         #This block section is not necessary but apperantly it's good form to include one anyway.
         #The following is an empty block section.
         dxf_code.append("0")
@@ -3691,7 +3691,7 @@ class Application(Frame):
         #for line in side:
         for line in self.coords:
             XY = line
-            
+
             #if line[0] == 1 or (line[0] == 0 and Rapids):
             dxf_code.append("LINE")
             dxf_code.append("  5")
@@ -3704,7 +3704,7 @@ class Application(Frame):
             #if line[0] == 1:
             #    dxf_code.append("1")
             #else:
-            #    dxf_code.append("2")    
+            #    dxf_code.append("2")
             #dxf_code.append(" 62") #color code
             #if line[0] == 1:
             #    dxf_code.append("10")
@@ -3714,7 +3714,7 @@ class Application(Frame):
             dxf_code.append(" 62") #color code
             dxf_code.append("150")
             ###########################
-            
+
             dxf_code.append("100")
             dxf_code.append("AcDbLine")
             dxf_code.append(" 10")
@@ -4346,7 +4346,7 @@ class Application(Frame):
         except:
             pass
         self.Recalc_RQD()
-        
+
     #############################
     def Entry_v_max_cut_Check(self):
         try:
@@ -4638,7 +4638,7 @@ class Application(Frame):
                     os.remove("f_engrave_icon")
                 except:
                     pass
-            
+
             clean_cut = 1
             self.V_Carve_It(clean_cut)
             vcalc_status.grab_release()
@@ -4647,7 +4647,7 @@ class Application(Frame):
             except:
                 pass
 
-        self.Clean_Path_Calc(bit_type) 
+        self.Clean_Path_Calc(bit_type)
 
         if self.clean_coords == []:
             return 1
@@ -4801,7 +4801,7 @@ class Application(Frame):
                                                     ("All Files","*")],\
                                                      initialdir=init_dir)
 
-            
+
         else:
             fileselect = askopenfilename(filetypes=[("DXF Files","*.dxf"),\
                                                     ("All Files","*")],\
@@ -4825,8 +4825,8 @@ class Application(Frame):
         for line in fin:
             if ident in line:
 
-                input_code =  line.split(ident)[1].split()[0] 
-                
+                input_code =  line.split(ident)[1].split()[0]
+
                 if "TCODE" in input_code:
                     code_list = line[line.find("TCODE"):].split()
                     for char in code_list:
@@ -4868,7 +4868,7 @@ class Application(Frame):
                 elif "show_v_area"   in input_code:
                    self.show_v_area.set(line[line.find("show_v_area"):].split()[1])
 
-                
+
                 elif "plotbox"    in input_code:
                     if (line[line.find("plotbox"):].split()[1] == "box"):
                         self.plotbox.set(1)
@@ -5054,7 +5054,7 @@ class Application(Frame):
         if self.initComplete == 1:
             self.NGC_FILE = filename
             self.menu_Mode_Change()
-            
+
 
     def menu_File_Save_Settings_File(self):
         self.WriteGCode(config_file=True)
@@ -5154,7 +5154,7 @@ class Application(Frame):
 
         fileName, fileExtension = os.path.splitext(self.NGC_FILE)
         init_file=os.path.basename(fileName)
-        
+
         if self.input_type.get() != "text":
             fileName, fileExtension = os.path.splitext(self.IMAGE_FILE)
             init_file=os.path.basename(fileName)
@@ -5223,7 +5223,7 @@ class Application(Frame):
                 except:
                     pass
             fout.close()
-            
+
             self.statusMessage.set("File Saved: %s" %(filename))
             self.statusbar.configure( bg = 'white' )
 
@@ -5231,7 +5231,7 @@ class Application(Frame):
         self.menu_File_Save_DXF_File(close_loops=True)
 
     def menu_File_Save_DXF_File(self,close_loops=False):
-        
+
         DXF_CODE = self.WriteDXF(close_loops=close_loops)
         init_dir = os.path.dirname(self.NGC_FILE)
         if ( not os.path.isdir(init_dir) ):
@@ -5263,10 +5263,10 @@ class Application(Frame):
                 except:
                     pass
             fout.close()
-            
+
             self.statusMessage.set("File Saved: %s" %(filename))
             self.statusbar.configure( bg = 'white' )
-            
+
     def menu_File_Quit(self):
         if message_ask_ok_cancel("Exit", "Exiting F-Engrave...."):
             self.Quit_Click(None)
@@ -5293,7 +5293,7 @@ class Application(Frame):
             self.Read_font_file()
         else:
             self.Read_image_file()
-        
+
         self.DoIt()
 
     def menu_View_Recalculate(self):
@@ -5351,7 +5351,7 @@ class Application(Frame):
             return
         if (self.batch.get()):
             return
-			
+
         x = int(self.master.winfo_x())
         y = int(self.master.winfo_y())
         w = int(self.master.winfo_width())
@@ -5577,7 +5577,7 @@ class Application(Frame):
                 else:
                     self.Label_Yscale_pct.place_forget()
                     self.Label_Yscale_u.place(x=x_units_L, y=Yloc, width=w_units, height=21)
-					
+
                 self.Entry_Yscale.place(x=x_entry_L, y=Yloc, width=w_entry, height=23)
 
                 Yloc=Yloc+24
@@ -5907,7 +5907,7 @@ class Application(Frame):
     def Read_font_file(self):
         if (self.delay_calc==1):
             return
-        
+
         self.font = {}
         file_full = self.fontdir.get() + "/" + self.fontfile.get()
         if ( not os.path.isfile(file_full) ):
@@ -5967,7 +5967,7 @@ class Application(Frame):
     def Read_image_file(self):
         if (self.delay_calc==1):
             return
-        
+
         self.font = {}
         file_full = self.IMAGE_FILE
         file_name = os.path.basename(file_full)
@@ -5980,8 +5980,8 @@ class Application(Frame):
                     if ( not os.path.isfile( file_full ) ):
                         return
         self.IMAGE_FILE = file_full
-        
-        
+
+
         if (not self.batch.get()):
             self.statusbar.configure( bg = 'yellow' )
             self.statusMessage.set(" Reading Image File.........")
@@ -6042,13 +6042,13 @@ class Application(Frame):
                     mode = PIL_im.mode
                     if len(mode)>3:
                         blank = Image.new("RGB", PIL_im.size, (255,255,255))
-                        blank.paste( PIL_im, (0, 0), PIL_im ) 
+                        blank.paste( PIL_im, (0, 0), PIL_im )
                         PIL_im = blank
-                    
+
                     PIL_im = PIL_im.convert("1")
                     file_full_tmp=self.HOME_DIR + "/fengrave_tmp.bmp"
                     PIL_im.save(file_full_tmp,"bmp")
-                
+
                     #cmd = ["potrace","-b","dxf",file_full,"-o","-"]
                     if self.bmp_longcurve.get() == 1:
                         cmd = ["potrace",
@@ -6083,7 +6083,7 @@ class Application(Frame):
                     #^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^#
             else:
                 fmessage("PIL is required for reading JPG, PNG, GIF and TIF files.")
-            ###########################################################################################################  
+            ###########################################################################################################
         else:
             pass
 
@@ -6161,7 +6161,7 @@ class Application(Frame):
 
         x_zero = self.Xzero
         y_zero = self.Yzero
-        
+
         # Plot circle radius with radius equal to Radius_plot
         if Radius_plot != 0:
             Rpx_lft = cszw/2 + ( -Radius_plot-midx - x_zero) / PlotScale
@@ -6215,7 +6215,7 @@ class Application(Frame):
 
             loop_old = -1
             rold     = -1
-            
+
             if self.show_v_path.get():
                 for line in self.vcoords:
                     XY    = line
@@ -6305,9 +6305,9 @@ class Application(Frame):
     def DoIt(self):
         if ((self.delay_calc==1) or (self.delay_calc == 1)):
             return
-        
+
         self.menu_View_Refresh()
-        
+
         if (not self.batch.get):
             if self.cut_type.get() == "v-carve":
                 self.V_Carve_Calc.configure(state="normal", command=None)
@@ -6441,7 +6441,7 @@ class Application(Frame):
         elif self.H_CALC.get() == "max_use":
             font_line_height = font_used_height
             font_line_depth  = font_used_depth
-            
+
         if font_line_height > -INF:
             if (self.useIMGsize.get() and self.input_type.get()=="image"):
                 YScale = YScale_in/100.0
@@ -6464,7 +6464,7 @@ class Application(Frame):
                     error_text = "Image contains no design information. (Empty DXF File)"
                 else:
                     error_text = "Input Characters Were Not Found in the Current Font"
-                    
+
                 if (not self.batch.get()):
                     self.statusMessage.set(error_text)
                 else:
@@ -6648,7 +6648,7 @@ class Application(Frame):
         ##########################################
         mirror_flag = self.mirror.get()
         flip_flag   = self.flip.get()
-            
+
         maxx  = -99991.0
         maxy  = -99992.0
         miny  =  99994.0
@@ -6661,7 +6661,7 @@ class Application(Frame):
 ##                    miny  =  -font_line_height*YScale
 ##                else:
 ##                    maxy  =  font_line_height*YScale
-##                    
+##
 ##            elif (Angle == 90.0) or (Angle == -270.0):
 ##                if not mirror_flag:
 ##                    minx  =  -font_line_height*YScale
@@ -6741,7 +6741,7 @@ class Application(Frame):
                     self.coords.append([ maxx+Delta, maxy+Delta, minx-Delta, maxy+Delta, 0, 0])
                     self.coords.append([ minx-Delta, maxy+Delta, minx-Delta, miny-Delta, 0, 0])
 
-                
+
                 if self.cut_type.get() != "v-carve":
                     Delta = Delta + Thick/2
                 minx = minx - Delta
@@ -6881,14 +6881,14 @@ class Application(Frame):
     def record_v_carve_data(self,x1,y1,phi,rout,loop_cnt, clean_flag):
         rbit = self.calc_vbit_dia() / 2.0
         r_clean  = float(self.clean_dia.get())/2.0
-        
+
         Lx, Ly = Transform(0,rout,-phi)
         xnormv = x1+Lx
         ynormv = y1+Ly
         need_clean = 0
 
         if int(clean_flag) != 1:
-            self.vcoords.append([xnormv, ynormv, rout, loop_cnt]) 
+            self.vcoords.append([xnormv, ynormv, rout, loop_cnt])
             if abs(rbit-rout) <= Zero:
                 need_clean = 1
         else:
@@ -6927,7 +6927,7 @@ class Application(Frame):
 
         if (self.input_type.get() == "text") and (CLEAN_FLAG==False):
             if self.plotbox.get():
-                v_flop = not(v_flop) 
+                v_flop = not(v_flop)
             if self.mirror.get():
                 v_flop  = not(v_flop)
             if self.flip.get():
@@ -6992,7 +6992,7 @@ class Application(Frame):
             ###############################################################
             rbit      = self.calc_vbit_dia()/2.0
             clean_dia = float(self.clean_dia.get())
-            
+
             r_inlay_top = self.calc_r_inlay_top()
             if (clean_flag != 1 ):
                 rmax = rbit
@@ -7101,7 +7101,7 @@ class Application(Frame):
                 x2_R = XY_R[2]
                 y2_R = XY_R[3]
                 LENGTH = sqrt( (x2_R-x1_R)*(x2_R-x1_R) + (y2_R-y1_R)*(y2_R-y1_R) )
-                
+
                 R_R = LENGTH/2 + rmax
                 X_R = (x1_R + x2_R)/2
                 Y_R = (y1_R + y2_R)/2
@@ -7177,7 +7177,7 @@ class Application(Frame):
                             coded_index.append(int(i+j*xN))
 
                 codedIndexSet= set(coded_index)
-                
+
                 for thisCode in codedIndexSet:
                     thisIndex = thisCode
                     line_R_appended = XY_R
@@ -7235,12 +7235,12 @@ class Application(Frame):
                         break
                     else:
                         calc_flag = self.clean_segment[CUR_CNT]
-                    
+
                     if (not self.batch.get()):
                         stamp=int(3*time()) #update every 1/3 of a second
                         if (stamp != timestamp):
                             timestamp=stamp #interlock
-                            
+
                             ####################################################
                             CUR_PCT=float(CUR_LENGTH)/TOT_LENGTH*100.0
                             if CUR_PCT > 0.0:
@@ -7249,7 +7249,7 @@ class Application(Frame):
                             else:
                                 MIN_REMAIN = -1
                                 MIN_TOTAL = -1
-                                
+
                             self.statusMessage.set('%.1f %% ( %.1f Minutes Remaining | %.1f Minutes Total )' %( CUR_PCT, MIN_REMAIN, MIN_TOTAL ) )
                             self.statusbar.configure( bg = 'yellow' )
                             self.PreviewCanvas.update()
@@ -7277,13 +7277,13 @@ class Application(Frame):
 
                     if Lseg < Zero: #was Acc
                         continue
-                    
+
                     #calculate the sin and cos of the coord transformation needed for
                     #the distance calculations
                     seg_sin =  dy/Lseg
                     seg_cos = -dx/Lseg
                     phi = Get_Angle(seg_sin,seg_cos)
-                    
+
                     if calc_flag != 0:
                         CUR_LENGTH = CUR_LENGTH + Lseg
                     else:
@@ -7296,7 +7296,7 @@ class Application(Frame):
                         continue
 
 
-                    
+
                     if (fabs(x1-x0) > Zero) or (fabs(y1-y0) > Zero) or (char_num != char_num0):
                     #if char_num != char_num0:
                         New_Loop=1
@@ -7455,7 +7455,7 @@ class Application(Frame):
         #########################################
 
     def sort_for_v_carve(self,sort_coords,LN_START=0):
-        Acc = float(self.accuracy.get())    
+        Acc = float(self.accuracy.get())
         ##########################
         ###   Create ECOORDS   ###
         ##########################
@@ -7610,7 +7610,7 @@ class Application(Frame):
                 else:
                     [x1,y1]   = ecoords[Start]
                     ecoords[End]  =[float(x1),float(y1)]
-                    
+
         ###########################################################
         ### Make new sequential ecoords for each new loop       ###
         ###########################################################
@@ -7683,7 +7683,7 @@ class Application(Frame):
             if (not self.batch.get()):
                 stamp=int(3*time()) #update every 1/3 of a second
                 if (stamp != timestamp):
-                    timestamp=stamp #interlock         
+                    timestamp=stamp #interlock
                     self.statusMessage.set('Determining Which Side of Loop to Cut: %d of %d' %(iloop+1,Nloops))
                     self.master.update()
                     if STOP_CALC != 0:
@@ -7782,7 +7782,7 @@ class Application(Frame):
                 else:
                     xlast = x1
                     ylast = y1
-                    
+
             if  xlast != "" and  ylast != "":
                 Llast = sqrt((x1-xa)*(x1-xa) + (y1-ya)*(y1-ya))
                 if len(temp_coords) > 1:
@@ -7806,14 +7806,14 @@ class Application(Frame):
                         while idel < len(temp_coords) and temp_coords[idel][4]==loop_last:
                             temp_coords.pop(idel)
                     cnt=1
-                    loop_last=loop                
+                    loop_last=loop
         #####################################################################################
         return temp_coords
     ### End sort_for_v_carve
 
     def Find_Paths(self,check_coords_in,clean_dia,Radjust,clean_step,skip,direction):
         check_coords=[]
-        
+
         if direction == "Y":
             cnt = -1
             for line in check_coords_in:
@@ -7839,7 +7839,7 @@ class Application(Frame):
             miny_c = min(miny_c, XY[1]-XY[2] )
             maxy_c = max(maxy_c, XY[1]+XY[2] )
 
-          
+
 
         DX = clean_dia*clean_step
         DY = DX
@@ -7854,7 +7854,7 @@ class Application(Frame):
             Y = miny_c
             line_cnt = skip-1
             while Y <= maxy_c:
-                line_cnt = line_cnt+1  
+                line_cnt = line_cnt+1
                 X  = minx_c
                 x1 = X
                 x2 = X
@@ -7916,7 +7916,7 @@ class Application(Frame):
             loop_cnt=0
             Y = miny_c
             while Y <= maxy_c:
-                line_cnt = line_cnt+1  
+                line_cnt = line_cnt+1
                 X  = minx_c
                 x1 = X
                 x2 = X
@@ -8006,7 +8006,7 @@ class Application(Frame):
                                             0,
                                             0])
         return path_coords_out
-    
+
     def Clean_Path_Calc(self,bit_type="straight"):
         v_flop  = self.get_flop_staus(CLEAN_FLAG=True)
         if v_flop:
@@ -8025,14 +8025,14 @@ class Application(Frame):
 
         rbit = self.calc_vbit_dia() / 2.0
         check_coords=[]
-       
+
         self.statusbar.configure( bg = 'yellow' )
         if bit_type=="straight":
             self.statusMessage.set('Calculating Cleanup Cut Paths')
             self.master.update()
             self.clean_coords_sort   = []
             clean_dia = float(self.clean_dia.get()) #diameter of cleanup bit
-            v_step_len = float(self.v_step_len.get()) 
+            v_step_len = float(self.v_step_len.get())
             step_over = float(self.clean_step.get()) #percent of cut DIA
             clean_step = step_over/100.0
             Radjust   = clean_dia/2.0 + rbit
@@ -8042,7 +8042,7 @@ class Application(Frame):
             self.statusMessage.set('Calculating V-Bit Cleanup Cut Paths')
             skip = 1
             clean_step = 1.0
-            
+
             self.master.update()
             self.v_clean_coords_sort = []
 
@@ -8051,7 +8051,7 @@ class Application(Frame):
                 return
             # The next line allows the cutter to get within 1/4 of the
             # v-clean step of the v-carved surface.
-            offset = clean_dia/4.0 
+            offset = clean_dia/4.0
             Radjust   =  rbit + offset
             flat_clean_r = float(self.clean_dia.get())/2.0
             for line in self.clean_coords:
@@ -8064,7 +8064,7 @@ class Application(Frame):
         if self.cut_type.get() == "v-carve" and len(self.clean_coords) > 1 and test_clean > 0:
             DX = clean_dia*clean_step
             DY = DX
-            
+
             if bit_type=="straight":
                 MAXD=clean_dia
             else:
@@ -8073,7 +8073,7 @@ class Application(Frame):
             Xclean_coords=[]
             Yclean_coords=[]
             clean_coords_out=[]
-            
+
             ## NEW STUFF FOR STRAIGHT BIT ##
             if bit_type=="straight":
                 MaxLoop=0
@@ -8081,7 +8081,7 @@ class Application(Frame):
                 step_over  = float(self.clean_step.get()) #percent of cut DIA
                 clean_step = step_over/100.0
                 Rperimeter = rbit + (clean_dia/2.0)
-                
+
                 ###################################################
                 # Extract straight bit points from clean_coords
                 ###################################################
@@ -8123,7 +8123,7 @@ class Application(Frame):
                     if cuts:
                         for move, (x, y, z), cent in douglas(cuts, tolerance=0.0001, plane=None):
                             P_coords.append([x,y,clean_dia/2,Ln_last])
-                ##################### 
+                #####################
                 loop_coords = self.Clean_coords_to_Path_coords(P_coords)
                 # Find min/max values for x,y and the highest loop number
                 x_pmin= 99999
@@ -8142,7 +8142,7 @@ class Application(Frame):
                     clean_coords_out = P_coords
 
                 offset = DX/2.0
-                if (self.clean_X.get() == 1):                    
+                if (self.clean_X.get() == 1):
                     y_pmax = y_pmax-offset
                     y_pmin = y_pmin+offset
                     Ysize = y_pmax - y_pmin
@@ -8164,8 +8164,8 @@ class Application(Frame):
                                     loop_cnt=loop_cnt+1
                                     Xclean_coords.append([x1+offset,y1,loop_cnt])
                                     Xclean_coords.append([x2-offset,y2,loop_cnt])
-                            
-                if (self.clean_Y.get() == 1):                    
+
+                if (self.clean_Y.get() == 1):
                     x_pmax = x_pmax-offset
                     x_pmin = x_pmin+offset
                     Xsize = x_pmax - x_pmin
@@ -8185,7 +8185,7 @@ class Application(Frame):
                                 if ((y2-y1) > offset*2):
                                     loop_cnt=loop_cnt+1
                                     Yclean_coords.append([x1,y1+offset,loop_cnt])
-                                    Yclean_coords.append([x2,y2-offset,loop_cnt])                
+                                    Yclean_coords.append([x2,y2-offset,loop_cnt])
             ## END NEW STUFF FOR STRAIGHT BIT ##
 
             #######################################
@@ -8262,7 +8262,7 @@ class Application(Frame):
                             dy = y_start_loop-y_old
                             dist = sqrt(dx*dx + dy*dy)
                             # Fully close loop if the current point is close enough to the start of the loop
-                            if dist < MAXD: 
+                            if dist < MAXD:
                                 clean_coords_out.append([x_start_loop,y_start_loop,clean_dia/2,loop_cnt_out])
                             loop_cnt_out=loop_cnt_out+1
                             x_start_loop=x1
@@ -8331,7 +8331,7 @@ class Application(Frame):
                         x_old=x1
                         y_old=y1
                         loop_old=loop
-                        
+
             self.entry_set(self.Entry_CLEAN_DIA, self.Entry_CLEAN_DIA_Check()     ,1)
             self.entry_set(self.Entry_STEP_OVER, self.Entry_STEP_OVER_Check()     ,1)
             self.entry_set(self.Entry_V_CLEAN,     self.Entry_V_CLEAN_Check()     ,1)
@@ -8360,7 +8360,7 @@ class Application(Frame):
         numcoords = len(lcoords)
         if numcoords < 1:
             return False
-        
+
         dx = x1-x0
         dy = y1-y0
         len_seg = sqrt(dx*dx+dy*dy)
@@ -8370,17 +8370,17 @@ class Application(Frame):
                 return False
             else:
                 return []
-            
+
         seg_sin = dy/len_seg
-        seg_cos = dx/len_seg    
+        seg_cos = dx/len_seg
         Xint_local = 0
-        
+
         for ii in range(0,numcoords):
             x2 = lcoords[ii][0]
-            y2 = lcoords[ii][1]      
+            y2 = lcoords[ii][1]
             x3 = lcoords[ii][2]
             y3 = lcoords[ii][3]
-            
+
             xr0 = (x2-x0)*seg_cos + (y2-y0)*seg_sin
             yr0 = (x2-x0)*seg_sin - (y2-y0)*seg_cos
             xr1 = (x3-x0)*seg_cos + (y3-y0)*seg_sin
@@ -8399,7 +8399,7 @@ class Application(Frame):
                     xint= -br/mr
                     if (xint > Zero and xint < len_seg-Zero):
                         Xint_local = xint #True
-                        
+
                 # Check if there was a intersection detected
                 if (Xint_local != 0):
                     if XY_T_F==False:
@@ -8407,7 +8407,7 @@ class Application(Frame):
                     else:
                         Xint_list.append(Xint_local)
                         Xint_local = 0
-            
+
         if XY_T_F==False:
             return False
         else:
@@ -8545,7 +8545,7 @@ class Application(Frame):
             except:
                 pass
 
-            
+
         D_Yloc  = 6
         D_dY = 24
         xd_label_L = 12
@@ -8562,7 +8562,7 @@ class Application(Frame):
         D_Yloc=D_Yloc+D_dY
         self.Label_Units = Label(gen_settings,text="Units")
         self.Label_Units.place(x=xd_label_L, y=D_Yloc, width=w_label, height=21)
-        
+
         self.Radio_Units_IN = Radiobutton(gen_settings,text="inch", value="in", width="100", anchor=W)
         self.Radio_Units_IN.place(x=w_label+x_radio_offset, y=D_Yloc, width=75, height=23)
         self.Radio_Units_IN.configure(variable=self.units, command=self.Entry_units_var_Callback )
@@ -8680,7 +8680,7 @@ class Application(Frame):
 
         D_Yloc=D_Yloc+D_dY
         self.Label_Hcalc = Label(gen_settings,text="Height Calculation")
-        self.Label_Hcalc.place(x=xd_label_L, y=D_Yloc, width=w_label, height=21)        
+        self.Label_Hcalc.place(x=xd_label_L, y=D_Yloc, width=w_label, height=21)
 
         self.Radio_Hcalc_USE = Radiobutton(gen_settings,text="Max Used", \
                                             value="max_use", width="110", anchor=W)
@@ -8725,7 +8725,7 @@ class Application(Frame):
         self.Checkbutton_v_pplot = Checkbutton(gen_settings,text="", anchor=W)
         self.Checkbutton_v_pplot.place(x=xd_entry_L, y=D_Yloc, width=75, height=23)
         self.Checkbutton_v_pplot.configure(variable=self.v_pplot)
-        
+
         D_Yloc=D_Yloc+D_dY+10
         self.Label_SaveConfig = Label(gen_settings,text="Configuration File")
         self.Label_SaveConfig.place(x=xd_label_L, y=D_Yloc, width=w_label, height=21)
@@ -8772,7 +8772,7 @@ class Application(Frame):
             except:
                 pass
 
-            
+
         D_Yloc  = 12
         D_dY = 24
         xd_label_L = 12
@@ -8862,7 +8862,7 @@ class Application(Frame):
         D_Yloc=D_Yloc+D_dY+12
         self.vcarve_separator00 = Frame(vcarve_settings,height=2, bd=1, relief=SUNKEN)
         self.vcarve_separator00.place(x=0, y=D_Yloc,width=580, height=2)
-        
+
         D_Yloc=D_Yloc+D_dY-12
         self.Label_v_flop = Label(vcarve_settings,text="Flip Normals (Cut Outside)")
         self.Label_v_flop.place(x=xd_label_L, y=D_Yloc, width=w_label, height=21)
@@ -8897,7 +8897,7 @@ class Application(Frame):
         self.GEN_Reload = Button(vcarve_settings,text="Recalculate")
         self.GEN_Reload.place(x=580-10, y=D_Yloc, width=90, height=25, anchor="ne")
         self.GEN_Reload.bind("<ButtonRelease-1>", self.Recalculate_Click)
-        
+
         D_Yloc=D_Yloc+D_dY+12
         self.vcarve_separator0 = Frame(vcarve_settings,height=2, bd=1, relief=SUNKEN)
         self.vcarve_separator0.place(x=0, y=D_Yloc,width=580, height=2)
@@ -8987,8 +8987,8 @@ class Application(Frame):
             self.Label_BoxGap.configure(state="normal")
             self.Entry_BoxGap.configure(state="normal")
             self.Label_BoxGap_u.configure(state="normal")
-            
-                
+
+
         ## Cleanup Settings ##
         D_Yloc=D_Yloc+D_dY+12
         self.vcarve_separator1 = Frame(vcarve_settings,height=2, bd=1, relief=SUNKEN)
@@ -9125,7 +9125,7 @@ class Gcode:
                  target=lambda s: sys.stdout.write(s + "\n"),
                  arc_fit = "none"
                  ):
-        
+
         self.lastx = self.lasty = self.lastz = self.lastf = None
         self.feed = None
         self.lastgcode = self.lastfeed = None
@@ -9133,7 +9133,7 @@ class Gcode:
         self.cuts = []
         self.dp = 4
         self.dpfeed = 2
-        
+
         self.safetyheight = self.lastz = safetyheight
         self.tolerance = tolerance
         self.write = target
@@ -9145,8 +9145,8 @@ class Gcode:
             if p != self.plane:
                 self.plane = p
                 self.write("G%d" % p)
-        
-        
+
+
     # If any 'cut' moves are stored up, send them to the simplification algorithm
     # and actually output them.
     #
@@ -9191,13 +9191,13 @@ class Gcode:
             YC = self.lasty+J
             R_check_1 = sqrt( (XC-self.lastx)**2+(YC-self.lasty)**2 )
             R_check_2 = sqrt( (XC-x         )**2+(YC-y         )**2 )
-            
+
             Rstring = " R"+FORMAT % ((R_check_1+R_check_2)/2.0)
             if  abs(R_check_1-R_check_2) > Zero:
                 fmessage("-- G-Code Curve Fitting Anomaly - Check Output --")
                 fmessage("R_start: %f R_end %f" %(R_check_1,R_check_2))
                 fmessage("Begining and end radii do not match: delta = %f" %(abs(R_check_1-R_check_2)))
-                
+
 
         if x != self.lastx:
                 xstring = " X"+FORMAT % (x)
@@ -9214,16 +9214,16 @@ class Gcode:
                 Jstring = " J"+FORMAT % (J)
         if xstring == ystring == zstring == fstring == "":
             return
-        
+
         gcodestring = gcode
         if (self.arc_fit == "radius"):
             cmd = "".join([gcodestring, xstring, ystring, zstring, Rstring, fstring])
         else:
             cmd = "".join([gcodestring, xstring, ystring, zstring, Istring, Jstring, fstring])
-       
+
         if cmd:
             self.write(cmd)
-            
+
 
     def set_feed(self, feed):
         #"Set the feed rate to the given value"
@@ -9231,8 +9231,8 @@ class Gcode:
         #self.write("F%.4f" % feed)
         self.feed = "F%s" % feed
         self.lastf = None
-        
-        
+
+
 
     def cut(self, x=None, y=None, z=None):
         #"Perform a cutting move at the specified feed rate to the specified coordinates"
@@ -9272,17 +9272,17 @@ def douglas(st, tolerance=.001, plane=None, _first=True):
     #    print "whaaaa!?"
     #    #yield "G1", st[0], None
     #    return
-    
+
     L1 = st[0]
     L2 = st[-1]
-    
+
     last_point = None
     while (abs(L1[0]-L2[0]) < Zero) and (abs(L1[1]-L2[1]) < Zero) and (abs(L1[2]-L2[2]) < Zero):
         last_point=st.pop()
         try:
             L2 = st[-1]
         except:
-            return    
+            return
 
     worst_dist = 0
     worst_distz = 0 #added to fix out of plane inacuracy problem
@@ -9321,7 +9321,7 @@ def douglas(st, tolerance=.001, plane=None, _first=True):
                 elif plane == 19:
                     dist = abs(hypot(c1-y, c2-z) - min_rad)
                 else: dist = MAXINT
-                
+
                 if dist > worst_arc_dist: worst_arc_dist = dist
 
                 mx = (x+Lx)/2
@@ -9373,7 +9373,7 @@ def dist_lseg(l1, l2, p, z_only=False):
     x0, y0, z0 = l1
     xa, ya, za = l2
     xi, yi, zi = p
-    
+
     dx = xa-x0
     dy = ya-y0
     dz = za-z0
@@ -9384,7 +9384,7 @@ def dist_lseg(l1, l2, p, z_only=False):
     t = (dx * (xi-x0) + dy * (yi-y0) + dz * (zi-z0)) / d2
     if t < 0: t = 0
     if t > 1: t = 1
-    
+
     if (z_only==True):
         dist2 = (zi - z0 - t*dz)**2
     else:
@@ -9471,7 +9471,7 @@ def one_quadrant(plane, c, p1, p2, p3):
     x1, y1 = get_pts(plane, p1[0],p1[1],p1[2])
     x2, y2 = get_pts(plane, p2[0],p2[1],p2[2])
     x3, y3 = get_pts(plane, p3[0],p3[1],p3[2])
-    
+
     ###########################################################
     #Check the angle here and return false if it is too sharp
     ###########################################################
@@ -9490,7 +9490,7 @@ def one_quadrant(plane, c, p1, p2, p3):
     if theta_a > theta_b:
         angle = theta_a - theta_b
     else:
-        angle = theta_b - theta_a      
+        angle = theta_b - theta_a
 
     test_angle = 36
     if angle > 180+test_angle or angle < 180-test_angle:
@@ -9498,7 +9498,7 @@ def one_quadrant(plane, c, p1, p2, p3):
         return False
     ###########################################################
 
-    
+
     def sign(x):
         if abs(x) < 1e-5: return 0
         if x < 0: return -1
@@ -9569,13 +9569,13 @@ def arc_dir(plane, c, p1, p2, p3):
     #    end_angle = theta_end - theta_start + 360.0
     #else:
     #    end_angle = theta_end - theta_start
-    # 
+    #
     #if (end_angle > mid_angle):
     #    cw3=True
     #else:
     #    cw3=False
-    
-    
+
+
 
 def arc_fmt(plane, c1, c2, p1):
     x, y, z = p1
@@ -9641,7 +9641,7 @@ def temp_icon(icon_file_name):
     f.write("   0x00, 0xf0, 0xff, 0xff, 0xff, 0xff, 0x7f, 0x00, 0x00, 0xf0, 0xff, 0xff,\n")
     f.write("   0xff, 0xff, 0xff, 0x01, 0x00, 0xfc, 0xff, 0xff };\n")
     f.close()
-    
+
 ################################################################################
 #                          Start-up Application                                #
 ################################################################################
@@ -9664,7 +9664,7 @@ try:
     #print(default_font.cget("family"))
 except:
     debug_message("Font Set Failed.")
-    
+
 try:
     try:
         app.master.iconbitmap(r'emblem')
