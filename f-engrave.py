@@ -326,7 +326,7 @@ if PIL == True:
 
 
 import binascii
-from constants import Zero, IN_AXIS
+from constants import Zero, IN_AXIS, Plane
 from constants import MIN_METRIC_STEP_LEN, MIN_IMP_STEP_LEN
 from dxf import parse_dxf, WriteDXF
 from gcode import GCode
@@ -1425,7 +1425,7 @@ class Application(Frame):
                   arc_fit=self.arc_fit.get(),
                   dp=dp)
 
-        g.set_plane(17)
+        g.set_plane(Plane.xy)
 
         self.gcode.assign_safe_z(SafeZ)
         self.gcode.assign_depth(Depth)
@@ -7409,12 +7409,12 @@ class Gcode:
         self.write = target
         self.arc_fit = arc_fit
 
-    def set_plane(self, p):
+    def set_plane(self, plane):
         if (self.arc_fit != "none"):
-            assert p in (17,18,19)
-            if p != self.plane:
-                self.plane = p
-                self.write("G%d" % p)
+            assert plane in (Plane.xy, Plane.xz, Plane.yz)
+            if plane != self.plane:
+                self.plane = plane
+                self.write("G%d" % plane)
 
 
     # If any 'cut' moves are stored up, send them to the simplification algorithm
@@ -7584,12 +7584,12 @@ def douglas(st, tolerance=.001, plane=None, _first=True):
         Lx, Ly, Lz = st[0]
         if one_quadrant(plane, (c1, c2), ps, st[max_arc], pe):
             for i, (x,y,z) in enumerate(st):
-                if plane == 17:
+                if plane == Plane.xy:
                     dist1 = abs(hypot(c1 - x, c2 - y) - min_rad)
                     dist = sqrt(worst_distz ** 2 + dist1 ** 2) #added to fix out of plane inacuracy problem
-                elif plane == 18:
+                elif plane == Plane.xz:
                     dist = abs(hypot(c1 - x, c2 - z) - min_rad)
-                elif plane == 19:
+                elif plane == Plane.yz:
                     dist = abs(hypot(c1 - y, c2 - z) - min_rad)
                 else: dist = MAXINT
 
@@ -7598,9 +7598,12 @@ def douglas(st, tolerance=.001, plane=None, _first=True):
                 mx = (x + Lx) / 2
                 my = (y + Ly) / 2
                 mz = (z + Lz) / 2
-                if plane == 17: dist = abs(hypot(c1 - mx, c2 - my) - min_rad)
-                elif plane == 18: dist = abs(hypot(c1 - mx, c2 - mz) - min_rad)
-                elif plane == 19: dist = abs(hypot(c1 - my, c2 - mz) - min_rad)
+                if plane == Plane.xy:
+                    dist = abs(hypot(c1 - mx, c2 - my) - min_rad)
+                elif plane == Plane.xz:
+                    dist = abs(hypot(c1 - mx, c2 - mz) - min_rad)
+                elif plane == Plane.yz:
+                    dist = abs(hypot(c1 - my, c2 - mz) - min_rad)
                 else: dist = MAXINT
                 Lx, Ly, Lz = x, y, z
         else:
@@ -7716,11 +7719,11 @@ def arc_center(plane, p1, p2, p3):
     x2, y2, z2 = p2
     x3, y3, z3 = p3
 
-    if plane == 17:
+    if plane == Plane.xy:
         return cent1(x1, y1, x2, y2, x3, y3)
-    if plane == 18:
+    if plane == Plane.xz:
         return cent1(x1, z1, x2, z2, x3, z3)
-    if plane == 19:
+    if plane == Plane.yz:
         return cent1(y1, z1, y2, z2, y3, z3)
 
 def arc_rad(plane, P1, P2, P3):
@@ -7730,20 +7733,20 @@ def arc_rad(plane, P1, P2, P3):
     x2, y2, z2 = P2
     x3, y3, z3 = P3
 
-    if plane == 17:
+    if plane == Plane.xy:
         return rad1(x1, y1, x2, y2, x3, y3)
-    if plane == 18:
+    if plane == Plane.xz:
         return rad1(x1, z1, x2, z2, x3, z3)
-    if plane == 19:
+    if plane == Plane.yz:
         return rad1(y1, z1, y2, z2, y3, z3)
     return None, 0
 
 def get_pts(plane, x, y, z):
-    if plane == 17:
+    if plane == Plane.xy:
         return x, y
-    if plane == 18:
+    if plane == Plane.xz:
         return x, z
-    if plane == 19:
+    if plane == Plane.yz:
         return y, z
 
 def one_quadrant(plane, c, p1, p2, p3):
@@ -7859,14 +7862,11 @@ def arc_dir(plane, c, p1, p2, p3):
 
 def arc_fmt(plane, c1, c2, p1):
     x, y, z = p1
-    if plane == 17:
-        #return "I%.4f J%.4f" % (c1-x, c2-y)
+    if plane == Plane.xy:
         return [c1 - x, c2 - y]
-    if plane == 18:
-        #return "I%.4f K%.4f" % (c1-x, c2-z)
+    if plane == Plane.xz:
         return [c1 - x, c2 - z]
-    if plane == 19:
-        #return "J%.4f K%.4f" % (c1-y, c2-z)
+    if plane == Plane.yz:
         return [c1 - y, c2 - z]
 
 
