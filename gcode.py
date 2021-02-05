@@ -62,3 +62,15 @@ class GCode(list):
         # Caller needs to know the normal feed rate
         return self.feed_str
 
+    def rapid(self, x, y):
+        FORMAT = 'G0 X%%.%df Y%%.%df' % (self.dp, self.dp)
+        self.append(FORMAT % (x, y))
+
+    def arc(self, cw, I, J):
+        if cw:
+            cmd = "G2"
+        else:
+            cmd="G3"
+        FORMAT = '%s I%%.%df J%%.%df F%%s' % (cmd, self.dp, self.dp)
+        self.append(FORMAT % (I, J, self.feed_str))
+

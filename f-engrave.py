@@ -1422,9 +1422,9 @@ class Application(Frame):
         g = Gcode(safetyheight = SafeZ,
                   tolerance=Acc,
                   target=lambda s: self.gcode.append(s),
-                  arc_fit = self.arc_fit.get())
+                  arc_fit=self.arc_fit.get(),
+                  dp=dp)
 
-        g.dp = dp
         g.set_plane(17)
 
         self.gcode.assign_safe_z(SafeZ)
@@ -1580,11 +1580,7 @@ class Application(Frame):
                             dist = sqrt(dx * dx + dy * dy)
                             if dist > Acc:
                                 self.gcode.retract_z()
-                                # rapid to current position
-
-                                FORMAT = 'G0 X%%.%df Y%%.%df' % (dp,dp)
-                                self.gcode.append(FORMAT % (x1,y1))
-
+                                self.gcode.rapid(x1, y1)
                                 feed_str = self.gcode.plunge_z()
                                 if (feed_str):
                                     g.set_feed(feed_str)
@@ -1742,10 +1738,7 @@ class Application(Frame):
                         if (loop != loop_old):
                             g.flush()
                             self.gcode.retract_z()
-                            # rapid to current position
-                            FORMAT = 'G0 X%%.%df Y%%.%df' % (dp,dp)
-                            self.gcode.append(FORMAT % (x1,y1))
-                            # drop cutter to z depth
+                            self.gcode.rapid(x1, y1)
                             self.gcode.plunge_z(z1)
 
                             lastx = x1
@@ -1768,19 +1761,11 @@ class Application(Frame):
         Radius_plot = float(self.RADIUS_PLOT)
         if Radius_plot != 0 and self.cut_type.get() == "engrave":
             self.gcode.retract_z()
-
-            FORMAT = 'G0 X%%.%df Y%%.%df' % (dp,dp)
-            self.gcode.append(FORMAT % (-Radius_plot - self.Xzero + XOrigin, YOrigin - self.Yzero))
-
+            self.gcode.rapid(-Radius_plot - self.Xzero + XOrigin, YOrigin - self.Yzero)
             feed_str = self.gcode.plunge_z()
             if (feed_str):
                 g.set_feed(feed_str)
-                FEED_STRING = " F" + feed_str
-            else:
-                FEED_STRING = ""
-
-            FORMAT = 'G2 I%%.%df J%%.%df' % (dp,dp)
-            self.gcode.append(FORMAT % ( Radius_plot, 0.0) + FEED_STRING)
+            self.gcode.arc(cw=True, I=Radius_plot, J=0.0)
         # End Circle
 
         # Done, so retract Z
@@ -7420,7 +7405,8 @@ class Gcode:
                  safetyheight = 0.04,
                  tolerance=0.001,
                  target=lambda s: sys.stdout.write(s + "\n"),
-                 arc_fit = "none"
+                 arc_fit = "none",
+                 dp=4
                 ):
 
         self.lastx = self.lasty = self.lastz = self.lastf = None
@@ -7428,7 +7414,7 @@ class Gcode:
         self.lastgcode = self.lastfeed = None
         self.plane = None
         self.cuts = []
-        self.dp = 4
+        self.dp = dp
 
         self.safetyheight = self.lastz = safetyheight
         self.tolerance = tolerance
