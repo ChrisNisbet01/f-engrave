@@ -327,6 +327,7 @@ if PIL == True:
 
 import binascii
 from constants import Zero, IN_AXIS
+from constants import MIN_METRIC_STEP_LEN, MIN_IMP_STEP_LEN
 from dxf import parse_dxf
 import getopt
 from graphics import Character, Line, Get_Angle, Transform
@@ -5592,11 +5593,11 @@ class Application(Frame):
         STOP_CALC = 0
 
         if self.units.get() == "mm":
-            if float( self.v_step_len.get() ) < .01:
-                self.v_step_len.set("0.01")
+            if float( self.v_step_len.get() ) < MIN_METRIC_STEP_LEN:
+                self.v_step_len.set(str(MIN_METRIC_STEP_LEN))
         else:
-            if float( self.v_step_len.get() ) < .0005:
-                self.v_step_len.set("0.0005")
+            if float( self.v_step_len.get() ) < MIN_IMP_STEP_LEN:
+                self.v_step_len.set(str(MIN_IMP_STEP_LEN))
 
         if (self.Check_All_Variables() > 0):
             return
