@@ -1,9 +1,9 @@
 class GCode(list):
-    def __init__(self, enable_variables, accuracy, metric):
+    def __init__(self, enable_variables, metric, arc_fit):
         super(list, self).__init__()
         self.enable_variables = enable_variables
-        self.accuracy = accuracy
         self.metric = metric
+        self.arc_fit = arc_fit
         if self.metric:
             self.dp = 3
             self.dpfeed = 1
@@ -34,7 +34,7 @@ class GCode(list):
     def append_comment(self, comment):
         self.append("(" + comment + ")")
 
-    def retract_z(self):
+    def move_z_safe(self):
         self.append("G0 Z%s" % (self.safe_val))
 
     def set_feed_rate(self, feed_rate):
@@ -73,4 +73,31 @@ class GCode(list):
             cmd="G3"
         FORMAT = '%s I%%.%df J%%.%df F%%s' % (cmd, self.dp, self.dp)
         self.append(FORMAT % (I, J, self.feed_str))
+
+    def _append_pre_post_amble(self, commands, comment):
+        self.append_comment(comment)
+        for line in commands.split('|'):
+            self.append(line)
+        self.append_comment("End %s" % (comment))
+
+    def append_preamble(self, commands):
+        self._append_pre_post_amble(commands, "Header")
+
+    def append_postamble(self, commands):
+        self._append_pre_post_amble(commands, "Post script")
+
+    def append_mode(self):
+        # G90        ; Sets absolute distance mode
+        self.append('G90 (absolute)')
+        # G91.1      ; Sets Incremental Distance Mode for I, J & K arc offsets.
+        if (self.arc_fit == "center"):
+            self.append('G91.1')
+
+    def append_units(self):
+        if self.metric:
+            # G21 ; sets units to mm
+            self.append('G21 (mm)')
+        else:
+            # G20 ; sets units to inches
+            self.append('G20 (in)')
 

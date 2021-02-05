@@ -1399,8 +1399,8 @@ class Application(Frame):
         Depth = float(self.ZCUT.get())
 
         self.gcode = GCode(enable_variables=not self.var_dis.get(),
-                           accuracy=Acc,
-                           metric=self.units.get() != "in")
+                           metric=self.units.get() != "in",
+                           arc_fit=self.arc_fit.get())
 
         if self.batch.get():
             String = self.default_text
@@ -1429,22 +1429,11 @@ class Application(Frame):
 
         self.gcode.assign_safe_z(SafeZ)
         self.gcode.assign_depth(Depth)
-
-        # G90        ; Sets absolute distance mode
-        self.gcode.append('G90')
-        # G91.1      ; Sets Incremental Distance Mode for I, J & K arc offsets.
-        if (self.arc_fit.get() == "center"):
-            self.gcode.append('G91.1')
-        if self.units.get() == "in":
-            # G20 ; sets units to inches
-            self.gcode.append('G20')
-        else:
-            # G21 ; sets units to mm
-            self.gcode.append('G21')
+        self.gcode.append_mode()
+        self.gcode.append_units()
 
         # Output preamble
-        for line in self.gpre.get().split('|'):
-            self.gcode.append(line)
+        self.gcode.append_preamble(self.gpre.get())
 
         #Set Feed rate
         self.gcode.set_feed_rate(self.FEED.get())
@@ -1579,7 +1568,7 @@ class Application(Frame):
                             dy = y1 - lasty
                             dist = sqrt(dx * dx + dy * dy)
                             if dist > Acc:
-                                self.gcode.retract_z()
+                                self.gcode.move_z_safe()
                                 self.gcode.rapid(x1, y1)
                                 feed_str = self.gcode.plunge_z()
                                 if (feed_str):
@@ -1737,7 +1726,7 @@ class Application(Frame):
                         # check and see if we need to move to a new discontinuous start point
                         if (loop != loop_old):
                             g.flush()
-                            self.gcode.retract_z()
+                            self.gcode.move_z_safe()
                             self.gcode.rapid(x1, y1)
                             self.gcode.plunge_z(z1)
 
@@ -1760,7 +1749,7 @@ class Application(Frame):
         YOrigin = float(self.yorigin.get())
         Radius_plot = float(self.RADIUS_PLOT)
         if Radius_plot != 0 and self.cut_type.get() == "engrave":
-            self.gcode.retract_z()
+            self.gcode.move_z_safe()
             self.gcode.rapid(-Radius_plot - self.Xzero + XOrigin, YOrigin - self.Yzero)
             feed_str = self.gcode.plunge_z()
             if (feed_str):
@@ -1768,12 +1757,11 @@ class Application(Frame):
             self.gcode.arc(cw=True, I=Radius_plot, J=0.0)
         # End Circle
 
-        # Done, so retract Z
-        self.gcode.retract_z()
+        # Done, so move Z to safe position.
+        self.gcode.move_z_safe()
 
         # Postamble
-        for line in self.gpost.get().split('|'):
-            self.gcode.append(line)
+        self.gcode.append_postamble(self.gpost.get())
 
     ################################################################################
 
