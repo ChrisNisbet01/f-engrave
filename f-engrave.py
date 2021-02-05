@@ -322,7 +322,7 @@ if PIL == True:
         Image.MAX_IMAGE_PIXELS = None
     except:
         PIL = False
-        sys.stdout.write("PIL No loaded.\n")
+        sys.stdout.write("PIL Not loaded.\n")
 
 
 from math import *
@@ -335,6 +335,8 @@ from subprocess import Popen, PIPE
 import webbrowser
 import struct
 from messages import Message
+from graphics import Character, Line
+import font
 
 try:
     unichr
@@ -380,94 +382,6 @@ def Get_Angle(s,c):
     return angle
 
 ################################################################################
-# This routine parses the .cxf font file and builds a font dictionary of       #
-# line segment strokes required to cut each character.                         #
-# Arcs (only used in some fonts) are converted to a number of line             #
-# segments based on the angular length of the arc. Since the idea of           #
-# this font description is to make it support independent x and y scaling,     #
-# we do not use native arcs in the g-code.                                      #
-################################################################################
-def parse(file,segarc):
-    font = {}
-    key = None
-    stroke_list = []
-    xmax, ymax = 0, 0
-    for text_in in file:
-        text = text_in+" "
-        # format for a typical letter (lower-case r):
-        # #comment, with a blank line after it
-        #
-        # [r] 3  (or "[0072] r" where 0072 is the HEX value of the character)
-        # L 0,0,0,6
-        # L 0,6,2,6
-        # A 2,5,1,0,90
-        #
-        end_char = len(text)
-        if end_char and key: #save the character to our dictionary
-            font[key] = Character(key)
-            font[key].stroke_list = stroke_list
-            font[key].xmax = xmax
-
-        new_cmd = re.match('^\[(.*)\]\s', text)
-        if new_cmd: #new character
-            key_tmp = new_cmd.group(1)
-            if len(new_cmd.group(1)) == 1:
-                key = ord(key_tmp)
-            else:
-                if len(key_tmp) == 5:
-                    key_tmp = key_tmp[1:]
-                if len(key_tmp) == 4:
-                    try:
-                        key=int(key_tmp,16)
-                    except:
-                        key = None
-                        stroke_list = []
-                        xmax, ymax = 0, 0
-                        continue
-                else:
-                    key = None
-                    stroke_list = []
-                    xmax, ymax = 0, 0
-                    continue
-            stroke_list = []
-            xmax, ymax = 0, 0
-
-        line_cmd = re.match('^L (.*)', text)
-        if line_cmd:
-            coords = line_cmd.group(1)
-            coords = [float(n) for n in coords.split(',')]
-            stroke_list += [Line(coords)]
-            xmax = max(xmax, coords[0], coords[2])
-
-        arc_cmd = re.match('^A (.*)', text)
-        if arc_cmd:
-            coords = arc_cmd.group(1)
-            coords = [float(n) for n in coords.split(',')]
-            xcenter, ycenter, radius, start_angle, end_angle = coords
-
-            # since font defn has arcs as ccw, we need some font foo
-            if ( end_angle < start_angle ):
-                start_angle -= 360.0
-
-            # approximate arc with line seg every "segarc" degrees
-            segs = int((end_angle - start_angle) / segarc)+1
-            angleincr = (end_angle - start_angle)/segs
-            xstart = cos( radians(start_angle) ) * radius + xcenter
-            ystart = sin( radians(start_angle) ) * radius + ycenter
-            angle = start_angle
-            for i in range(segs):
-                angle += angleincr
-                xend = cos( radians(angle) ) * radius + xcenter
-                yend = sin( radians(angle) ) * radius + ycenter
-                coords = [xstart,ystart,xend,yend]
-                stroke_list += [Line(coords)]
-                xmax = max(xmax, coords[0], coords[2])
-                ymax = max(ymax, coords[1], coords[3])
-                xstart = xend
-                ystart = yend
-    return font
-
-################################################################################
 def parse_dxf(dxf_file,segarc,new_origin=True):
     # Initialize / reset
     font = {}
@@ -498,39 +412,7 @@ def parse_dxf(dxf_file,segarc,new_origin=True):
     font[key].ymin = ymin
 
     return font
-################################################################################
 
-class Character:
-    def __init__(self, key):
-        self.key = key
-        self.stroke_list = []
-
-    def __repr__(self):
-        return "%%s" % (self.stroke_list)
-
-    def get_xmax(self):
-        try: return max([s.xmax for s in self.stroke_list[:]])
-        except ValueError: return 0
-
-    def get_ymax(self):
-        try: return max([s.ymax for s in self.stroke_list[:]])
-        except ValueError: return 0
-
-    def get_ymin(self):
-        try: return min([s.ymin for s in self.stroke_list[:]])
-        except ValueError: return 0
-
-################################################################################
-class Line:
-
-    def __init__(self, coords):
-        self.xstart, self.ystart, self.xend, self.yend = coords
-        self.xmax = max(self.xstart, self.xend)
-        self.ymax = max(self.ystart, self.yend)
-        self.ymin = min(self.ystart, self.yend)
-
-    def __repr__(self):
-        return "Line([%s, %s, %s, %s])" % (self.xstart, self.ystart, self.xend, self.yend)
 ################################################################################
 ####################################################
 ##     PointClass from dxf2gcode_b02_point.py     ##
@@ -1779,20 +1661,8 @@ class Application(Frame):
         #    fmessage("Python Imaging Library (PIL) was not found...Bummer")
         #    fmessage("    PIL enables more image file formats.")
 
-        cmd = ["ttf2cxf_stream","TEST","STDOUT"]
-        try:
-            p = Popen(cmd, stdout=PIPE, stderr=PIPE)
-            stdout, stderr = p.communicate()
-            if VERSION == 3:
-                stdout = bytes.decode(stdout)
-            if str.find(stdout.upper(),'TTF2CXF') != -1:
-                self.TTF_AVAIL = TRUE
-            else:
-                self.TTF_AVAIL = FALSE
-                message.fmessage("ttf2cxf_stream is not working...Bummer")
-        except:
+        if not font.TTF_is_supported():
             message.fmessage("ttf2cxf_stream executable is not present/working...Bummer")
-            self.TTF_AVAIL = FALSE
 
         cmd = ["potrace","-v"]
         try:
@@ -2395,15 +2265,9 @@ class Application(Frame):
         self.Listbox_1.bind("<Up>",   self.Listbox_Key_Up)
         self.Listbox_1.bind("<Down>", self.Listbox_Key_Down)
 
-        try:
-            font_files=os.listdir(self.fontdir.get())
-            font_files.sort()
-        except:
-            font_files=" "
-        for name in font_files:
-            if str.find(name.upper(),'.CXF') != -1 \
-            or (str.find(name.upper(),'.TTF') != -1 and self.TTF_AVAIL ):
-                self.Listbox_1.insert(END, name)
+        for name in font.available_font_files(self.fontdir.get()):
+            self.Listbox_1.insert(END, name)
+
         if len(self.fontfile.get()) < 4:
             try:
                 self.fontfile.set(self.Listbox_1.get(0))
@@ -4706,15 +4570,9 @@ class Application(Frame):
     def Entry_fontdir_Callback(self, varName, index, mode):
         self.Listbox_1.delete(0, END)
         self.Listbox_1.configure( bg = self.NormalColor )
-        try:
-            font_files=os.listdir(self.fontdir.get())
-            font_files.sort()
-        except:
-            font_files=" "
-        for name in font_files:
-            if str.find(name.upper(),'.CXF') != -1 \
-            or (str.find(name.upper(),'.TTF') != -1 and self.TTF_AVAIL ):
-                self.Listbox_1.insert(END, name)
+        for name in font.available_font_files(self.fontdir.get()):
+            self.Listbox_1.insert(END, name)
+
         if len(self.fontfile.get()) < 4:
             try:
                 self.fontfile.set(self.Listbox_1.get(0))
@@ -5871,45 +5729,16 @@ class Application(Frame):
             self.statusMessage.set("Reading Font File.........")
             self.master.update_idletasks()
 
-        fileName, fileExtension = os.path.splitext(file_full)
         self.current_input_file.set( os.path.basename(file_full) )
 
-        SegArc    =  float(self.segarc.get())
-        TYPE=fileExtension.upper()
-        if TYPE=='.CXF':
-            try:
-                file = open(file_full)
-            except:
-                self.statusMessage.set("Unable to Open CXF File: %s" %(file_full))
-                self.statusbar.configure( bg = 'red' )
-                return
-            self.font = parse(file,SegArc)  # build stroke lists from font file
-            file.close()
+        self.font = font.parse_font_file(
+            file_full, self.segarc.get(), self.ext_char.get())
 
-        elif TYPE=='.TTF':
-            option = ""
-            if self.ext_char.get():
-                option = option + "-e"
-            else:
-                option = ""
-            cmd = ["ttf2cxf_stream",
-                   option,
-                   "-s",self.segarc.get(),
-                   file_full,"STDOUT"]
-            try:
-                p = Popen(cmd, stdout=PIPE, stderr=PIPE)
-                stdout, stderr = p.communicate()
-                if VERSION == 3:
-                    file=bytes.decode(stdout).split("\n")
-                else:
-                    file=stdout.split("\n")
-
-                self.font = parse(file,SegArc)  # build stroke lists from font file
-                self.input_type.set("text")
-            except:
-                message.fmessage("Unable To open True Type (TTF) font file: %s" %(file_full))
+        if self.font:
+            self.input_type.set("text")
         else:
-            pass
+            self.statusMessage.set("Unable to open font file: %s" % (file_full))
+            self.statusbar.configure(bg='red')
 
         if (not self.batch.get()):
             self.entry_set(self.Entry_ArcAngle,self.Entry_ArcAngle_Check(),1)
