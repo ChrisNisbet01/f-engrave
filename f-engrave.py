@@ -192,7 +192,7 @@
                  - Added button in "General Settings" to automatically save a configuration (config.ngc) file
 
     Version 1.50 - Modified helper program (ttf2cxf_stream) and F-Engrave interaction with it to better control the line
-	           segment approximation of arcs.
+                 - segment approximation of arcs.
                  - Added straight cutter support
                  - Added option to create prismatic cuts (inverse of v-carve).  This option opens the
                    possibility of making v-carve inlays.
@@ -343,9 +343,9 @@ try:
 except NameError:
     unichr = chr
 
-IN_AXIS   = "AXIS_PROGRESS_BAR" in os.environ
+IN_AXIS = "AXIS_PROGRESS_BAR" in os.environ
 
-Zero       = 0.00001
+Zero = 0.00001
 STOP_CALC = 0
 
 message = Message(quiet=QUIET or IN_AXIS, debug=DEBUG)
@@ -1529,9 +1529,9 @@ create_contents() : creates the contents of the tooltip window (by default a Tki
 class ToolTip:
     def __init__(self, master, text='Your text here', delay=100, **opts):
         self.master = master
-        self._opts = {'anchor':'center', 'bd':1, 'bg':'lightyellow', 'delay':delay, 'fg':'black',\
-                      'follow_mouse':0, 'font':None, 'justify':'left', 'padx':4, 'pady':2,\
-                      'relief':'solid', 'state':'normal', 'text':text, 'textvariable':None,\
+        self._opts = {'anchor':'center', 'bd':1, 'bg':'lightyellow', 'delay':delay, 'fg':'black', \
+                      'follow_mouse':0, 'font':None, 'justify':'left', 'padx':4, 'pady':2, \
+                      'relief':'solid', 'state':'normal', 'text':text, 'textvariable':None, \
                       'width':0, 'wraplength':150}
         self.configure(**opts)
         self._tipwindow = None
@@ -1549,7 +1549,7 @@ class ToolTip:
             if self._opts.has_key(key):
                 self._opts[key] = opts[key]
             else:
-                KeyError = 'KeyError: Unknown option: "%s"' %key
+                KeyError = 'KeyError: Unknown option: "%s"' % key
                 raise KeyError
 
     ##----these methods handle the callbacks on "<Enter>", "<Leave>" and "<Motion>"---------------##
@@ -1670,9 +1670,9 @@ class Application(Frame):
             stdout, stderr = p.communicate()
             if VERSION == 3:
                 stdout = bytes.decode(stdout)
-            if str.find(stdout.upper(),'POTRACE') != -1:
+            if str.find(stdout.upper(), 'POTRACE') != -1:
                 self.POTRACE_AVAIL = TRUE
-                if str.find(stdout.upper(),'1.1') == -1:
+                if str.find(stdout.upper(), '1.1') == -1:
                     message.fmessage("F-Engrave Requires Potrace Version 1.10 or Newer.")
             else:
                 self.POTRACE_AVAIL = FALSE
@@ -1686,7 +1686,7 @@ class Application(Frame):
     def f_engrave_init(self):
         self.master.update()
         self.initComplete = 1
-        self.delay_calc   = 0
+        self.delay_calc = 0
         self.menu_Mode_Change()
 
     def createWidgets(self):
@@ -1697,101 +1697,101 @@ class Application(Frame):
         self.master.bind('<F3>', self.KEY_F3)
         self.master.bind('<F4>', self.KEY_F4)
         self.master.bind('<F5>', self.KEY_F5) #self.Recalculate_Click)
-        self.master.bind('<Control-Up>'  , self.Listbox_Key_Up)
+        self.master.bind('<Control-Up>', self.Listbox_Key_Up)
         self.master.bind('<Control-Down>', self.Listbox_Key_Down)
         self.master.bind('<Prior>', self.KEY_ZOOM_IN) # Page Up
         self.master.bind('<Next>', self.KEY_ZOOM_OUT) # Page Down
         self.master.bind('<Control-g>', self.KEY_CTRL_G)
         self.master.bind('<Control-s>', self.KEY_CTRL_S)
 
-        self.batch      = BooleanVar()
-        self.show_axis  = BooleanVar()
-        self.show_box   = BooleanVar()
-        self.show_v_path= BooleanVar()
-        self.show_v_area= BooleanVar()
+        self.batch = BooleanVar()
+        self.show_axis = BooleanVar()
+        self.show_box = BooleanVar()
+        self.show_v_path = BooleanVar()
+        self.show_v_area = BooleanVar()
         self.show_thick = BooleanVar()
-        self.flip       = BooleanVar()
-        self.mirror     = BooleanVar()
-        self.outer      = BooleanVar()
-        self.upper      = BooleanVar()
-        self.fontdex    = BooleanVar()
-        self.v_flop     = BooleanVar()
-        self.v_pplot    = BooleanVar()
-        self.inlay      = BooleanVar()
-        self.no_comments= BooleanVar()
-        self.ext_char   = BooleanVar()
-        self.var_dis    = BooleanVar()
+        self.flip = BooleanVar()
+        self.mirror = BooleanVar()
+        self.outer = BooleanVar()
+        self.upper = BooleanVar()
+        self.fontdex = BooleanVar()
+        self.v_flop = BooleanVar()
+        self.v_pplot = BooleanVar()
+        self.inlay = BooleanVar()
+        self.no_comments = BooleanVar()
+        self.ext_char = BooleanVar()
+        self.var_dis = BooleanVar()
         self.useIMGsize = BooleanVar()
-        self.plotbox    = BooleanVar()
+        self.plotbox = BooleanVar()
 
-        self.clean_P    = BooleanVar()
-        self.clean_X    = BooleanVar()
-        self.clean_Y    = BooleanVar()
-        self.v_clean_P  = BooleanVar()
-        self.v_clean_X  = BooleanVar()
-        self.v_clean_Y  = BooleanVar()
+        self.clean_P = BooleanVar()
+        self.clean_X = BooleanVar()
+        self.clean_Y = BooleanVar()
+        self.v_clean_P = BooleanVar()
+        self.v_clean_X = BooleanVar()
+        self.v_clean_Y = BooleanVar()
 
-        self.arc_fit    = StringVar()
-        self.YSCALE     = StringVar()
-        self.XSCALE     = StringVar()
-        self.LSPACE     = StringVar()
-        self.CSPACE     = StringVar()
-        self.WSPACE     = StringVar()
-        self.TANGLE     = StringVar()
-        self.TRADIUS    = StringVar()
-        self.ZSAFE      = StringVar()
-        self.ZCUT       = StringVar()
-        self.STHICK     = StringVar()
-        self.origin     = StringVar()
-        self.justify    = StringVar()
-        self.units      = StringVar()
+        self.arc_fit = StringVar()
+        self.YSCALE = StringVar()
+        self.XSCALE = StringVar()
+        self.LSPACE = StringVar()
+        self.CSPACE = StringVar()
+        self.WSPACE = StringVar()
+        self.TANGLE = StringVar()
+        self.TRADIUS = StringVar()
+        self.ZSAFE = StringVar()
+        self.ZCUT = StringVar()
+        self.STHICK = StringVar()
+        self.origin = StringVar()
+        self.justify = StringVar()
+        self.units = StringVar()
 
-        self.xorigin    = StringVar()
-        self.yorigin    = StringVar()
-        self.segarc     = StringVar()
-        self.accuracy   = StringVar()
+        self.xorigin = StringVar()
+        self.yorigin = StringVar()
+        self.segarc = StringVar()
+        self.accuracy = StringVar()
 
-        self.funits     = StringVar()
-        self.FEED       = StringVar()
-        self.PLUNGE     = StringVar()
-        self.fontfile   = StringVar()
-        self.H_CALC     = StringVar()
+        self.funits = StringVar()
+        self.FEED = StringVar()
+        self.PLUNGE = StringVar()
+        self.fontfile = StringVar()
+        self.H_CALC = StringVar()
         #self.plotbox    = StringVar()
-        self.boxgap     = StringVar()
-        self.fontdir    = StringVar()
-        self.cut_type   = StringVar()
+        self.boxgap = StringVar()
+        self.fontdir = StringVar()
+        self.cut_type = StringVar()
         self.input_type = StringVar()
 
 
-        self.bit_shape  = StringVar()
-        self.v_bit_angle= StringVar()
-        self.v_bit_dia  = StringVar()
-        self.v_depth_lim= StringVar()
-        self.v_drv_crner= StringVar()
-        self.v_stp_crner= StringVar()
+        self.bit_shape = StringVar()
+        self.v_bit_angle = StringVar()
+        self.v_bit_dia = StringVar()
+        self.v_depth_lim = StringVar()
+        self.v_drv_crner = StringVar()
+        self.v_stp_crner = StringVar()
         self.v_step_len = StringVar()
-        self.allowance  = StringVar()
-        self.v_check_all= StringVar()
-        self.v_max_cut  = StringVar()
-        self.v_rough_stk= StringVar()
+        self.allowance = StringVar()
+        self.v_check_all = StringVar()
+        self.v_max_cut = StringVar()
+        self.v_rough_stk = StringVar()
 
-        self.clean_dia  = StringVar()
+        self.clean_dia = StringVar()
         self.clean_step = StringVar()
-        self.clean_v    = StringVar()
+        self.clean_v = StringVar()
         self.clean_name = StringVar()
 
-        self.gpre        = StringVar()
-        self.gpost       = StringVar()
+        self.gpre = StringVar()
+        self.gpost = StringVar()
 
-        self.bmp_turnpol      = StringVar()
-        self.bmp_turdsize     = StringVar()
-        self.bmp_alphamax     = StringVar()
+        self.bmp_turnpol = StringVar()
+        self.bmp_turdsize = StringVar()
+        self.bmp_alphamax = StringVar()
         self.bmp_opttolerance = StringVar()
-        self.bmp_longcurve    = BooleanVar()
+        self.bmp_longcurve = BooleanVar()
 
-        self.maxcut             = StringVar()
+        self.maxcut = StringVar()
         self.current_input_file = StringVar()
-        self.bounding_box       = StringVar()
+        self.bounding_box = StringVar()
 
         ###########################################################################
         #                         INITILIZE VARIABLES                             #
@@ -1876,34 +1876,34 @@ class Application(Frame):
         self.segarc.set("5.0")
         self.accuracy.set("0.001")
 
-        self.segID   = []
-        self.gcode   = []
+        self.segID = []
+        self.gcode = []
         self.svgcode = []
-        self.coords  = []
+        self.coords = []
         self.vcoords = []
-        self.clean_coords=[]
-        self.clean_segment=[]
-        self.clean_coords_sort=[]
-        self.v_clean_coords_sort=[]
+        self.clean_coords = []
+        self.clean_segment = []
+        self.clean_coords_sort = []
+        self.v_clean_coords_sort = []
 
         self.clean_v.set("0.05")
         self.clean_dia.set(".25")      # Diameter of clean-up bit
         self.clean_step.set("50")      # Clean-up step-over as percent of clean-up bit diameter
         self.clean_name.set("_clean")
 
-        self.font    = {}
+        self.font = {}
         self.RADIUS_PLOT = 0
-        self.MAXX    = 0
-        self.MINX    = 0
-        self.MAXY    = 0
-        self.MINY    = 0
+        self.MAXX = 0
+        self.MINX = 0
+        self.MAXY = 0
+        self.MINY = 0
 
         self.Xzero = float(0.0)
         self.Yzero = float(0.0)
         self.default_text = "F-Engrave"
-        self.HOME_DIR     =  os.path.expanduser("~")
-        self.NGC_FILE     = (self.HOME_DIR+"/None")
-        self.IMAGE_FILE   = (self.HOME_DIR+"/None")
+        self.HOME_DIR = os.path.expanduser("~")
+        self.NGC_FILE = (self.HOME_DIR + "/None")
+        self.IMAGE_FILE = (self.HOME_DIR + "/None")
         self.current_input_file.set(" ")
         self.bounding_box.set(" ")
 
@@ -1960,7 +1960,7 @@ class Application(Frame):
 
         opts, args = None, None
         try:
-            opts, args = getopt.getopt(sys.argv[1:], "hbg:f:d:t:",["help","batch","gcode_file","fontdir=","defdir=","text="])
+            opts, args = getopt.getopt(sys.argv[1:], "hbg:f:d:t:", ["help","batch","gcode_file","fontdir=","defdir=","text="])
         except:
             message.fmessage('Unable interpret command line options')
             sys.exit()
@@ -1984,23 +1984,23 @@ class Application(Frame):
                 elif os.path.isfile(value):
                     dirname = os.path.dirname(value)
                     fileName, fileExtension = os.path.splitext(value)
-                    TYPE=fileExtension.upper()
-                    if TYPE=='.CXF' or TYPE=='.TTF':
+                    TYPE = fileExtension.upper()
+                    if TYPE == '.CXF' or TYPE == '.TTF':
                         self.input_type.set("text")
                         self.fontdir.set(dirname)
-                        self.fontfile.set(os.path.basename(fileName)+fileExtension)
+                        self.fontfile.set(os.path.basename(fileName) + fileExtension)
                     else:
                         self.input_type.set("image")
                         self.IMAGE_FILE = value
                 else:
-                    message.fmessage("File/Directory Not Found:\t%s" %(value) )
+                    message.fmessage("File/Directory Not Found:\t%s" % (value) )
 
             if option in ('-d','--defdir'):
                 self.HOME_DIR = value
-                if str.find(self.NGC_FILE,'/None') != -1:
-                    self.NGC_FILE = (self.HOME_DIR+"/None")
-                if str.find(self.IMAGE_FILE,'/None') != -1:
-                    self.IMAGE_FILE = (self.HOME_DIR+"/None")
+                if str.find(self.NGC_FILE, '/None') != -1:
+                    self.NGC_FILE = (self.HOME_DIR + "/None")
+                if str.find(self.IMAGE_FILE, '/None') != -1:
+                    self.IMAGE_FILE = (self.HOME_DIR + "/None")
             if option in ('-t','--text'):
                 value = value.replace('|', '\n')
 
@@ -2023,7 +2023,7 @@ class Application(Frame):
 
             for line in self.gcode:
                 try:
-                    sys.stdout.write(line+'\n')
+                    sys.stdout.write(line + '\n')
                 except:
                     sys.stdout.write('(skipping line)\n')
             sys.exit()
@@ -2034,116 +2034,116 @@ class Application(Frame):
         self.statusMessage = StringVar()
         self.statusMessage.set("")
         self.statusbar = Label(self.master, textvariable=self.statusMessage, \
-                                   bd=1, relief=SUNKEN , height=1)
+                               bd=1, relief=SUNKEN, height=1)
         self.statusbar.pack(anchor=SW, fill=X, side=BOTTOM)
         self.statusMessage.set("Welcome to F-Engrave")
 
         # Buttons
-        self.Recalculate = Button(self.master,text="Recalculate")
+        self.Recalculate = Button(self.master, text="Recalculate")
         self.Recalculate.bind("<ButtonRelease-1>", self.Recalculate_Click)
 
         # Canvas
         lbframe = Frame( self.master )
         self.PreviewCanvas_frame = lbframe
-        self.PreviewCanvas = Canvas(lbframe, width=self.w-525, \
-                                        height=self.h-200, background="grey75")
+        self.PreviewCanvas = Canvas(lbframe, width=self.w - 525, \
+                                    height=self.h - 200, background="grey75")
         self.PreviewCanvas.pack(side=LEFT, fill=BOTH, expand=1)
         self.PreviewCanvas_frame.place(x=230, y=10)
 
-        self.PreviewCanvas.bind("<Button-4>" , self._mouseZoomIn)
-        self.PreviewCanvas.bind("<Button-5>" , self._mouseZoomOut)
-        self.PreviewCanvas.bind("<2>"        , self.mousePanStart)
+        self.PreviewCanvas.bind("<Button-4>", self._mouseZoomIn)
+        self.PreviewCanvas.bind("<Button-5>", self._mouseZoomOut)
+        self.PreviewCanvas.bind("<2>", self.mousePanStart)
         self.PreviewCanvas.bind("<B2-Motion>", self.mousePan)
-        self.PreviewCanvas.bind("<1>"        , self.mouseZoomStart)
+        self.PreviewCanvas.bind("<1>", self.mouseZoomStart)
         self.PreviewCanvas.bind("<B1-Motion>", self.mouseZoom)
-        self.PreviewCanvas.bind("<3>"        , self.mousePanStart)
+        self.PreviewCanvas.bind("<3>", self.mousePanStart)
         self.PreviewCanvas.bind("<B3-Motion>", self.mousePan)
 
         # Left Column #
-        self.Label_font_prop = Label(self.master,text="Text Font Properties:", anchor=W)
+        self.Label_font_prop = Label(self.master, text="Text Font Properties:", anchor=W)
 
-        self.Label_Yscale = Label(self.master,text="Text Height", anchor=CENTER)
-        self.Label_Yscale_u = Label(self.master,textvariable=self.units, anchor=W)
-        self.Label_Yscale_pct = Label(self.master,text="%", anchor=W)
-        self.Entry_Yscale = Entry(self.master,width="15")
+        self.Label_Yscale = Label(self.master, text="Text Height", anchor=CENTER)
+        self.Label_Yscale_u = Label(self.master, textvariable=self.units, anchor=W)
+        self.Label_Yscale_pct = Label(self.master, text="%", anchor=W)
+        self.Entry_Yscale = Entry(self.master, width="15")
         self.Entry_Yscale.configure(textvariable=self.YSCALE)
         self.Entry_Yscale.bind('<Return>', self.Recalculate_Click)
         self.YSCALE.trace_variable("w", self.Entry_Yscale_Callback)
         self.Label_Yscale_ToolTip = ToolTip(self.Label_Yscale, text= \
-        'Character height of a single line of text.')
+                                            'Character height of a single line of text.')
         #or the height of an imported image. (DXF, BMP, etc.)')
 
 
-        self.NormalColor =  self.Entry_Yscale.cget('bg')
+        self.NormalColor = self.Entry_Yscale.cget('bg')
 
-        self.Label_Sthick = Label(self.master,text="Line Thickness")
-        self.Label_Sthick_u = Label(self.master,textvariable=self.units, anchor=W)
-        self.Entry_Sthick = Entry(self.master,width="15")
+        self.Label_Sthick = Label(self.master, text="Line Thickness")
+        self.Label_Sthick_u = Label(self.master, textvariable=self.units, anchor=W)
+        self.Entry_Sthick = Entry(self.master, width="15")
         self.Entry_Sthick.configure(textvariable=self.STHICK)
         self.Entry_Sthick.bind('<Return>', self.Recalculate_Click)
         self.STHICK.trace_variable("w", self.Entry_Sthick_Callback)
         self.Label_Sthick_ToolTip = ToolTip(self.Label_Sthick, text= \
-        'Thickness or width of engraved lines. Set this to your engraving cutter diameter.  This setting only affects the displayed lines not the g-code output.')
+                                            'Thickness or width of engraved lines. Set this to your engraving cutter diameter.  This setting only affects the displayed lines not the g-code output.')
 
-        self.Label_Xscale = Label(self.master,text="Text Width", anchor=CENTER )
-        self.Label_Xscale_u = Label(self.master,text="%", anchor=W)
-        self.Entry_Xscale = Entry(self.master,width="15")
+        self.Label_Xscale = Label(self.master, text="Text Width", anchor=CENTER )
+        self.Label_Xscale_u = Label(self.master, text="%", anchor=W)
+        self.Entry_Xscale = Entry(self.master, width="15")
         self.Entry_Xscale.configure(textvariable=self.XSCALE)
         self.Entry_Xscale.bind('<Return>', self.Recalculate_Click)
         self.XSCALE.trace_variable("w", self.Entry_Xscale_Callback)
         self.Label_Xscale_ToolTip = ToolTip(self.Label_Xscale, text= \
-        'Scaling factor for the width of characters.')
+                                            'Scaling factor for the width of characters.')
 
-        self.Label_useIMGsize = Label(self.master,text="Set Height as %")
-        self.Checkbutton_useIMGsize = Checkbutton(self.master,text=" ", anchor=W)
+        self.Label_useIMGsize = Label(self.master, text="Set Height as %")
+        self.Checkbutton_useIMGsize = Checkbutton(self.master, text=" ", anchor=W)
         self.Checkbutton_useIMGsize.configure(variable=self.useIMGsize, command = self.useIMGsize_var_Callback)
 
-        self.Label_Cspace = Label(self.master,text="Char Spacing", anchor=CENTER )
-        self.Label_Cspace_u = Label(self.master,text="%", anchor=W)
-        self.Entry_Cspace = Entry(self.master,width="15")
+        self.Label_Cspace = Label(self.master, text="Char Spacing", anchor=CENTER )
+        self.Label_Cspace_u = Label(self.master, text="%", anchor=W)
+        self.Entry_Cspace = Entry(self.master, width="15")
         self.Entry_Cspace.configure(textvariable=self.CSPACE)
         self.Entry_Cspace.bind('<Return>', self.Recalculate_Click)
         self.CSPACE.trace_variable("w", self.Entry_Cspace_Callback)
         self.Label_Cspace_ToolTip = ToolTip(self.Label_Cspace, text= \
-        'Character spacing as a percent of character width.')
+                                            'Character spacing as a percent of character width.')
 
-        self.Label_Wspace = Label(self.master,text="Word Spacing", anchor=CENTER )
-        self.Label_Wspace_u = Label(self.master,text="%", anchor=W)
-        self.Entry_Wspace = Entry(self.master,width="15")
+        self.Label_Wspace = Label(self.master, text="Word Spacing", anchor=CENTER )
+        self.Label_Wspace_u = Label(self.master, text="%", anchor=W)
+        self.Entry_Wspace = Entry(self.master, width="15")
         self.Entry_Wspace.configure(textvariable=self.WSPACE)
         self.Entry_Wspace.bind('<Return>', self.Recalculate_Click)
         self.WSPACE.trace_variable("w", self.Entry_Wspace_Callback)
         self.Label_Wspace_ToolTip = ToolTip(self.Label_Wspace, text= \
-        'Width of the space character. This is determined as a percentage of the maximum width of the characters in the currently selected font.')
+                                            'Width of the space character. This is determined as a percentage of the maximum width of the characters in the currently selected font.')
 
-        self.Label_Lspace = Label(self.master,text="Line Spacing", anchor=CENTER )
-        self.Entry_Lspace = Entry(self.master,width="15")
+        self.Label_Lspace = Label(self.master, text="Line Spacing", anchor=CENTER )
+        self.Entry_Lspace = Entry(self.master, width="15")
         self.Entry_Lspace.configure(textvariable=self.LSPACE)
         self.Entry_Lspace.bind('<Return>', self.Recalculate_Click)
         self.LSPACE.trace_variable("w", self.Entry_Lspace_Callback)
         self.Label_Lspace_ToolTip = ToolTip(self.Label_Lspace, text= \
-        'The vertical spacing between lines of text. This is a multiple of the text height previously input. A vertical spacing of 1.0 could result in consecutive lines of text touching each other if the maximum height character is directly below a character that extends the lowest (like a "g").')
+                                            'The vertical spacing between lines of text. This is a multiple of the text height previously input. A vertical spacing of 1.0 could result in consecutive lines of text touching each other if the maximum height character is directly below a character that extends the lowest (like a "g").')
 
-        self.Label_pos_orient = Label(self.master,text="Text Position and Orientation:",\
-                                          anchor=W)
+        self.Label_pos_orient = Label(self.master, text="Text Position and Orientation:", \
+                                      anchor=W)
 
-        self.Label_Tangle = Label(self.master,text="Text Angle", anchor=CENTER )
-        self.Label_Tangle_u = Label(self.master,text="deg", anchor=W)
-        self.Entry_Tangle = Entry(self.master,width="15")
+        self.Label_Tangle = Label(self.master, text="Text Angle", anchor=CENTER )
+        self.Label_Tangle_u = Label(self.master, text="deg", anchor=W)
+        self.Entry_Tangle = Entry(self.master, width="15")
         self.Entry_Tangle.configure(textvariable=self.TANGLE)
         self.Entry_Tangle.bind('<Return>', self.Recalculate_Click)
         self.TANGLE.trace_variable("w", self.Entry_Tangle_Callback)
         self.Label_Tangle_ToolTip = ToolTip(self.Label_Tangle, text= \
-        'Rotation of the text or image from horizontal.')
+                                            'Rotation of the text or image from horizontal.')
 
 
-        self.Label_Justify      = Label(self.master,text="Justify", anchor=CENTER )
-        self.Justify_OptionMenu = OptionMenu(root, self.justify, "Left","Center",\
-                                                 "Right", command=self.Recalculate_RQD_Click)
+        self.Label_Justify = Label(self.master, text="Justify", anchor=CENTER )
+        self.Justify_OptionMenu = OptionMenu(root, self.justify, "Left", "Center", \
+                                             "Right", command=self.Recalculate_RQD_Click)
         self.Label_Justify_ToolTip = ToolTip(self.Label_Justify, text= \
-        'Justify determins how to align multiple lines of text. Left side, Right side or Centered.')
+                                             'Justify determins how to align multiple lines of text. Left side, Right side or Centered.')
 
-        self.Label_Origin      = Label(self.master,text="Origin", anchor=CENTER )
+        self.Label_Origin = Label(self.master, text="Origin", anchor=CENTER )
         self.Origin_OptionMenu = OptionMenu(root, self.origin,
                                             "Top-Left",
                                             "Top-Center",
@@ -2156,47 +2156,47 @@ class Application(Frame):
                                             "Bot-Right",
                                             "Default", command=self.Recalculate_RQD_Click)
         self.Label_Origin_ToolTip = ToolTip(self.Label_Origin, text= \
-        'Origin determins where the X and Y zero position is located relative to the engraving.')
+                                            'Origin determins where the X and Y zero position is located relative to the engraving.')
 
-        self.Label_flip = Label(self.master,text="Flip Text")
-        self.Checkbutton_flip = Checkbutton(self.master,text=" ", anchor=W)
+        self.Label_flip = Label(self.master, text="Flip Text")
+        self.Checkbutton_flip = Checkbutton(self.master, text=" ", anchor=W)
         self.Checkbutton_flip.configure(variable=self.flip)
         self.flip.trace_variable("w", self.Entry_recalc_var_Callback)
         self.Label_flip_ToolTip = ToolTip(self.Label_flip, text= \
-        'Selecting Flip Text/Image mirrors the design about a horizontal line')
+                                          'Selecting Flip Text/Image mirrors the design about a horizontal line')
 
-        self.Label_mirror = Label(self.master,text="Mirror Text")
-        self.Checkbutton_mirror = Checkbutton(self.master,text=" ", anchor=W)
+        self.Label_mirror = Label(self.master, text="Mirror Text")
+        self.Checkbutton_mirror = Checkbutton(self.master, text=" ", anchor=W)
         self.Checkbutton_mirror.configure(variable=self.mirror)
         self.mirror.trace_variable("w", self.Entry_recalc_var_Callback)
         self.Label_mirror_ToolTip = ToolTip(self.Label_mirror, text= \
-        'Selecting Mirror Text/Image mirrors the design about a vertical line.')
+                                            'Selecting Mirror Text/Image mirrors the design about a vertical line.')
 
-        self.Label_text_on_arc = Label(self.master,text="Text on Circle Properties:",\
-                                           anchor=W)
+        self.Label_text_on_arc = Label(self.master, text="Text on Circle Properties:", \
+                                       anchor=W)
 
-        self.Label_Tradius = Label(self.master,text="Circle Radius", anchor=CENTER )
-        self.Label_Tradius_u = Label(self.master,textvariable=self.units, anchor=W)
-        self.Entry_Tradius = Entry(self.master,width="15")
+        self.Label_Tradius = Label(self.master, text="Circle Radius", anchor=CENTER )
+        self.Label_Tradius_u = Label(self.master, textvariable=self.units, anchor=W)
+        self.Entry_Tradius = Entry(self.master, width="15")
         self.Entry_Tradius.configure(textvariable=self.TRADIUS)
         self.Entry_Tradius.bind('<Return>', self.Recalculate_Click)
         self.TRADIUS.trace_variable("w", self.Entry_Tradius_Callback)
         self.Label_Tradius_ToolTip = ToolTip(self.Label_Tradius, text= \
-        'Circle radius is the radius of the circle that the text in the input box is placed on. If the circle radius is set to 0.0 the text is not placed on a circle.')
+                                             'Circle radius is the radius of the circle that the text in the input box is placed on. If the circle radius is set to 0.0 the text is not placed on a circle.')
 
-        self.Label_outer = Label(self.master,text="Outside circle")
-        self.Checkbutton_outer = Checkbutton(self.master,text=" ", anchor=W)
+        self.Label_outer = Label(self.master, text="Outside circle")
+        self.Checkbutton_outer = Checkbutton(self.master, text=" ", anchor=W)
         self.Checkbutton_outer.configure(variable=self.outer)
         self.outer.trace_variable("w", self.Entry_recalc_var_Callback)
         self.Label_outer_ToolTip = ToolTip(self.Label_outer, text= \
-        'Select whether the text is placed so that is falls on the inside of the circle radius or the outside of the circle radius.')
+                                           'Select whether the text is placed so that is falls on the inside of the circle radius or the outside of the circle radius.')
 
-        self.Label_upper = Label(self.master,text="Top of Circle")
-        self.Checkbutton_upper = Checkbutton(self.master,text=" ", anchor=W)
+        self.Label_upper = Label(self.master, text="Top of Circle")
+        self.Checkbutton_upper = Checkbutton(self.master, text=" ", anchor=W)
         self.Checkbutton_upper.configure(variable=self.upper)
         self.upper.trace_variable("w", self.Entry_recalc_var_Callback)
         self.Label_upper_ToolTip = ToolTip(self.Label_upper, text= \
-        'Select whether the text is placed on the top of the circle of on the bottom of the circle (i.e. concave down or concave up).')
+                                           'Select whether the text is placed on the top of the circle of on the bottom of the circle (i.e. concave down or concave up).')
 
         self.separator1 = Frame(height=2, bd=1, relief=SUNKEN)
         self.separator2 = Frame(height=2, bd=1, relief=SUNKEN)
@@ -2205,54 +2205,54 @@ class Application(Frame):
         # End Left Column #
 
         # Right Column #
-        self.Label_gcode_opt = Label(self.master,text="Gcode Properties:", anchor=W)
+        self.Label_gcode_opt = Label(self.master, text="Gcode Properties:", anchor=W)
 
-        self.Label_Feed = Label(self.master,text="Feed Rate")
-        self.Label_Feed_u = Label(self.master,textvariable=self.funits, anchor=W)
-        self.Entry_Feed = Entry(self.master,width="15")
+        self.Label_Feed = Label(self.master, text="Feed Rate")
+        self.Label_Feed_u = Label(self.master, textvariable=self.funits, anchor=W)
+        self.Entry_Feed = Entry(self.master, width="15")
         self.Entry_Feed.configure(textvariable=self.FEED)
         self.Entry_Feed.bind('<Return>', self.Recalculate_Click)
         self.FEED.trace_variable("w", self.Entry_Feed_Callback)
         self.Label_Feed_ToolTip = ToolTip(self.Label_Feed, text= \
-        'Specify the tool feed rate that is output in the g-code output file.')
+                                          'Specify the tool feed rate that is output in the g-code output file.')
 
 
-        self.Label_Plunge = Label(self.master,text="Plunge Rate")
-        self.Label_Plunge_u = Label(self.master,textvariable=self.funits, anchor=W)
-        self.Entry_Plunge = Entry(self.master,width="15")
+        self.Label_Plunge = Label(self.master, text="Plunge Rate")
+        self.Label_Plunge_u = Label(self.master, textvariable=self.funits, anchor=W)
+        self.Entry_Plunge = Entry(self.master, width="15")
         self.Entry_Plunge.configure(textvariable=self.PLUNGE)
         self.Entry_Plunge.bind('<Return>', self.Recalculate_Click)
         self.PLUNGE.trace_variable("w", self.Entry_Plunge_Callback)
         self.Label_Plunge_ToolTip = ToolTip(self.Label_Plunge, text= \
-        'Plunge Rate sets the feed rate for vertical moves into the material being cut.\n\nWhen Plunge Rate is set to zero plunge feeds are equal to Feed Rate.')
+                                            'Plunge Rate sets the feed rate for vertical moves into the material being cut.\n\nWhen Plunge Rate is set to zero plunge feeds are equal to Feed Rate.')
 
 
-        self.Label_Zsafe = Label(self.master,text="Z Safe")
-        self.Label_Zsafe_u = Label(self.master,textvariable=self.units, anchor=W)
-        self.Entry_Zsafe = Entry(self.master,width="15")
+        self.Label_Zsafe = Label(self.master, text="Z Safe")
+        self.Label_Zsafe_u = Label(self.master, textvariable=self.units, anchor=W)
+        self.Entry_Zsafe = Entry(self.master, width="15")
         self.Entry_Zsafe.configure(textvariable=self.ZSAFE)
         self.Entry_Zsafe.bind('<Return>', self.Recalculate_Click)
         self.ZSAFE.trace_variable("w", self.Entry_Zsafe_Callback)
         self.Label_Zsafe_ToolTip = ToolTip(self.Label_Zsafe, text= \
-        'Z location that the tool will be sent to prior to any rapid moves.')
+                                           'Z location that the tool will be sent to prior to any rapid moves.')
 
-        self.Label_Zcut = Label(self.master,text="Engrave Depth")
-        self.Label_Zcut_u = Label(self.master,textvariable=self.units, anchor=W)
-        self.Entry_Zcut = Entry(self.master,width="15")
+        self.Label_Zcut = Label(self.master, text="Engrave Depth")
+        self.Label_Zcut_u = Label(self.master, textvariable=self.units, anchor=W)
+        self.Entry_Zcut = Entry(self.master, width="15")
         self.Entry_Zcut.configure(textvariable=self.ZCUT)
         self.Entry_Zcut.bind('<Return>', self.Recalculate_Click)
         self.ZCUT.trace_variable("w", self.Entry_Zcut_Callback)
         self.Label_Zcut_ToolTip = ToolTip(self.Label_Zcut, text= \
-        'Depth of the engraving cut. This setting has no effect when the v-carve option is selected.')
+                                          'Depth of the engraving cut. This setting has no effect when the v-carve option is selected.')
 
-        self.Checkbutton_fontdex = Checkbutton(self.master,text="Show All Font Characters",\
-                                                   anchor=W)
+        self.Checkbutton_fontdex = Checkbutton(self.master, text="Show All Font Characters", \
+                                               anchor=W)
         self.fontdex.trace_variable("w", self.Entry_recalc_var_Callback)
         self.Checkbutton_fontdex.configure(variable=self.fontdex)
-        self.Label_fontfile = Label(self.master,textvariable=self.current_input_file, anchor=W,\
-                                        foreground='grey50')
-        self.Label_List_Box = Label(self.master,text="Font Files:", foreground="#101010",\
-                                        anchor=W)
+        self.Label_fontfile = Label(self.master, textvariable=self.current_input_file, anchor=W, \
+                                    foreground='grey50')
+        self.Label_List_Box = Label(self.master, text="Font Files:", foreground="#101010", \
+                                    anchor=W)
         lbframe = Frame( self.master )
         self.Listbox_1_frame = lbframe
         scrollbar = Scrollbar(lbframe, orient=VERTICAL)
@@ -2262,7 +2262,7 @@ class Application(Frame):
         self.Listbox_1.pack(side=LEFT, fill=BOTH, expand=1)
 
         self.Listbox_1.bind("<ButtonRelease-1>", self.Listbox_1_Click)
-        self.Listbox_1.bind("<Up>",   self.Listbox_Key_Up)
+        self.Listbox_1.bind("<Up>", self.Listbox_Key_Up)
         self.Listbox_1.bind("<Down>", self.Listbox_Key_Down)
 
         for name in font.available_font_files(self.fontdir.get()):
@@ -2276,23 +2276,23 @@ class Application(Frame):
 
         self.fontdir.trace_variable("w", self.Entry_fontdir_Callback)
 
-        self.V_Carve_Calc = Button(self.master,text="Calc V-Carve", command=self.V_Carve_Calc_Click)
+        self.V_Carve_Calc = Button(self.master, text="Calc V-Carve", command=self.V_Carve_Calc_Click)
 
-        self.Radio_Cut_E = Radiobutton(self.master,text="Engrave", value="engrave", anchor=W)
+        self.Radio_Cut_E = Radiobutton(self.master, text="Engrave", value="engrave", anchor=W)
         self.Radio_Cut_E.configure(variable=self.cut_type )
-        self.Radio_Cut_V = Radiobutton(self.master,text="V-Carve", value="v-carve", anchor=W)
+        self.Radio_Cut_V = Radiobutton(self.master, text="V-Carve", value="v-carve", anchor=W)
         self.Radio_Cut_V.configure(variable=self.cut_type )
         self.cut_type.trace_variable("w", self.Entry_recalc_var_Callback)
         # End Right Column #
 
         # Text Box
-        self.Input_Label = Label(self.master,text="Input Text:",anchor=W)
+        self.Input_Label = Label(self.master, text="Input Text:", anchor=W)
 
         lbframe = Frame( self.master)
         self.Input_frame = lbframe
         scrollbar = Scrollbar(lbframe, orient=VERTICAL)
-        self.Input = Text(lbframe, width="40", height="12", yscrollcommand=scrollbar.set,\
-                              bg='white')
+        self.Input = Text(lbframe, width="40", height="12", yscrollcommand=scrollbar.set, \
+                          bg='white')
         self.Input.insert(END, self.default_text)
         scrollbar.config(command=self.Input.yview)
         scrollbar.pack(side=RIGHT, fill=Y)
@@ -2301,8 +2301,8 @@ class Application(Frame):
         ## self.master.unbind("<Alt>")
 
         #GEN Setting Window Entry initialization
-        self.Entry_Xoffset=Entry()
-        self.Entry_Yoffset=Entry()
+        self.Entry_Xoffset = Entry()
+        self.Entry_Yoffset = Entry()
         self.Entry_BoxGap = Entry()
         self.Entry_ArcAngle = Entry()
         self.Entry_Accuracy = Entry()
@@ -2328,38 +2328,38 @@ class Application(Frame):
 
         top_File = Menu(self.menuBar, tearoff=0)
         top_File.add("command", label = "Save Settings to File", \
-                         command = self.menu_File_Save_Settings_File)
+                     command = self.menu_File_Save_Settings_File)
         top_File.add("command", label = "Read Settings from File", \
-                         command = self.menu_File_Open_G_Code_File)
+                     command = self.menu_File_Open_G_Code_File)
         top_File.add_separator()
         if self.POTRACE_AVAIL == TRUE:
             top_File.add("command", label = "Open DXF/Image", \
-                             command = self.menu_File_Open_DXF_File)
+                         command = self.menu_File_Open_DXF_File)
         else:
             top_File.add("command", label = "Open DXF", \
-                             command = self.menu_File_Open_DXF_File)
+                         command = self.menu_File_Open_DXF_File)
         top_File.add_separator()
         top_File.add("command", label = "Save G-Code", \
-                         command = self.menu_File_Save_G_Code_File)
+                     command = self.menu_File_Save_G_Code_File)
         top_File.add_separator()
-        top_File.add("command", label = "Export SVG",    \
-                         command = self.menu_File_Save_SVG_File)
-        top_File.add("command", label = "Export DXF",    \
-                         command = self.menu_File_Save_DXF_File)
+        top_File.add("command", label = "Export SVG", \
+                     command = self.menu_File_Save_SVG_File)
+        top_File.add("command", label = "Export DXF", \
+                     command = self.menu_File_Save_DXF_File)
         top_File.add("command", label = "Export DXF (close loops)", \
-                         command = self.menu_File_Save_DXF_File_close_loops)
+                     command = self.menu_File_Save_DXF_File_close_loops)
         if IN_AXIS:
             top_File.add("command", label = "Write To Axis and Exit", \
-                             command = self.WriteToAxis)
+                         command = self.WriteToAxis)
         else:
             top_File.add("command", label = "Exit", command = self.menu_File_Quit)
         self.menuBar.add("cascade", label="File", menu=top_File)
 
         top_Edit = Menu(self.menuBar, tearoff=0)
         top_Edit.add("command", label = "Copy G-Code Data to Clipboard", \
-                         command = self.CopyClipboard_GCode)
+                     command = self.CopyClipboard_GCode)
         top_Edit.add("command", label = "Copy SVG Data to Clipboard", \
-                         command = self.CopyClipboard_SVG  )
+                     command = self.CopyClipboard_SVG  )
         self.menuBar.add("cascade", label="Edit", menu=top_Edit)
 
         top_View = Menu(self.menuBar, tearoff=0)
@@ -2372,36 +2372,36 @@ class Application(Frame):
 
         top_View.add_separator()
 
-        top_View.add_checkbutton(label = "Show Thickness" ,   variable=self.show_thick, \
-                                     command= self.menu_View_Refresh)
-        top_View.add_checkbutton(label = "Show Origin Axis",  variable=self.show_axis , \
-                                     command= self.menu_View_Refresh)
-        top_View.add_checkbutton(label = "Show Bounding Box", variable=self.show_box  , \
-                                     command= self.menu_View_Refresh)
-        top_View.add_checkbutton(label = "Show V-Carve ToolPath", variable=self.show_v_path  , \
-                                     command= self.menu_View_Refresh)
-        top_View.add_checkbutton(label = "Show V-Carve Area", variable=self.show_v_area  , \
-                                     command= self.menu_View_Refresh)
+        top_View.add_checkbutton(label = "Show Thickness", variable=self.show_thick, \
+                                 command= self.menu_View_Refresh)
+        top_View.add_checkbutton(label = "Show Origin Axis", variable=self.show_axis, \
+                                 command= self.menu_View_Refresh)
+        top_View.add_checkbutton(label = "Show Bounding Box", variable=self.show_box, \
+                                 command= self.menu_View_Refresh)
+        top_View.add_checkbutton(label = "Show V-Carve ToolPath", variable=self.show_v_path, \
+                                 command= self.menu_View_Refresh)
+        top_View.add_checkbutton(label = "Show V-Carve Area", variable=self.show_v_area, \
+                                 command= self.menu_View_Refresh)
         self.menuBar.add("cascade", label="View", menu=top_View)
 
         top_Settings = Menu(self.menuBar, tearoff=0)
         top_Settings.add("command", label = "General Settings", \
-                             command = self.GEN_Settings_Window)
+                         command = self.GEN_Settings_Window)
         top_Settings.add("command", label = "V-Carve Settings", \
-                             command = self.VCARVE_Settings_Window)
+                         command = self.VCARVE_Settings_Window)
         if self.POTRACE_AVAIL == TRUE:
             top_Settings.add("command", label = "Bitmap Import Settings", \
-                                 command = self.PBM_Settings_Window)
+                             command = self.PBM_Settings_Window)
 
         top_Settings.add_separator()
-        top_Settings.add_radiobutton(label = "Engrave Mode" ,   variable=self.cut_type, value="engrave")
-        top_Settings.add_radiobutton(label = "V-Carve Mode" ,   variable=self.cut_type, value="v-carve")
+        top_Settings.add_radiobutton(label = "Engrave Mode", variable=self.cut_type, value="engrave")
+        top_Settings.add_radiobutton(label = "V-Carve Mode", variable=self.cut_type, value="v-carve")
 
         top_Settings.add_separator()
-        top_Settings.add_radiobutton(label = "Text Mode (CXF/TTF)" ,   variable=self.input_type, value="text", \
-                                         command= self.menu_Mode_Change)
-        top_Settings.add_radiobutton(label = "Image Mode (DXF/Bitmap)" ,   variable=self.input_type, value="image", \
-                                         command= self.menu_Mode_Change)
+        top_Settings.add_radiobutton(label = "Text Mode (CXF/TTF)", variable=self.input_type, value="text", \
+                                     command= self.menu_Mode_Change)
+        top_Settings.add_radiobutton(label = "Image Mode (DXF/Bitmap)", variable=self.input_type, value="image", \
+                                     command= self.menu_Mode_Change)
 
         self.menuBar.add("cascade", label="Settings", menu=top_Settings)
 
@@ -2414,7 +2414,7 @@ class Application(Frame):
 
 ################################################################################
     def entry_set(self, val2, calc_flag=0, new=0):
-        if calc_flag == 0 and new==0:
+        if calc_flag == 0 and new == 0:
             try:
                 self.statusbar.configure( bg = 'yellow' )
                 val2.configure( bg = 'yellow' )
@@ -2434,14 +2434,14 @@ class Application(Frame):
                 val2.configure( bg = 'red' )
             except:
                 pass
-        elif (calc_flag == 0 or calc_flag == 1) and new==1 :
+        elif (calc_flag == 0 or calc_flag == 1) and new == 1:
             try:
                 self.statusbar.configure( bg = 'white' )
                 self.statusMessage.set(self.bounding_box.get())
                 val2.configure( bg = 'white' )
             except:
                 pass
-        elif (calc_flag == 1) and new==0 :
+        elif (calc_flag == 1) and new == 0:
             try:
                 self.statusbar.configure( bg = 'white' )
                 self.statusMessage.set(self.bounding_box.get())
@@ -2449,43 +2449,43 @@ class Application(Frame):
             except:
                 pass
 
-        elif (calc_flag == 0 or calc_flag == 1) and new==2:
+        elif (calc_flag == 0 or calc_flag == 1) and new == 2:
             return 0
         return 1
 
 ################################################################################
-    def Sort_Paths(self,ecoords,i_loop=2):
+    def Sort_Paths(self, ecoords, i_loop=2):
         ##########################
         ###   find loop ends   ###
         ##########################
-        Lbeg=[]
-        Lend=[]
-        if len(ecoords)>0:
+        Lbeg = []
+        Lend = []
+        if len(ecoords) > 0:
             Lbeg.append(0)
-            loop_old=ecoords[0][i_loop]
-            for i in range(1,len(ecoords)):
+            loop_old = ecoords[0][i_loop]
+            for i in range(1, len(ecoords)):
                 loop = ecoords[i][i_loop]
                 if loop != loop_old:
                     Lbeg.append(i)
-                    Lend.append(i-1)
-                loop_old=loop
+                    Lend.append(i - 1)
+                loop_old = loop
             Lend.append(i)
 
         #######################################################
         # Find new order based on distance to next beg or end #
         #######################################################
         order_out = []
-        use_beg=0
-        if len(ecoords)>0:
+        use_beg = 0
+        if len(ecoords) > 0:
             order_out.append([Lbeg[0],Lend[0]])
         inext = 0
-        total=len(Lbeg)
-        for i in range(total-1):
-            if use_beg==1:
-                ii=Lbeg.pop(inext)
+        total = len(Lbeg)
+        for i in range(total - 1):
+            if use_beg == 1:
+                ii = Lbeg.pop(inext)
                 Lend.pop(inext)
             else:
-                ii=Lend.pop(inext)
+                ii = Lend.pop(inext)
                 Lbeg.pop(inext)
 
             Xcur = ecoords[ii][0]
@@ -2493,36 +2493,36 @@ class Application(Frame):
 
             dx = Xcur - ecoords[ Lbeg[0] ][0]
             dy = Ycur - ecoords[ Lbeg[0] ][1]
-            min_dist = dx*dx + dy*dy
+            min_dist = dx * dx + dy * dy
 
             dxe = Xcur - ecoords[ Lend[0] ][0]
             dye = Ycur - ecoords[ Lend[0] ][1]
-            min_diste = dxe*dxe + dye*dye
+            min_diste = dxe * dxe + dye * dye
 
-            inext=0
-            inexte=0
-            for j in range(1,len(Lbeg)):
+            inext = 0
+            inexte = 0
+            for j in range(1, len(Lbeg)):
                 dx = Xcur - ecoords[ Lbeg[j] ][0]
                 dy = Ycur - ecoords[ Lbeg[j] ][1]
-                dist = dx*dx + dy*dy
+                dist = dx * dx + dy * dy
                 if dist < min_dist:
-                    min_dist=dist
-                    inext=j
+                    min_dist = dist
+                    inext = j
                 ###
                 dxe = Xcur - ecoords[ Lend[j] ][0]
                 dye = Ycur - ecoords[ Lend[j] ][1]
-                diste = dxe*dxe + dye*dye
+                diste = dxe * dxe + dye * dye
                 if diste < min_diste:
-                    min_diste=diste
-                    inexte=j
+                    min_diste = diste
+                    inexte = j
                 ###
             if min_diste < min_dist:
-                inext=inexte
+                inext = inexte
                 order_out.append([Lend[inexte],Lbeg[inexte]])
-                use_beg=1
+                use_beg = 1
             else:
                 order_out.append([Lbeg[inext],Lend[inext]])
-                use_beg=0
+                use_beg = 0
         ###########################################################
         return order_out
 
@@ -2541,7 +2541,7 @@ class Application(Frame):
             except:
                 pass
 
-            if not message.message_ask_ok_cancel("Replace", "Replace Exiting Configuration File?\n"+configname_full):
+            if not message.message_ask_ok_cancel("Replace", "Replace Exiting Configuration File?\n" + configname_full):
                 try:
                     win_id.deiconify()
                 except:
@@ -2549,18 +2549,18 @@ class Application(Frame):
                 return
 
         try:
-            fout = open(configname_full,'w')
+            fout = open(configname_full, 'w')
         except:
-            self.statusMessage.set("Unable to open file for writing: %s" %(configname_full))
+            self.statusMessage.set("Unable to open file for writing: %s" % (configname_full))
             self.statusbar.configure( bg = 'red' )
             return
         for line in self.gcode:
             try:
-                fout.write(line+'\n')
+                fout.write(line + '\n')
             except:
                 fout.write('(skipping line)\n')
         fout.close()
-        self.statusMessage.set("Configuration File Saved: %s" %(configname_full))
+        self.statusMessage.set("Configuration File Saved: %s" % (configname_full))
         self.statusbar.configure( bg = 'white' )
         try:
             win_id.deiconify()
@@ -2569,27 +2569,27 @@ class Application(Frame):
 
 
     ################################################################################
-    def WriteGCode(self,config_file=False):
+    def WriteGCode(self, config_file=False):
         global Zero
         self.gcode = []
-        SafeZ  =   float(self.ZSAFE.get())
-        Depth  =   float(self.ZCUT.get())
+        SafeZ = float(self.ZSAFE.get())
+        Depth = float(self.ZCUT.get())
 
 
         if self.batch.get():
             String = self.default_text
         else:
-            String = self.Input.get(1.0,END)
+            String = self.Input.get(1.0, END)
 
         String_short = String
         max_len = 40
-        if len(String)  >  max_len:
+        if len(String) > max_len:
             String_short = String[0:max_len] + '___'
 
-        Acc    =   float(self.accuracy.get())
+        Acc = float(self.accuracy.get())
 
         if (self.no_comments.get() != True) or (config_file == True):
-            self.gcode.append('( Code generated by f-engrave-'+version+'.py )')
+            self.gcode.append('( Code generated by f-engrave-' + version + '.py )')
             self.gcode.append('( by Scorch - 2017 )')
 
             self.gcode.append('(Settings used in f-engrave when this file was created)')
@@ -2598,103 +2598,103 @@ class Application(Frame):
             self.gcode.append("(=========================================================)")
 
             # BOOL
-            self.gcode.append('(fengrave_set show_axis   %s )' %( int(self.show_axis.get())     ))
-            self.gcode.append('(fengrave_set show_box    %s )' %( int(self.show_box.get())      ))
-            self.gcode.append('(fengrave_set show_thick  %s )' %( int(self.show_thick.get())    ))
-            self.gcode.append('(fengrave_set flip        %s )' %( int(self.flip.get())          ))
-            self.gcode.append('(fengrave_set mirror      %s )' %( int(self.mirror.get())        ))
-            self.gcode.append('(fengrave_set outer       %s )' %( int(self.outer.get())         ))
-            self.gcode.append('(fengrave_set upper       %s )' %( int(self.upper.get())         ))
-            self.gcode.append('(fengrave_set v_flop      %s )' %( int(self.v_flop.get())        ))
-            self.gcode.append('(fengrave_set v_pplot     %s )' %( int(self.v_pplot.get())       ))
-            self.gcode.append('(fengrave_set inlay       %s )' %( int(self.inlay.get())       ))
-            self.gcode.append('(fengrave_set bmp_long    %s )' %( int(self.bmp_longcurve.get()) ))
-            self.gcode.append('(fengrave_set var_dis     %s )' %( int(self.var_dis.get())       ))
-            self.gcode.append('(fengrave_set ext_char    %s )' %( int(self.ext_char.get())      ))
-            self.gcode.append('(fengrave_set useIMGsize  %s )' %( int(self.useIMGsize.get())    ))
-            self.gcode.append('(fengrave_set no_comments %s )' %( int(self.no_comments.get())   ))
-            self.gcode.append('(fengrave_set plotbox     %s )' %( int(self.plotbox.get())       ))
-            self.gcode.append('(fengrave_set show_v_path %s )' %( int(self.show_v_path.get())   ))
-            self.gcode.append('(fengrave_set show_v_area %s )' %( int(self.show_v_area.get())   ))
+            self.gcode.append('(fengrave_set show_axis   %s )' % ( int(self.show_axis.get())     ))
+            self.gcode.append('(fengrave_set show_box    %s )' % ( int(self.show_box.get())      ))
+            self.gcode.append('(fengrave_set show_thick  %s )' % ( int(self.show_thick.get())    ))
+            self.gcode.append('(fengrave_set flip        %s )' % ( int(self.flip.get())          ))
+            self.gcode.append('(fengrave_set mirror      %s )' % ( int(self.mirror.get())        ))
+            self.gcode.append('(fengrave_set outer       %s )' % ( int(self.outer.get())         ))
+            self.gcode.append('(fengrave_set upper       %s )' % ( int(self.upper.get())         ))
+            self.gcode.append('(fengrave_set v_flop      %s )' % ( int(self.v_flop.get())        ))
+            self.gcode.append('(fengrave_set v_pplot     %s )' % ( int(self.v_pplot.get())       ))
+            self.gcode.append('(fengrave_set inlay       %s )' % ( int(self.inlay.get())       ))
+            self.gcode.append('(fengrave_set bmp_long    %s )' % ( int(self.bmp_longcurve.get()) ))
+            self.gcode.append('(fengrave_set var_dis     %s )' % ( int(self.var_dis.get())       ))
+            self.gcode.append('(fengrave_set ext_char    %s )' % ( int(self.ext_char.get())      ))
+            self.gcode.append('(fengrave_set useIMGsize  %s )' % ( int(self.useIMGsize.get())    ))
+            self.gcode.append('(fengrave_set no_comments %s )' % ( int(self.no_comments.get())   ))
+            self.gcode.append('(fengrave_set plotbox     %s )' % ( int(self.plotbox.get())       ))
+            self.gcode.append('(fengrave_set show_v_path %s )' % ( int(self.show_v_path.get())   ))
+            self.gcode.append('(fengrave_set show_v_area %s )' % ( int(self.show_v_area.get())   ))
 
 
 
             # STRING.get()
-            self.gcode.append('(fengrave_set arc_fit    %s )' %( self.arc_fit.get()    ))
-            self.gcode.append('(fengrave_set YSCALE     %s )' %( self.YSCALE.get()     ))
-            self.gcode.append('(fengrave_set XSCALE     %s )' %( self.XSCALE.get()     ))
-            self.gcode.append('(fengrave_set LSPACE     %s )' %( self.LSPACE.get()     ))
-            self.gcode.append('(fengrave_set CSPACE     %s )' %( self.CSPACE.get()     ))
-            self.gcode.append('(fengrave_set WSPACE     %s )' %( self.WSPACE.get()     ))
-            self.gcode.append('(fengrave_set TANGLE     %s )' %( self.TANGLE.get()     ))
-            self.gcode.append('(fengrave_set TRADIUS    %s )' %( self.TRADIUS.get()    ))
-            self.gcode.append('(fengrave_set ZSAFE      %s )' %( self.ZSAFE.get()      ))
-            self.gcode.append('(fengrave_set ZCUT       %s )' %( self.ZCUT.get()       ))
-            self.gcode.append('(fengrave_set STHICK     %s )' %( self.STHICK.get()     ))
-            self.gcode.append('(fengrave_set origin     %s )' %( self.origin.get()     ))
-            self.gcode.append('(fengrave_set justify    %s )' %( self.justify.get()    ))
-            self.gcode.append('(fengrave_set units      %s )' %( self.units.get()      ))
+            self.gcode.append('(fengrave_set arc_fit    %s )' % ( self.arc_fit.get()    ))
+            self.gcode.append('(fengrave_set YSCALE     %s )' % ( self.YSCALE.get()     ))
+            self.gcode.append('(fengrave_set XSCALE     %s )' % ( self.XSCALE.get()     ))
+            self.gcode.append('(fengrave_set LSPACE     %s )' % ( self.LSPACE.get()     ))
+            self.gcode.append('(fengrave_set CSPACE     %s )' % ( self.CSPACE.get()     ))
+            self.gcode.append('(fengrave_set WSPACE     %s )' % ( self.WSPACE.get()     ))
+            self.gcode.append('(fengrave_set TANGLE     %s )' % ( self.TANGLE.get()     ))
+            self.gcode.append('(fengrave_set TRADIUS    %s )' % ( self.TRADIUS.get()    ))
+            self.gcode.append('(fengrave_set ZSAFE      %s )' % ( self.ZSAFE.get()      ))
+            self.gcode.append('(fengrave_set ZCUT       %s )' % ( self.ZCUT.get()       ))
+            self.gcode.append('(fengrave_set STHICK     %s )' % ( self.STHICK.get()     ))
+            self.gcode.append('(fengrave_set origin     %s )' % ( self.origin.get()     ))
+            self.gcode.append('(fengrave_set justify    %s )' % ( self.justify.get()    ))
+            self.gcode.append('(fengrave_set units      %s )' % ( self.units.get()      ))
 
-            self.gcode.append('(fengrave_set xorigin    %s )' %( self.xorigin.get()    ))
-            self.gcode.append('(fengrave_set yorigin    %s )' %( self.yorigin.get()    ))
-            self.gcode.append('(fengrave_set segarc     %s )' %( self.segarc.get()     ))
-            self.gcode.append('(fengrave_set accuracy   %s )' %( self.accuracy.get()   ))
+            self.gcode.append('(fengrave_set xorigin    %s )' % ( self.xorigin.get()    ))
+            self.gcode.append('(fengrave_set yorigin    %s )' % ( self.yorigin.get()    ))
+            self.gcode.append('(fengrave_set segarc     %s )' % ( self.segarc.get()     ))
+            self.gcode.append('(fengrave_set accuracy   %s )' % ( self.accuracy.get()   ))
 
-            self.gcode.append('(fengrave_set FEED       %s )' %( self.FEED.get()       ))
-            self.gcode.append('(fengrave_set PLUNGE     %s )' %( self.PLUNGE.get()     ))
-            self.gcode.append('(fengrave_set fontfile   \042%s\042 )' %( self.fontfile.get() ))
-            self.gcode.append('(fengrave_set H_CALC     %s )' %( self.H_CALC.get()     ))
-            self.gcode.append('(fengrave_set boxgap     %s )' %( self.boxgap.get()    ))
-            self.gcode.append('(fengrave_set cut_type    %s )' %( self.cut_type.get()    ))
-            self.gcode.append('(fengrave_set bit_shape   %s )' %( self.bit_shape.get() ))
-            self.gcode.append('(fengrave_set v_bit_angle %s )' %( self.v_bit_angle.get() ))
-            self.gcode.append('(fengrave_set v_bit_dia   %s )' %( self.v_bit_dia.get()   ))
-            self.gcode.append('(fengrave_set v_drv_crner %s )' %( self.v_drv_crner.get() ))
-            self.gcode.append('(fengrave_set v_stp_crner %s )' %( self.v_stp_crner.get() ))
-            self.gcode.append('(fengrave_set v_step_len  %s )' %( self.v_step_len.get()  ))
-            self.gcode.append('(fengrave_set allowance   %s )' %( self.allowance.get()   ))
+            self.gcode.append('(fengrave_set FEED       %s )' % ( self.FEED.get()       ))
+            self.gcode.append('(fengrave_set PLUNGE     %s )' % ( self.PLUNGE.get()     ))
+            self.gcode.append('(fengrave_set fontfile   \042%s\042 )' % ( self.fontfile.get() ))
+            self.gcode.append('(fengrave_set H_CALC     %s )' % ( self.H_CALC.get()     ))
+            self.gcode.append('(fengrave_set boxgap     %s )' % ( self.boxgap.get()    ))
+            self.gcode.append('(fengrave_set cut_type    %s )' % ( self.cut_type.get()    ))
+            self.gcode.append('(fengrave_set bit_shape   %s )' % ( self.bit_shape.get() ))
+            self.gcode.append('(fengrave_set v_bit_angle %s )' % ( self.v_bit_angle.get() ))
+            self.gcode.append('(fengrave_set v_bit_dia   %s )' % ( self.v_bit_dia.get()   ))
+            self.gcode.append('(fengrave_set v_drv_crner %s )' % ( self.v_drv_crner.get() ))
+            self.gcode.append('(fengrave_set v_stp_crner %s )' % ( self.v_stp_crner.get() ))
+            self.gcode.append('(fengrave_set v_step_len  %s )' % ( self.v_step_len.get()  ))
+            self.gcode.append('(fengrave_set allowance   %s )' % ( self.allowance.get()   ))
 
-            self.gcode.append('(fengrave_set v_max_cut   %s )' %( self.v_max_cut.get()   ))
-            self.gcode.append('(fengrave_set v_rough_stk %s )' %( self.v_rough_stk.get() ))
+            self.gcode.append('(fengrave_set v_max_cut   %s )' % ( self.v_max_cut.get()   ))
+            self.gcode.append('(fengrave_set v_rough_stk %s )' % ( self.v_rough_stk.get() ))
 
-            self.gcode.append('(fengrave_set v_depth_lim  %s )' %( self.v_depth_lim.get() ))
+            self.gcode.append('(fengrave_set v_depth_lim  %s )' % ( self.v_depth_lim.get() ))
 
-            self.gcode.append('(fengrave_set v_check_all %s )' %( self.v_check_all.get() ))
-            self.gcode.append('(fengrave_set bmp_turnp   %s )' %( self.bmp_turnpol.get()      ))
-            self.gcode.append('(fengrave_set bmp_turds   %s )' %( self.bmp_turdsize.get()     ))
-            self.gcode.append('(fengrave_set bmp_alpha   %s )' %( self.bmp_alphamax.get()     ))
-            self.gcode.append('(fengrave_set bmp_optto   %s )' %( self.bmp_opttolerance.get() ))
+            self.gcode.append('(fengrave_set v_check_all %s )' % ( self.v_check_all.get() ))
+            self.gcode.append('(fengrave_set bmp_turnp   %s )' % ( self.bmp_turnpol.get()      ))
+            self.gcode.append('(fengrave_set bmp_turds   %s )' % ( self.bmp_turdsize.get()     ))
+            self.gcode.append('(fengrave_set bmp_alpha   %s )' % ( self.bmp_alphamax.get()     ))
+            self.gcode.append('(fengrave_set bmp_optto   %s )' % ( self.bmp_opttolerance.get() ))
 
-            self.gcode.append('(fengrave_set fontdir    \042%s\042 )' %( self.fontdir.get()  ))
-            self.gcode.append('(fengrave_set gpre        %s )' %( self.gpre.get()         ))
-            self.gcode.append('(fengrave_set gpost       %s )' %( self.gpost.get()        ))
+            self.gcode.append('(fengrave_set fontdir    \042%s\042 )' % ( self.fontdir.get()  ))
+            self.gcode.append('(fengrave_set gpre        %s )' % ( self.gpre.get()         ))
+            self.gcode.append('(fengrave_set gpost       %s )' % ( self.gpost.get()        ))
 
-            self.gcode.append('(fengrave_set imagefile   \042%s\042 )' %( self.IMAGE_FILE ))
-            self.gcode.append('(fengrave_set input_type  %s )' %( self.input_type.get() ))
+            self.gcode.append('(fengrave_set imagefile   \042%s\042 )' % ( self.IMAGE_FILE ))
+            self.gcode.append('(fengrave_set input_type  %s )' % ( self.input_type.get() ))
 
-            self.gcode.append('(fengrave_set clean_dia   %s )' %( self.clean_dia.get()  ))
-            self.gcode.append('(fengrave_set clean_step  %s )' %( self.clean_step.get() ))
-            self.gcode.append('(fengrave_set clean_v     %s )' %( self.clean_v.get()    ))
-            clean_out = ("%d,%d,%d,%d,%d,%d" %(self.clean_P.get(),self.clean_X.get(),self.clean_Y.get(),\
-                self.v_clean_P.get(),self.v_clean_Y.get(),self.v_clean_X.get()) )
-            self.gcode.append('(fengrave_set clean_paths  %s )' %( clean_out ))
+            self.gcode.append('(fengrave_set clean_dia   %s )' % ( self.clean_dia.get()  ))
+            self.gcode.append('(fengrave_set clean_step  %s )' % ( self.clean_step.get() ))
+            self.gcode.append('(fengrave_set clean_v     %s )' % ( self.clean_v.get()    ))
+            clean_out = ("%d,%d,%d,%d,%d,%d" % (self.clean_P.get(),self.clean_X.get(),self.clean_Y.get(), \
+                                                self.v_clean_P.get(),self.v_clean_Y.get(),self.v_clean_X.get()) )
+            self.gcode.append('(fengrave_set clean_paths  %s )' % ( clean_out ))
 
-            str_data=''
+            str_data = ''
             cnt = 0
             for char in String:
-               if cnt > 10:
-                   str_data = str_data + ')'
-                   self.gcode.append('(fengrave_set TCODE   %s' %(str_data))
-                   str_data=''
-                   cnt=0
-               str_data = str_data + ' %03d ' %( ord(char) )
-               cnt = cnt + 1
+                if cnt > 10:
+                    str_data = str_data + ')'
+                    self.gcode.append('(fengrave_set TCODE   %s' % (str_data))
+                    str_data = ''
+                    cnt = 0
+                str_data = str_data + ' %03d ' % ( ord(char) )
+                cnt = cnt + 1
             str_data = str_data + ')'
-            self.gcode.append('(fengrave_set TCODE   %s' %(str_data))
+            self.gcode.append('(fengrave_set TCODE   %s' % (str_data))
 
 
-            self.gcode.append('(fengrave_set NGC_DIR  \042%s\042 )' %( os.path.dirname(self.NGC_FILE) ))
-            self.gcode.append('( Fontfile: %s )' %(self.fontfile.get()))
+            self.gcode.append('(fengrave_set NGC_DIR  \042%s\042 )' % ( os.path.dirname(self.NGC_FILE) ))
+            self.gcode.append('( Fontfile: %s )' % (self.fontfile.get()))
 
             self.gcode.append("(#########################################################)")
 
@@ -2703,38 +2703,38 @@ class Application(Frame):
             return
 
         if self.units.get() == "in":
-            dp=4
-            dpfeed=2
+            dp = 4
+            dpfeed = 2
         else:
-            dp=3
-            dpfeed=1
+            dp = 3
+            dpfeed = 1
 
         g_target = lambda s: sys.stdout.write(s + "\n")
         g = Gcode(safetyheight = SafeZ,
-                 tolerance=Acc,
-                 target=lambda s: self.gcode.append(s),
-                 arc_fit = self.arc_fit.get())
+                  tolerance=Acc,
+                  target=lambda s: self.gcode.append(s),
+                  arc_fit = self.arc_fit.get())
 
-        g.dp     = dp
+        g.dp = dp
         g.dpfeed = dpfeed
         g.set_plane(17)
 
         if not self.var_dis.get():
-            FORMAT = '#1 = %%.%df  ( Safe Z )' %(dp)
-            self.gcode.append(FORMAT %(SafeZ))
-            FORMAT = '#2 = %%.%df  ( Engraving Depth Z )' %(dp)
-            self.gcode.append(FORMAT %(Depth))
-            safe_val  = '#1'
+            FORMAT = '#1 = %%.%df  ( Safe Z )' % (dp)
+            self.gcode.append(FORMAT % (SafeZ))
+            FORMAT = '#2 = %%.%df  ( Engraving Depth Z )' % (dp)
+            self.gcode.append(FORMAT % (Depth))
+            safe_val = '#1'
             depth_val = '#2'
         else:
-            FORMAT = '%%.%df' %(dp)
-            safe_val  = FORMAT %(SafeZ)
-            depth_val = FORMAT %(Depth)
+            FORMAT = '%%.%df' % (dp)
+            safe_val = FORMAT % (SafeZ)
+            depth_val = FORMAT % (Depth)
 
         # G90        ; Sets absolute distance mode
         self.gcode.append('G90')
         # G91.1      ; Sets Incremental Distance Mode for I, J & K arc offsets.
-        if (self.arc_fit.get()=="center"):
+        if (self.arc_fit.get() == "center"):
             self.gcode.append('G91.1')
         if self.units.get() == "in":
             # G20 ; sets units to inches
@@ -2746,41 +2746,41 @@ class Application(Frame):
         for line in self.gpre.get().split('|'):
             self.gcode.append(line)
 
-        FORMAT = '%%.%df' %(dpfeed)
-        feed_str     = FORMAT %(float(self.FEED.get()))
-        plunge_str   = FORMAT %(float(self.PLUNGE.get()))
-        zero_feed    = FORMAT %(float(0.0))
+        FORMAT = '%%.%df' % (dpfeed)
+        feed_str = FORMAT % (float(self.FEED.get()))
+        plunge_str = FORMAT % (float(self.PLUNGE.get()))
+        zero_feed = FORMAT % (float(0.0))
 
         #Set Feed rate
-        self.gcode.append("F%s" %feed_str)
+        self.gcode.append("F%s" % feed_str)
 
-        if plunge_str==zero_feed:
+        if plunge_str == zero_feed:
             plunge_str = feed_str
 
         oldx = oldy = -99990.0
         first_stroke = True
         #Set up variables for multipass cutting
-        maxDZ       =  float(self.v_max_cut.get())
-        rough_stock =  float(self.v_rough_stk.get())
-        zmin        =  0.0
-        roughing    = True
+        maxDZ = float(self.v_max_cut.get())
+        rough_stock = float(self.v_rough_stk.get())
+        zmin = 0.0
+        roughing = True
         rough_again = False
 
         if self.cut_type.get() == "engrave" or self.bit_shape.get() == "FLAT":
             ecoords = []
             if (self.bit_shape.get() == "FLAT") and (self.cut_type.get() != "engrave"):
-                Acc = float(self.v_step_len.get())*1.5 #fudge factor
+                Acc = float(self.v_step_len.get()) * 1.5 #fudge factor
                 ###################################
                 ###   Create Flat Cut ECOORDS   ###
                 ###################################
-                if len(self.vcoords)>0:
-                    rbit      = self.calc_vbit_dia()/2.0
+                if len(self.vcoords) > 0:
+                    rbit = self.calc_vbit_dia() / 2.0
                     loopa_old = self.vcoords[0][3]
-                    loop=0
-                    for i in range(1,len(self.vcoords)):
-                        xa    = self.vcoords[i][0]
-                        ya    = self.vcoords[i][1]
-                        ra    = self.vcoords[i][2]
+                    loop = 0
+                    for i in range(1, len(self.vcoords)):
+                        xa = self.vcoords[i][0]
+                        ya = self.vcoords[i][1]
+                        ra = self.vcoords[i][2]
                         loopa = self.vcoords[i][3]
 
                         if (loopa_old != loopa):
@@ -2803,7 +2803,7 @@ class Application(Frame):
                 ##########################
                 ###   Create ECOORDS   ###
                 ##########################
-                loop=0
+                loop = 0
                 for line in self.coords:
                     XY = line
                     x1 = XY[0]
@@ -2812,16 +2812,16 @@ class Application(Frame):
                     y2 = XY[3]
                     dx = oldx - x1
                     dy = oldy - y1
-                    dist = sqrt(dx*dx + dy*dy)
+                    dist = sqrt(dx * dx + dy * dy)
                     # check and see if we need to move to a new discontinuous start point
                     if (dist > Acc) or first_stroke:
-                        loop = loop+1
+                        loop = loop + 1
                         first_stroke = False
                         ecoords.append([x1,y1,loop])
                     ecoords.append([x2,y2,loop])
                     oldx, oldy = x2, y2
 
-            order_out=self.Sort_Paths(ecoords)
+            order_out = self.Sort_Paths(ecoords)
             ###########################
 
             while (rough_again == True or roughing == True):
@@ -2831,7 +2831,7 @@ class Application(Frame):
                 rough_again = False
                 zmin = zmin + maxDZ
 
-                z1   = Depth
+                z1 = Depth
                 if ( roughing ):
                     z1 = z1 + rough_stock
                 if ( z1 < zmin):
@@ -2840,71 +2840,71 @@ class Application(Frame):
                 zmax = zmin - maxDZ
 
                 if (self.bit_shape.get() == "FLAT") and (self.cut_type.get() != "engrave"):
-                    FORMAT = '%%.%df' %(dp)
-                    depth_val = FORMAT %(z1)
+                    FORMAT = '%%.%df' % (dp)
+                    depth_val = FORMAT % (z1)
 
                 dist = 999
-                lastx=-999
-                lasty=-999
-                lastz= 0
-                z1   = 0
-                nextz= 0
+                lastx = -999
+                lasty = -999
+                lastz = 0
+                z1 = 0
+                nextz = 0
 
                 #self.gcode.append("G0 Z%s" %(safe_val))
                 for line in order_out:
-                    temp=line
+                    temp = line
                     if temp[0] > temp[1]:
                         step = -1
                     else:
                         step = 1
 
-                    R_last         = 999
-                    x_center_last  = 999
-                    y_center_last  = 999
+                    R_last = 999
+                    x_center_last = 999
+                    y_center_last = 999
                     FLAG_arc = 0
                     FLAG_line = 0
-                    code=" "
+                    code = " "
 
                     loop_old = -1
 
-                    for i in range(temp[0],temp[1]+step,step):
-                        x1   = ecoords[i][0]
-                        y1   = ecoords[i][1]
+                    for i in range(temp[0], temp[1] + step, step):
+                        x1 = ecoords[i][0]
+                        y1 = ecoords[i][1]
                         loop = ecoords[i][2]
 
-                        if ( i+1 < temp[1]+step ):
-                            nextx    = ecoords[i+1][0]
-                            nexty    = ecoords[i+1][1]
-                            nextloop = ecoords[i+1][2]
+                        if ( i + 1 < temp[1] + step ):
+                            nextx = ecoords[i + 1][0]
+                            nexty = ecoords[i + 1][1]
+                            nextloop = ecoords[i + 1][2]
                         else:
-                            nextx    =  0
-                            nexty    =  0
-                            nextloop =  -99 #don't change this dummy number it is used below
+                            nextx = 0
+                            nexty = 0
+                            nextloop = -99 #don't change this dummy number it is used below
 
                         # check and see if we need to move to a new discontinuous start point
                         if (loop != loop_old):
                             g.flush()
-                            dx = x1-lastx
-                            dy = y1-lasty
-                            dist = sqrt(dx*dx + dy*dy)
+                            dx = x1 - lastx
+                            dy = y1 - lasty
+                            dist = sqrt(dx * dx + dy * dy)
                             if dist > Acc:
                                 # lift engraver
-                                self.gcode.append("G0 Z%s" %(safe_val))
+                                self.gcode.append("G0 Z%s" % (safe_val))
                                 # rapid to current position
 
-                                FORMAT = 'G0 X%%.%df Y%%.%df'%(dp,dp)
-                                self.gcode.append(FORMAT %(x1,y1))
+                                FORMAT = 'G0 X%%.%df Y%%.%df' % (dp,dp)
+                                self.gcode.append(FORMAT % (x1,y1))
                                 # drop cutter
                                 if (feed_str == plunge_str):
-                                    self.gcode.append('G1 Z%s' %(depth_val))
+                                    self.gcode.append('G1 Z%s' % (depth_val))
                                 else:
-                                    self.gcode.append('G1 Z%s F%s' %(depth_val, plunge_str))
+                                    self.gcode.append('G1 Z%s F%s' % (depth_val, plunge_str))
                                     g.set_feed(feed_str)
                                 lastx = x1
                                 lasty = y1
-                                g.cut(x1,y1)
+                                g.cut(x1, y1)
                         else:
-                            g.cut(x1,y1)
+                            g.cut(x1, y1)
                             lastx = x1
                             lasty = y1
 
@@ -2919,17 +2919,17 @@ class Application(Frame):
             ##########################
             ###   find loop ends   ###
             ##########################
-            Lbeg=[]
-            Lend=[]
+            Lbeg = []
+            Lend = []
             Lbeg.append(0)
             if len(self.vcoords) > 0:
-                loop_old=self.vcoords[0][3]
-                for i in range(1,len(self.vcoords)):
+                loop_old = self.vcoords[0][3]
+                for i in range(1, len(self.vcoords)):
                     loop = self.vcoords[i][3]
                     if loop != loop_old:
                         Lbeg.append(i)
-                        Lend.append(i-1)
-                    loop_old=loop
+                        Lend.append(i - 1)
+                    loop_old = loop
                 Lend.append(i)
                 #####################################################
                 # Find new order based on distance to next begining #
@@ -2937,35 +2937,35 @@ class Application(Frame):
                 order_out = []
                 order_out.append([Lbeg[0],Lend[0]])
                 inext = 0
-                total=len(Lbeg)
-                for i in range(total-1):
-                    ii=Lend.pop(inext)
+                total = len(Lbeg)
+                for i in range(total - 1):
+                    ii = Lend.pop(inext)
                     Lbeg.pop(inext)
                     Xcur = self.vcoords[ii][0]
                     Ycur = self.vcoords[ii][1]
 
                     dx = Xcur - self.vcoords[ Lbeg[0] ][0]
                     dy = Ycur - self.vcoords[ Lbeg[0] ][1]
-                    min_dist = dx*dx + dy*dy
+                    min_dist = dx * dx + dy * dy
 
-                    inext=0
-                    for j in range(1,len(Lbeg)):
+                    inext = 0
+                    for j in range(1, len(Lbeg)):
                         dx = Xcur - self.vcoords[ Lbeg[j] ][0]
                         dy = Ycur - self.vcoords[ Lbeg[j] ][1]
-                        dist = dx*dx + dy*dy
+                        dist = dx * dx + dy * dy
                         if dist < min_dist:
-                            min_dist=dist
-                            inext=j
+                            min_dist = dist
+                            inext = j
                     order_out.append([Lbeg[inext],Lend[inext]])
                 #####################################################
-                new_coords=[]
+                new_coords = []
                 for line in order_out:
-                    temp=line
-                    for i in range(temp[0],temp[1]+1):
+                    temp = line
+                    for i in range(temp[0], temp[1] + 1):
                         new_coords.append(self.vcoords[i])
 
-                half_angle = radians( float(self.v_bit_angle.get())/2.0 )
-                bit_radius = float(self.v_bit_dia.get())/2.0
+                half_angle = radians( float(self.v_bit_angle.get()) / 2.0 )
+                bit_radius = float(self.v_bit_dia.get()) / 2.0
 
                 ################################
                 # V-carve stuff
@@ -2987,47 +2987,47 @@ class Application(Frame):
                     zmin = zmin + maxDZ
 
                     loop_old = -1
-                    R_last         = 999
-                    x_center_last  = 999
-                    y_center_last  = 999
+                    R_last = 999
+                    x_center_last = 999
+                    y_center_last = 999
                     FLAG_arc = 0
                     FLAG_line = 0
-                    code=" "
+                    code = " "
 
-                    v_index=-1
+                    v_index = -1
 
-                    while v_index < len(new_coords)-1:
+                    while v_index < len(new_coords) - 1:
                         v_index = v_index + 1
-                        x1   = new_coords[v_index][0]
-                        y1   = new_coords[v_index][1]
-                        r1   = new_coords[v_index][2]
+                        x1 = new_coords[v_index][0]
+                        y1 = new_coords[v_index][1]
+                        r1 = new_coords[v_index][2]
                         loop = new_coords[v_index][3]
 
-                        if ( v_index+1 < len(new_coords) ):
-                            nextx    = new_coords[v_index+1][0]
-                            nexty    = new_coords[v_index+1][1]
-                            nextr    = new_coords[v_index+1][2]
-                            nextloop = new_coords[v_index+1][3]
+                        if ( v_index + 1 < len(new_coords) ):
+                            nextx = new_coords[v_index + 1][0]
+                            nexty = new_coords[v_index + 1][1]
+                            nextr = new_coords[v_index + 1][2]
+                            nextloop = new_coords[v_index + 1][3]
                         else:
-                            nextx    =  0
-                            nexty    =  0
-                            nextr    =  0
-                            nextloop =  -99 #don't change this dummy number it is used below
+                            nextx = 0
+                            nexty = 0
+                            nextr = 0
+                            nextloop = -99 #don't change this dummy number it is used below
 
                         if   self.bit_shape.get() == "VBIT":
-                            z1    = -r1   /tan(half_angle)
-                            nextz = -nextr/tan(half_angle)
+                            z1 = -r1 / tan(half_angle)
+                            nextz = -nextr / tan(half_angle)
                             if self.inlay.get():
                                 inlay_depth = self.calc_r_inlay_depth()
-                                z1    = z1 + inlay_depth
+                                z1 = z1 + inlay_depth
                                 nextz = nextz + inlay_depth
 
                         elif self.bit_shape.get() == "BALL":
-                            theta =  acos(r1 / bit_radius)
-                            z1    = -bit_radius*(1- sin(theta))
+                            theta = acos(r1 / bit_radius)
+                            z1 = -bit_radius * (1 - sin(theta))
 
-                            next_theta =  acos(nextr / bit_radius)
-                            nextz      = -bit_radius*(1- sin(next_theta))
+                            next_theta = acos(nextr / bit_radius)
+                            nextz = -bit_radius * (1 - sin(next_theta))
                         elif self.bit_shape.get() == "FLAT":
                             # This case should have been caught in the
                             # engraving section above
@@ -3036,10 +3036,10 @@ class Application(Frame):
                             pass
 
                         if ( roughing ):
-                            z1    = z1    + rough_stock
+                            z1 = z1 + rough_stock
                             nextz = nextz + rough_stock
                         if (   z1 < zmin):
-                            z1    = zmin
+                            z1 = zmin
                             rough_again = True
                         if (nextz < zmin):
                             nextz = zmin
@@ -3053,20 +3053,20 @@ class Application(Frame):
                         if (loop != loop_old):
                             g.flush()
                             # lift engraver
-                            self.gcode.append("G0 Z%s" %(safe_val))
+                            self.gcode.append("G0 Z%s" % (safe_val))
                             # rapid to current position
-                            FORMAT = 'G0 X%%.%df Y%%.%df' %(dp,dp)
-                            self.gcode.append(FORMAT %(x1,y1))
+                            FORMAT = 'G0 X%%.%df Y%%.%df' % (dp,dp)
+                            self.gcode.append(FORMAT % (x1,y1))
                             # drop cutter to z depth
-                            FORMAT = 'G1 Z%%.%df'  %(dp)
-                            self.gcode.append(FORMAT %(z1))
+                            FORMAT = 'G1 Z%%.%df' % (dp)
+                            self.gcode.append(FORMAT % (z1))
 
                             lastx = x1
                             lasty = y1
                             lastz = z1
-                            g.cut(x1,y1,z1)
+                            g.cut(x1, y1, z1)
                         else:
-                            g.cut(x1,y1,z1)
+                            g.cut(x1, y1, z1)
                             lastx = x1
                             lasty = y1
                             lastz = z1
@@ -3076,14 +3076,14 @@ class Application(Frame):
             g.flush()
             # End V-carve stuff
         # Make Circle
-        XOrigin    =  float(self.xorigin.get())
-        YOrigin    =  float(self.yorigin.get())
-        Radius_plot=  float(self.RADIUS_PLOT)
+        XOrigin = float(self.xorigin.get())
+        YOrigin = float(self.yorigin.get())
+        Radius_plot = float(self.RADIUS_PLOT)
         if Radius_plot != 0 and self.cut_type.get() == "engrave":
-            self.gcode.append('G0 Z%s' %(safe_val))
+            self.gcode.append('G0 Z%s' % (safe_val))
 
-            FORMAT = 'G0 X%%.%df Y%%.%df' %(dp,dp)
-            self.gcode.append(FORMAT  %(-Radius_plot - self.Xzero + XOrigin, YOrigin - self.Yzero))
+            FORMAT = 'G0 X%%.%df Y%%.%df' % (dp,dp)
+            self.gcode.append(FORMAT % (-Radius_plot - self.Xzero + XOrigin, YOrigin - self.Yzero))
 
 
             if (feed_str == plunge_str):
@@ -3092,18 +3092,18 @@ class Application(Frame):
                 FEED_STRING = " F" + plunge_str
                 g.set_feed(feed_str)
 
-            self.gcode.append('G1 Z%s' %(depth_val) + FEED_STRING)
+            self.gcode.append('G1 Z%s' % (depth_val) + FEED_STRING)
 
             if (feed_str == plunge_str):
                 FEED_STRING = ""
             else:
                 FEED_STRING = " F" + feed_str
 
-            FORMAT = 'G2 I%%.%df J%%.%df' %(dp,dp)
-            self.gcode.append(FORMAT %( Radius_plot, 0.0) + FEED_STRING)
+            FORMAT = 'G2 I%%.%df J%%.%df' % (dp,dp)
+            self.gcode.append(FORMAT % ( Radius_plot, 0.0) + FEED_STRING)
         # End Circle
 
-        self.gcode.append( 'G0 Z%s' %(safe_val))  # final engraver up
+        self.gcode.append( 'G0 Z%s' % (safe_val))  # final engraver up
 
         for line in self.gpost.get().split('|'):
             self.gcode.append(line)
@@ -3113,11 +3113,11 @@ class Application(Frame):
     #############################
     # Write Cleanup G-code File #
     #############################
-    def WRITE_CLEAN_UP(self,bit_type="straight"):
+    def WRITE_CLEAN_UP(self, bit_type="straight"):
         global Zero
         self.gcode = []
-        SafeZ  =   float(self.ZSAFE.get())
-        BitDia =   float(self.clean_dia.get())
+        SafeZ = float(self.ZSAFE.get())
+        BitDia = float(self.clean_dia.get())
 
         self.calc_depth_limit()
         try:
@@ -3127,8 +3127,8 @@ class Application(Frame):
         if self.inlay.get():
             Depth = Depth + float(self.allowance.get())
 
-        Acc    =   float(self.accuracy.get())
-        Units  =   self.units.get()
+        Acc = float(self.accuracy.get())
+        Units = self.units.get()
 
 
         if bit_type == "straight":
@@ -3137,7 +3137,7 @@ class Application(Frame):
             coords_out = self.v_clean_coords_sort
 
         if (self.no_comments.get() != True):
-            self.gcode.append('( Code generated by f-engrave-'+version+'.py )')
+            self.gcode.append('( Code generated by f-engrave-' + version + '.py )')
             self.gcode.append('( by Scorch - 2017 )')
             self.gcode.append('( This file is a secondary operation for )')
             self.gcode.append('( cleaning up a V-carve. )')
@@ -3145,37 +3145,37 @@ class Application(Frame):
             if bit_type == "straight":
                 self.gcode.append('( The tool paths were calculated based )')
                 self.gcode.append('( on using a bit with a )')
-                self.gcode.append('( Diameter of %.4f %s)' %(BitDia, Units))
+                self.gcode.append('( Diameter of %.4f %s)' % (BitDia, Units))
             else:
                 self.gcode.append('( The tool paths were calculated based )')
                 self.gcode.append('( on using a v-bit with a)')
-                self.gcode.append('( angle of %.4f Degrees)' %(float(self.v_bit_angle.get())) )
+                self.gcode.append('( angle of %.4f Degrees)' % (float(self.v_bit_angle.get())) )
 
             self.gcode.append("(==========================================)")
 
 
         if self.units.get() == "in":
-            dp=4
-            dpfeed=2
+            dp = 4
+            dpfeed = 2
         else:
-            dp=3
-            dpfeed=1
+            dp = 3
+            dpfeed = 1
 
 
         if not self.var_dis.get():
-            FORMAT = '#1 = %%.%df  ( Safe Z )' %(dp)
-            self.gcode.append(FORMAT %(SafeZ))
-            safe_val  = '#1'
+            FORMAT = '#1 = %%.%df  ( Safe Z )' % (dp)
+            self.gcode.append(FORMAT % (SafeZ))
+            safe_val = '#1'
         else:
-            FORMAT = '%%.%df' %(dp)
-            safe_val  = FORMAT %(SafeZ)
-            depth_val = FORMAT %(Depth)
+            FORMAT = '%%.%df' % (dp)
+            safe_val = FORMAT % (SafeZ)
+            depth_val = FORMAT % (Depth)
 
         self.gcode.append("(##########################################)")
         # G90        ; Sets absolute distance mode
         self.gcode.append('G90')
         # G91.1      ; Sets Incremental Distance Mode for I, J & K arc offsets.
-        if (self.arc_fit.get()=="center"):
+        if (self.arc_fit.get() == "center"):
             self.gcode.append('G91.1')
         if self.units.get() == "in":
             # G20 ; sets units to inches
@@ -3189,21 +3189,21 @@ class Application(Frame):
 
         #self.gcode.append( 'G0 Z%s' %(safe_val))
 
-        FORMAT = '%%.%df' %(dp)
-        feed_str     = FORMAT %(float(self.FEED.get()))
-        plunge_str   = FORMAT %(float(self.PLUNGE.get()))
-        feed_current = FORMAT %(float(0.0))
+        FORMAT = '%%.%df' % (dp)
+        feed_str = FORMAT % (float(self.FEED.get()))
+        plunge_str = FORMAT % (float(self.PLUNGE.get()))
+        feed_current = FORMAT % (float(0.0))
         #fmessage(feed_str +" "+plunge_str)
-        if plunge_str==feed_current:
+        if plunge_str == feed_current:
             plunge_str = feed_str
 
         # Multipass stuff
         ################################
         # Cleanup
-        maxDZ       =  float(self.v_max_cut.get())
-        rough_stock =  float(self.v_rough_stk.get())
-        zmin        =  0.0
-        roughing    = True
+        maxDZ = float(self.v_max_cut.get())
+        rough_stock = float(self.v_rough_stk.get())
+        zmin = 0.0
+        roughing = True
         rough_again = False
         if (rough_stock > 0):
             rough_again = True
@@ -3224,59 +3224,59 @@ class Application(Frame):
             # The clean coords have already been sorted so we can just write them  #
             ########################################################################
 
-            order_out=self.Sort_Paths(coords_out,3)
-            new_coords=[]
+            order_out = self.Sort_Paths(coords_out, 3)
+            new_coords = []
             for line in order_out:
-                temp=line
+                temp = line
                 if (temp[0] < temp[1]):
-                    step=1
+                    step = 1
                 else:
-                    step=-1
-                for i in range(temp[0],temp[1]+step,step):
+                    step = -1
+                for i in range(temp[0], temp[1] + step, step):
                     new_coords.append(coords_out[i])
-            coords_out=new_coords
+            coords_out = new_coords
 
             if len(coords_out) > 0:
                 loop_old = -1
                 FLAG_arc = 0
                 FLAG_line = 0
-                code=" "
-                v_index=-1
-                while v_index < len(coords_out)-1:
+                code = " "
+                v_index = -1
+                while v_index < len(coords_out) - 1:
                     v_index = v_index + 1
-                    x1   = coords_out[v_index][0]
-                    y1   = coords_out[v_index][1]
-                    r1   = coords_out[v_index][2]
+                    x1 = coords_out[v_index][0]
+                    y1 = coords_out[v_index][1]
+                    r1 = coords_out[v_index][2]
                     loop = coords_out[v_index][3]
 
-                    if ( v_index+1 < len(coords_out) ):
-                        nextx    = coords_out[v_index+1][0]
-                        nexty    = coords_out[v_index+1][1]
-                        nextr    = coords_out[v_index+1][2]
-                        nextloop = coords_out[v_index+1][3]
+                    if ( v_index + 1 < len(coords_out) ):
+                        nextx = coords_out[v_index + 1][0]
+                        nexty = coords_out[v_index + 1][1]
+                        nextr = coords_out[v_index + 1][2]
+                        nextloop = coords_out[v_index + 1][3]
                     else:
-                        nextx    =  0
-                        nexty    =  0
-                        nextr    =  0
-                        nextloop =  -99
+                        nextx = 0
+                        nexty = 0
+                        nextr = 0
+                        nextloop = -99
 
                     # check and see if we need to move to a new discontinuous start point
                     if (loop != loop_old):
                         # lift engraver
-                        self.gcode.append("G0 Z%s" %(safe_val))
+                        self.gcode.append("G0 Z%s" % (safe_val))
                         # rapid to current position
-                        FORMAT = 'G0 X%%.%df Y%%.%df' %(dp,dp)
-                        self.gcode.append(FORMAT %(x1,y1))
+                        FORMAT = 'G0 X%%.%df Y%%.%df' % (dp,dp)
+                        self.gcode.append(FORMAT % (x1,y1))
 
                         z1 = Depth;
                         if ( roughing ):
-                            z1    = Depth + rough_stock #Depth
+                            z1 = Depth + rough_stock #Depth
                         if (   z1 < zmin):
-                            z1    = zmin
+                            z1 = zmin
                             rough_again = True
 
-                        FORMAT = '%%.%df' %(dp)
-                        depth_val = FORMAT %(z1)
+                        FORMAT = '%%.%df' % (dp)
+                        depth_val = FORMAT % (z1)
 
                         if (feed_current == plunge_str):
                             FEED_STRING = ""
@@ -3284,10 +3284,10 @@ class Application(Frame):
                             FEED_STRING = " F" + plunge_str
                             feed_current = plunge_str
 
-                        self.gcode.append("G1 Z%s" %(depth_val) + FEED_STRING)
+                        self.gcode.append("G1 Z%s" % (depth_val) + FEED_STRING)
 
-                        lastx=x1
-                        lasty=y1
+                        lastx = x1
+                        lasty = y1
                     else:
                         if (feed_str == feed_current):
                             FEED_STRING = ""
@@ -3295,15 +3295,15 @@ class Application(Frame):
                             FEED_STRING = " F" + feed_str
                             feed_current = feed_str
 
-                        FORMAT = 'G1 X%%.%df Y%%.%df' %(dp,dp)
-                        self.gcode.append(FORMAT %(x1,y1) + FEED_STRING)
-                        lastx=x1
-                        lasty=y1
+                        FORMAT = 'G1 X%%.%df Y%%.%df' % (dp,dp)
+                        self.gcode.append(FORMAT % (x1,y1) + FEED_STRING)
+                        lastx = x1
+                        lasty = y1
                     loop_old = loop
 
         #End multipass loop
 
-        self.gcode.append( 'G0 Z%s' %(safe_val))  # final engraver up
+        self.gcode.append( 'G0 Z%s' % (safe_val))  # final engraver up
 
         for line in self.gpost.get().split('|'):
             self.gcode.append(line)
@@ -3313,80 +3313,80 @@ class Application(Frame):
         if self.cut_type.get() == "v-carve":
             Thick = 0.001
         else:
-            Thick   = float(self.STHICK.get())
+            Thick = float(self.STHICK.get())
 
-        dpi=100
+        dpi = 100
 
         maxx = -99919.0
         maxy = -99929.0
         maxa = -99939.0
-        mina =  99949.0
-        miny =  99959.0
-        minx =  99969.0
+        mina = 99949.0
+        miny = 99959.0
+        minx = 99969.0
         for line in self.coords:
             XY = line
-            maxx = max(maxx, XY[0],XY[2])
-            minx = min(minx, XY[0],XY[2])
-            miny = min(miny, XY[1],XY[3])
-            maxy = max(maxy, XY[1],XY[3])
+            maxx = max(maxx, XY[0], XY[2])
+            minx = min(minx, XY[0], XY[2])
+            miny = min(miny, XY[1], XY[3])
+            maxy = max(maxy, XY[1], XY[3])
 
-        XOrigin    =  float(self.xorigin.get())
-        YOrigin    =  float(self.yorigin.get())
-        Radius_plot=  float(self.RADIUS_PLOT)
+        XOrigin = float(self.xorigin.get())
+        YOrigin = float(self.yorigin.get())
+        Radius_plot = float(self.RADIUS_PLOT)
         if Radius_plot != 0:
-            maxx = max(maxx, XOrigin+Radius_plot - self.Xzero)
-            minx = min(minx, XOrigin-Radius_plot - self.Xzero)
-            miny = min(miny, YOrigin-Radius_plot - self.Yzero)
-            maxy = max(maxy, YOrigin+Radius_plot - self.Yzero)
+            maxx = max(maxx, XOrigin + Radius_plot - self.Xzero)
+            minx = min(minx, XOrigin - Radius_plot - self.Xzero)
+            miny = min(miny, YOrigin - Radius_plot - self.Yzero)
+            maxy = max(maxy, YOrigin + Radius_plot - self.Yzero)
 
-        maxx = maxx + Thick/2
-        minx = minx - Thick/2
-        miny = miny - Thick/2
-        maxy = maxy + Thick/2
+        maxx = maxx + Thick / 2
+        minx = minx - Thick / 2
+        miny = miny - Thick / 2
+        maxy = maxy + Thick / 2
 
-        width_in  = maxx-minx
-        height_in = maxy-miny
-        width  = ((maxx-minx)*dpi)
-        height = ((maxy-miny)*dpi)
+        width_in = maxx - minx
+        height_in = maxy - miny
+        width = ((maxx - minx) * dpi)
+        height = ((maxy - miny) * dpi)
 
         self.svgcode = []
         self.svgcode.append('<?xml version="1.0" standalone="no"?>')
         self.svgcode.append('<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"  ')
         self.svgcode.append('  "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">  ')
         self.svgcode.append('<svg width="%f%s" height="%f%s" viewBox="0 0 %f %f"  ' \
-                            %(width_in,self.units.get(),height_in,self.units.get(),width,height) )
+                            % (width_in,self.units.get(),height_in,self.units.get(),width,height) )
         self.svgcode.append('     xmlns="http://www.w3.org/2000/svg" version="1.1">')
         self.svgcode.append('  <title> F-engrave Output </title>')
         self.svgcode.append('  <desc>SVG File Created By F-Engrave</desc>')
 
         # Make Circle
         if Radius_plot != 0 and self.cut_type.get() == "engrave":
-            self.svgcode.append('  <circle cx="%f" cy="%f" r="%f"' %(
-                        ( XOrigin-self.Xzero-minx)*dpi,
-                        (-YOrigin+self.Yzero+maxy)*dpi,
-                        ( Radius_plot            )*dpi) )
-            self.svgcode.append('        fill="none" stroke="blue" stroke-width="%f"/>' %(Thick*dpi))
+            self.svgcode.append('  <circle cx="%f" cy="%f" r="%f"' % (
+                ( XOrigin - self.Xzero - minx) * dpi,
+                (-YOrigin + self.Yzero + maxy) * dpi,
+                ( Radius_plot            ) * dpi) )
+            self.svgcode.append('        fill="none" stroke="blue" stroke-width="%f"/>' % (Thick * dpi))
         # End Circle
 
         for line in self.coords:
             XY = line
-            self.svgcode.append('  <path d="M %f %f L %f %f"' %(
-                    ( XY[0]-minx)*dpi,
-                    (-XY[1]+maxy)*dpi,
-                    ( XY[2]-minx)*dpi,
-                    (-XY[3]+maxy)*dpi) )
-            self.svgcode.append('        fill="none" stroke="blue" stroke-width="%f" stroke-linecap="round" stroke-linejoin="round"/>' %(Thick*dpi))
+            self.svgcode.append('  <path d="M %f %f L %f %f"' % (
+                ( XY[0] - minx) * dpi,
+                (-XY[1] + maxy) * dpi,
+                ( XY[2] - minx) * dpi,
+                (-XY[3] + maxy) * dpi) )
+            self.svgcode.append('        fill="none" stroke="blue" stroke-width="%f" stroke-linecap="round" stroke-linejoin="round"/>' % (Thick * dpi))
 
         if self.input_type.get() == "text":
-            Radius_in =  float(self.TRADIUS.get())
+            Radius_in = float(self.TRADIUS.get())
         else:
             Radius_in = 0.0
 
-        Thick     =  float(self.STHICK.get() )
+        Thick = float(self.STHICK.get() )
         #if self.plotbox.get() != "no_box":
         if self.plotbox.get():
             if Radius_in != 0:
-                Delta = Thick/2 + float(self.boxgap.get())
+                Delta = Thick / 2 + float(self.boxgap.get())
         self.svgcode.append('</svg>')
 
 
@@ -3394,10 +3394,10 @@ class Application(Frame):
     ##################################################
     ###  Begin Dxf_Write G-Code Writing Function   ###
     ##################################################
-    def WriteDXF(self,close_loops=False):
+    def WriteDXF(self, close_loops=False):
 
         if close_loops:
-            self.V_Carve_It(clean_flag=0,DXF_FLAG = close_loops)
+            self.V_Carve_It(clean_flag=0, DXF_FLAG = close_loops)
 
         dxf_code = []
         # Create a header section just in case the reading software needs it
@@ -3536,17 +3536,17 @@ class Application(Frame):
             dxf_code.append("100")
             dxf_code.append("AcDbLine")
             dxf_code.append(" 10")
-            dxf_code.append("%.4f" %(line[0])) #x1 coord
+            dxf_code.append("%.4f" % (line[0])) #x1 coord
             dxf_code.append(" 20")
-            dxf_code.append("%.4f" %(line[1])) #y1 coord
+            dxf_code.append("%.4f" % (line[1])) #y1 coord
             dxf_code.append(" 30")
-            dxf_code.append("%.4f" %(0))       #z1 coord
+            dxf_code.append("%.4f" % (0))       #z1 coord
             dxf_code.append(" 11")
-            dxf_code.append("%.4f" %(line[2])) #x2 coord
+            dxf_code.append("%.4f" % (line[2])) #x2 coord
             dxf_code.append(" 21")
-            dxf_code.append("%.4f" %(line[3])) #y2 coord
+            dxf_code.append("%.4f" % (line[3])) #y2 coord
             dxf_code.append(" 31")
-            dxf_code.append("%.4f" %(0))       #z2 coord
+            dxf_code.append("%.4f" % (0))       #z2 coord
             dxf_code.append("  0")
 
         dxf_code.append("ENDSEC")
@@ -3564,13 +3564,13 @@ class Application(Frame):
             return
         self.WriteGCode()
         for line in self.gcode:
-            self.clipboard_append(line+'\n')
+            self.clipboard_append(line + '\n')
 
     def CopyClipboard_SVG(self):
         self.clipboard_clear()
         self.WriteSVG()
         for line in self.svgcode:
-            self.clipboard_append(line+'\n')
+            self.clipboard_append(line + '\n')
 
     def WriteToAxis(self):
         if (self.Check_All_Variables() > 0):
@@ -3578,7 +3578,7 @@ class Application(Frame):
         self.WriteGCode()
         for line in self.gcode:
             try:
-                sys.stdout.write(line+'\n')
+                sys.stdout.write(line + '\n')
             except:
                 pass
         self.Quit_Click(None)
@@ -3587,47 +3587,47 @@ class Application(Frame):
         self.statusMessage.set("Exiting!")
         root.destroy()
 
-    def ZOOM_ITEMS(self,x0,y0,z_factor):
+    def ZOOM_ITEMS(self, x0, y0, z_factor):
         all = self.PreviewCanvas.find_all()
         for i in all:
             self.PreviewCanvas.scale(i, x0, y0, z_factor, z_factor)
-            w=self.PreviewCanvas.itemcget(i,"width")
-            self.PreviewCanvas.itemconfig(i, width=float(w)*z_factor)
+            w = self.PreviewCanvas.itemcget(i, "width")
+            self.PreviewCanvas.itemconfig(i, width=float(w) * z_factor)
         self.PreviewCanvas.update_idletasks()
 
-    def ZOOM(self,z_inc):
+    def ZOOM(self, z_inc):
         all = self.PreviewCanvas.find_all()
-        x = int(self.PreviewCanvas.cget("width" ))/2.0
-        y = int(self.PreviewCanvas.cget("height"))/2.0
+        x = int(self.PreviewCanvas.cget("width" )) / 2.0
+        y = int(self.PreviewCanvas.cget("height")) / 2.0
         for i in all:
             self.PreviewCanvas.scale(i, x, y, z_inc, z_inc)
-            w=self.PreviewCanvas.itemcget(i,"width")
-            self.PreviewCanvas.itemconfig(i, width=float(w)*z_inc)
+            w = self.PreviewCanvas.itemcget(i, "width")
+            self.PreviewCanvas.itemconfig(i, width=float(w) * z_inc)
         self.PreviewCanvas.update_idletasks()
 
     def menu_View_Zoom_in(self):
-        x = int(self.PreviewCanvas.cget("width" ))/2.0
-        y = int(self.PreviewCanvas.cget("height"))/2.0
+        x = int(self.PreviewCanvas.cget("width" )) / 2.0
+        y = int(self.PreviewCanvas.cget("height")) / 2.0
         self.ZOOM_ITEMS(x, y, 2.0)
 
     def menu_View_Zoom_out(self):
-        x = int(self.PreviewCanvas.cget("width" ))/2.0
-        y = int(self.PreviewCanvas.cget("height"))/2.0
+        x = int(self.PreviewCanvas.cget("width" )) / 2.0
+        y = int(self.PreviewCanvas.cget("height")) / 2.0
         self.ZOOM_ITEMS(x, y, 0.5)
 
-    def _mouseZoomIn(self,event):
+    def _mouseZoomIn(self, event):
         self.ZOOM_ITEMS(event.x, event.y, 1.25)
 
-    def _mouseZoomOut(self,event):
+    def _mouseZoomOut(self, event):
         self.ZOOM_ITEMS(event.x, event.y, 0.75)
 
-    def mouseZoomStart(self,event):
+    def mouseZoomStart(self, event):
         self.zoomx0 = event.x
-        self.zoomy  = event.y
+        self.zoomy = event.y
         self.zoomy0 = event.y
 
-    def mouseZoom(self,event):
-        dy = event.y-self.zoomy
+    def mouseZoom(self, event):
+        dy = event.y - self.zoomy
         if dy < 0.0:
             self.ZOOM_ITEMS(self.zoomx0, self.zoomy0, 1.15)
         else:
@@ -3635,14 +3635,14 @@ class Application(Frame):
         self.lasty = self.lasty + dy
         self.zoomy = event.y
 
-    def mousePanStart(self,event):
+    def mousePanStart(self, event):
         self.panx = event.x
         self.pany = event.y
 
-    def mousePan(self,event):
+    def mousePan(self, event):
         all = self.PreviewCanvas.find_all()
-        dx = event.x-self.panx
-        dy = event.y-self.pany
+        dx = event.x - self.panx
+        dy = event.y - self.pany
         for i in all:
             self.PreviewCanvas.move(i, dx, dy)
         self.lastx = self.lastx + dx
@@ -3654,7 +3654,7 @@ class Application(Frame):
         self.DoIt()
 
     def Settings_ReLoad_Click(self, event, arg1="", arg2=""):
-        win_id=self.grab_current()
+        win_id = self.grab_current()
         if self.input_type.get() == "text":
             self.Read_font_file()
         else:
@@ -3667,7 +3667,7 @@ class Application(Frame):
             pass
 
     def VCARVE_Recalculate_Click(self):
-        win_id=self.grab_current()
+        win_id = self.grab_current()
         self.V_Carve_Calc_Click()
         try:
             win_id.withdraw()
@@ -3678,11 +3678,11 @@ class Application(Frame):
 
     def CLEAN_Recalculate_Click(self):
         TSTART = time()
-        win_id=self.grab_current()
+        win_id = self.grab_current()
         if self.clean_segment == []:
             mess = "Calculate V-Carve must be executed\n"
             mess = mess + "prior to Calculating Cleanup"
-            message.message_box("Cleanup Info",mess)
+            message.message_box("Cleanup Info", mess)
         else:
             stop = self.Clean_Calc_Click("straight")
             if stop != 1:
@@ -3698,7 +3698,7 @@ class Application(Frame):
         #print "time for cleanup calculations: ",time()-TSTART
 
     def Write_Clean_Click(self):
-        win_id=self.grab_current()
+        win_id = self.grab_current()
         if (self.clean_P.get() + \
             self.clean_X.get() + \
             self.clean_Y.get() + \
@@ -3709,15 +3709,15 @@ class Application(Frame):
                 mess = "Calculate Cleanup must be executed\n"
                 mess = mess + "prior to saving G-Code\n"
                 mess = mess + "(Or no Cleanup paths were found)"
-                message.message_box("Cleanup Info",mess)
+                message.message_box("Cleanup Info", mess)
             else:
                 self.menu_File_Save_clean_G_Code_File("straight")
         else:
-            mess =        "Cleanup Operation must be set and\n"
+            mess = "Cleanup Operation must be set and\n"
             mess = mess + "Calculate Cleanup must be executed\n"
             mess = mess + "prior to Saving Cleanup G-Code\n"
             mess = mess + "(Or no V Cleanup paths were found)"
-            message.message_box("Cleanup Info",mess)
+            message.message_box("Cleanup Info", mess)
         try:
             win_id.withdraw()
             win_id.deiconify()
@@ -3726,7 +3726,7 @@ class Application(Frame):
             pass
 
     def Write_V_Clean_Click(self):
-        win_id=self.grab_current()
+        win_id = self.grab_current()
         if (self.clean_P.get() + \
             self.clean_X.get() + \
             self.clean_Y.get() + \
@@ -3737,15 +3737,15 @@ class Application(Frame):
                 mess = "Calculate Cleanup must be executed\n"
                 mess = mess + "prior to saving V Cleanup G-Code\n"
                 mess = mess + "(Or no Cleanup paths were found)"
-                message.message_box("Cleanup Info",mess)
+                message.message_box("Cleanup Info", mess)
             else:
                 self.menu_File_Save_clean_G_Code_File("v-bit")
         else:
-            mess =        "Cleanup Operation must be set and\n"
+            mess = "Cleanup Operation must be set and\n"
             mess = mess + "Calculate Cleanup must be executed\n"
             mess = mess + "prior to Saving Cleanup G-Code\n"
             mess = mess + "(Or no Cleanup paths were found)"
-            message.message_box("Cleanup Info",mess)
+            message.message_box("Cleanup Info", mess)
         try:
             win_id.withdraw()
             win_id.deiconify()
@@ -3755,35 +3755,35 @@ class Application(Frame):
 
     ######################
 
-    def Close_Current_Window_Click(self,event=None):
+    def Close_Current_Window_Click(self, event=None):
         current_name = event.widget.winfo_parent()
         win_id = event.widget.nametowidget(current_name)
         win_id.destroy()
 
     def Stop_Click(self, event):
         global STOP_CALC
-        STOP_CALC=1
+        STOP_CALC = 1
 
     def calc_vbit_dia(self):
-        bit_dia   = float(self.v_bit_dia.get())
+        bit_dia = float(self.v_bit_dia.get())
         depth_lim = float(self.v_depth_lim.get())
-        half_angle = radians( float(self.v_bit_angle.get())/2.0 )
+        half_angle = radians( float(self.v_bit_angle.get()) / 2.0 )
 
         if self.inlay.get() and (self.bit_shape.get() == "VBIT"):
             allowance = float(self.allowance.get())
-            bit_dia = -2*allowance*tan(half_angle)
+            bit_dia = -2 * allowance * tan(half_angle)
             bit_dia = max(bit_dia, 0.001)
             return bit_dia
 
         if depth_lim < 0.0:
             if   self.bit_shape.get() == "VBIT":
-                bit_dia    = -2*depth_lim*tan(half_angle)
+                bit_dia = -2 * depth_lim * tan(half_angle)
             elif self.bit_shape.get() == "BALL":
                 R = bit_dia / 2.0
                 if (depth_lim > -R):
-                    bit_dia = 2*sqrt( R**2 - (R+depth_lim)**2)
+                    bit_dia = 2 * sqrt( R ** 2 - (R + depth_lim) ** 2)
                 else:
-                    bit_dia   = float(self.v_bit_dia.get())
+                    bit_dia = float(self.v_bit_dia.get())
             elif self.bit_shape.get() == "FLAT":
                 R = bit_dia / 2.0
             else:
@@ -3793,8 +3793,8 @@ class Application(Frame):
     def calc_depth_limit(self):
         try:
             if  self.bit_shape.get() == "VBIT":
-                half_angle = radians( float(self.v_bit_angle.get())/2.0 )
-                bit_depth = -float(self.v_bit_dia.get())/2.0 /tan(half_angle)
+                half_angle = radians( float(self.v_bit_angle.get()) / 2.0 )
+                bit_depth = -float(self.v_bit_dia.get()) / 2.0 / tan(half_angle)
             elif self.bit_shape.get() == "BALL":
                 bit_depth = -float( self.v_bit_dia.get()) / 2.0
             elif self.bit_shape.get() == "FLAT":
@@ -3805,21 +3805,21 @@ class Application(Frame):
             depth_lim = float(self.v_depth_lim.get())
             if self.bit_shape.get() != "FLAT":
                 if depth_lim < 0.0:
-                    self.maxcut.set("%.3f" %(max(bit_depth, depth_lim)))
+                    self.maxcut.set("%.3f" % (max(bit_depth, depth_lim)))
                 else:
-                    self.maxcut.set("%.3f" %(bit_depth))
+                    self.maxcut.set("%.3f" % (bit_depth))
             else:
                 if depth_lim < 0.0:
-                    self.maxcut.set("%.3f" %(depth_lim))
+                    self.maxcut.set("%.3f" % (depth_lim))
                 else:
-                    self.maxcut.set("%.3f" %(bit_depth))
+                    self.maxcut.set("%.3f" % (bit_depth))
         except:
             self.maxcut.set("error")
 
     def calc_r_inlay_top(self):
-        half_angle  = radians( float(self.v_bit_angle.get())/2.0 )
+        half_angle = radians( float(self.v_bit_angle.get()) / 2.0 )
         inlay_depth = self.calc_r_inlay_depth()
-        r_inlay_top = tan(half_angle)*inlay_depth
+        r_inlay_top = tan(half_angle) * inlay_depth
         return r_inlay_top
 
     def calc_r_inlay_depth(self):
@@ -3941,7 +3941,7 @@ class Application(Frame):
             return 3     # Value not a number
         return 1         # Value is a valid number changes do not require recalc
     def Entry_Feed_Callback(self, varName, index, mode):
-        self.entry_set(self.Entry_Feed,self.Entry_Feed_Check())
+        self.entry_set(self.Entry_Feed, self.Entry_Feed_Check())
     #############################
     def Entry_Plunge_Check(self):
         try:
@@ -3953,7 +3953,7 @@ class Application(Frame):
             return 3     # Value not a number
         return 1         # Value is a valid number changes do not require recalc
     def Entry_Plunge_Callback(self, varName, index, mode):
-        self.entry_set(self.Entry_Plunge,self.Entry_Plunge_Check())
+        self.entry_set(self.Entry_Plunge, self.Entry_Plunge_Check())
     #############################
     def Entry_Zsafe_Check(self):
         try:
@@ -3962,7 +3962,7 @@ class Application(Frame):
             return 3     # Value not a number
         return 1         # Value is a valid number changes do not require recalc
     def Entry_Zsafe_Callback(self, varName, index, mode):
-        self.entry_set(self.Entry_Zsafe,self.Entry_Zsafe_Check())
+        self.entry_set(self.Entry_Zsafe, self.Entry_Zsafe_Check())
     #############################
     def Entry_Zcut_Check(self):
         try:
@@ -3971,7 +3971,7 @@ class Application(Frame):
             return 3     # Value not a number
         return 1         # Value is a valid number changes do not require recalc
     def Entry_Zcut_Callback(self, varName, index, mode):
-        self.entry_set(self.Entry_Zcut,self.Entry_Zcut_Check())
+        self.entry_set(self.Entry_Zcut, self.Entry_Zcut_Check())
     #############################
     # End Right Column #
 
@@ -3995,7 +3995,7 @@ class Application(Frame):
             return 3     # Value not a number
         return 1         # Value is a valid number changes do not require recalc
     def Entry_Yoffset_Callback(self, varName, index, mode):
-        self.entry_set(self.Entry_Yoffset,self.Entry_Yoffset_Check())
+        self.entry_set(self.Entry_Yoffset, self.Entry_Yoffset_Check())
     #############################
     def Entry_ArcAngle_Check(self):
         try:
@@ -4007,7 +4007,7 @@ class Application(Frame):
             return 3     # Value not a number
         return 0         # Value is a valid number
     def Entry_ArcAngle_Callback(self, varName, index, mode):
-        self.entry_set(self.Entry_ArcAngle,self.Entry_ArcAngle_Check())
+        self.entry_set(self.Entry_ArcAngle, self.Entry_ArcAngle_Check())
     #############################
     def Entry_Accuracy_Check(self):
         try:
@@ -4016,7 +4016,7 @@ class Application(Frame):
             return 3     # Value not a number
         return 0         # Value is a valid number
     def Entry_Accuracy_Callback(self, varName, index, mode):
-        self.entry_set(self.Entry_Accuracy,self.Entry_Accuracy_Check())
+        self.entry_set(self.Entry_Accuracy, self.Entry_Accuracy_Check())
     #############################
     def Entry_BoxGap_Check(self):
         try:
@@ -4028,7 +4028,7 @@ class Application(Frame):
             return 3     # Value not a number
         return 0         # Value is a valid number
     def Entry_BoxGap_Callback(self, varName, index, mode):
-        self.entry_set(self.Entry_BoxGap,self.Entry_BoxGap_Check())
+        self.entry_set(self.Entry_BoxGap, self.Entry_BoxGap_Check())
         try:
             if not bool(self.plotbox.get()):
                 self.Label_BoxGap.configure(state="disabled")
@@ -4048,8 +4048,8 @@ class Application(Frame):
         self.Recalc_RQD()
     #############################
     def Fontdir_Click(self, event):
-        win_id=self.grab_current()
-        newfontdir = askdirectory(mustexist=1,initialdir=self.fontdir.get() )
+        win_id = self.grab_current()
+        newfontdir = askdirectory(mustexist=1, initialdir=self.fontdir.get() )
         if newfontdir != "" and newfontdir != ():
             if type(newfontdir) is not str:
                 newfontdir = newfontdir.encode("utf-8")
@@ -4225,8 +4225,8 @@ class Application(Frame):
         return 0         # Value is a valid number
     def Entry_CLEAN_DIA_Callback(self, varName, index, mode):
         self.entry_set(self.Entry_CLEAN_DIA, self.Entry_CLEAN_DIA_Check() )
-        self.clean_coords=[]
-        self.v_clean_coords=[]
+        self.clean_coords = []
+        self.v_clean_coords = []
     #############################
     def Entry_STEP_OVER_Check(self):
         try:
@@ -4289,7 +4289,7 @@ class Application(Frame):
     def Entry_BMPalphamax_Check(self):
         try:
             value = float(self.bmp_alphamax.get())
-            if  value < 0.0 or value > 4.0/3.0:
+            if  value < 0.0 or value > 4.0 / 3.0:
                 self.statusMessage.set(" Alpha Max should be between 0.0 and 1.333 ")
                 return 2 # Value is invalid number
         except:
@@ -4317,64 +4317,64 @@ class Application(Frame):
     def Check_All_Variables(self):
         if self.batch.get():
             return 0
-        MAIN_error_cnt= \
-        self.entry_set(self.Entry_Yscale,  self.Entry_Yscale_Check()  ,2) +\
-        self.entry_set(self.Entry_Xscale,  self.Entry_Xscale_Check()  ,2) +\
-        self.entry_set(self.Entry_Sthick,  self.Entry_Sthick_Check()  ,2) +\
-        self.entry_set(self.Entry_Lspace,  self.Entry_Lspace_Check()  ,2) +\
-        self.entry_set(self.Entry_Cspace,  self.Entry_Cspace_Check()  ,2) +\
-        self.entry_set(self.Entry_Wspace,  self.Entry_Wspace_Check()  ,2) +\
-        self.entry_set(self.Entry_Tangle,  self.Entry_Tangle_Check()  ,2) +\
-        self.entry_set(self.Entry_Tradius, self.Entry_Tradius_Check() ,2) +\
-        self.entry_set(self.Entry_Feed,    self.Entry_Feed_Check()    ,2) +\
-        self.entry_set(self.Entry_Plunge,  self.Entry_Plunge_Check()  ,2) +\
-        self.entry_set(self.Entry_Zsafe,   self.Entry_Zsafe_Check()   ,2) +\
-        self.entry_set(self.Entry_Zcut,    self.Entry_Zcut_Check()    ,2)
+        MAIN_error_cnt = \
+            self.entry_set(self.Entry_Yscale, self.Entry_Yscale_Check(), 2) + \
+            self.entry_set(self.Entry_Xscale, self.Entry_Xscale_Check(), 2) + \
+            self.entry_set(self.Entry_Sthick, self.Entry_Sthick_Check(), 2) + \
+            self.entry_set(self.Entry_Lspace, self.Entry_Lspace_Check(), 2) + \
+            self.entry_set(self.Entry_Cspace, self.Entry_Cspace_Check(), 2) + \
+            self.entry_set(self.Entry_Wspace, self.Entry_Wspace_Check(), 2) + \
+            self.entry_set(self.Entry_Tangle, self.Entry_Tangle_Check(), 2) + \
+            self.entry_set(self.Entry_Tradius, self.Entry_Tradius_Check(), 2) + \
+            self.entry_set(self.Entry_Feed, self.Entry_Feed_Check(), 2) + \
+            self.entry_set(self.Entry_Plunge, self.Entry_Plunge_Check(), 2) + \
+            self.entry_set(self.Entry_Zsafe, self.Entry_Zsafe_Check(), 2) + \
+            self.entry_set(self.Entry_Zcut, self.Entry_Zcut_Check(), 2)
 
-        GEN_error_cnt= \
-        self.entry_set(self.Entry_Xoffset, self.Entry_Xoffset_Check() ,2) +\
-        self.entry_set(self.Entry_Yoffset, self.Entry_Yoffset_Check() ,2) +\
-        self.entry_set(self.Entry_ArcAngle,self.Entry_ArcAngle_Check(),2) +\
-        self.entry_set(self.Entry_Accuracy,self.Entry_Accuracy_Check(),2) +\
-        self.entry_set(self.Entry_BoxGap,  self.Entry_BoxGap_Check()  ,2) +\
-        self.entry_set(self.Entry_Xoffset, self.Entry_Xoffset_Check() ,2) +\
-        self.entry_set(self.Entry_Yoffset, self.Entry_Yoffset_Check() ,2) +\
-        self.entry_set(self.Entry_ArcAngle,self.Entry_ArcAngle_Check(),2) +\
-        self.entry_set(self.Entry_Accuracy,self.Entry_Accuracy_Check(),2) +\
-        self.entry_set(self.Entry_BoxGap,  self.Entry_BoxGap_Check()  ,2)
+        GEN_error_cnt = \
+            self.entry_set(self.Entry_Xoffset, self.Entry_Xoffset_Check(), 2) + \
+            self.entry_set(self.Entry_Yoffset, self.Entry_Yoffset_Check(), 2) + \
+            self.entry_set(self.Entry_ArcAngle, self.Entry_ArcAngle_Check(), 2) + \
+            self.entry_set(self.Entry_Accuracy, self.Entry_Accuracy_Check(), 2) + \
+            self.entry_set(self.Entry_BoxGap, self.Entry_BoxGap_Check(), 2) + \
+            self.entry_set(self.Entry_Xoffset, self.Entry_Xoffset_Check(), 2) + \
+            self.entry_set(self.Entry_Yoffset, self.Entry_Yoffset_Check(), 2) + \
+            self.entry_set(self.Entry_ArcAngle, self.Entry_ArcAngle_Check(), 2) + \
+            self.entry_set(self.Entry_Accuracy, self.Entry_Accuracy_Check(), 2) + \
+            self.entry_set(self.Entry_BoxGap, self.Entry_BoxGap_Check(), 2)
 
-        VCARVE_error_cnt= \
-        self.entry_set(self.Entry_Vbitangle,   self.Entry_Vbitangle_Check()   ,2) +\
-        self.entry_set(self.Entry_Vbitdia,     self.Entry_Vbitdia_Check()     ,2) +\
-        self.entry_set(self.Entry_InsideAngle, self.Entry_InsideAngle_Check() ,2) +\
-        self.entry_set(self.Entry_OutsideAngle,self.Entry_OutsideAngle_Check(),2) +\
-        self.entry_set(self.Entry_StepSize,    self.Entry_StepSize_Check()    ,2) +\
-        self.entry_set(self.Entry_CLEAN_DIA,   self.Entry_CLEAN_DIA_Check()   ,2) +\
-        self.entry_set(self.Entry_STEP_OVER,   self.Entry_STEP_OVER_Check()   ,2) +\
-        self.entry_set(self.Entry_Allowance,   self.Entry_Allowance_Check()   ,2) +\
-        self.entry_set(self.Entry_VDepthLimit, self.Entry_VDepthLimit_Check(), 2)
+        VCARVE_error_cnt = \
+            self.entry_set(self.Entry_Vbitangle, self.Entry_Vbitangle_Check(), 2) + \
+            self.entry_set(self.Entry_Vbitdia, self.Entry_Vbitdia_Check(), 2) + \
+            self.entry_set(self.Entry_InsideAngle, self.Entry_InsideAngle_Check(), 2) + \
+            self.entry_set(self.Entry_OutsideAngle, self.Entry_OutsideAngle_Check(), 2) + \
+            self.entry_set(self.Entry_StepSize, self.Entry_StepSize_Check(), 2) + \
+            self.entry_set(self.Entry_CLEAN_DIA, self.Entry_CLEAN_DIA_Check(), 2) + \
+            self.entry_set(self.Entry_STEP_OVER, self.Entry_STEP_OVER_Check(), 2) + \
+            self.entry_set(self.Entry_Allowance, self.Entry_Allowance_Check(), 2) + \
+            self.entry_set(self.Entry_VDepthLimit, self.Entry_VDepthLimit_Check(), 2)
 
-        PBM_error_cnt= \
-        self.entry_set(self.Entry_BMPoptTolerance,self.Entry_BMPoptTolerance_Check(),2) +\
-        self.entry_set(self.Entry_BMPturdsize,    self.Entry_BMPturdsize_Check()    ,2) +\
-        self.entry_set(self.Entry_BMPalphamax,    self.Entry_BMPalphamax_Check()    ,2)
+        PBM_error_cnt = \
+            self.entry_set(self.Entry_BMPoptTolerance, self.Entry_BMPoptTolerance_Check(), 2) + \
+            self.entry_set(self.Entry_BMPturdsize, self.Entry_BMPturdsize_Check(), 2) + \
+            self.entry_set(self.Entry_BMPalphamax, self.Entry_BMPalphamax_Check(), 2)
 
-        ERROR_cnt = MAIN_error_cnt + GEN_error_cnt + VCARVE_error_cnt +PBM_error_cnt
+        ERROR_cnt = MAIN_error_cnt + GEN_error_cnt + VCARVE_error_cnt + PBM_error_cnt
 
         if (ERROR_cnt > 0):
             self.statusbar.configure( bg = 'red' )
         if (PBM_error_cnt > 0):
-            self.statusMessage.set(\
-                " Entry Error Detected: Check Entry Values in PBM Settings Window ")
+            self.statusMessage.set( \
+                                   " Entry Error Detected: Check Entry Values in PBM Settings Window ")
         if (VCARVE_error_cnt > 0):
-            self.statusMessage.set(\
-                " Entry Error Detected: Check Entry Values in V-Carve Settings Window ")
+            self.statusMessage.set( \
+                                   " Entry Error Detected: Check Entry Values in V-Carve Settings Window ")
         if (GEN_error_cnt > 0):
-            self.statusMessage.set(\
-                " Entry Error Detected: Check Entry Values in General Settings Window ")
+            self.statusMessage.set( \
+                                   " Entry Error Detected: Check Entry Values in General Settings Window ")
         if (MAIN_error_cnt > 0):
-            self.statusMessage.set(\
-                " Entry Error Detected: Check Entry Values in Main Window ")
+            self.statusMessage.set( \
+                                   " Entry Error Detected: Check Entry Values in Main Window ")
 
         return ERROR_cnt
 
@@ -4388,20 +4388,20 @@ class Application(Frame):
         # Use grab_set to prevent user input in the main window during calculations
         vcalc_status.grab_set()
 
-        self.statusbar2 = Label(vcalc_status, textvariable=self.statusMessage, bd=1, relief=FLAT , height=1, anchor=W)
-        self.statusbar2.place(x=130+12+12, y=6, width=350, height=30)
+        self.statusbar2 = Label(vcalc_status, textvariable=self.statusMessage, bd=1, relief=FLAT, height=1, anchor=W)
+        self.statusbar2.place(x=130 + 12 + 12, y=6, width=350, height=30)
         self.statusMessage.set("Starting Calculation")
         self.statusbar.configure( bg = 'yellow' )
 
-        self.stop_button = Button(vcalc_status,text="Stop Calculation")
+        self.stop_button = Button(vcalc_status, text="Stop Calculation")
         self.stop_button.place(x=12, y=17, width=130, height=30)
         self.stop_button.bind("<ButtonRelease-1>", self.Stop_Click)
 
-        self.Checkbutton_v_pplot = Checkbutton(vcalc_status,text="Plot During V-Carve Calculation", anchor=W)
-        self.Checkbutton_v_pplot.place(x=130+12+12, y=34, width=300, height=23)
+        self.Checkbutton_v_pplot = Checkbutton(vcalc_status, text="Plot During V-Carve Calculation", anchor=W)
+        self.Checkbutton_v_pplot.place(x=130 + 12 + 12, y=34, width=300, height=23)
         self.Checkbutton_v_pplot.configure(variable=self.v_pplot)
 
-        vcalc_status.resizable(0,0)
+        vcalc_status.resizable(0, 0)
         vcalc_status.title('Executing V-Carve')
         vcalc_status.iconname("F-Engrave")
 
@@ -4425,7 +4425,7 @@ class Application(Frame):
 
     ##########################################################################
     ##########################################################################
-    def Clean_Calc_Click(self,bit_type="straight"):
+    def Clean_Calc_Click(self, bit_type="straight"):
         if (self.Check_All_Variables() > 0):
             return 1
 
@@ -4434,16 +4434,16 @@ class Application(Frame):
             # Use grab_set to prevent user input in the main window during calculations
             vcalc_status.grab_set()
 
-            self.statusbar2 = Label(vcalc_status, textvariable=self.statusMessage, bd=1, relief=FLAT , height=1)
-            self.statusbar2.place(x=130+12+12, y=12, width=350, height=30)
+            self.statusbar2 = Label(vcalc_status, textvariable=self.statusMessage, bd=1, relief=FLAT, height=1)
+            self.statusbar2.place(x=130 + 12 + 12, y=12, width=350, height=30)
             self.statusMessage.set("Starting Clean Calculation")
             self.statusbar.configure( bg = 'yellow' )
 
-            self.stop_button = Button(vcalc_status,text="Stop Calculation")
+            self.stop_button = Button(vcalc_status, text="Stop Calculation")
             self.stop_button.place(x=12, y=12, width=130, height=30)
             self.stop_button.bind("<ButtonRelease-1>", self.Stop_Click)
 
-            vcalc_status.resizable(0,0)
+            vcalc_status.resizable(0, 0)
             vcalc_status.title('Executing Clean Area Calculation')
             vcalc_status.iconname("F-Engrave")
 
@@ -4476,35 +4476,35 @@ class Application(Frame):
         self.Recalc_RQD()
 
     def Entry_units_var_Callback(self):
-        if (self.units.get() == 'in') and (self.funits.get()=='mm/min'):
-            self.Scale_Linear_Inputs(1/25.4)
+        if (self.units.get() == 'in') and (self.funits.get() == 'mm/min'):
+            self.Scale_Linear_Inputs(1 / 25.4)
             self.funits.set('in/min')
-        elif (self.units.get() == 'mm') and (self.funits.get()=='in/min'):
+        elif (self.units.get() == 'mm') and (self.funits.get() == 'in/min'):
             self.Scale_Linear_Inputs(25.4)
             self.funits.set('mm/min')
         self.Recalc_RQD()
 
     def Scale_Linear_Inputs(self, factor=1.0):
         try:
-            self.YSCALE.set(     '%.3g' %(float(self.YSCALE.get()     )*factor) )
-            self.TRADIUS.set(    '%.3g' %(float(self.TRADIUS.get()    )*factor) )
-            self.ZSAFE.set(      '%.3g' %(float(self.ZSAFE.get()      )*factor) )
-            self.ZCUT.set(       '%.3g' %(float(self.ZCUT.get()       )*factor) )
-            self.STHICK.set(     '%.3g' %(float(self.STHICK.get()     )*factor) )
-            self.FEED.set(       '%.3g' %(float(self.FEED.get()       )*factor) )
-            self.PLUNGE.set(     '%.3g' %(float(self.PLUNGE.get()     )*factor) )
-            self.boxgap.set(     '%.3g' %(float(self.boxgap.get()     )*factor) )
-            self.v_bit_dia.set(  '%.3g' %(float(self.v_bit_dia.get()  )*factor) )
-            self.v_depth_lim.set('%.3g' %(float(self.v_depth_lim.get())*factor) )
-            self.v_step_len.set( '%.3g' %(float(self.v_step_len.get() )*factor) )
-            self.allowance.set(  '%.3g' %(float(self.allowance.get()  )*factor) )
-            self.v_max_cut.set(  '%.3g' %(float(self.v_max_cut.get()  )*factor) )
-            self.v_rough_stk.set('%.3g' %(float(self.v_rough_stk.get())*factor) )
-            self.xorigin.set(    '%.3g' %(float(self.xorigin.get()    )*factor) )
-            self.yorigin.set(    '%.3g' %(float(self.yorigin.get()    )*factor) )
-            self.accuracy.set(   '%.3g' %(float(self.accuracy.get()   )*factor) )
-            self.clean_v.set(    '%.3g' %(float(self.clean_v.get()    )*factor) )
-            self.clean_dia.set(  '%.3g' %(float(self.clean_dia.get()  )*factor) )
+            self.YSCALE.set(     '%.3g' % (float(self.YSCALE.get()     ) * factor) )
+            self.TRADIUS.set(    '%.3g' % (float(self.TRADIUS.get()    ) * factor) )
+            self.ZSAFE.set(      '%.3g' % (float(self.ZSAFE.get()      ) * factor) )
+            self.ZCUT.set(       '%.3g' % (float(self.ZCUT.get()       ) * factor) )
+            self.STHICK.set(     '%.3g' % (float(self.STHICK.get()     ) * factor) )
+            self.FEED.set(       '%.3g' % (float(self.FEED.get()       ) * factor) )
+            self.PLUNGE.set(     '%.3g' % (float(self.PLUNGE.get()     ) * factor) )
+            self.boxgap.set(     '%.3g' % (float(self.boxgap.get()     ) * factor) )
+            self.v_bit_dia.set(  '%.3g' % (float(self.v_bit_dia.get()  ) * factor) )
+            self.v_depth_lim.set('%.3g' % (float(self.v_depth_lim.get()) * factor) )
+            self.v_step_len.set( '%.3g' % (float(self.v_step_len.get() ) * factor) )
+            self.allowance.set(  '%.3g' % (float(self.allowance.get()  ) * factor) )
+            self.v_max_cut.set(  '%.3g' % (float(self.v_max_cut.get()  ) * factor) )
+            self.v_rough_stk.set('%.3g' % (float(self.v_rough_stk.get()) * factor) )
+            self.xorigin.set(    '%.3g' % (float(self.xorigin.get()    ) * factor) )
+            self.yorigin.set(    '%.3g' % (float(self.yorigin.get()    ) * factor) )
+            self.accuracy.set(   '%.3g' % (float(self.accuracy.get()   ) * factor) )
+            self.clean_v.set(    '%.3g' % (float(self.clean_v.get()    ) * factor) )
+            self.clean_dia.set(  '%.3g' % (float(self.clean_dia.get()  ) * factor) )
         except:
             pass
 
@@ -4514,16 +4514,16 @@ class Application(Frame):
         try:
             ymx = max(self.font[key].get_ymax() for key in self.font)
             ymn = min(self.font[key].get_ymin() for key in self.font)
-            image_height = ymx-ymn
+            image_height = ymx - ymn
         except:
             if self.units.get() == 'in':
                 image_height = 2
             else:
                 image_height = 50
         if (self.useIMGsize.get()):
-            self.YSCALE.set('%.3g' %(100 * float(self.YSCALE.get()) / image_height ))
+            self.YSCALE.set('%.3g' % (100 * float(self.YSCALE.get()) / image_height ))
         else:
-            self.YSCALE.set('%.3g' %(float(self.YSCALE.get()) / 100 * image_height ))
+            self.YSCALE.set('%.3g' % (float(self.YSCALE.get()) / 100 * image_height ))
 
         self.menu_View_Refresh()
         self.Recalc_RQD()
@@ -4541,10 +4541,10 @@ class Application(Frame):
 
     def Listbox_Key_Up(self, event):
         try:
-            select_new = int(self.Listbox_1.curselection()[0])-1
+            select_new = int(self.Listbox_1.curselection()[0]) - 1
         except:
-            select_new = self.Listbox_1.size()-2
-        self.Listbox_1.selection_clear(0,END)
+            select_new = self.Listbox_1.size() - 2
+        self.Listbox_1.selection_clear(0, END)
         self.Listbox_1.select_set(select_new)
         try:
             self.fontfile.set(self.Listbox_1.get(select_new))
@@ -4555,10 +4555,10 @@ class Application(Frame):
 
     def Listbox_Key_Down(self, event):
         try:
-            select_new = int(self.Listbox_1.curselection()[0])+1
+            select_new = int(self.Listbox_1.curselection()[0]) + 1
         except:
             select_new = 1
-        self.Listbox_1.selection_clear(0,END)
+        self.Listbox_1.selection_clear(0, END)
         self.Listbox_1.select_set(select_new)
         try:
             self.fontfile.set(self.Listbox_1.get(select_new))
@@ -4586,9 +4586,9 @@ class Application(Frame):
         init_dir = os.path.dirname(self.NGC_FILE)
         if ( not os.path.isdir(init_dir) ):
             init_dir = self.HOME_DIR
-        fileselect = askopenfilename(filetypes=[("F-Engrave G-code Files","*.ngc"),\
-                                                ("All Files","*")],\
-                                                 initialdir=init_dir)
+        fileselect = askopenfilename(filetypes=[("F-Engrave G-code Files","*.ngc"), \
+                                                ("All Files","*")], \
+                                     initialdir=init_dir)
 
         if fileselect != '' and fileselect != ():
             self.Open_G_Code_File(fileselect)
@@ -4601,43 +4601,43 @@ class Application(Frame):
         if self.POTRACE_AVAIL == TRUE:
             if PIL:
                 fileselect = askopenfilename(filetypes=[("DXF/Image Files", ("*.dxf","*.png","*.bmp","*.tif")),
-                                                    ("DXF Files","*.dxf"),\
-                                                    ("Bitmap Files",("*.bmp","*.pbm","*.ppm","*.pgm","*.pnm")),\
-                                                    ("Slower Image Files",("*.jpg","*.png","*.gif","*.tif")),\
-                                                    ("All Files","*")],\
-                                                     initialdir=init_dir)
+                                                        ("DXF Files","*.dxf"), \
+                                                        ("Bitmap Files",("*.bmp","*.pbm","*.ppm","*.pgm","*.pnm")), \
+                                                        ("Slower Image Files",("*.jpg","*.png","*.gif","*.tif")), \
+                                                        ("All Files","*")], \
+                                             initialdir=init_dir)
             else:
                 fileselect = askopenfilename(filetypes=[("DXF/Bitmap Files", ("*.dxf","*.bmp","*.pbm","*.ppm","*.pgm","*.pnm")),
-                                                    ("DXF Files","*.dxf"),\
-                                                    ("Bitmap Files",("*.bmp","*.pbm","*.ppm","*.pgm","*.pnm")),\
-                                                    ("All Files","*")],\
-                                                     initialdir=init_dir)
+                                                        ("DXF Files","*.dxf"), \
+                                                        ("Bitmap Files",("*.bmp","*.pbm","*.ppm","*.pgm","*.pnm")), \
+                                                        ("All Files","*")], \
+                                             initialdir=init_dir)
 
 
         else:
-            fileselect = askopenfilename(filetypes=[("DXF Files","*.dxf"),\
-                                                    ("All Files","*")],\
-                                                    initialdir=init_dir)
+            fileselect = askopenfilename(filetypes=[("DXF Files","*.dxf"), \
+                                                    ("All Files","*")], \
+                                         initialdir=init_dir)
 
         if fileselect != '' and fileselect != ():
-            self.IMAGE_FILE=fileselect
+            self.IMAGE_FILE = fileselect
             self.Read_image_file()
             self.DoIt()
 
-    def Open_G_Code_File(self,filename):
+    def Open_G_Code_File(self, filename):
         self.delay_calc = 1
         boxsize = "0"
         try:
-            fin = open(filename,'r')
+            fin = open(filename, 'r')
         except:
-            message.fmessage("Unable to open file: %s" %(filename))
+            message.fmessage("Unable to open file: %s" % (filename))
             return
-        text_codes=[]
+        text_codes = []
         ident = "fengrave_set"
         for line in fin:
             if ident in line:
 
-                input_code =  line.split(ident)[1].split()[0]
+                input_code = line.split(ident)[1].split()[0]
 
                 if "TCODE" in input_code:
                     code_list = line[line.find("TCODE"):].split()
@@ -4660,25 +4660,25 @@ class Application(Frame):
                 elif "outer"  in input_code:
                     self.outer.set(line[line.find("outer"):].split()[1])
                 elif "upper"      in input_code:
-                   self.upper.set(line[line.find("upper"):].split()[1])
+                    self.upper.set(line[line.find("upper"):].split()[1])
                 elif "v_flop"      in input_code:
-                   self.v_flop.set(line[line.find("v_flop"):].split()[1])
+                    self.v_flop.set(line[line.find("v_flop"):].split()[1])
                 elif "v_pplot"      in input_code:
-                   self.v_pplot.set(line[line.find("v_pplot"):].split()[1])
+                    self.v_pplot.set(line[line.find("v_pplot"):].split()[1])
                 elif "inlay"      in input_code:
-                   self.inlay.set(line[line.find("inlay"):].split()[1])
+                    self.inlay.set(line[line.find("inlay"):].split()[1])
                 elif "bmp_long"      in input_code:
-                   self.bmp_longcurve.set(line[line.find("bmp_long"):].split()[1])
+                    self.bmp_longcurve.set(line[line.find("bmp_long"):].split()[1])
                 elif "ext_char"   in input_code:
-                   self.ext_char.set(line[line.find("ext_char"):].split()[1])
+                    self.ext_char.set(line[line.find("ext_char"):].split()[1])
                 elif "useIMGsize"   in input_code:
-                   self.useIMGsize.set(line[line.find("useIMGsize"):].split()[1])
+                    self.useIMGsize.set(line[line.find("useIMGsize"):].split()[1])
                 elif "no_comments"   in input_code:
-                   self.no_comments.set(line[line.find("no_comments"):].split()[1])
+                    self.no_comments.set(line[line.find("no_comments"):].split()[1])
                 elif "show_v_path"   in input_code:
-                   self.show_v_path.set(line[line.find("show_v_path"):].split()[1])
+                    self.show_v_path.set(line[line.find("show_v_path"):].split()[1])
                 elif "show_v_area"   in input_code:
-                   self.show_v_area.set(line[line.find("show_v_area"):].split()[1])
+                    self.show_v_area.set(line[line.find("show_v_area"):].split()[1])
 
 
                 elif "plotbox"    in input_code:
@@ -4707,7 +4707,7 @@ class Application(Frame):
 
                 # STRING.set()
                 elif "arc_fit"   in input_code:
-                   self.arc_fit.set(line[line.find("arc_fit"):].split()[1])
+                    self.arc_fit.set(line[line.find("arc_fit"):].split()[1])
                 elif "YSCALE"     in input_code:
                     self.YSCALE.set(line[line.find("YSCALE"):].split()[1])
                 elif "XSCALE"     in input_code:
@@ -4801,7 +4801,7 @@ class Application(Frame):
                 elif "clean_v"       in input_code:
                     self.clean_v.set(line[line.find("clean_v"):].split()[1])
                 elif "clean_paths"    in input_code:
-                    clean_paths=(line[line.find("clean_paths"):].split()[1])
+                    clean_paths = (line[line.find("clean_paths"):].split()[1])
                     clean_split = [float(n) for n in clean_paths.split(',')]
                     if len(clean_split) > 5:
                         self.clean_P.set(bool(clean_split[0]))
@@ -4812,44 +4812,44 @@ class Application(Frame):
                         self.v_clean_X.set(bool(clean_split[5]))
                 elif "NGC_DIR"    in input_code:
                     NGC_DIR = (line[line.find("NGC_DIR"):].split("\042")[1])
-                    self.NGC_FILE     = (NGC_DIR+"/None")
+                    self.NGC_FILE = (NGC_DIR + "/None")
 
         fin.close()
 
         file_full = self.fontdir.get() + "/" + self.fontfile.get()
         fileName, fileExtension = os.path.splitext(file_full)
-        TYPE=fileExtension.upper()
+        TYPE = fileExtension.upper()
 
-        if TYPE!='.CXF' and TYPE!='.TTF' and TYPE!='':
+        if TYPE != '.CXF' and TYPE != '.TTF' and TYPE != '':
             if ( os.path.isfile(file_full) ):
                 self.input_type.set("image")
 
-        if boxsize!="0":
+        if boxsize != "0":
             self.boxgap.set( float(boxsize) * float(self.STHICK.get()) )
 
-        if (self.arc_fit.get()=="0"):
+        if (self.arc_fit.get() == "0"):
             self.arc_fit.set("none")
-        elif (self.arc_fit.get()=="1"):
+        elif (self.arc_fit.get() == "1"):
             self.arc_fit.set("center")
 
-        if (self.arc_fit.get()!="none" and self.arc_fit.get()!="center" and self.arc_fit.get()!="radius"):
+        if (self.arc_fit.get() != "none" and self.arc_fit.get() != "center" and self.arc_fit.get() != "radius"):
             self.arc_fit.set("center")
 
         if text_codes != []:
             try:
-                self.Input.delete(1.0,END)
+                self.Input.delete(1.0, END)
                 for Ch in text_codes:
                     try:
-                        self.Input.insert(END, "%c" %( unichr(int(Ch))))
+                        self.Input.insert(END, "%c" % ( unichr(int(Ch))))
                     except:
-                        self.Input.insert(END, "%c" %( chr(int(Ch))))
+                        self.Input.insert(END, "%c" % ( chr(int(Ch))))
             except:
                 self.default_text = ''
                 for Ch in text_codes:
                     try:
-                        self.default_text = self.default_text + "%c" %( unichr(int(Ch)))
+                        self.default_text = self.default_text + "%c" % ( unichr(int(Ch)))
                     except:
-                        self.default_text = self.default_text + "%c" %( chr(int(Ch)))
+                        self.default_text = self.default_text + "%c" % ( chr(int(Ch)))
 
         if self.units.get() == 'in':
             self.funits.set('in/min')
@@ -4860,7 +4860,7 @@ class Application(Frame):
         self.calc_depth_limit()
 
         temp_name, fileExtension = os.path.splitext(filename)
-        file_base=os.path.basename(temp_name)
+        file_base = os.path.basename(temp_name)
 
         self.delay_calc = 0
         if self.initComplete == 1:
@@ -4875,33 +4875,33 @@ class Application(Frame):
             init_dir = self.HOME_DIR
 
         fileName, fileExtension = os.path.splitext(self.NGC_FILE)
-        init_file=os.path.basename(fileName)
+        init_file = os.path.basename(fileName)
 
         if self.input_type.get() == "image":
             fileName, fileExtension = os.path.splitext(self.IMAGE_FILE)
-            init_file=os.path.basename(fileName)
+            init_file = os.path.basename(fileName)
         else:
-            init_file="text"
+            init_file = "text"
 
         filename = asksaveasfilename(defaultextension='.txt', \
-                                     filetypes=[("Settings File","*.txt"),("All Files","*")],\
-                                     initialdir=init_dir,\
+                                     filetypes=[("Settings File","*.txt"),("All Files","*")], \
+                                     initialdir=init_dir, \
                                      initialfile= init_file )
 
         if filename != '' and filename != ():
             try:
-                fout = open(filename,'w')
+                fout = open(filename, 'w')
             except:
-                self.statusMessage.set("Unable to open file for writing: %s" %(filename))
+                self.statusMessage.set("Unable to open file for writing: %s" % (filename))
                 self.statusbar.configure( bg = 'red' )
                 return
             for line in self.gcode:
                 try:
-                    fout.write(line+'\n')
+                    fout.write(line + '\n')
                 except:
                     fout.write('(skipping line)\n')
             fout.close()
-            self.statusMessage.set("File Saved: %s" %(filename))
+            self.statusMessage.set("File Saved: %s" % (filename))
             self.statusbar.configure( bg = 'white' )
 
 
@@ -4923,34 +4923,34 @@ class Application(Frame):
             init_dir = self.HOME_DIR
 
         fileName, fileExtension = os.path.splitext(self.NGC_FILE)
-        init_file=os.path.basename(fileName)
+        init_file = os.path.basename(fileName)
 
         if self.input_type.get() == "image":
             fileName, fileExtension = os.path.splitext(self.IMAGE_FILE)
-            init_file=os.path.basename(fileName)
+            init_file = os.path.basename(fileName)
         else:
-            init_file="text"
+            init_file = "text"
 
         filename = asksaveasfilename(defaultextension='.ngc', \
-                                     filetypes=[("G-Code File","*.ngc"),("TAP File","*.tap"),("All Files","*")],\
-                                     initialdir=init_dir,\
+                                     filetypes=[("G-Code File","*.ngc"),("TAP File","*.tap"),("All Files","*")], \
+                                     initialdir=init_dir, \
                                      initialfile= init_file )
 
         if filename != '' and filename != ():
             self.NGC_FILE = filename
             try:
-                fout = open(filename,'w')
+                fout = open(filename, 'w')
             except:
-                self.statusMessage.set("Unable to open file for writing: %s" %(filename))
+                self.statusMessage.set("Unable to open file for writing: %s" % (filename))
                 self.statusbar.configure( bg = 'red' )
                 return
             for line in self.gcode:
                 try:
-                    fout.write(line+'\n')
+                    fout.write(line + '\n')
                 except:
                     fout.write('(skipping line)\n')
             fout.close()
-            self.statusMessage.set("File Saved: %s" %(filename))
+            self.statusMessage.set("File Saved: %s" % (filename))
             self.statusbar.configure( bg = 'white' )
 
 
@@ -4965,41 +4965,41 @@ class Application(Frame):
             init_dir = self.HOME_DIR
 
         fileName, fileExtension = os.path.splitext(self.NGC_FILE)
-        init_file=os.path.basename(fileName)
+        init_file = os.path.basename(fileName)
 
         if self.input_type.get() != "text":
             fileName, fileExtension = os.path.splitext(self.IMAGE_FILE)
-            init_file=os.path.basename(fileName)
+            init_file = os.path.basename(fileName)
             fileName_tmp, fileExtension = os.path.splitext(init_file)
             init_file = fileName_tmp
         else:
-            init_file="text"
+            init_file = "text"
 
         if bit_type == "v-bit":
             init_file = init_file + "_v" + self.clean_name.get()
         else:
-            init_file = init_file +        self.clean_name.get()
+            init_file = init_file + self.clean_name.get()
 
 
         filename = asksaveasfilename(defaultextension='.ngc', \
-                                     filetypes=[("G-Code File","*.ngc"),("TAP File","*.tap"),("All Files","*")],\
-                                     initialdir=init_dir,\
+                                     filetypes=[("G-Code File","*.ngc"),("TAP File","*.tap"),("All Files","*")], \
+                                     initialdir=init_dir, \
                                      initialfile= init_file )
 
         if filename != '' and filename != ():
             try:
-                fout = open(filename,'w')
+                fout = open(filename, 'w')
             except:
-                self.statusMessage.set("Unable to open file for writing: %s" %(filename))
+                self.statusMessage.set("Unable to open file for writing: %s" % (filename))
                 self.statusbar.configure( bg = 'red' )
                 return
             for line in self.gcode:
                 try:
-                    fout.write(line+'\n')
+                    fout.write(line + '\n')
                 except:
                     fout.write('(skipping line)\n')
             fout.close()
-            self.statusMessage.set("File Saved: %s" %(filename))
+            self.statusMessage.set("File Saved: %s" % (filename))
             self.statusbar.configure( bg = 'white' )
 
     def menu_File_Save_SVG_File(self):
@@ -5010,39 +5010,39 @@ class Application(Frame):
             init_dir = self.HOME_DIR
 
         fileName, fileExtension = os.path.splitext(self.NGC_FILE)
-        init_file=os.path.basename(fileName)
+        init_file = os.path.basename(fileName)
         if self.input_type.get() != "text":
             fileName, fileExtension = os.path.splitext(self.IMAGE_FILE)
-            init_file=os.path.basename(fileName)
+            init_file = os.path.basename(fileName)
         else:
-            init_file="text"
+            init_file = "text"
 
         filename = asksaveasfilename(defaultextension='.svg', \
-                                     filetypes=[("SVG File"  ,"*.svg"),("All Files","*")],\
-                                     initialdir=init_dir,\
+                                     filetypes=[("SVG File","*.svg"),("All Files","*")], \
+                                     initialdir=init_dir, \
                                      initialfile= init_file )
 
         if filename != '' and filename != ():
             try:
-                fout = open(filename,'w')
+                fout = open(filename, 'w')
             except:
-                self.statusMessage.set("Unable to open file for writing: %s" %(filename))
+                self.statusMessage.set("Unable to open file for writing: %s" % (filename))
                 self.statusbar.configure( bg = 'red' )
                 return
             for line in self.svgcode:
                 try:
-                    fout.write(line+'\n')
+                    fout.write(line + '\n')
                 except:
                     pass
             fout.close()
 
-            self.statusMessage.set("File Saved: %s" %(filename))
+            self.statusMessage.set("File Saved: %s" % (filename))
             self.statusbar.configure( bg = 'white' )
 
     def menu_File_Save_DXF_File_close_loops(self):
         self.menu_File_Save_DXF_File(close_loops=True)
 
-    def menu_File_Save_DXF_File(self,close_loops=False):
+    def menu_File_Save_DXF_File(self, close_loops=False):
 
         DXF_CODE = self.WriteDXF(close_loops=close_loops)
         init_dir = os.path.dirname(self.NGC_FILE)
@@ -5050,33 +5050,33 @@ class Application(Frame):
             init_dir = self.HOME_DIR
 
         fileName, fileExtension = os.path.splitext(self.NGC_FILE)
-        init_file=os.path.basename(fileName)
+        init_file = os.path.basename(fileName)
         if self.input_type.get() != "text":
             fileName, fileExtension = os.path.splitext(self.IMAGE_FILE)
-            init_file=os.path.basename(fileName)
+            init_file = os.path.basename(fileName)
         else:
-            init_file="text"
+            init_file = "text"
 
         filename = asksaveasfilename(defaultextension='.dxf', \
-                                     filetypes=[("DXF File"  ,"*.dxf"),("All Files","*")],\
-                                     initialdir=init_dir,\
+                                     filetypes=[("DXF File","*.dxf"),("All Files","*")], \
+                                     initialdir=init_dir, \
                                      initialfile= init_file )
 
         if filename != '' and filename != ():
             try:
-                fout = open(filename,'w')
+                fout = open(filename, 'w')
             except:
-                self.statusMessage.set("Unable to open file for writing: %s" %(filename))
+                self.statusMessage.set("Unable to open file for writing: %s" % (filename))
                 self.statusbar.configure( bg = 'red' )
                 return
             for line in DXF_CODE:
                 try:
-                    fout.write(line+'\n')
+                    fout.write(line + '\n')
                 except:
                     pass
             fout.close()
 
-            self.statusMessage.set("File Saved: %s" %(filename))
+            self.statusMessage.set("File Saved: %s" % (filename))
             self.statusbar.configure( bg = 'white' )
 
     def menu_File_Quit(self):
@@ -5087,20 +5087,20 @@ class Application(Frame):
         self.menu_View_Refresh()
 
     def menu_View_Refresh(self):
-        if ( (not self.batch.get()) and (self.initComplete == 1) and (self.delay_calc!=1) ):
+        if ( (not self.batch.get()) and (self.initComplete == 1) and (self.delay_calc != 1) ):
             dummy_event = Event()
-            dummy_event.widget=self.master
-            self.Master_Configure(dummy_event,1)
+            dummy_event.widget = self.master
+            self.Master_Configure(dummy_event, 1)
 
     def menu_Mode_Change_Callback(self, varName, index, mode):
         self.menu_View_Refresh()
 
     def menu_Mode_Change(self):
-        self.delay_calc=1
+        self.delay_calc = 1
         dummy_event = Event()
-        dummy_event.widget=self.master
-        self.Master_Configure(dummy_event,1)
-        self.delay_calc=0
+        dummy_event.widget = self.master
+        self.Master_Configure(dummy_event, 1)
+        self.delay_calc = 0
         if self.input_type.get() == "text":
             self.Read_font_file()
         else:
@@ -5112,17 +5112,17 @@ class Application(Frame):
         self.DoIt()
 
     def menu_Help_About(self):
-        about = "F-Engrave Version %s\n\n" %(version)
+        about = "F-Engrave Version %s\n\n" % (version)
         about = about + "By Scorch.\n"
         about = about + "\163\143\157\162\143\150\100\163\143\157\162"
         about = about + "\143\150\167\157\162\153\163\056\143\157\155\n"
         about = about + "https://www.scorchworks.com/\n\n"
         try:
-            python_version = "%d.%d.%d" %(sys.version_info.major,sys.version_info.minor,sys.version_info.micro)
+            python_version = "%d.%d.%d" % (sys.version_info.major,sys.version_info.minor,sys.version_info.micro)
         except:
             python_version = ""
-        about = about + "Python "+python_version+" (%d bit)" %(struct.calcsize("P") * 8)
-        message.message_box("About F-Engrave",about)
+        about = about + "Python " + python_version + " (%d bit)" % (struct.calcsize("P") * 8)
+        message.message_box("About F-Engrave", about)
 
     def menu_Help_Web(self):
         webbrowser.open_new(r"http://www.scorchworks.com/Fengrave/fengrave_doc.html")
@@ -5170,12 +5170,12 @@ class Application(Frame):
         h = int(self.master.winfo_height())
         if (self.x, self.y) == (-1,-1):
             self.x, self.y = x,y
-        if abs(self.w-w)>10 or abs(self.h-h)>10 or update==1:
+        if abs(self.w - w) > 10 or abs(self.h - h) > 10 or update == 1:
             ###################################################
             #  Form changed Size (resized) adjust as required #
             ###################################################
-            self.w=w
-            self.h=h
+            self.w = w
+            self.h = h
             #canvas
             if self.cut_type.get() == "v-carve":
                 self.V_Carve_Calc.configure(state="normal", command=None)
@@ -5196,23 +5196,23 @@ class Application(Frame):
                 self.Checkbutton_useIMGsize.place_forget()
 
                 # Left Column #
-                w_label=90
-                w_entry=60
-                w_units=35
+                w_label = 90
+                w_entry = 60
+                w_units = 35
 
-                x_label_L=10
-                x_entry_L=x_label_L+w_label+10
-                x_units_L=x_entry_L+w_entry+5
+                x_label_L = 10
+                x_entry_L = x_label_L + w_label + 10
+                x_units_L = x_entry_L + w_entry + 5
 
-                Yloc=6
-                self.Label_font_prop.place(x=x_label_L, y=Yloc, width=w_label*2, height=21)
-                Yloc=Yloc+24
+                Yloc = 6
+                self.Label_font_prop.place(x=x_label_L, y=Yloc, width=w_label * 2, height=21)
+                Yloc = Yloc + 24
                 self.Label_Yscale.place(x=x_label_L, y=Yloc, width=w_label, height=21)
                 self.Label_Yscale_pct.place_forget()
                 self.Label_Yscale_u.place(x=x_units_L, y=Yloc, width=w_units, height=21)
                 self.Entry_Yscale.place(x=x_entry_L, y=Yloc, width=w_entry, height=23)
 
-                Yloc=Yloc+24
+                Yloc = Yloc + 24
                 self.Label_Sthick.place(x=x_label_L, y=Yloc, width=w_label, height=21)
                 self.Label_Sthick_u.place(x=x_units_L, y=Yloc, width=w_units, height=21)
                 self.Entry_Sthick.place(x=x_entry_L, y=Yloc, width=w_entry, height=23)
@@ -5226,103 +5226,103 @@ class Application(Frame):
                     self.Label_Sthick.configure(state="normal")
                     self.Label_Sthick_u.configure(state="normal")
 
-                Yloc=Yloc+24
+                Yloc = Yloc + 24
                 self.Label_Xscale.place(x=x_label_L, y=Yloc, width=w_label, height=21)
                 self.Label_Xscale_u.place(x=x_units_L, y=Yloc, width=w_units, height=21)
                 self.Entry_Xscale.place(x=x_entry_L, y=Yloc, width=w_entry, height=23)
 
-                Yloc=Yloc+24
+                Yloc = Yloc + 24
                 self.Label_Cspace.place(x=x_label_L, y=Yloc, width=w_label, height=21)
                 self.Label_Cspace_u.place(x=x_units_L, y=Yloc, width=w_units, height=21)
                 self.Entry_Cspace.place(x=x_entry_L, y=Yloc, width=w_entry, height=23)
 
-                Yloc=Yloc+24
+                Yloc = Yloc + 24
                 self.Label_Wspace.place(x=x_label_L, y=Yloc, width=w_label, height=21)
                 self.Label_Wspace_u.place(x=x_units_L, y=Yloc, width=w_units, height=21)
                 self.Entry_Wspace.place(x=x_entry_L, y=Yloc, width=w_entry, height=23)
 
-                Yloc=Yloc+24
+                Yloc = Yloc + 24
                 self.Label_Lspace.place(x=x_label_L, y=Yloc, width=w_label, height=21)
                 self.Entry_Lspace.place(x=x_entry_L, y=Yloc, width=w_entry, height=23)
 
-                Yloc=Yloc+24+12
-                self.separator1.place(x=x_label_L, y=Yloc,width=w_label+75+40, height=2)
-                Yloc=Yloc+6
-                self.Label_pos_orient.place(x=x_label_L, y=Yloc, width=w_label*2, height=21)
+                Yloc = Yloc + 24 + 12
+                self.separator1.place(x=x_label_L, y=Yloc, width=w_label + 75 + 40, height=2)
+                Yloc = Yloc + 6
+                self.Label_pos_orient.place(x=x_label_L, y=Yloc, width=w_label * 2, height=21)
 
-                Yloc=Yloc+24
+                Yloc = Yloc + 24
                 self.Label_Tangle.place(x=x_label_L, y=Yloc, width=w_label, height=21)
                 self.Label_Tangle_u.place(x=x_units_L, y=Yloc, width=w_units, height=21)
                 self.Entry_Tangle.place(x=x_entry_L, y=Yloc, width=w_entry, height=23)
 
-                Yloc=Yloc+24
+                Yloc = Yloc + 24
                 self.Label_Justify.place(x=x_label_L, y=Yloc, width=w_label, height=21)
-                self.Justify_OptionMenu.place(x=x_entry_L, y=Yloc, width=w_entry+40, height=23)
+                self.Justify_OptionMenu.place(x=x_entry_L, y=Yloc, width=w_entry + 40, height=23)
 
-                Yloc=Yloc+24
+                Yloc = Yloc + 24
                 self.Label_Origin.place(x=x_label_L, y=Yloc, width=w_label, height=21)
-                self.Origin_OptionMenu.place(x=x_entry_L, y=Yloc, width=w_entry+40, height=23)
+                self.Origin_OptionMenu.place(x=x_entry_L, y=Yloc, width=w_entry + 40, height=23)
 
-                Yloc=Yloc+24
+                Yloc = Yloc + 24
                 self.Label_flip.place(x=x_label_L, y=Yloc, width=w_label, height=21)
-                self.Checkbutton_flip.place(x=x_entry_L, y=Yloc, width=w_entry+40, height=23)
+                self.Checkbutton_flip.place(x=x_entry_L, y=Yloc, width=w_entry + 40, height=23)
 
-                Yloc=Yloc+24
+                Yloc = Yloc + 24
                 self.Label_mirror.place(x=x_label_L, y=Yloc, width=w_label, height=21)
-                self.Checkbutton_mirror.place(x=x_entry_L, y=Yloc, width=w_entry+40, height=23)
+                self.Checkbutton_mirror.place(x=x_entry_L, y=Yloc, width=w_entry + 40, height=23)
 
-                Yloc=Yloc+24+12
-                self.separator2.place(x=x_label_L, y=Yloc,width=w_label+75+40, height=2)
-                Yloc=Yloc+6
-                self.Label_text_on_arc.place(x=x_label_L, y=Yloc, width=w_label*2, height=21)
+                Yloc = Yloc + 24 + 12
+                self.separator2.place(x=x_label_L, y=Yloc, width=w_label + 75 + 40, height=2)
+                Yloc = Yloc + 6
+                self.Label_text_on_arc.place(x=x_label_L, y=Yloc, width=w_label * 2, height=21)
 
-                Yloc=Yloc+24
+                Yloc = Yloc + 24
                 self.Label_Tradius.place(x=x_label_L, y=Yloc, width=w_label, height=21)
                 self.Label_Tradius_u.place(x=x_units_L, y=Yloc, width=w_units, height=21)
                 self.Entry_Tradius.place(x=x_entry_L, y=Yloc, width=w_entry, height=23)
 
-                Yloc=Yloc+24
+                Yloc = Yloc + 24
                 self.Label_outer.place(x=x_label_L, y=Yloc, width=w_label, height=21)
-                self.Checkbutton_outer.place(x=x_entry_L, y=Yloc, width=w_entry+40, height=23)
+                self.Checkbutton_outer.place(x=x_entry_L, y=Yloc, width=w_entry + 40, height=23)
 
-                Yloc=Yloc+24
+                Yloc = Yloc + 24
                 self.Label_upper.place(x=x_label_L, y=Yloc, width=w_label, height=21)
-                self.Checkbutton_upper.place(x=x_entry_L, y=Yloc, width=w_entry+40, height=23)
+                self.Checkbutton_upper.place(x=x_entry_L, y=Yloc, width=w_entry + 40, height=23)
 
-                Yloc=Yloc+24+12
-                self.separator3.place(x=x_label_L, y=Yloc,width=w_label+75+40, height=2)
+                Yloc = Yloc + 24 + 12
+                self.separator3.place(x=x_label_L, y=Yloc, width=w_label + 75 + 40, height=2)
 
                 # End Left Column #
 
                 # Start Right Column
-                w_label=90
-                w_entry=60
-                w_units=35
+                w_label = 90
+                w_entry = 60
+                w_units = 35
 
-                x_label_R=self.w - 220
-                x_entry_R=x_label_R+w_label+10
-                x_units_R=x_entry_R+w_entry+5
+                x_label_R = self.w - 220
+                x_entry_R = x_label_R + w_label + 10
+                x_units_R = x_entry_R + w_entry + 5
 
-                Yloc=6
-                self.Label_gcode_opt.place(x=x_label_R, y=Yloc, width=w_label*2, height=21)
+                Yloc = 6
+                self.Label_gcode_opt.place(x=x_label_R, y=Yloc, width=w_label * 2, height=21)
 
-                Yloc=Yloc+24
+                Yloc = Yloc + 24
                 self.Entry_Feed.place(  x=x_entry_R, y=Yloc, width=w_entry, height=23)
                 self.Label_Feed.place(  x=x_label_R, y=Yloc, width=w_label, height=21)
-                self.Label_Feed_u.place(x=x_units_R, y=Yloc, width=w_units+15, height=21)
+                self.Label_Feed_u.place(x=x_units_R, y=Yloc, width=w_units + 15, height=21)
 
-                Yloc=Yloc+24
+                Yloc = Yloc + 24
                 self.Entry_Plunge.place(  x=x_entry_R, y=Yloc, width=w_entry, height=23)
                 self.Label_Plunge.place(  x=x_label_R, y=Yloc, width=w_label, height=21)
-                self.Label_Plunge_u.place(x=x_units_R, y=Yloc, width=w_units+15, height=21)
+                self.Label_Plunge_u.place(x=x_units_R, y=Yloc, width=w_units + 15, height=21)
 
-                Yloc=Yloc+24
+                Yloc = Yloc + 24
                 self.Entry_Zsafe.place(  x=x_entry_R, y=Yloc, width=w_entry, height=23)
                 self.Label_Zsafe.place(  x=x_label_R, y=Yloc, width=w_label, height=21)
                 self.Label_Zsafe_u.place(x=x_units_R, y=Yloc, width=w_units, height=21)
 
 
-                Yloc=Yloc+24
+                Yloc = Yloc + 24
                 self.Label_Zcut.place(  x=x_label_R, y=Yloc, width=w_label, height=21)
                 self.Label_Zcut_u.place(x=x_units_R, y=Yloc, width=w_units, height=21)
                 self.Entry_Zcut.place(  x=x_entry_R, y=Yloc, width=w_entry, height=23)
@@ -5336,31 +5336,31 @@ class Application(Frame):
                     self.Label_Zcut.configure(state="normal")
                     self.Label_Zcut_u.configure(state="normal")
 
-                Yloc=Yloc+24+6
-                self.Label_List_Box.place(x=x_label_R+0, y=Yloc, width=113, height=22)
+                Yloc = Yloc + 24 + 6
+                self.Label_List_Box.place(x=x_label_R + 0, y=Yloc, width=113, height=22)
 
-                Yloc=Yloc+24
-                self.Listbox_1_frame.place(x=x_label_R+0, y=Yloc, width=160+25, height = self.h-324)
-                self.Label_fontfile.place(x=x_label_R, y=self.h-165, width=w_label+75, height=21)
-                self.Checkbutton_fontdex.place(x=x_label_R, y=self.h-145, width=185, height=23)
+                Yloc = Yloc + 24
+                self.Listbox_1_frame.place(x=x_label_R + 0, y=Yloc, width=160 + 25, height = self.h - 324)
+                self.Label_fontfile.place(x=x_label_R, y=self.h - 165, width=w_label + 75, height=21)
+                self.Checkbutton_fontdex.place(x=x_label_R, y=self.h - 145, width=185, height=23)
 
                 # Buttons etc.
 
-                Ybut=self.h-60
+                Ybut = self.h - 60
                 self.Recalculate.place(x=12, y=Ybut, width=95, height=30)
 
-                Ybut=self.h-60
+                Ybut = self.h - 60
                 self.V_Carve_Calc.place(x=x_label_R, y=Ybut, width=100, height=30)
 
-                Ybut=self.h-105
+                Ybut = self.h - 105
                 self.Radio_Cut_E.place(x=x_label_R, y=Ybut, width=185, height=23)
-                Ybut=self.h-85
+                Ybut = self.h - 85
                 self.Radio_Cut_V.place(x=x_label_R, y=Ybut, width=185, height=23)
 
-                self.PreviewCanvas.configure( width = self.w-455, height = self.h-160 )
+                self.PreviewCanvas.configure( width = self.w - 455, height = self.h - 160 )
                 self.PreviewCanvas_frame.place(x=220, y=10)
-                self.Input_Label.place(x=222, y=self.h-130, width=112, height=21, anchor=W)
-                self.Input_frame.place(x=222, y=self.h-110, width=self.w-455, height=75)
+                self.Input_Label.place(x=222, y=self.h - 130, width=112, height=21, anchor=W)
+                self.Input_frame.place(x=222, y=self.h - 110, width=self.w - 455, height=75)
 
             else:
                 self.Label_font_prop.configure(text="Image Properties:")
@@ -5371,17 +5371,17 @@ class Application(Frame):
                 self.Label_flip.configure(text="Flip Image")
                 self.Label_mirror.configure(text="Mirror Image")
                 # Left Column #
-                w_label=90
-                w_entry=60
-                w_units=35
+                w_label = 90
+                w_entry = 60
+                w_units = 35
 
-                x_label_L=10
-                x_entry_L=x_label_L+w_label+10
-                x_units_L=x_entry_L+w_entry+5
+                x_label_L = 10
+                x_entry_L = x_label_L + w_label + 10
+                x_units_L = x_entry_L + w_entry + 5
 
-                Yloc=6
-                self.Label_font_prop.place(x=x_label_L, y=Yloc, width=w_label*2, height=21)
-                Yloc=Yloc+24
+                Yloc = 6
+                self.Label_font_prop.place(x=x_label_L, y=Yloc, width=w_label * 2, height=21)
+                Yloc = Yloc + 24
                 self.Label_Yscale.place(x=x_label_L, y=Yloc, width=w_label, height=21)
                 if (self.useIMGsize.get()):
                     self.Label_Yscale_u.place_forget()
@@ -5392,11 +5392,11 @@ class Application(Frame):
 
                 self.Entry_Yscale.place(x=x_entry_L, y=Yloc, width=w_entry, height=23)
 
-                Yloc=Yloc+24
+                Yloc = Yloc + 24
                 self.Label_useIMGsize.place(x=x_label_L, y=Yloc, width=w_label, height=21)
-                self.Checkbutton_useIMGsize.place(x=x_entry_L, y=Yloc, width=w_entry+40, height=23)
+                self.Checkbutton_useIMGsize.place(x=x_entry_L, y=Yloc, width=w_entry + 40, height=23)
 
-                Yloc=Yloc+24
+                Yloc = Yloc + 24
                 self.Label_Sthick.place(x=x_label_L, y=Yloc, width=w_label, height=21)
                 self.Label_Sthick_u.place(x=x_units_L, y=Yloc, width=w_units, height=21)
                 self.Entry_Sthick.place(x=x_entry_L, y=Yloc, width=w_entry, height=23)
@@ -5410,7 +5410,7 @@ class Application(Frame):
                     self.Label_Sthick_u.configure(state="normal")
 
 
-                Yloc=Yloc+24
+                Yloc = Yloc + 24
                 self.Label_Xscale.place(x=x_label_L, y=Yloc, width=w_label, height=21)
                 self.Label_Xscale_u.place(x=x_units_L, y=Yloc, width=w_units, height=21)
                 self.Entry_Xscale.place(x=x_entry_L, y=Yloc, width=w_entry, height=23)
@@ -5426,12 +5426,12 @@ class Application(Frame):
                 self.Label_Lspace.place_forget()
                 self.Entry_Lspace.place_forget()
 
-                Yloc=Yloc+24+12
-                self.separator1.place(x=x_label_L, y=Yloc,width=w_label+75+40, height=2)
-                Yloc=Yloc+6
-                self.Label_pos_orient.place(x=x_label_L, y=Yloc, width=w_label*2, height=21)
+                Yloc = Yloc + 24 + 12
+                self.separator1.place(x=x_label_L, y=Yloc, width=w_label + 75 + 40, height=2)
+                Yloc = Yloc + 6
+                self.Label_pos_orient.place(x=x_label_L, y=Yloc, width=w_label * 2, height=21)
 
-                Yloc=Yloc+24
+                Yloc = Yloc + 24
                 self.Label_Tangle.place(x=x_label_L, y=Yloc, width=w_label, height=21)
                 self.Label_Tangle_u.place(x=x_units_L, y=Yloc, width=w_units, height=21)
                 self.Entry_Tangle.place(x=x_entry_L, y=Yloc, width=w_entry, height=23)
@@ -5439,17 +5439,17 @@ class Application(Frame):
                 self.Label_Justify.place_forget()
                 self.Justify_OptionMenu.place_forget()
 
-                Yloc=Yloc+24
+                Yloc = Yloc + 24
                 self.Label_Origin.place(x=x_label_L, y=Yloc, width=w_label, height=21)
-                self.Origin_OptionMenu.place(x=x_entry_L, y=Yloc, width=w_entry+40, height=23)
+                self.Origin_OptionMenu.place(x=x_entry_L, y=Yloc, width=w_entry + 40, height=23)
 
-                Yloc=Yloc+24
+                Yloc = Yloc + 24
                 self.Label_flip.place(x=x_label_L, y=Yloc, width=w_label, height=21)
-                self.Checkbutton_flip.place(x=x_entry_L, y=Yloc, width=w_entry+40, height=23)
+                self.Checkbutton_flip.place(x=x_entry_L, y=Yloc, width=w_entry + 40, height=23)
 
-                Yloc=Yloc+24
+                Yloc = Yloc + 24
                 self.Label_mirror.place(x=x_label_L, y=Yloc, width=w_label, height=21)
-                self.Checkbutton_mirror.place(x=x_entry_L, y=Yloc, width=w_entry+40, height=23)
+                self.Checkbutton_mirror.place(x=x_entry_L, y=Yloc, width=w_entry + 40, height=23)
 
                 self.Label_text_on_arc.place_forget()
                 self.Label_Tradius.place_forget()
@@ -5462,33 +5462,33 @@ class Application(Frame):
 
                 # End Left Column #
                 # Start Right Column Items
-                x_label_R=x_label_L
-                x_entry_R=x_entry_L
-                x_units_R=x_units_L
+                x_label_R = x_label_L
+                x_entry_R = x_entry_L
+                x_units_R = x_units_L
 
-                Yloc=Yloc+24+12
-                self.separator2.place(x=x_label_R, y=Yloc,width=w_label+75+40, height=2)
+                Yloc = Yloc + 24 + 12
+                self.separator2.place(x=x_label_R, y=Yloc, width=w_label + 75 + 40, height=2)
 
-                Yloc=Yloc+6
-                self.Label_gcode_opt.place(x=x_label_R, y=Yloc, width=w_label*2, height=21)
+                Yloc = Yloc + 6
+                self.Label_gcode_opt.place(x=x_label_R, y=Yloc, width=w_label * 2, height=21)
 
-                Yloc=Yloc+24
+                Yloc = Yloc + 24
                 self.Entry_Feed.place(  x=x_entry_R, y=Yloc, width=w_entry, height=23)
                 self.Label_Feed.place(  x=x_label_R, y=Yloc, width=w_label, height=21)
-                self.Label_Feed_u.place(x=x_units_R, y=Yloc, width=w_units+15, height=21)
+                self.Label_Feed_u.place(x=x_units_R, y=Yloc, width=w_units + 15, height=21)
 
-                Yloc=Yloc+24
+                Yloc = Yloc + 24
                 self.Entry_Plunge.place(  x=x_entry_R, y=Yloc, width=w_entry, height=23)
                 self.Label_Plunge.place(  x=x_label_R, y=Yloc, width=w_label, height=21)
-                self.Label_Plunge_u.place(x=x_units_R, y=Yloc, width=w_units+15, height=21)
+                self.Label_Plunge_u.place(x=x_units_R, y=Yloc, width=w_units + 15, height=21)
 
-                Yloc=Yloc+24
+                Yloc = Yloc + 24
                 self.Entry_Zsafe.place(  x=x_entry_R, y=Yloc, width=w_entry, height=23)
                 self.Label_Zsafe.place(  x=x_label_R, y=Yloc, width=w_label, height=21)
                 self.Label_Zsafe_u.place(x=x_units_R, y=Yloc, width=w_units, height=21)
 
 
-                Yloc=Yloc+24
+                Yloc = Yloc + 24
                 self.Label_Zcut.place(  x=x_label_R, y=Yloc, width=w_label, height=21)
                 self.Label_Zcut_u.place(x=x_units_R, y=Yloc, width=w_units, height=21)
                 self.Entry_Zcut.place(  x=x_entry_R, y=Yloc, width=w_entry, height=23)
@@ -5506,25 +5506,25 @@ class Application(Frame):
                 self.Listbox_1_frame.place_forget()
                 self.Checkbutton_fontdex.place_forget()
 
-                Yloc=Yloc+24+12
-                self.separator3.place(x=x_label_L, y=Yloc,width=w_label+75+40, height=2)
-                Yloc=Yloc+6
-                self.Label_fontfile.place(x=x_label_R, y=Yloc, width=w_label+75, height=21)
+                Yloc = Yloc + 24 + 12
+                self.separator3.place(x=x_label_L, y=Yloc, width=w_label + 75 + 40, height=2)
+                Yloc = Yloc + 6
+                self.Label_fontfile.place(x=x_label_R, y=Yloc, width=w_label + 75, height=21)
 
                 # Buttons etc.
-                offset_R=100
-                Ybut=self.h-60
+                offset_R = 100
+                Ybut = self.h - 60
                 self.Recalculate.place(x=12, y=Ybut, width=95, height=30)
 
-                Ybut=self.h-60
-                self.V_Carve_Calc.place(x=x_label_R+offset_R, y=Ybut, width=100, height=30)
+                Ybut = self.h - 60
+                self.V_Carve_Calc.place(x=x_label_R + offset_R, y=Ybut, width=100, height=30)
 
-                Ybut=self.h-105
-                self.Radio_Cut_E.place(x=x_label_R+offset_R, y=Ybut, width=w_label, height=23)
-                Ybut=self.h-85
-                self.Radio_Cut_V.place(x=x_label_R+offset_R, y=Ybut, width=w_label, height=23)
+                Ybut = self.h - 105
+                self.Radio_Cut_E.place(x=x_label_R + offset_R, y=Ybut, width=w_label, height=23)
+                Ybut = self.h - 85
+                self.Radio_Cut_V.place(x=x_label_R + offset_R, y=Ybut, width=w_label, height=23)
 
-                self.PreviewCanvas.configure( width = self.w-240, height = self.h-45 )
+                self.PreviewCanvas.configure( width = self.w - 240, height = self.h - 45 )
                 self.PreviewCanvas_frame.place(x=230, y=10)
                 self.Input_Label.place_forget()
                 self.Input_frame.place_forget()
@@ -5540,7 +5540,7 @@ class Application(Frame):
     ############################################################################
     # routine takes an x and y the point is rotated by angle returns new x,y   #
     ############################################################################
-    def Rotn(self,x,y,angle,radius):
+    def Rotn(self, x, y, angle, radius):
         if radius > 0.0:
             alpha = x / radius
             xx = ( radius + y ) * sin(alpha)
@@ -5555,74 +5555,74 @@ class Application(Frame):
             yy = y
 
         rad = sqrt(xx * xx + yy * yy)
-        theta = atan2(yy,xx)
-        newx=rad * cos(theta + radians(angle) )
-        newy=rad * sin(theta + radians(angle) )
+        theta = atan2(yy, xx)
+        newx = rad * cos(theta + radians(angle) )
+        newy = rad * sin(theta + radians(angle) )
         return newx,newy,alpha
 
     ############################################################################
     # routine takes an x and a y scales are applied and returns new x,y tuple  #
     ############################################################################
-    def CoordScale(self,x,y,xscale,yscale):
+    def CoordScale(self, x, y, xscale, yscale):
         newx = x * xscale
         newy = y * yscale
         return newx,newy
 
-    def Plot_Line(self,XX1,YY1,XX2,YY2,midx,midy,cszw,cszh,PlotScale,col,radius=0):
-        x1 =  cszw/2 + (XX1-midx) / PlotScale
-        x2 =  cszw/2 + (XX2-midx) / PlotScale
-        y1 =  cszh/2 - (YY1-midy) / PlotScale
-        y2 =  cszh/2 - (YY2-midy) / PlotScale
-        if radius==0:
-            thick=0
+    def Plot_Line(self, XX1, YY1, XX2, YY2, midx, midy, cszw, cszh, PlotScale, col, radius=0):
+        x1 = cszw / 2 + (XX1 - midx) / PlotScale
+        x2 = cszw / 2 + (XX2 - midx) / PlotScale
+        y1 = cszh / 2 - (YY1 - midy) / PlotScale
+        y2 = cszh / 2 - (YY2 - midy) / PlotScale
+        if radius == 0:
+            thick = 0
         else:
-            thick  =  radius*2 / PlotScale
-        self.segID.append( self.PreviewCanvas.create_line(x1,y1,x2,y2,fill = col, capstyle="round", width=thick))
+            thick = radius * 2 / PlotScale
+        self.segID.append( self.PreviewCanvas.create_line(x1, y1, x2, y2, fill = col, capstyle="round", width=thick))
 
-    def Plot_Circ(self,XX1,YY1,midx,midy,cszw,cszh,PlotScale,color,Rad,fill):
-        dd=Rad
-        x1 =  cszw/2 + (XX1-dd-midx) / PlotScale
-        x2 =  cszw/2 + (XX1+dd-midx) / PlotScale
-        y1 =  cszh/2 - (YY1-dd-midy) / PlotScale
-        y2 =  cszh/2 - (YY1+dd-midy) / PlotScale
-        if fill ==0:
-            self.segID.append( self.PreviewCanvas.create_oval(x1,y1,x2,y2, outline=color, fill=None, width=1 ))
+    def Plot_Circ(self, XX1, YY1, midx, midy, cszw, cszh, PlotScale, color, Rad, fill):
+        dd = Rad
+        x1 = cszw / 2 + (XX1 - dd - midx) / PlotScale
+        x2 = cszw / 2 + (XX1 + dd - midx) / PlotScale
+        y1 = cszh / 2 - (YY1 - dd - midy) / PlotScale
+        y2 = cszh / 2 - (YY1 + dd - midy) / PlotScale
+        if fill == 0:
+            self.segID.append( self.PreviewCanvas.create_oval(x1, y1, x2, y2, outline=color, fill=None, width=1 ))
         else:
-            self.segID.append( self.PreviewCanvas.create_oval(x1,y1,x2,y2, outline=color, fill=color, width=0 ))
+            self.segID.append( self.PreviewCanvas.create_oval(x1, y1, x2, y2, outline=color, fill=color, width=0 ))
 
     ############################################################################
     # Routine finds the maximum radius that can be placed in the position      #
     # xpt,ypt witout interfearing with other line segments (rmin is max R LOL) #
     ############################################################################
     #def find_max_circle(self,xpt,ypt,rmin,char_num,seg_sin,seg_cos,corner,Acc_delete,CHK_STRING):
-    def find_max_circle(self,xpt,ypt,rmin,char_num,seg_sin,seg_cos,corner,CHK_STRING):
+    def find_max_circle(self, xpt, ypt, rmin, char_num, seg_sin, seg_cos, corner, CHK_STRING):
         global Zero
         rtmp = rmin
 
-        xIndex = int((xpt-self.MINX)/self.xPartitionLength)
-        yIndex = int((ypt-self.MINY)/self.yPartitionLength)
+        xIndex = int((xpt - self.MINX) / self.xPartitionLength)
+        yIndex = int((ypt - self.MINY) / self.yPartitionLength)
 
-        self.coords_check=[]
+        self.coords_check = []
         R_A = abs(rmin)
-        Bcnt=-1
+        Bcnt = -1
         ############################################################
         # Loop over active partitions for the current line segment #
         ############################################################
         for line_B in self.partitionList[xIndex][yIndex]:
-            Bcnt=Bcnt+1
-            X_B = line_B[len(line_B)-3]
-            Y_B = line_B[len(line_B)-2]
-            R_B = line_B[len(line_B)-1]
-            GAP = sqrt( (X_B-xpt)*(X_B-xpt) + (Y_B-ypt)*(Y_B-ypt)  )
+            Bcnt = Bcnt + 1
+            X_B = line_B[len(line_B) - 3]
+            Y_B = line_B[len(line_B) - 2]
+            R_B = line_B[len(line_B) - 1]
+            GAP = sqrt( (X_B - xpt) * (X_B - xpt) + (Y_B - ypt) * (Y_B - ypt)  )
             if GAP < abs(R_A + R_B):
                 self.coords_check.append(line_B)
 
         for linec in self.coords_check:
             XYc = linec
-            xmaxt=max(XYc[0],XYc[2]) + rmin*2
-            xmint=min(XYc[0],XYc[2]) - rmin*2
-            ymaxt=max(XYc[1],XYc[3]) + rmin*2
-            ymint=min(XYc[1],XYc[3]) - rmin*2
+            xmaxt = max(XYc[0], XYc[2]) + rmin * 2
+            xmint = min(XYc[0], XYc[2]) - rmin * 2
+            ymaxt = max(XYc[1], XYc[3]) + rmin * 2
+            ymint = min(XYc[1], XYc[3]) - rmin * 2
             if (xpt >= xmint and  ypt >= ymint and xpt <= xmaxt and  ypt <= ymaxt):
                 logic_full = True
             else:
@@ -5632,60 +5632,60 @@ class Application(Frame):
             if (CHK_STRING == "chr"):
                 logic_full = logic_full and (char_num == int(XYc[5]))
 
-            if corner==1:
-                logic_full = logic_full and                                                 \
-                             ( (fabs(xpt-XYc[0]) > Zero) or (fabs(ypt-XYc[1]) > Zero) ) and \
-                             ( (fabs(xpt-XYc[2]) > Zero) or (fabs(ypt-XYc[3]) > Zero) )
+            if corner == 1:
+                logic_full = logic_full and \
+                    ( (fabs(xpt - XYc[0]) > Zero) or (fabs(ypt - XYc[1]) > Zero) ) and \
+                    ( (fabs(xpt - XYc[2]) > Zero) or (fabs(ypt - XYc[3]) > Zero) )
 
             if logic_full:
-                xc1 = (XYc[0]-xpt) * seg_cos - (XYc[1]-ypt) * seg_sin
-                yc1 = (XYc[0]-xpt) * seg_sin + (XYc[1]-ypt) * seg_cos
-                xc2 = (XYc[2]-xpt) * seg_cos - (XYc[3]-ypt) * seg_sin
-                yc2 = (XYc[2]-xpt) * seg_sin + (XYc[3]-ypt) * seg_cos
+                xc1 = (XYc[0] - xpt) * seg_cos - (XYc[1] - ypt) * seg_sin
+                yc1 = (XYc[0] - xpt) * seg_sin + (XYc[1] - ypt) * seg_cos
+                xc2 = (XYc[2] - xpt) * seg_cos - (XYc[3] - ypt) * seg_sin
+                yc2 = (XYc[2] - xpt) * seg_sin + (XYc[3] - ypt) * seg_cos
 
-                if fabs(xc2-xc1) < Zero and fabs(yc2-yc1) > Zero:
-                    rtmp=fabs(xc1)
-                    if max(yc1,yc2) >= rtmp and min(yc1,yc2) <= rtmp:
-                        rmin = min(rmin,rtmp)
+                if fabs(xc2 - xc1) < Zero and fabs(yc2 - yc1) > Zero:
+                    rtmp = fabs(xc1)
+                    if max(yc1, yc2) >= rtmp and min(yc1, yc2) <= rtmp:
+                        rmin = min(rmin, rtmp)
 
-                elif fabs(yc2-yc1) < Zero and fabs(xc2-xc1) > Zero:
-                    if max(xc1,xc2) >= 0.0 and min(xc1,xc2) <= 0.0 and yc1 > Zero:
-                        rtmp=yc1/2.0
-                        rmin = min(rmin,rtmp)
+                elif fabs(yc2 - yc1) < Zero and fabs(xc2 - xc1) > Zero:
+                    if max(xc1, xc2) >= 0.0 and min(xc1, xc2) <= 0.0 and yc1 > Zero:
+                        rtmp = yc1 / 2.0
+                        rmin = min(rmin, rtmp)
 
-                if fabs(yc2-yc1) > Zero and fabs(xc2-xc1) > Zero:
-                    m = (yc2-yc1)/(xc2-xc1)
-                    b = yc1 - m*xc1
-                    sq = m+1/m
-                    A = 1 + m*m - 2*m*sq
-                    B = -2*b*sq
-                    C = -b*b
+                if fabs(yc2 - yc1) > Zero and fabs(xc2 - xc1) > Zero:
+                    m = (yc2 - yc1) / (xc2 - xc1)
+                    b = yc1 - m * xc1
+                    sq = m + 1 / m
+                    A = 1 + m * m - 2 * m * sq
+                    B = -2 * b * sq
+                    C = -b * b
                     try:
-                        sq_root = sqrt(B*B-4*A*C)
-                        xq1 = (-B + sq_root)/(2*A)
+                        sq_root = sqrt(B * B - 4 * A * C)
+                        xq1 = (-B + sq_root) / (2 * A)
 
-                        if xq1 >= min(xc1,xc2) and xq1 <= max(xc1,xc2):
-                            rtmp = xq1*sq + b
+                        if xq1 >= min(xc1, xc2) and xq1 <= max(xc1, xc2):
+                            rtmp = xq1 * sq + b
                             if rtmp >= 0.0:
-                                rmin=min(rmin,rtmp)
+                                rmin = min(rmin, rtmp)
 
-                        xq2 = (-B - sq_root)/(2*A)
-                        yq2 = m*xq2+b
+                        xq2 = (-B - sq_root) / (2 * A)
+                        yq2 = m * xq2 + b
 
-                        if xq2 >= min(xc1,xc2) and xq2 <= max(xc1,xc2):
-                            rtmp = xq2*sq + b
+                        if xq2 >= min(xc1, xc2) and xq2 <= max(xc1, xc2):
+                            rtmp = xq2 * sq + b
                             if rtmp >= 0.0:
-                                rmin=min(rmin,rtmp)
+                                rmin = min(rmin, rtmp)
                     except:
                         pass
 
                 if yc1 > Zero:
-                    rtmp = (xc1*xc1 + yc1*yc1) / (2*yc1)
-                    rmin=min(rmin,rtmp)
+                    rtmp = (xc1 * xc1 + yc1 * yc1) / (2 * yc1)
+                    rmin = min(rmin, rtmp)
 
                 if yc2 > Zero:
-                    rtmp = (xc2*xc2 + yc2*yc2) / (2*yc2)
-                    rmin=min(rmin,rtmp)
+                    rtmp = (xc2 * xc2 + yc2 * yc2) / (2 * yc2)
+                    rmin = min(rmin, rtmp)
 
                 ###### NEW V1.20 #######
                 if abs(yc1) < Zero and abs(xc1) < Zero:
@@ -5717,7 +5717,7 @@ class Application(Frame):
     #          Read Font File                #
     ##########################################
     def Read_font_file(self):
-        if (self.delay_calc==1):
+        if (self.delay_calc == 1):
             return
 
         self.font = {}
@@ -5741,14 +5741,14 @@ class Application(Frame):
             self.statusbar.configure(bg='red')
 
         if (not self.batch.get()):
-            self.entry_set(self.Entry_ArcAngle,self.Entry_ArcAngle_Check(),1)
+            self.entry_set(self.Entry_ArcAngle, self.Entry_ArcAngle_Check(), 1)
             self.menu_View_Refresh()
 
     ##########################################
     #          Read Font File                #
     ##########################################
     def Read_image_file(self):
-        if (self.delay_calc==1):
+        if (self.delay_calc == 1):
             return
 
         self.font = {}
@@ -5757,9 +5757,9 @@ class Application(Frame):
         if ( not os.path.isfile(file_full) ):
             file_full = file_name
             if ( not os.path.isfile( file_full ) ):
-                file_full = self.HOME_DIR+"/"+file_name
+                file_full = self.HOME_DIR + "/" + file_name
                 if ( not os.path.isfile( file_full ) ):
-                    file_full = os.path.dirname(self.NGC_FILE)+"/"+file_name
+                    file_full = os.path.dirname(self.NGC_FILE) + "/" + file_name
                     if ( not os.path.isfile( file_full ) ):
                         return
         self.IMAGE_FILE = file_full
@@ -5775,86 +5775,86 @@ class Application(Frame):
 
 
         new_origin = False
-        SegArc    =  float(self.segarc.get())
-        TYPE=fileExtension.upper()
-        if TYPE=='.DXF':
+        SegArc = float(self.segarc.get())
+        TYPE = fileExtension.upper()
+        if TYPE == '.DXF':
             try:
                 fd = open(file_full)
-                self.font = parse_dxf(fd,SegArc,new_origin)  # build stroke lists from font file
+                self.font = parse_dxf(fd, SegArc, new_origin)  # build stroke lists from font file
                 fd.close()
                 self.input_type.set("image")
             except:
                 message.fmessage("Unable To open Drawing Exchange File (DXF) file.")
 
-        elif TYPE=='.BMP' or TYPE=='.PBM' or TYPE=='.PPM' or TYPE=='.PGM' or TYPE=='.PNM':
+        elif TYPE == '.BMP' or TYPE == '.PBM' or TYPE == '.PPM' or TYPE == '.PGM' or TYPE == '.PNM':
             try:
                 #cmd = ["potrace","-b","dxf",file_full,"-o","-"]
                 if self.bmp_longcurve.get() == 1:
                     cmd = ["potrace",
-                       "-z", self.bmp_turnpol.get(),
-                       "-t", self.bmp_turdsize.get(),
-                       "-a",self.bmp_alphamax.get(),
-                       "-O",self.bmp_opttolerance.get(),
-                       "-b","dxf",file_full,"-o","-"]
+                           "-z", self.bmp_turnpol.get(),
+                           "-t", self.bmp_turdsize.get(),
+                           "-a",self.bmp_alphamax.get(),
+                           "-O",self.bmp_opttolerance.get(),
+                           "-b","dxf",file_full,"-o","-"]
                 else:
                     cmd = ["potrace",
-                       "-z", self.bmp_turnpol.get(),
-                       "-t", self.bmp_turdsize.get(),
-                       "-a",self.bmp_alphamax.get(),
-                       "-n",
-                       "-b","dxf",file_full,"-o","-"]
+                           "-z", self.bmp_turnpol.get(),
+                           "-t", self.bmp_turdsize.get(),
+                           "-a",self.bmp_alphamax.get(),
+                           "-n",
+                           "-b","dxf",file_full,"-o","-"]
 
                 p = Popen(cmd, stdout=PIPE, stderr=PIPE)
                 stdout, stderr = p.communicate()
                 if VERSION == 3:
-                    fd=bytes.decode(stdout).split("\n")
+                    fd = bytes.decode(stdout).split("\n")
                 else:
-                    fd=stdout.split("\n")
-                #self.font,self.DXF_source = parse_dxf(fd,SegArc,new_origin)  # build stroke lists from font file
-                self.font = parse_dxf(fd,SegArc,new_origin)  # build stroke lists from font file
+                    fd = stdout.split("\n")
+                self.font = parse_dxf(fd, SegArc, new_origin)  # build stroke lists from font file
                 self.input_type.set("image")
             except:
                 message.fmessage("Unable To create path data from bitmap File.")
 
-        elif TYPE=='.JPG' or TYPE=='.PNG' or TYPE=='.GIF' or TYPE=='.TIF':
+        elif TYPE == '.JPG' or TYPE == '.PNG' or TYPE == '.GIF' or TYPE == '.TIF':
             ###########################################################################################################
             #VVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVV#
             if PIL:
                 try:
                     PIL_im = Image.open(file_full)
                     mode = PIL_im.mode
-                    if len(mode)>3:
+                    if len(mode) > 3:
                         blank = Image.new("RGB", PIL_im.size, (255,255,255))
                         blank.paste( PIL_im, (0, 0), PIL_im )
                         PIL_im = blank
 
                     PIL_im = PIL_im.convert("1")
-                    file_full_tmp=self.HOME_DIR + "/fengrave_tmp.bmp"
-                    PIL_im.save(file_full_tmp,"bmp")
+                    file_full_tmp = self.HOME_DIR + "/fengrave_tmp.bmp"
+                    PIL_im.save(file_full_tmp, "bmp")
 
                     #cmd = ["potrace","-b","dxf",file_full,"-o","-"]
                     if self.bmp_longcurve.get() == 1:
                         cmd = ["potrace",
-                           "-z", self.bmp_turnpol.get(),
-                           "-t", self.bmp_turdsize.get(),
-                           "-a",self.bmp_alphamax.get(),
-                           "-O",self.bmp_opttolerance.get(),
-                           "-b","dxf",file_full_tmp,"-o","-"]
+                               "-z", self.bmp_turnpol.get(),
+                               "-t", self.bmp_turdsize.get(),
+                               "-a",self.bmp_alphamax.get(),
+                               "-O",self.bmp_opttolerance.get(),
+                               "-b","dxf",file_full_tmp,"-o","-"]
                     else:
                         cmd = ["potrace",
-                           "-z", self.bmp_turnpol.get(),
-                           "-t", self.bmp_turdsize.get(),
-                           "-a",self.bmp_alphamax.get(),
-                           "-n",
-                           "-b","dxf",file_full_tmp,"-o","-"]
+                               "-z", self.bmp_turnpol.get(),
+                               "-t", self.bmp_turdsize.get(),
+                               "-a",self.bmp_alphamax.get(),
+                               "-n",
+                               "-b","dxf",file_full_tmp,"-o","-"]
 
                     p = Popen(cmd, stdout=PIPE, stderr=PIPE)
                     stdout, stderr = p.communicate()
                     if VERSION == 3:
-                        fd=bytes.decode(stdout).split("\n")
+                        fd = bytes.decode(stdout).split("\n")
                     else:
-                        fd=stdout.split("\n")
-                    self.font = parse_dxf(fd,SegArc,new_origin)  # build stroke lists from font file
+                        fd = stdout.split("\n")
+                    # build stroke lists from font file
+                    self.font = parse_dxf(fd, SegArc, new_origin)
                     self.input_type.set("image")
                     try:
                         os.remove(file_full_tmp)
@@ -5872,10 +5872,10 @@ class Application(Frame):
 
         #Reset Entry Fields in Bitmap Settings
         if (not self.batch.get()):
-            self.entry_set(self.Entry_BMPoptTolerance,self.Entry_BMPoptTolerance_Check(),1)
-            self.entry_set(self.Entry_BMPturdsize,    self.Entry_BMPturdsize_Check()    ,1)
-            self.entry_set(self.Entry_BMPalphamax,    self.Entry_BMPalphamax_Check()    ,1)
-            self.entry_set(self.Entry_ArcAngle,       self.Entry_ArcAngle_Check()       ,1)
+            self.entry_set(self.Entry_BMPoptTolerance, self.Entry_BMPoptTolerance_Check(), 1)
+            self.entry_set(self.Entry_BMPturdsize, self.Entry_BMPturdsize_Check(), 1)
+            self.entry_set(self.Entry_BMPalphamax, self.Entry_BMPalphamax_Check(), 1)
+            self.entry_set(self.Entry_ArcAngle, self.Entry_ArcAngle_Check(), 1)
             self.menu_View_Refresh()
 
 
@@ -5883,7 +5883,7 @@ class Application(Frame):
     #        CANVAS PLOTTING STUFF           #
     ##########################################
     def Plot_Data(self):
-        if (self.delay_calc==1) or (self.delay_calc == 1):
+        if (self.delay_calc == 1) or (self.delay_calc == 1):
             return
         self.master.update_idletasks()
         # erase old segs/display objects
@@ -5892,49 +5892,49 @@ class Application(Frame):
 
         cszw = int(self.PreviewCanvas.cget("width"))
         cszh = int(self.PreviewCanvas.cget("height"))
-        buff=10
+        buff = 10
 
         maxx = self.MAXX
         minx = self.MINX
         maxy = self.MAXY
         miny = self.MINY
-        midx=(maxx+minx)/2
-        midy=(maxy+miny)/2
+        midx = (maxx + minx) / 2
+        midy = (maxy + miny) / 2
 
         if self.cut_type.get() == "v-carve":
             Thick = 0.0
         else:
-            Thick   = float(self.STHICK.get())
+            Thick = float(self.STHICK.get())
 
         if self.input_type.get() == "text":
-            Radius_in =  float(self.TRADIUS.get())
+            Radius_in = float(self.TRADIUS.get())
         else:
             Radius_in = 0.0
 
-        PlotScale = max((maxx-minx+Thick)/(cszw-buff), (maxy-miny+Thick)/(cszh-buff))
+        PlotScale = max((maxx - minx + Thick) / (cszw - buff), (maxy - miny + Thick) / (cszh - buff))
         if PlotScale <= 0:
-            PlotScale=1.0
+            PlotScale = 1.0
         self.pscale = PlotScale
 
         Radius_plot = 0
         if self.plotbox.get() and self.cut_type.get() == "engrave":
             if Radius_in != 0:
-                Radius_plot=  float(self.RADIUS_PLOT)
+                Radius_plot = float(self.RADIUS_PLOT)
 
-        x_lft = cszw/2 + (minx-midx) / PlotScale
-        x_rgt = cszw/2 + (maxx-midx) / PlotScale
-        y_bot = cszh/2 + (maxy-midy) / PlotScale
-        y_top = cszh/2 + (miny-midy) / PlotScale
+        x_lft = cszw / 2 + (minx - midx) / PlotScale
+        x_rgt = cszw / 2 + (maxx - midx) / PlotScale
+        y_bot = cszh / 2 + (maxy - midy) / PlotScale
+        y_top = cszh / 2 + (miny - midy) / PlotScale
 
         if self.show_box.get() == True:
             self.segID.append( self.PreviewCanvas.create_rectangle(
-                    x_lft, y_bot, x_rgt, y_top, fill="gray80", outline="gray80", width = 0) )
+                x_lft, y_bot, x_rgt, y_top, fill="gray80", outline="gray80", width = 0) )
 
         if Radius_in != 0:
-            Rx_lft = cszw/2 + ( -Radius_in-midx)  / PlotScale
-            Rx_rgt = cszw/2 + (  Radius_in-midx)  / PlotScale
-            Ry_bot = cszh/2 + (  Radius_in+midy)  / PlotScale
-            Ry_top = cszh/2 + ( -Radius_in+midy)  / PlotScale
+            Rx_lft = cszw / 2 + (-Radius_in - midx) / PlotScale
+            Rx_rgt = cszw / 2 + (  Radius_in - midx) / PlotScale
+            Ry_bot = cszh / 2 + (  Radius_in + midy) / PlotScale
+            Ry_top = cszh / 2 + (-Radius_in + midy) / PlotScale
             self.segID.append( self.PreviewCanvas.create_oval(Rx_lft, Ry_bot, Rx_rgt, Ry_top, outline="gray90", width = 0, dash=3) )
 
         if self.show_thick.get() == True:
@@ -5947,32 +5947,32 @@ class Application(Frame):
 
         # Plot circle radius with radius equal to Radius_plot
         if Radius_plot != 0:
-            Rpx_lft = cszw/2 + ( -Radius_plot-midx - x_zero) / PlotScale
-            Rpx_rgt = cszw/2 + (  Radius_plot-midx - x_zero)  / PlotScale
-            Rpy_bot = cszh/2 + (  Radius_plot+midy + y_zero)  / PlotScale
-            Rpy_top = cszh/2 + ( -Radius_plot+midy + y_zero)  / PlotScale
+            Rpx_lft = cszw / 2 + (-Radius_plot - midx - x_zero) / PlotScale
+            Rpx_rgt = cszw / 2 + (  Radius_plot - midx - x_zero) / PlotScale
+            Rpy_bot = cszh / 2 + (  Radius_plot + midy + y_zero) / PlotScale
+            Rpy_top = cszh / 2 + (-Radius_plot + midy + y_zero) / PlotScale
             self.segID.append( self.PreviewCanvas.create_oval(Rpx_lft, Rpy_bot, Rpx_rgt, Rpy_top, outline="black", width = plot_width) )
 
         for line in self.coords:
             XY = line
-            x1 =  cszw/2 + (XY[0]-midx) / PlotScale
-            x2 =  cszw/2 + (XY[2]-midx) / PlotScale
-            y1 =  cszh/2 - (XY[1]-midy) / PlotScale
-            y2 =  cszh/2 - (XY[3]-midy) / PlotScale
-            self.segID.append( self.PreviewCanvas.create_line(x1,y1,x2,y2,fill = 'black', \
-                                                                  width=plot_width , \
-                                                                  capstyle='round' ))
-        XOrigin   =  float(self.xorigin.get())
-        YOrigin   =  float(self.yorigin.get())
-        axis_length=(maxx-minx)/4
-        axis_x1 =  cszw/2 + (-midx             + XOrigin ) / PlotScale
-        axis_x2 =  cszw/2 + ( axis_length-midx + XOrigin ) / PlotScale
-        axis_y1 =  cszh/2 - (-midy             + YOrigin ) / PlotScale
-        axis_y2 =  cszh/2 - ( axis_length-midy + YOrigin ) / PlotScale
+            x1 = cszw / 2 + (XY[0] - midx) / PlotScale
+            x2 = cszw / 2 + (XY[2] - midx) / PlotScale
+            y1 = cszh / 2 - (XY[1] - midy) / PlotScale
+            y2 = cszh / 2 - (XY[3] - midy) / PlotScale
+            self.segID.append( self.PreviewCanvas.create_line(x1, y1, x2, y2, fill = 'black', \
+                                                              width=plot_width, \
+                                                              capstyle='round' ))
+        XOrigin = float(self.xorigin.get())
+        YOrigin = float(self.yorigin.get())
+        axis_length = (maxx - minx) / 4
+        axis_x1 = cszw / 2 + (-midx + XOrigin ) / PlotScale
+        axis_x2 = cszw / 2 + ( axis_length - midx + XOrigin ) / PlotScale
+        axis_y1 = cszh / 2 - (-midy + YOrigin ) / PlotScale
+        axis_y2 = cszh / 2 - ( axis_length - midy + YOrigin ) / PlotScale
 
 
         #########################################
-        # V-carve Ploting Stuff
+        # V-carve Plotting Stuff
         #########################################
         if self.cut_type.get() == "v-carve":
             loop_old = -1
@@ -5980,32 +5980,32 @@ class Application(Frame):
 
             if self.show_v_area.get():
                 for line in self.vcoords:
-                    XY    = line
-                    x1    = XY[0]
-                    y1    = XY[1]
-                    r     = XY[2]
+                    XY = line
+                    x1 = XY[0]
+                    y1 = XY[1]
+                    r = XY[2]
                     color = "black"
 
-                    rbit = self.calc_vbit_dia()/2.0
+                    rbit = self.calc_vbit_dia() / 2.0
                     if self.bit_shape.get() == "FLAT":
                         if r >= rbit:
-                            self.Plot_Circ(x1,y1,midx,midy,cszw,cszh,PlotScale,color,r,1)
+                            self.Plot_Circ(x1, y1, midx, midy, cszw, cszh, PlotScale, color, r, 1)
                     else:
                         if self.inlay.get():
-                            self.Plot_Circ(x1,y1,midx,midy,cszw,cszh,PlotScale,color,r-r_inlay_top,1)
+                            self.Plot_Circ(x1, y1, midx, midy, cszw, cszh, PlotScale, color, r - r_inlay_top, 1)
                         else:
-                            self.Plot_Circ(x1,y1,midx,midy,cszw,cszh,PlotScale,color,r,1)
+                            self.Plot_Circ(x1, y1, midx, midy, cszw, cszh, PlotScale, color, r, 1)
 
             loop_old = -1
-            rold     = -1
+            rold = -1
 
             if self.show_v_path.get():
                 for line in self.vcoords:
-                    XY    = line
-                    x1    = XY[0]
-                    y1    = XY[1]
-                    r     = XY[2]
-                    loop  = XY[3]
+                    XY = line
+                    x1 = XY[0]
+                    y1 = XY[1]
+                    r = XY[2]
+                    loop = XY[3]
                     color = "white"
                     # check and see if we need to move to a new discontinuous start point
                     plot_flat = False
@@ -6016,11 +6016,11 @@ class Application(Frame):
                         plot_flat = True
 
                     if (loop == loop_old) and plot_flat:
-                        self.Plot_Line(xold, yold, x1, y1, midx,midy,cszw,cszh,PlotScale,color)
+                        self.Plot_Line(xold, yold, x1, y1, midx, midy, cszw, cszh, PlotScale, color)
                     loop_old = loop
-                    rold=r
-                    xold=x1
-                    yold=y1
+                    rold = r
+                    xold = x1
+                    yold = y1
 
         ########################################
         # Plot cleanup data
@@ -6028,45 +6028,45 @@ class Application(Frame):
         if self.cut_type.get() == "v-carve":
             loop_old = -1
             for line in self.clean_coords_sort:
-                XY    = line
-                x1    = XY[0]
-                y1    = XY[1]
-                r     = XY[2]
-                loop  = XY[3]
+                XY = line
+                x1 = XY[0]
+                y1 = XY[1]
+                r = XY[2]
+                loop = XY[3]
                 color = "brown"
                 if (loop == loop_old):
-                    self.Plot_Line(xold, yold, x1, y1, midx,midy,cszw,cszh,PlotScale,color,r)
+                    self.Plot_Line(xold, yold, x1, y1, midx, midy, cszw, cszh, PlotScale, color, r)
                 loop_old = loop
-                xold=x1
-                yold=y1
+                xold = x1
+                yold = y1
 
             loop_old = -1
             for line in self.clean_coords_sort:
-                XY    = line
-                x1    = XY[0]
-                y1    = XY[1]
-                loop  = XY[3]
+                XY = line
+                x1 = XY[0]
+                y1 = XY[1]
+                loop = XY[3]
                 color = "white"
                 # check and see if we need to move to a new discontinuous start point
                 if (loop == loop_old):
-                    self.Plot_Line(xold, yold, x1, y1, midx,midy,cszw,cszh,PlotScale,color)
+                    self.Plot_Line(xold, yold, x1, y1, midx, midy, cszw, cszh, PlotScale, color)
                 loop_old = loop
-                xold=x1
-                yold=y1
+                xold = x1
+                yold = y1
 
             loop_old = -1
             for line in self.v_clean_coords_sort:
-                XY    = line
-                x1    = XY[0]
-                y1    = XY[1]
-                r     = XY[2]
-                loop  = XY[3]
+                XY = line
+                x1 = XY[0]
+                y1 = XY[1]
+                r = XY[2]
+                loop = XY[3]
                 color = "yellow"
                 if (loop == loop_old):
-                    self.Plot_Line(xold, yold, x1, y1, midx,midy,cszw,cszh,PlotScale,color)
+                    self.Plot_Line(xold, yold, x1, y1, midx, midy, cszw, cszh, PlotScale, color)
                 loop_old = loop
-                xold=x1
-                yold=y1
+                xold = x1
+                yold = y1
 
 
         #########################################
@@ -6075,18 +6075,18 @@ class Application(Frame):
 
         if self.show_axis.get() == True:
             # Plot coordinate system origin
-            self.segID.append( self.PreviewCanvas.create_line(axis_x1,axis_y1,\
-                                                                  axis_x2,axis_y1,\
-                                                                  fill = 'red'  , width = 0))
-            self.segID.append( self.PreviewCanvas.create_line(axis_x1,axis_y1,\
-                                                                  axis_x1,axis_y2,\
-                                                                  fill = 'green', width = 0))
+            self.segID.append( self.PreviewCanvas.create_line(axis_x1, axis_y1, \
+                                                              axis_x2, axis_y1, \
+                                                              fill = 'red', width = 0))
+            self.segID.append( self.PreviewCanvas.create_line(axis_x1, axis_y1, \
+                                                              axis_x1, axis_y2, \
+                                                              fill = 'green', width = 0))
 
     ############################################################################
     #                         Perform  Calculations                            #
     ############################################################################
     def DoIt(self):
-        if ((self.delay_calc==1) or (self.delay_calc == 1)):
+        if ((self.delay_calc == 1) or (self.delay_calc == 1)):
             return
 
         self.menu_View_Refresh()
@@ -6108,14 +6108,14 @@ class Application(Frame):
 
         # erase old data
         self.segID = []
-        self.gcode   = []
+        self.gcode = []
         self.svgcode = []
-        self.coords  = []
+        self.coords = []
         self.vcoords = []
         self.clean_coords = []
-        self.clean_segment=[]
-        self.clean_coords_sort=[]
-        self.v_clean_coords_sort=[]
+        self.clean_segment = []
+        self.clean_coords_sort = []
+        self.v_clean_coords_sort = []
 
         self.RADIUS_PLOT = 0
 
@@ -6130,25 +6130,25 @@ class Application(Frame):
 
         if self.input_type.get() == "text":
             if (not self.batch.get()):
-                String    =  self.Input.get(1.0,END)
+                String = self.Input.get(1.0, END)
             else:
-                String    =  self.default_text
+                String = self.default_text
 
-            Radius_in =  float(self.TRADIUS.get())
+            Radius_in = float(self.TRADIUS.get())
         else:
-            String    = "F"
-            Radius_in =  0.0
+            String = "F"
+            Radius_in = 0.0
         try:
-            SegArc    =  float(self.segarc.get())
-            YScale_in =  float(self.YSCALE.get() )
-            CSpaceP   =  float(self.CSPACE.get() )
-            WSpaceP   =  float(self.WSPACE.get() )
-            LSpace    =  float(self.LSPACE.get() )
-            Angle     =  float(self.TANGLE.get() )
-            Thick     =  float(self.STHICK.get() )
-            XOrigin   =  float(self.xorigin.get())
-            YOrigin   =  float(self.yorigin.get())
-            v_flop    =  bool(self.v_flop.get())
+            SegArc = float(self.segarc.get())
+            YScale_in = float(self.YSCALE.get() )
+            CSpaceP = float(self.CSPACE.get() )
+            WSpaceP = float(self.WSPACE.get() )
+            LSpace = float(self.LSPACE.get() )
+            Angle = float(self.TANGLE.get() )
+            Thick = float(self.STHICK.get() )
+            XOrigin = float(self.xorigin.get())
+            YOrigin = float(self.yorigin.get())
+            v_flop = bool(self.v_flop.get())
         except:
             self.statusMessage.set(" Unable to create paths.  Check Settings Entry Values.")
             self.statusbar.configure( bg = 'red' )
@@ -6167,17 +6167,17 @@ class Application(Frame):
         maxx_tmp = -99991.0
         maxy_tmp = -99992.0
         maxa_tmp = -99993.0
-        mina_tmp =  99993.0
-        miny_tmp =  99994.0
-        minx_tmp =  99995.0
+        mina_tmp = 99993.0
+        miny_tmp = 99994.0
+        minx_tmp = 99995.0
 
-        font_word_space  = 0
+        font_word_space = 0
         INF = 1e10
         font_line_height = -INF
-        font_char_width =  -INF
+        font_char_width = -INF
         font_used_height = -INF
-        font_used_width  = -INF
-        font_used_depth  =  INF
+        font_used_width = -INF
+        font_used_depth = INF
 
         ################################
         ##      Font Index Preview    ##
@@ -6196,12 +6196,12 @@ class Application(Frame):
             String = ""
 
             if self.ext_char.get():
-                pcols = int(1.5*sqrt(float(len(self.font))))
+                pcols = int(1.5 * sqrt(float(len(self.font))))
             else:
                 pcols = 15
 
             for char in Strings:
-                mcnt = mcnt+1
+                mcnt = mcnt + 1
                 String = String + char
                 if mcnt > pcols:
                     String = String + '\n'
@@ -6213,26 +6213,26 @@ class Application(Frame):
         for char in String:
             try:
                 font_used_height = max( self.font[ord(char)].get_ymax(), font_used_height )
-                font_used_width  = max( self.font[ord(char)].get_xmax(), font_used_width  )
-                font_used_depth  = min( self.font[ord(char)].get_ymin(), font_used_depth  )
+                font_used_width = max( self.font[ord(char)].get_xmax(), font_used_width  )
+                font_used_depth = min( self.font[ord(char)].get_ymin(), font_used_depth  )
             except:
                 pass
 
         if self.H_CALC.get() == "max_all":
             font_line_height = max(self.font[key].get_ymax() for key in self.font)
-            font_line_depth  = min(self.font[key].get_ymin() for key in self.font)
+            font_line_depth = min(self.font[key].get_ymin() for key in self.font)
         elif self.H_CALC.get() == "max_use":
             font_line_height = font_used_height
-            font_line_depth  = font_used_depth
+            font_line_depth = font_used_depth
 
         if font_line_height > -INF:
-            if (self.useIMGsize.get() and self.input_type.get()=="image"):
-                YScale = YScale_in/100.0
+            if (self.useIMGsize.get() and self.input_type.get() == "image"):
+                YScale = YScale_in / 100.0
             else:
                 try:
-                    YScale = (YScale_in-Thick)/(font_line_height-font_line_depth)
+                    YScale = (YScale_in - Thick) / (font_line_height - font_line_depth)
                 except:
-                    YScale=.1
+                    YScale = .1
                 if YScale <= Zero:
                     YScale = .1
         else:
@@ -6243,7 +6243,7 @@ class Application(Frame):
                 else:
                     message.fmessage("(No Font Characters Found)")
             elif self.H_CALC.get() == "max_use":
-                if self.input_type.get()=="image":
+                if self.input_type.get() == "image":
                     error_text = "Image contains no design information. (Empty DXF File)"
                 else:
                     error_text = "Input Characters Were Not Found in the Current Font"
@@ -6251,34 +6251,34 @@ class Application(Frame):
                 if (not self.batch.get()):
                     self.statusMessage.set(error_text)
                 else:
-                    message.fmessage("("+error_text+")")
+                    message.fmessage("(" + error_text + ")")
             return
-        font_char_width  = max(self.font[key].get_xmax() for key in self.font)
-        font_word_space =  font_char_width * (WSpaceP/100.0)
+        font_char_width = max(self.font[key].get_xmax() for key in self.font)
+        font_word_space = font_char_width * (WSpaceP / 100.0)
 
-        XScale = float(self.XSCALE.get())  * YScale / 100
-        font_char_space =  font_char_width * (CSpaceP /100.0)
+        XScale = float(self.XSCALE.get()) * YScale / 100
+        font_char_space = font_char_width * (CSpaceP / 100.0)
 
         if Radius_in != 0.0:
             if self.outer.get() == True:
                 if self.upper.get() == True:
-                    Radius =  Radius_in + Thick/2 + YScale*(-font_line_depth)
+                    Radius = Radius_in + Thick / 2 + YScale * (-font_line_depth)
                 else:
-                    Radius = -Radius_in - Thick/2 - YScale*(font_line_height)
+                    Radius = -Radius_in - Thick / 2 - YScale * (font_line_height)
             else:
                 if self.upper.get() == True:
-                    Radius =  Radius_in - Thick/2 - YScale*(font_line_height)
+                    Radius = Radius_in - Thick / 2 - YScale * (font_line_height)
                 else:
-                    Radius = -Radius_in + Thick/2 + YScale*(-font_line_depth)
+                    Radius = -Radius_in + Thick / 2 + YScale * (-font_line_depth)
         else:
-            Radius =  Radius_in
+            Radius = Radius_in
 
-        font_line_space = (font_line_height - font_line_depth + Thick/YScale) * LSpace
+        font_line_space = (font_line_height - font_line_depth + Thick / YScale) * LSpace
 
-        max_vals=[]
+        max_vals = []
 
-        xposition  = 0.0
-        yposition  = 0.0
+        xposition = 0.0
+        yposition = 0.0
         line_cnt = 0.0
         char_cnt = 0
         no_font_record = []
@@ -6290,12 +6290,12 @@ class Application(Frame):
                 xposition += font_word_space
                 continue
             if char == '\t':
-                xposition += 3*font_word_space
+                xposition += 3 * font_word_space
                 continue
             if char == '\n':
                 xposition = 0
                 yposition += font_line_space
-                line_cnt = line_cnt+1
+                line_cnt = line_cnt + 1
                 line_minx.append(minx_tmp)
                 line_miny.append(miny_tmp)
                 line_maxx.append(maxx_tmp)
@@ -6305,19 +6305,19 @@ class Application(Frame):
                 maxx_tmp = -99919.0
                 maxy_tmp = -99929.0
                 maxa_tmp = -99939.0
-                mina_tmp =  99949.0
-                miny_tmp =  99959.0
-                minx_tmp =  99969.0
+                mina_tmp = 99949.0
+                miny_tmp = 99959.0
+                minx_tmp = 99969.0
                 continue
 
             first_stroke = True
             try:
                 font_line_height = self.font[ord(char)].get_ymax()
             except:
-                flag=0
+                flag = 0
                 for norec in no_font_record:
                     if norec == char:
-                        flag=1
+                        flag = 1
                 if flag == 0:
                     no_font_record.append(char)
                     message2 = ", CHECK OUTPUT! Some characters not found in font file."
@@ -6325,12 +6325,12 @@ class Application(Frame):
             for stroke in self.font[ord(char)].stroke_list:
                 x1 = stroke.xstart + xposition
                 y1 = stroke.ystart - yposition
-                x2 = stroke.xend   + xposition
-                y2 = stroke.yend   - yposition
+                x2 = stroke.xend + xposition
+                y2 = stroke.yend - yposition
 
                 # Perform scaling
-                x1,y1 = self.CoordScale(x1,y1,XScale,YScale)
-                x2,y2 = self.CoordScale(x2,y2,XScale,YScale)
+                x1,y1 = self.CoordScale(x1, y1, XScale, YScale)
+                x2,y2 = self.CoordScale(x2, y2, XScale, YScale)
 
                 self.coords.append([x1,y1,x2,y2,line_cnt,char_cnt])
 
@@ -6344,15 +6344,15 @@ class Application(Frame):
         #END Char in String
 
         maxx = maxy = -99999.0
-        miny = minx =  99999.0
-        cnt=0
+        miny = minx = 99999.0
+        cnt = 0
 
         for maxx_val in line_maxx:
             maxx = max( maxx, line_maxx[cnt] )
             minx = min( minx, line_minx[cnt] )
             miny = min( miny, line_miny[cnt] )
             maxy = max( maxy, line_maxy[cnt] )
-            cnt=cnt+1
+            cnt = cnt + 1
         ##########################################
         #      TEXT LEFT JUSTIFY STUFF           #
         ##########################################
@@ -6362,16 +6362,16 @@ class Application(Frame):
         #          TEXT CENTERING STUFF          #
         ##########################################
         if self.justify.get() == "Center":
-            cnt=0
+            cnt = 0
             for line in self.coords:
                 XY = line
                 line_num = int(XY[4])
                 try:
-                    self.coords[cnt][0]=XY[0] + (maxx - line_maxx[line_num])/2
-                    self.coords[cnt][2]=XY[2] + (maxx - line_maxx[line_num])/2
+                    self.coords[cnt][0] = XY[0] + (maxx - line_maxx[line_num]) / 2
+                    self.coords[cnt][2] = XY[2] + (maxx - line_maxx[line_num]) / 2
                 except:
                     pass
-                cnt=cnt+1
+                cnt = cnt + 1
 
         ##########################################
         #        TEXT RIGHT JUSTIFY STUFF        #
@@ -6381,25 +6381,25 @@ class Application(Frame):
                 XY = line
                 line_num = int(XY[4])
                 try:
-                    XY[0]=XY[0] + (maxx - line_maxx[line_num])
-                    XY[2]=XY[2] + (maxx - line_maxx[line_num])
+                    XY[0] = XY[0] + (maxx - line_maxx[line_num])
+                    XY[2] = XY[2] + (maxx - line_maxx[line_num])
                 except:
                     pass
-                cnt=cnt+1
+                cnt = cnt + 1
 
         ##########################################
         #         TEXT ON RADIUS STUFF           #
         ##########################################
-        mina =  99996.0
+        mina = 99996.0
         maxa = -99993.0
         if Radius != 0.0:
             for line in self.coords:
                 XY = line
-                XY[0],XY[1],A1 = self.Rotn(XY[0],XY[1],0,Radius)
-                XY[2],XY[3],A2 = self.Rotn(XY[2],XY[3],0,Radius)
+                XY[0],XY[1],A1 = self.Rotn(XY[0], XY[1], 0, Radius)
+                XY[2],XY[3],A2 = self.Rotn(XY[2], XY[3], 0, Radius)
                 maxa = max(maxa, A1, A2)
                 mina = min(mina, A1, A2)
-            mida = (mina+maxa)/2
+            mida = (mina + maxa) / 2
             ##########################################
             #         TEXT LEFT JUSTIFY STUFF        #
             ##########################################
@@ -6411,8 +6411,8 @@ class Application(Frame):
             if self.justify.get() == "Center":
                 for line in self.coords:
                     XY = line
-                    XY[0],XY[1] = Transform(XY[0],XY[1],mida)
-                    XY[2],XY[3] = Transform(XY[2],XY[3],mida)
+                    XY[0],XY[1] = Transform(XY[0], XY[1], mida)
+                    XY[2],XY[3] = Transform(XY[2], XY[3], mida)
             ##########################################
             #        TEXT RIGHT JUSTIFY STUFF        #
             ##########################################
@@ -6420,22 +6420,22 @@ class Application(Frame):
                 for line in self.coords:
                     XY = line
                     if self.upper.get() == True:
-                        XY[0],XY[1] = Transform(XY[0],XY[1],maxa)
-                        XY[2],XY[3] = Transform(XY[2],XY[3],maxa)
+                        XY[0],XY[1] = Transform(XY[0], XY[1], maxa)
+                        XY[2],XY[3] = Transform(XY[2], XY[3], maxa)
                     else:
-                        XY[0],XY[1] = Transform(XY[0],XY[1],mina)
-                        XY[2],XY[3] = Transform(XY[2],XY[3],mina)
+                        XY[0],XY[1] = Transform(XY[0], XY[1], mina)
+                        XY[2],XY[3] = Transform(XY[2], XY[3], mina)
 
         ##########################################
         #    TEXT FLIP / MIRROR STUFF / ANGLE    #
         ##########################################
         mirror_flag = self.mirror.get()
-        flip_flag   = self.flip.get()
+        flip_flag = self.flip.get()
 
-        maxx  = -99991.0
-        maxy  = -99992.0
-        miny  =  99994.0
-        minx  =  99995.0
+        maxx = -99991.0
+        maxy = -99992.0
+        miny = 99994.0
+        minx = 99995.0
 
 ##        ## Commented this section out in Version 1.66
 ##        if Radius == 0.0:
@@ -6463,47 +6463,47 @@ class Application(Frame):
 ##                else:
 ##                    miny  = -font_line_height*YScale
 
-        maxr2 =  0.0
+        maxr2 = 0.0
         for line in self.coords:
             XY = line
             if Angle != 0.0:
-                XY[0],XY[1],A1 = self.Rotn(XY[0],XY[1],Angle,0)
-                XY[2],XY[3],A2 = self.Rotn(XY[2],XY[3],Angle,0)
+                XY[0],XY[1],A1 = self.Rotn(XY[0], XY[1], Angle, 0)
+                XY[2],XY[3],A2 = self.Rotn(XY[2], XY[3], Angle, 0)
 
             if mirror_flag == True:
                 XY[0] = -XY[0]
                 XY[2] = -XY[2]
-                v_flop  = not(v_flop)
+                v_flop = not(v_flop)
 
             if flip_flag == True:
                 XY[1] = -XY[1]
                 XY[3] = -XY[3]
                 v_flop = not(v_flop)
 
-            maxx  = max(maxx,  XY[0], XY[2])
-            maxy  = max(maxy,  XY[1], XY[3])
+            maxx = max(maxx, XY[0], XY[2])
+            maxy = max(maxy, XY[1], XY[3])
 
-            minx  = min(minx,  XY[0], XY[2])
-            miny  = min(miny,  XY[1], XY[3])
+            minx = min(minx, XY[0], XY[2])
+            miny = min(miny, XY[1], XY[3])
 
-            maxr2 = max(maxr2, float(XY[0]*XY[0]+XY[1]*XY[1]), float(XY[2]*XY[2]+XY[3]*XY[3]))
+            maxr2 = max(maxr2, float(XY[0] * XY[0] + XY[1] * XY[1]), float(XY[2] * XY[2] + XY[3] * XY[3]))
 
 
-        maxx = maxx + Thick/2
-        maxy = maxy + Thick/2
-        minx = minx - Thick/2
-        miny = miny - Thick/2
+        maxx = maxx + Thick / 2
+        maxy = maxy + Thick / 2
+        minx = minx - Thick / 2
+        miny = miny - Thick / 2
 
-        midx = (minx+maxx)/2
-        midy = (miny+maxy)/2
+        midx = (minx + maxx) / 2
+        midy = (miny + maxy) / 2
 
         #############################
         #   Engrave Box or circle   #
         #############################
         Delta = 0
         Radius_plot = 0
-        Thick_Border  =  float(self.STHICK.get() )
-        Delta = Thick/2 + float(self.boxgap.get())
+        Thick_Border = float(self.STHICK.get() )
+        Delta = Thick / 2 + float(self.boxgap.get())
         if self.plotbox.get(): #and self.cut_type.get() != "v-carve":
             if Radius_in == 0 or self.cut_type.get() == "v-carve":
             #    #Add coords for box
@@ -6514,31 +6514,31 @@ class Application(Frame):
 
 
                 if (bool(self.mirror.get()) ^ bool(self.flip.get())):
-                    self.coords.append([ minx-Delta, miny-Delta, minx-Delta, maxy+Delta, 0, 0])
-                    self.coords.append([ minx-Delta, maxy+Delta, maxx+Delta, maxy+Delta, 0, 0])
-                    self.coords.append([ maxx+Delta, maxy+Delta, maxx+Delta, miny-Delta, 0, 0])
-                    self.coords.append([ maxx+Delta, miny-Delta, minx-Delta, miny-Delta, 0, 0])
+                    self.coords.append([ minx - Delta, miny - Delta, minx - Delta, maxy + Delta, 0, 0])
+                    self.coords.append([ minx - Delta, maxy + Delta, maxx + Delta, maxy + Delta, 0, 0])
+                    self.coords.append([ maxx + Delta, maxy + Delta, maxx + Delta, miny - Delta, 0, 0])
+                    self.coords.append([ maxx + Delta, miny - Delta, minx - Delta, miny - Delta, 0, 0])
                 else:
-                    self.coords.append([ minx-Delta, miny-Delta, maxx+Delta, miny-Delta, 0, 0])
-                    self.coords.append([ maxx+Delta, miny-Delta, maxx+Delta, maxy+Delta, 0, 0])
-                    self.coords.append([ maxx+Delta, maxy+Delta, minx-Delta, maxy+Delta, 0, 0])
-                    self.coords.append([ minx-Delta, maxy+Delta, minx-Delta, miny-Delta, 0, 0])
+                    self.coords.append([ minx - Delta, miny - Delta, maxx + Delta, miny - Delta, 0, 0])
+                    self.coords.append([ maxx + Delta, miny - Delta, maxx + Delta, maxy + Delta, 0, 0])
+                    self.coords.append([ maxx + Delta, maxy + Delta, minx - Delta, maxy + Delta, 0, 0])
+                    self.coords.append([ minx - Delta, maxy + Delta, minx - Delta, miny - Delta, 0, 0])
 
 
                 if self.cut_type.get() != "v-carve":
-                    Delta = Delta + Thick/2
+                    Delta = Delta + Thick / 2
                 minx = minx - Delta
                 maxx = maxx + Delta
                 miny = miny - Delta
                 maxy = maxy + Delta
             else:
                 Radius_plot = sqrt(maxr2) + Thick + float(self.boxgap.get())
-                minx = -Radius_plot - Thick/2
+                minx = -Radius_plot - Thick / 2
                 maxx = -minx
-                miny =  minx
-                maxy =  maxx
-                midx =  0
-                midy =  0
+                miny = minx
+                maxy = maxx
+                midx = 0
+                midy = 0
                 self.RADIUS_PLOT = Radius_plot
                 # Don't create the circle coords here a g-code circle command
                 # is generated later when not v-carving
@@ -6600,19 +6600,19 @@ class Application(Frame):
             x_zero = 0
             y_zero = 0
 
-        cnt=0
+        cnt = 0
         for line in self.coords:
             XY = line
             self.coords[cnt][0] = XY[0] - x_zero + XOrigin
             self.coords[cnt][1] = XY[1] - y_zero + YOrigin
             self.coords[cnt][2] = XY[2] - x_zero + XOrigin
             self.coords[cnt][3] = XY[3] - y_zero + YOrigin
-            cnt=cnt+1
+            cnt = cnt + 1
 
-        self.MAXX=maxx - x_zero + XOrigin
-        self.MINX=minx - x_zero + XOrigin
-        self.MAXY=maxy - y_zero + YOrigin
-        self.MINY=miny - y_zero + YOrigin
+        self.MAXX = maxx - x_zero + XOrigin
+        self.MINX = minx - x_zero + XOrigin
+        self.MAXY = maxy - y_zero + YOrigin
+        self.MINY = miny - y_zero + YOrigin
 
 
         self.Xzero = x_zero
@@ -6621,37 +6621,37 @@ class Application(Frame):
         if (not self.batch.get()):
             # Reset Status Bar and Entry Fields
             self.Input.configure(         bg = 'white' )
-            self.entry_set(self.Entry_Yscale,  self.Entry_Yscale_Check()  ,1)
-            self.entry_set(self.Entry_Xscale,  self.Entry_Xscale_Check()  ,1)
-            self.entry_set(self.Entry_Sthick,  self.Entry_Sthick_Check()  ,1)
-            self.entry_set(self.Entry_Lspace,  self.Entry_Lspace_Check()  ,1)
-            self.entry_set(self.Entry_Cspace,  self.Entry_Cspace_Check()  ,1)
-            self.entry_set(self.Entry_Wspace,  self.Entry_Wspace_Check()  ,1)
-            self.entry_set(self.Entry_Tangle,  self.Entry_Tangle_Check()  ,1)
-            self.entry_set(self.Entry_Tradius, self.Entry_Tradius_Check() ,1)
-            self.entry_set(self.Entry_Feed,    self.Entry_Feed_Check()    ,1)
-            self.entry_set(self.Entry_Plunge,  self.Entry_Plunge_Check()  ,1)
-            self.entry_set(self.Entry_Zsafe,   self.Entry_Zsafe_Check()   ,1)
-            self.entry_set(self.Entry_Zcut,    self.Entry_Zcut_Check()    ,1)
-            self.entry_set(self.Entry_BoxGap,  self.Entry_BoxGap_Check()  ,1)
-            self.entry_set(self.Entry_Accuracy,self.Entry_Accuracy_Check(),1)
+            self.entry_set(self.Entry_Yscale, self.Entry_Yscale_Check(), 1)
+            self.entry_set(self.Entry_Xscale, self.Entry_Xscale_Check(), 1)
+            self.entry_set(self.Entry_Sthick, self.Entry_Sthick_Check(), 1)
+            self.entry_set(self.Entry_Lspace, self.Entry_Lspace_Check(), 1)
+            self.entry_set(self.Entry_Cspace, self.Entry_Cspace_Check(), 1)
+            self.entry_set(self.Entry_Wspace, self.Entry_Wspace_Check(), 1)
+            self.entry_set(self.Entry_Tangle, self.Entry_Tangle_Check(), 1)
+            self.entry_set(self.Entry_Tradius, self.Entry_Tradius_Check(), 1)
+            self.entry_set(self.Entry_Feed, self.Entry_Feed_Check(), 1)
+            self.entry_set(self.Entry_Plunge, self.Entry_Plunge_Check(), 1)
+            self.entry_set(self.Entry_Zsafe, self.Entry_Zsafe_Check(), 1)
+            self.entry_set(self.Entry_Zcut, self.Entry_Zcut_Check(), 1)
+            self.entry_set(self.Entry_BoxGap, self.Entry_BoxGap_Check(), 1)
+            self.entry_set(self.Entry_Accuracy, self.Entry_Accuracy_Check(), 1)
 
-            self.bounding_box.set("Bounding Box (WxH) = "    +
-                                   "%.3g" % (maxx-minx)      +
-                                   " %s " % self.units.get() +
-                                   " x " +
-                                   "%.3g" % (maxy-miny)      +
-                                   " %s " % self.units.get() +
-                                   " %s" % message2)
+            self.bounding_box.set("Bounding Box (WxH) = " +
+                                  "%.3g" % (maxx - minx) +
+                                  " %s " % self.units.get() +
+                                  " x " +
+                                  "%.3g" % (maxy - miny) +
+                                  " %s " % self.units.get() +
+                                  " %s" % message2)
             self.statusMessage.set(self.bounding_box.get())
 
         if no_font_record != []:
             if (not self.batch.get()):
                 self.statusbar.configure( bg = 'orange' )
-            message.fmessage('Characters not found in font file:',FALSE)
-            message.fmessage("(",FALSE)
+            message.fmessage('Characters not found in font file:', FALSE)
+            message.fmessage("(", FALSE)
             for entry in no_font_record:
-                message.fmessage( "%s," %(entry),FALSE)
+                message.fmessage( "%s," % (entry), FALSE)
             message.fmessage(")")
 
         if (not self.batch.get()):
@@ -6661,18 +6661,18 @@ class Application(Frame):
         ################
 
     ##################################################
-    def record_v_carve_data(self,x1,y1,phi,rout,loop_cnt, clean_flag):
+    def record_v_carve_data(self, x1, y1, phi, rout, loop_cnt, clean_flag):
         rbit = self.calc_vbit_dia() / 2.0
-        r_clean  = float(self.clean_dia.get())/2.0
+        r_clean = float(self.clean_dia.get()) / 2.0
 
-        Lx, Ly = Transform(0,rout,-phi)
-        xnormv = x1+Lx
-        ynormv = y1+Ly
+        Lx, Ly = Transform(0, rout, -phi)
+        xnormv = x1 + Lx
+        ynormv = y1 + Ly
         need_clean = 0
 
         if int(clean_flag) != 1:
             self.vcoords.append([xnormv, ynormv, rout, loop_cnt])
-            if abs(rbit-rout) <= Zero:
+            if abs(rbit - rout) <= Zero:
                 need_clean = 1
         else:
             if rout >= rbit:
@@ -6686,43 +6686,43 @@ class Application(Frame):
     # Polygon is a list of (x,y) pairs.
     # http://www.ariel.com.au/a/python-point-int-poly.html
     #####################################################
-    def point_inside_polygon(self,x,y,poly):
+    def point_inside_polygon(self, x, y, poly):
         n = len(poly)
         inside = -1
         p1x = poly[0][0]
         p1y = poly[0][1]
-        for i in range(n+1):
-            p2x = poly[i%n][0]
-            p2y = poly[i%n][1]
-            if y > min(p1y,p2y):
-                if y <= max(p1y,p2y):
-                    if x <= max(p1x,p2x):
+        for i in range(n + 1):
+            p2x = poly[i % n][0]
+            p2y = poly[i % n][1]
+            if y > min(p1y, p2y):
+                if y <= max(p1y, p2y):
+                    if x <= max(p1x, p2x):
                         if p1y != p2y:
-                            xinters = (y-p1y)*(p2x-p1x)/(p2y-p1y)+p1x
+                            xinters = (y - p1y) * (p2x - p1x) / (p2y - p1y) + p1x
                         if p1x == p2x or x <= xinters:
                             inside = inside * -1
             p1x,p1y = p2x,p2y
 
         return inside
 
-    def get_flop_staus(self,CLEAN_FLAG=False):
-        v_flop    =  bool(self.v_flop.get())
+    def get_flop_staus(self, CLEAN_FLAG=False):
+        v_flop = bool(self.v_flop.get())
 
-        if (self.input_type.get() == "text") and (CLEAN_FLAG==False):
+        if (self.input_type.get() == "text") and (CLEAN_FLAG == False):
             if self.plotbox.get():
                 v_flop = not(v_flop)
             if self.mirror.get():
-                v_flop  = not(v_flop)
+                v_flop = not(v_flop)
             if self.flip.get():
                 v_flop = not(v_flop)
         return v_flop
 
 
-    def V_Carve_It(self,clean_flag=0,DXF_FLAG = False):
+    def V_Carve_It(self, clean_flag=0, DXF_FLAG=False):
         global STOP_CALC
         timestamp = 0
         self.master.unbind("<Configure>")
-        STOP_CALC=0
+        STOP_CALC = 0
 
         if self.units.get() == "mm":
             if float( self.v_step_len.get() ) < .01:
@@ -6736,14 +6736,14 @@ class Application(Frame):
         if (clean_flag != 1 ):
             self.DoIt()
             self.clean_coords = []
-            self.clean_coords_sort=[]
-            self.v_clean_coords_sort=[]
-            self.clean_segment=[]
+            self.clean_coords_sort = []
+            self.v_clean_coords_sort = []
+            self.clean_segment = []
         elif self.clean_coords_sort != [] or self.v_clean_coords_sort != []:
             # If there is existing cleanup data clear the screen before computing.
             self.clean_coords = []
-            self.clean_coords_sort=[]
-            self.v_clean_coords_sort=[]
+            self.clean_coords_sort = []
+            self.v_clean_coords_sort = []
             self.Plot_Data()
 
         if (not self.batch.get()):
@@ -6756,7 +6756,7 @@ class Application(Frame):
         #########################################
         if self.cut_type.get() == "v-carve" and self.fontdex.get() == False:
 
-            v_flop  = self.get_flop_staus()
+            v_flop = self.get_flop_staus()
             if (not self.batch.get()):
                 cszw = int(self.PreviewCanvas.cget("width"))
                 cszh = int(self.PreviewCanvas.cget("height"))
@@ -6768,19 +6768,19 @@ class Application(Frame):
             minx = self.MINX
             maxy = self.MAXY
             miny = self.MINY
-            midx=(maxx+minx)/2
-            midy=(maxy+miny)/2
+            midx = (maxx + minx) / 2
+            midy = (maxy + miny) / 2
 
-            dline       = float(self.v_step_len.get())
+            dline = float(self.v_step_len.get())
             ###############################################################
-            rbit      = self.calc_vbit_dia()/2.0
+            rbit = self.calc_vbit_dia() / 2.0
             clean_dia = float(self.clean_dia.get())
 
             r_inlay_top = self.calc_r_inlay_top()
             if (clean_flag != 1 ):
                 rmax = rbit
             else:
-                rmax = rbit + clean_dia/2
+                rmax = rbit + clean_dia / 2
             ###############################################################
             v_stp_crner = float(self.v_stp_crner.get())
             if self.inlay.get():
@@ -6788,17 +6788,17 @@ class Application(Frame):
             else:
                 v_drv_crner = float(self.v_drv_crner.get())
 
-            Acc         = float(self.accuracy.get())
+            Acc = float(self.accuracy.get())
 
-            CHK_STRING  = str(self.v_check_all.get())
+            CHK_STRING = str(self.v_check_all.get())
             not_b_carve = not bool(self.bit_shape.get() == "BALL")
 
             if self.input_type.get() != "text":
-                CHK_STRING  = "all"
+                CHK_STRING = "all"
 
-            BIT_ANGLE   = float(self.v_bit_angle.get())
+            BIT_ANGLE = float(self.v_bit_angle.get())
 
-            dangle = degrees(dline/rbit)
+            dangle = degrees(dline / rbit)
             if dangle < 2.0:
                 dangle = 2.0
 
@@ -6816,8 +6816,8 @@ class Application(Frame):
             xb = 9999
             yb = 9999
             #set variable for the point previously calculated in a loop
-            x0=9999
-            y0=9999
+            x0 = 9999
+            y0 = 9999
             seg_sin0 = 2
             seg_cos0 = 2
             char_num0 = -1
@@ -6838,67 +6838,67 @@ class Application(Frame):
                 i_x2 = 0
                 i_y2 = 1
 
-            coord_radius=[]
+            coord_radius = []
             #########################
             # Setup Grid Partitions #
             #########################
-            xLength = self.MAXX-self.MINX
-            yLength = self.MAXY-self.MINY
+            xLength = self.MAXX - self.MINX
+            yLength = self.MAXY - self.MINY
 
-            xN=0
-            yN=0
+            xN = 0
+            yN = 0
 
-            xN_minus_1 = max(int(xLength/((2*rmax+dline)*1.1)),1)
-            yN_minus_1 = max(int(yLength/((2*rmax+dline)*1.1)),1)
+            xN_minus_1 = max(int(xLength / ((2 * rmax + dline) * 1.1)), 1)
+            yN_minus_1 = max(int(yLength / ((2 * rmax + dline) * 1.1)), 1)
 
-            xPartitionLength=xLength/xN_minus_1
-            yPartitionLength=yLength/yN_minus_1
+            xPartitionLength = xLength / xN_minus_1
+            yPartitionLength = yLength / yN_minus_1
 
-            xN = xN_minus_1+1
-            yN = yN_minus_1+1
+            xN = xN_minus_1 + 1
+            yN = yN_minus_1 + 1
 
-            if (xPartitionLength<Zero):
-                xPartitionLength=1
-            if (yPartitionLength<Zero):
-                yPartitionLength=1
+            if (xPartitionLength < Zero):
+                xPartitionLength = 1
+            if (yPartitionLength < Zero):
+                yPartitionLength = 1
             self.xPartitionLength = xPartitionLength
             self.yPartitionLength = yPartitionLength
 
             self.partitionList = []
 
-            for xCount in range(0,xN):
+            for xCount in range(0, xN):
                 self.partitionList.append([])
-                for yCount in range(0,yN):
+                for yCount in range(0, yN):
                     self.partitionList[xCount].append([])
 
             ###############################
             # End Setup Grid Partitions   #
             ###############################
 
-            CUR_CNT=-1
-            while (len(self.coords) > CUR_CNT+1):
-                CUR_CNT=CUR_CNT+1
+            CUR_CNT = -1
+            while (len(self.coords) > CUR_CNT + 1):
+                CUR_CNT = CUR_CNT + 1
                 XY_R = self.coords[CUR_CNT][:]
                 x1_R = XY_R[0]
                 y1_R = XY_R[1]
                 x2_R = XY_R[2]
                 y2_R = XY_R[3]
-                LENGTH = sqrt( (x2_R-x1_R)*(x2_R-x1_R) + (y2_R-y1_R)*(y2_R-y1_R) )
+                LENGTH = sqrt( (x2_R - x1_R) * (x2_R - x1_R) + (y2_R - y1_R) * (y2_R - y1_R) )
 
-                R_R = LENGTH/2 + rmax
-                X_R = (x1_R + x2_R)/2
-                Y_R = (y1_R + y2_R)/2
+                R_R = LENGTH / 2 + rmax
+                X_R = (x1_R + x2_R) / 2
+                Y_R = (y1_R + y2_R) / 2
                 coord_radius.append([X_R, Y_R, R_R])
 
                 #####################################################
                 # Determine active partitions for each line segment #
                 #####################################################
-                coded_index=[]
+                coded_index = []
                 ## find the local coordinates of the line segment ends
-                x1_G = XY_R[0]-self.MINX
-                y1_G = XY_R[1]-self.MINY
-                x2_G = XY_R[2]-self.MINX
-                y2_G = XY_R[3]-self.MINY
+                x1_G = XY_R[0] - self.MINX
+                y1_G = XY_R[1] - self.MINY
+                x2_G = XY_R[2] - self.MINX
+                y2_G = XY_R[3] - self.MINY
 
                 ## Find the grid box index for each line segment end
                 X1i = int( x1_G / xPartitionLength )
@@ -6907,33 +6907,33 @@ class Application(Frame):
                 Y2i = int( y2_G / yPartitionLength )
 
                 ## Find the max/min grid box locations
-                Xindex_min = min(X1i,X2i)
-                Xindex_max = max(X1i,X2i)
-                Yindex_min = min(Y1i,Y2i)
-                Yindex_max = max(Y1i,Y2i)
+                Xindex_min = min(X1i, X2i)
+                Xindex_max = max(X1i, X2i)
+                Yindex_min = min(Y1i, Y2i)
+                Yindex_max = max(Y1i, Y2i)
 
-                check_points=[]
-                if (Xindex_max > Xindex_min) and (abs(x2_G-x1_G) > Zero):
-                    if (Yindex_max > Yindex_min) and (abs(y2_G-y1_G) > Zero):
+                check_points = []
+                if (Xindex_max > Xindex_min) and (abs(x2_G - x1_G) > Zero):
+                    if (Yindex_max > Yindex_min) and (abs(y2_G - y1_G) > Zero):
                         check_points.append([X1i,Y1i])
                         check_points.append([X2i,Y2i])
                         ## Establish line equation variables: y=m*x+b
-                        m_G = (y2_G-y1_G)/(x2_G-x1_G)
-                        b_G = y1_G - m_G*x1_G
+                        m_G = (y2_G - y1_G) / (x2_G - x1_G)
+                        b_G = y1_G - m_G * x1_G
                         ## Add check point in each partition in the range of X values
-                        x_ind_check = Xindex_min+1
-                        while x_ind_check <= Xindex_max-1:
+                        x_ind_check = Xindex_min + 1
+                        while x_ind_check <= Xindex_max - 1:
                             x_val = x_ind_check * xPartitionLength
                             y_val = m_G * x_val + b_G
-                            y_ind_check = int(y_val/yPartitionLength)
+                            y_ind_check = int(y_val / yPartitionLength)
                             check_points.append([x_ind_check,y_ind_check])
                             x_ind_check = x_ind_check + 1
                         ## Add check point in each partition in the range of Y values
-                        y_ind_check = Yindex_min+1
-                        while y_ind_check <= Yindex_max-1:
-                            y_val =  y_ind_check * yPartitionLength
-                            x_val = (y_val-b_G ) / m_G
-                            x_ind_check = int(x_val/xPartitionLength)
+                        y_ind_check = Yindex_min + 1
+                        while y_ind_check <= Yindex_max - 1:
+                            y_val = y_ind_check * yPartitionLength
+                            x_val = (y_val - b_G ) / m_G
+                            x_ind_check = int(x_val / xPartitionLength)
                             check_points.append([x_ind_check,y_ind_check])
                             y_ind_check = y_ind_check + 1
                     else:
@@ -6955,11 +6955,11 @@ class Application(Frame):
                     xy_p = xy_point
                     xIndex = xy_p[0]
                     yIndex = xy_p[1]
-                    for i in range( max(xIndex-1,0), min(xN,xIndex+2) ):
-                        for j in range( max(yIndex-1,0), min(yN,yIndex+2) ):
-                            coded_index.append(int(i+j*xN))
+                    for i in range( max(xIndex - 1, 0), min(xN, xIndex + 2) ):
+                        for j in range( max(yIndex - 1, 0), min(yN, yIndex + 2) ):
+                            coded_index.append(int(i + j * xN))
 
-                codedIndexSet= set(coded_index)
+                codedIndexSet = set(coded_index)
 
                 for thisCode in codedIndexSet:
                     thisIndex = thisCode
@@ -6967,7 +6967,7 @@ class Application(Frame):
                     line_R_appended.append(X_R)
                     line_R_appended.append(Y_R)
                     line_R_appended.append(R_R)
-                    self.partitionList[int(thisIndex%xN)][int(thisIndex/xN)].append(line_R_appended)
+                    self.partitionList[int(thisIndex % xN)][int(thisIndex / xN)].append(line_R_appended)
             #########################################################
             # End Determine active partitions for each line segment #
             #########################################################
@@ -6977,17 +6977,17 @@ class Application(Frame):
                 v_index = len(self.coords)
             v_ind = v_index
 
-            CUR_CNT=-1
+            CUR_CNT = -1
             TOT_LENGTH = 0.0
 
             for line in range(len(self.coords)):
-                CUR_CNT=CUR_CNT+1
+                CUR_CNT = CUR_CNT + 1
                 v_ind = v_ind + v_inc
                 x1 = self.coords[v_ind][i_x1]
                 y1 = self.coords[v_ind][i_y1]
                 x2 = self.coords[v_ind][i_x2]
                 y2 = self.coords[v_ind][i_y2]
-                LENGTH = sqrt( (x2-x1)*(x2-x1) + (y2-y1)*(y2-y1) )
+                LENGTH = sqrt( (x2 - x1) * (x2 - x1) + (y2 - y1) * (y2 - y1) )
                 if clean_flag == 1:
                     if self.clean_segment[CUR_CNT] != 0:
                         TOT_LENGTH = TOT_LENGTH + LENGTH
@@ -6997,7 +6997,7 @@ class Application(Frame):
             CUR_LENGTH = 0.0
             MAX_CNT = len(self.coords)
             CUR_CNT = -1
-            START_TIME=time()
+            START_TIME = time()
 
             ################################################################################################################
             ################################################################################################################
@@ -7007,9 +7007,9 @@ class Application(Frame):
                 self.Plot_Data()
 
             if TOT_LENGTH > 0.0:
-                calc_flag=1
+                calc_flag = 1
                 for line in range(len(self.coords)):
-                    CUR_CNT=CUR_CNT+1
+                    CUR_CNT = CUR_CNT + 1
                     ####################################################
                     if clean_flag == 0:
                         self.clean_segment.append(0)
@@ -7020,25 +7020,25 @@ class Application(Frame):
                         calc_flag = self.clean_segment[CUR_CNT]
 
                     if (not self.batch.get()):
-                        stamp=int(3*time()) #update every 1/3 of a second
+                        stamp = int(3 * time()) #update every 1/3 of a second
                         if (stamp != timestamp):
-                            timestamp=stamp #interlock
+                            timestamp = stamp #interlock
 
                             ####################################################
-                            CUR_PCT=float(CUR_LENGTH)/TOT_LENGTH*100.0
+                            CUR_PCT = float(CUR_LENGTH) / TOT_LENGTH * 100.0
                             if CUR_PCT > 0.0:
-                                MIN_REMAIN =( time()-START_TIME )/60 * (100-CUR_PCT)/CUR_PCT
-                                MIN_TOTAL = 100.0/CUR_PCT * ( time()-START_TIME )/60
+                                MIN_REMAIN = ( time() - START_TIME ) / 60 * (100 - CUR_PCT) / CUR_PCT
+                                MIN_TOTAL = 100.0 / CUR_PCT * ( time() - START_TIME ) / 60
                             else:
                                 MIN_REMAIN = -1
                                 MIN_TOTAL = -1
 
-                            self.statusMessage.set('%.1f %% ( %.1f Minutes Remaining | %.1f Minutes Total )' %( CUR_PCT, MIN_REMAIN, MIN_TOTAL ) )
+                            self.statusMessage.set('%.1f %% ( %.1f Minutes Remaining | %.1f Minutes Total )' % ( CUR_PCT, MIN_REMAIN, MIN_TOTAL ) )
                             self.statusbar.configure( bg = 'yellow' )
                             self.PreviewCanvas.update()
 
                     if STOP_CALC != 0:
-                        STOP_CALC=0
+                        STOP_CALC = 0
 
                         if (clean_flag != 1 ):
                             self.vcoords = []
@@ -7048,42 +7048,42 @@ class Application(Frame):
                         break
 
                     v_index = v_index + v_inc
-                    New_Loop=0
+                    New_Loop = 0
                     x1 = self.coords[v_index][i_x1]
                     y1 = self.coords[v_index][i_y1]
                     x2 = self.coords[v_index][i_x2]
                     y2 = self.coords[v_index][i_y2]
                     char_num = int(self.coords[v_index][5])
-                    dx = x2-x1
-                    dy = y2-y1
-                    Lseg = sqrt(dx*dx + dy*dy)
+                    dx = x2 - x1
+                    dy = y2 - y1
+                    Lseg = sqrt(dx * dx + dy * dy)
 
                     if Lseg < Zero: #was Acc
                         continue
 
                     #calculate the sin and cos of the coord transformation needed for
                     #the distance calculations
-                    seg_sin =  dy/Lseg
-                    seg_cos = -dx/Lseg
-                    phi = Get_Angle(seg_sin,seg_cos)
+                    seg_sin = dy / Lseg
+                    seg_cos = -dx / Lseg
+                    phi = Get_Angle(seg_sin, seg_cos)
 
                     if calc_flag != 0:
                         CUR_LENGTH = CUR_LENGTH + Lseg
                     else:
                         theta = phi         #commented out in V1.62 brought back in V1.72
-                        x0=x2               #commented out in V1.62 brought back in V1.72
-                        y0=y2               #commented out in V1.62 brought back in V1.72
-                        seg_sin0=seg_sin    #commented out in V1.62 brought back in V1.72
-                        seg_cos0=seg_cos    #commented out in V1.62 brought back in V1.72
-                        char_num0=char_num  #commented out in V1.62 brought back in V1.72
+                        x0 = x2               #commented out in V1.62 brought back in V1.72
+                        y0 = y2               #commented out in V1.62 brought back in V1.72
+                        seg_sin0 = seg_sin    #commented out in V1.62 brought back in V1.72
+                        seg_cos0 = seg_cos    #commented out in V1.62 brought back in V1.72
+                        char_num0 = char_num  #commented out in V1.62 brought back in V1.72
                         continue
 
 
 
-                    if (fabs(x1-x0) > Zero) or (fabs(y1-y0) > Zero) or (char_num != char_num0):
+                    if (fabs(x1 - x0) > Zero) or (fabs(y1 - y0) > Zero) or (char_num != char_num0):
                     #if char_num != char_num0:
-                        New_Loop=1
-                        loop_cnt=loop_cnt+1
+                        New_Loop = 1
+                        loop_cnt = loop_cnt + 1
                         xa = float(x1)
                         ya = float(y1)
                         xb = float(x2)
@@ -7095,116 +7095,116 @@ class Application(Frame):
                     if seg_cos0 > 1.0:
                         delta = 180
                     else:
-                        xtmp1 = (x2-x1) * seg_cos0 - (y2-y1) * seg_sin0
-                        ytmp1 = (x2-x1) * seg_sin0 + (y2-y1) * seg_cos0
-                        Ltmp=sqrt( xtmp1*xtmp1 + ytmp1*ytmp1 )
-                        d_seg_sin =   ytmp1/Ltmp
-                        d_seg_cos =   xtmp1/Ltmp
-                        delta = Get_Angle(d_seg_sin,d_seg_cos)
-                    if delta < float(v_drv_crner) and BIT_ANGLE !=0 and not_b_carve and clean_flag != 1:
+                        xtmp1 = (x2 - x1) * seg_cos0 - (y2 - y1) * seg_sin0
+                        ytmp1 = (x2 - x1) * seg_sin0 + (y2 - y1) * seg_cos0
+                        Ltmp = sqrt( xtmp1 * xtmp1 + ytmp1 * ytmp1 )
+                        d_seg_sin = ytmp1 / Ltmp
+                        d_seg_cos = xtmp1 / Ltmp
+                        delta = Get_Angle(d_seg_sin, d_seg_cos)
+                    if delta < float(v_drv_crner) and BIT_ANGLE != 0 and not_b_carve and clean_flag != 1:
                         #drive to corner
                         self.vcoords.append([x1, y1, 0.0, loop_cnt])
 
                     if delta > float(v_stp_crner):
-                       #add sub-steps around corner
-                       ###########################
-                       phisteps = max(floor((delta-180)/dangle),2)
-                       step_phi = (delta-180)/phisteps
-                       pcnt = 0
-                       while pcnt < phisteps-1:
-                           pcnt=pcnt+1
-                           sub_phi =  radians( -pcnt*step_phi + theta )
-                           sub_seg_cos = cos(sub_phi)
-                           sub_seg_sin = sin(sub_phi)
+                        #add sub-steps around corner
+                        ###########################
+                        phisteps = max(floor((delta - 180) / dangle), 2)
+                        step_phi = (delta - 180) / phisteps
+                        pcnt = 0
+                        while pcnt < phisteps - 1:
+                            pcnt = pcnt + 1
+                            sub_phi = radians(-pcnt * step_phi + theta )
+                            sub_seg_cos = cos(sub_phi)
+                            sub_seg_sin = sin(sub_phi)
 
-                           rout = self.find_max_circle(x1,y1,rmax,char_num,sub_seg_sin,sub_seg_cos,1,CHK_STRING)
-                           xv,yv,rv,clean_seg=self.record_v_carve_data(x1,y1,sub_phi,rout,loop_cnt,clean_flag)
-                           self.clean_segment[CUR_CNT] = bool(self.clean_segment[CUR_CNT]) or bool(clean_seg)
-                           if self.v_pplot.get() == 1 and (not self.batch.get()) and (clean_flag != 1 ):
-                               self.Plot_Circ(xv,yv,midx,midy,cszw,cszh,PlotScale,"blue",rv,0)
+                            rout = self.find_max_circle(x1, y1, rmax, char_num, sub_seg_sin, sub_seg_cos, 1, CHK_STRING)
+                            xv,yv,rv,clean_seg = self.record_v_carve_data(x1, y1, sub_phi, rout, loop_cnt, clean_flag)
+                            self.clean_segment[CUR_CNT] = bool(self.clean_segment[CUR_CNT]) or bool(clean_seg)
+                            if self.v_pplot.get() == 1 and (not self.batch.get()) and (clean_flag != 1 ):
+                                self.Plot_Circ(xv, yv, midx, midy, cszw, cszh, PlotScale, "blue", rv, 0)
                        #############################
                     ### end for linec in self.coords
                     theta = phi
-                    x0=x2
-                    y0=y2
-                    seg_sin0=seg_sin
-                    seg_cos0=seg_cos
-                    char_num0=char_num
+                    x0 = x2
+                    y0 = y2
+                    seg_sin0 = seg_sin
+                    seg_cos0 = seg_cos
+                    char_num0 = char_num
 
                     #Calculate the number of steps then the dx and dy for each step
                     #Don't calculate at the joints.
-                    nsteps = max(floor(Lseg/dline),2)
-                    dxpt = dx/nsteps
-                    dypt = dy/nsteps
+                    nsteps = max(floor(Lseg / dline), 2)
+                    dxpt = dx / nsteps
+                    dypt = dy / nsteps
 
                     ### This makes sure the first cut start at the begining of the first segment
                     cnt = 0
-                    if New_Loop == 1 and BIT_ANGLE !=0 and not_b_carve:
+                    if New_Loop == 1 and BIT_ANGLE != 0 and not_b_carve:
                         cnt = -1
 
-                    seg_sin =  dy/Lseg
-                    seg_cos = -dx/Lseg
-                    phi2 = radians(Get_Angle(seg_sin,seg_cos))
-                    while cnt < nsteps-1:
-                        cnt=cnt+1
+                    seg_sin = dy / Lseg
+                    seg_cos = -dx / Lseg
+                    phi2 = radians(Get_Angle(seg_sin, seg_cos))
+                    while cnt < nsteps - 1:
+                        cnt = cnt + 1
                         #determine location of next step along outline (xpt, ypt)
                         xpt = x1 + dxpt * cnt
                         ypt = y1 + dypt * cnt
 
-                        rout = self.find_max_circle(xpt,ypt,rmax,char_num,seg_sin,seg_cos,0,CHK_STRING)
+                        rout = self.find_max_circle(xpt, ypt, rmax, char_num, seg_sin, seg_cos, 0, CHK_STRING)
                         # Make the first cut drive down at an angle instead of straight down plunge
-                        if cnt==0 and not_b_carve:
+                        if cnt == 0 and not_b_carve:
                             rout = 0.0
-                        xv,yv,rv,clean_seg=self.record_v_carve_data(xpt,ypt,phi2,rout,loop_cnt,clean_flag)
+                        xv,yv,rv,clean_seg = self.record_v_carve_data(xpt, ypt, phi2, rout, loop_cnt, clean_flag)
 
                         self.clean_segment[CUR_CNT] = bool(self.clean_segment[CUR_CNT]) or bool(clean_seg)
                         if self.v_pplot.get() == 1 and (not self.batch.get()) and (clean_flag != 1 ):
                             self.master.update_idletasks()
-                            self.Plot_Circ(xv,yv,midx,midy,cszw,cszh,PlotScale,"blue",rv,0)
+                            self.Plot_Circ(xv, yv, midx, midy, cszw, cszh, PlotScale, "blue", rv, 0)
 
-                        if (New_Loop==1 and cnt==1):
-                            xpta  = xpt
-                            ypta  = ypt
+                        if (New_Loop == 1 and cnt == 1):
+                            xpta = xpt
+                            ypta = ypt
                             phi2a = phi2
                             routa = rout
 
                     #################################################
                     # Check to see if we need to close an open loop #
                     #################################################
-                    if (abs(x2-xa) < Zero and abs(y2-ya) < Zero):
-                        xtmp1 = (xb-xa) * seg_cos0 - (yb-ya) * seg_sin0
-                        ytmp1 = (xb-xa) * seg_sin0 + (yb-ya) * seg_cos0
-                        Ltmp=sqrt( xtmp1*xtmp1 + ytmp1*ytmp1 )
-                        d_seg_sin =   ytmp1/Ltmp
-                        d_seg_cos =   xtmp1/Ltmp
-                        delta = Get_Angle(d_seg_sin,d_seg_cos)
+                    if (abs(x2 - xa) < Zero and abs(y2 - ya) < Zero):
+                        xtmp1 = (xb - xa) * seg_cos0 - (yb - ya) * seg_sin0
+                        ytmp1 = (xb - xa) * seg_sin0 + (yb - ya) * seg_cos0
+                        Ltmp = sqrt( xtmp1 * xtmp1 + ytmp1 * ytmp1 )
+                        d_seg_sin = ytmp1 / Ltmp
+                        d_seg_cos = xtmp1 / Ltmp
+                        delta = Get_Angle(d_seg_sin, d_seg_cos)
                         if delta < v_drv_crner and clean_flag != 1:
                             #drive to corner
                             self.vcoords.append([xa, ya, 0.0, loop_cnt])
 
                         elif delta > v_stp_crner:
                             #add substeps around corner
-                            phisteps = max(floor((delta-180)/dangle),2)
-                            step_phi = (delta-180)/phisteps
+                            phisteps = max(floor((delta - 180) / dangle), 2)
+                            step_phi = (delta - 180) / phisteps
                             pcnt = 0
 
-                            while pcnt < phisteps-1:
-                                pcnt=pcnt+1
-                                sub_phi =  radians( -pcnt*step_phi + theta )
+                            while pcnt < phisteps - 1:
+                                pcnt = pcnt + 1
+                                sub_phi = radians(-pcnt * step_phi + theta )
                                 sub_seg_cos = cos(sub_phi)
                                 sub_seg_sin = sin(sub_phi)
 
-                                rout = self.find_max_circle(xa,ya,rmax,char_num,sub_seg_sin,sub_seg_cos,1,CHK_STRING)
-                                xv,yv,rv,clean_seg = self.record_v_carve_data(xa,ya,sub_phi,rout,loop_cnt,clean_flag)
+                                rout = self.find_max_circle(xa, ya, rmax, char_num, sub_seg_sin, sub_seg_cos, 1, CHK_STRING)
+                                xv,yv,rv,clean_seg = self.record_v_carve_data(xa, ya, sub_phi, rout, loop_cnt, clean_flag)
                                 self.clean_segment[CUR_CNT] = bool(self.clean_segment[CUR_CNT]) or bool(clean_seg)
                                 if (self.v_pplot.get() == 1) and (not self.batch.get()) and (clean_flag != 1 ):
-                                    self.Plot_Circ(xv,yv,midx,midy,cszw,cszh,PlotScale,"blue",rv,0)
+                                    self.Plot_Circ(xv, yv, midx, midy, cszw, cszh, PlotScale, "blue", rv, 0)
 
-                            xv,yv,rv,clean_seg = self.record_v_carve_data(xpta,ypta,phi2a,routa,loop_cnt,clean_flag)
+                            xv,yv,rv,clean_seg = self.record_v_carve_data(xpta, ypta, phi2a, routa, loop_cnt, clean_flag)
                             self.clean_segment[CUR_CNT] = bool(self.clean_segment[CUR_CNT]) or bool(clean_seg)
                         else:
                             # Add closing segment
-                            xv,yv,rv,clean_seg = self.record_v_carve_data(xpta,ypta,phi2a,routa,loop_cnt,clean_flag)
+                            xv,yv,rv,clean_seg = self.record_v_carve_data(xpta, ypta, phi2a, routa, loop_cnt, clean_flag)
                             self.clean_segment[CUR_CNT] = bool(self.clean_segment[CUR_CNT]) or bool(clean_seg)
 
                 #end for line in self coords
@@ -7212,20 +7212,20 @@ class Application(Frame):
 
                 #Reset Entry Fields in V-Carve Settings
                 if (not self.batch.get()):
-                    self.entry_set(self.Entry_Vbitangle,   self.Entry_Vbitangle_Check()   ,1)
-                    self.entry_set(self.Entry_Vbitdia,     self.Entry_Vbitdia_Check()     ,1)
-                    self.entry_set(self.Entry_VDepthLimit, self.Entry_VDepthLimit_Check() ,1)
-                    self.entry_set(self.Entry_InsideAngle, self.Entry_InsideAngle_Check() ,1)
-                    self.entry_set(self.Entry_OutsideAngle,self.Entry_OutsideAngle_Check(),1)
-                    self.entry_set(self.Entry_StepSize,    self.Entry_StepSize_Check()    ,1)
-                    self.entry_set(self.Entry_Allowance,   self.Entry_Allowance_Check()   ,1)
-                    self.entry_set(self.Entry_Accuracy,    self.Entry_Accuracy_Check()    ,1)
-                    self.entry_set(self.Entry_CLEAN_DIA,   self.Entry_CLEAN_DIA_Check()   ,1)
-                    self.entry_set(self.Entry_STEP_OVER,   self.Entry_STEP_OVER_Check()   ,1)
-                    self.entry_set(self.Entry_V_CLEAN,     self.Entry_V_CLEAN_Check()     ,1)
+                    self.entry_set(self.Entry_Vbitangle, self.Entry_Vbitangle_Check(), 1)
+                    self.entry_set(self.Entry_Vbitdia, self.Entry_Vbitdia_Check(), 1)
+                    self.entry_set(self.Entry_VDepthLimit, self.Entry_VDepthLimit_Check(), 1)
+                    self.entry_set(self.Entry_InsideAngle, self.Entry_InsideAngle_Check(), 1)
+                    self.entry_set(self.Entry_OutsideAngle, self.Entry_OutsideAngle_Check(), 1)
+                    self.entry_set(self.Entry_StepSize, self.Entry_StepSize_Check(), 1)
+                    self.entry_set(self.Entry_Allowance, self.Entry_Allowance_Check(), 1)
+                    self.entry_set(self.Entry_Accuracy, self.Entry_Accuracy_Check(), 1)
+                    self.entry_set(self.Entry_CLEAN_DIA, self.Entry_CLEAN_DIA_Check(), 1)
+                    self.entry_set(self.Entry_STEP_OVER, self.Entry_STEP_OVER_Check(), 1)
+                    self.entry_set(self.Entry_V_CLEAN, self.Entry_V_CLEAN_Check(), 1)
 
 
-            if CUR_CNT==MAX_CNT-1 and (not self.batch.get()):
+            if CUR_CNT == MAX_CNT - 1 and (not self.batch.get()):
                 self.statusMessage.set('Done -- ' + self.bounding_box.get())
                 self.statusbar.configure( bg = 'white' )
             ################################################################################################################
@@ -7237,34 +7237,34 @@ class Application(Frame):
         # End V-Carve Stuff
         #########################################
 
-    def sort_for_v_carve(self,sort_coords,LN_START=0):
+    def sort_for_v_carve(self, sort_coords, LN_START=0):
         Acc = float(self.accuracy.get())
         ##########################
         ###   Create ECOORDS   ###
         ##########################
         ecoords = []
-        Lbeg=[]
-        Lend=[]
-        cnt=0
+        Lbeg = []
+        Lend = []
+        cnt = 0
         for i in range(len(sort_coords)):
-            [x1,y1,x2,y2,dummy1,dummy2]=sort_coords[i]
+            [x1,y1,x2,y2,dummy1,dummy2] = sort_coords[i]
             if i == 0:
-                cnt=0
+                cnt = 0
                 ecoords.append([x1,y1])
                 Lbeg.append(cnt)
-                cnt = cnt+1
+                cnt = cnt + 1
                 ecoords.append([x2,y2])
                 oldx, oldy = x2, y2
             else:
-                dist = sqrt((oldx - x1)**2 + (oldy - y1)**2)
+                dist = sqrt((oldx - x1) ** 2 + (oldy - y1) ** 2)
                 # check and see if we need to move
                 # to a new discontinuous start point
                 if (dist > Zero):
                     Lend.append(cnt)
-                    cnt = cnt+1
+                    cnt = cnt + 1
                     ecoords.append([x1,y1])
                     Lbeg.append(cnt)
-                cnt = cnt+1
+                cnt = cnt + 1
                 ecoords.append([x2,y2])
                 oldx, oldy = x2, y2
         Lend.append(cnt)
@@ -7283,26 +7283,26 @@ class Application(Frame):
             [Xstart, Ystart] = ecoords[Lbeg[i]]
             [Xend,   Yend  ] = ecoords[Lend[i]]
 
-            dist = sqrt((Xend-Xstart)**2 +(Yend-Ystart)**2)
+            dist = sqrt((Xend - Xstart) ** 2 + (Yend - Ystart) ** 2)
             if  dist <= Zero: #if end is the same as the beginning (changed in V1.55: was Acc)
                 ecoords[Lend[i]] = [Xstart, Ystart]
-                i = i+1
+                i = i + 1
             else:  #end != to beginning
                 LObeg.append(Lbeg.pop(i))
                 LOend.append(Lend.pop(i))
 
-        LNbeg=[]
-        LNend=[]
-        LNloop=[]
+        LNbeg = []
+        LNend = []
+        LNloop = []
         #######################################################
         ###  For Each open loop connect to the next closest ###
         ###  loop end until all of the loops are closed     ###
         #######################################################
-        Lcnt=0
+        Lcnt = 0
         while len(LObeg) > 0: #for each Open Loop
             Start = LObeg.pop(0)
-            End   = LOend.pop(0)
-            Lcnt = Lcnt+1
+            End = LOend.pop(0)
+            Lcnt = Lcnt + 1
             LNloop.append(Lcnt)
             LNbeg.append(Start)
             LNend.append(End)
@@ -7311,15 +7311,15 @@ class Application(Frame):
             OPEN = True
             while OPEN == True and len(LObeg) > 0:
                 [Xend,Yend] = ecoords[End]
-                dist_beg_min = sqrt((Xend-Xstart)**2 +(Yend-Ystart)**2)
+                dist_beg_min = sqrt((Xend - Xstart) ** 2 + (Yend - Ystart) ** 2)
                 dist_end_min = dist_beg_min
                 k_min_beg = -1
                 k_min_end = -1
                 for k in range(len(LObeg)):
                     [Xkstart, Ykstart] = ecoords[LObeg[k]]
-                    [Xkend  ,   Ykend] = ecoords[LOend[k]]
-                    dist_beg = sqrt((Xend-Xkstart)**2 +(Yend-Ykstart)**2)
-                    dist_end = sqrt((Xend - Xkend)**2 +(Yend - Ykend)**2)
+                    [Xkend,   Ykend] = ecoords[LOend[k]]
+                    dist_beg = sqrt((Xend - Xkstart) ** 2 + (Yend - Ykstart) ** 2)
+                    dist_end = sqrt((Xend - Xkend) ** 2 + (Yend - Ykend) ** 2)
 
                     if dist_beg < dist_beg_min:
                         dist_beg_min = dist_beg
@@ -7334,8 +7334,8 @@ class Application(Frame):
                     ecoords.append(ecoords[End])
                     ecoords.append(ecoords[Start])
                     LNloop.append(Lcnt)
-                    LNbeg.append(len(ecoords)-2)
-                    LNend.append(len(ecoords)-1)
+                    LNbeg.append(len(ecoords) - 2)
+                    LNend.append(len(ecoords) - 1)
                     OPEN = False
 
                 elif dist_end_min < dist_beg_min:
@@ -7346,12 +7346,12 @@ class Application(Frame):
                     ecoords.append(ecoords[kbeg])
 
                     LNloop.append(Lcnt)
-                    LNbeg.append(len(ecoords)-2)
-                    LNend.append(len(ecoords)-1)
+                    LNbeg.append(len(ecoords) - 2)
+                    LNend.append(len(ecoords) - 1)
                     LNloop.append(Lcnt)
                     LNbeg.append(kbeg)
                     LNend.append(kend)
-                    End  = kend
+                    End = kend
                 else:
                     kbeg = LObeg.pop(k_min_beg)
                     kend = LOend.pop(k_min_beg)
@@ -7360,39 +7360,39 @@ class Application(Frame):
                     ecoords.append(ecoords[kbeg])
 
                     LNloop.append(Lcnt)
-                    LNbeg.append(len(ecoords)-2)
-                    LNend.append(len(ecoords)-1)
+                    LNbeg.append(len(ecoords) - 2)
+                    LNend.append(len(ecoords) - 1)
                     LNloop.append(Lcnt)
                     LNbeg.append(kbeg)
                     LNend.append(kend)
-                    End  = kend
+                    End = kend
 
             if OPEN == True and len(LObeg) == 0:
                 ecoords.append(ecoords[End])
                 ecoords.append(ecoords[Start])
                 LNloop.append(Lcnt)
-                LNbeg.append(len(ecoords)-2)
-                LNend.append(len(ecoords)-1)
+                LNbeg.append(len(ecoords) - 2)
+                LNend.append(len(ecoords) - 1)
 
         #################################
         ###   Eliminate Tiny Features ###
         #################################
         for k in range(len(Lbeg)):
             Start = Lbeg[k]
-            End   = Lend[k]
+            End = Lend[k]
             step = 1
-            [x1,y1]   = ecoords[Start+0]
-            for i in range(Start+1,End+step,step):
-                [x2,y2]   = ecoords[i]
-                Lseg = sqrt((x2-x1)**2 + (y2-y1)**2)
+            [x1,y1] = ecoords[Start + 0]
+            for i in range(Start + 1, End + step, step):
+                [x2,y2] = ecoords[i]
+                Lseg = sqrt((x2 - x1) ** 2 + (y2 - y1) ** 2)
                 if Lseg >= Acc:
-                    x1=float(x2)
-                    y1=float(y2)
-                elif i!= End:
-                    ecoords[i]=[float(x1),float(y1)]
+                    x1 = float(x2)
+                    y1 = float(y2)
+                elif i != End:
+                    ecoords[i] = [float(x1),float(y1)]
                 else:
-                    [x1,y1]   = ecoords[Start]
-                    ecoords[End]  =[float(x1),float(y1)]
+                    [x1,y1] = ecoords[Start]
+                    ecoords[End] = [float(x1),float(y1)]
 
         ###########################################################
         ### Make new sequential ecoords for each new loop       ###
@@ -7400,24 +7400,24 @@ class Application(Frame):
         Loop_last = -1
         for k in range(len(LNbeg)):
             Start = LNbeg[k]
-            End   = LNend[k]
-            Loop  = LNloop[k]
+            End = LNend[k]
+            Loop = LNloop[k]
             if Loop != Loop_last:
                 Lbeg.append(len(ecoords))
 
                 if Loop_last != -1:
-                    Lend.append(len(ecoords)-1)
+                    Lend.append(len(ecoords) - 1)
                 Loop_last = Loop
 
             if Start > End:
                 step = -1
             else:
                 step = 1
-            for i in range(Start,End+step,step):
-                [x1,y1]   = ecoords[i]
+            for i in range(Start, End + step, step):
+                [x1,y1] = ecoords[i]
                 ecoords.append([x1,y1])
         if len(Lbeg) > len(Lend):
-            Lend.append(len(ecoords)-1)
+            Lend.append(len(ecoords) - 1)
 
         ###########################################
         ###   Determine loop directions CW/CCW  ###
@@ -7426,21 +7426,21 @@ class Application(Frame):
             self.statusMessage.set('Calculating Initial Loop Directions (CW/CCW)')
             self.master.update()
         Lflip = []
-        Lcw   = []
+        Lcw = []
 
         for k in range(len(Lbeg)):
             Start = Lbeg[k]
-            End   = Lend[k]
+            End = Lend[k]
             step = 1
 
-            signedArea=0.0
+            signedArea = 0.0
 
-            [x1,y1]   = ecoords[Start]
-            for i in range(Start+1,End+step,step):
-                [x2,y2]   = ecoords[i]
-                signedArea += (x2-x1)*(y2+y1)
-                x1=x2
-                y1=y2
+            [x1,y1] = ecoords[Start]
+            for i in range(Start + 1, End + step, step):
+                [x2,y2] = ecoords[i]
+                signedArea += (x2 - x1) * (y2 + y1)
+                x1 = x2
+                y1 = y2
             if signedArea > 0.0:
                 Lflip.append(False)
                 Lcw.append(True)
@@ -7449,9 +7449,9 @@ class Application(Frame):
                 Lcw.append(False)
 
         Nloops = len(Lbeg)
-        LoopTree=[]
-        Lnum=[]
-        for iloop in range(LN_START,Nloops+LN_START):
+        LoopTree = []
+        Lnum = []
+        for iloop in range(LN_START, Nloops + LN_START):
             LoopTree.append([iloop,[],[]])
             Lnum.append(iloop)
 
@@ -7462,12 +7462,12 @@ class Application(Frame):
         global STOP_CALC
         STOP_CALC = 0
         for iloop in range(Nloops):
-            CUR_PCT=float(iloop)/Nloops*100.0
+            CUR_PCT = float(iloop) / Nloops * 100.0
             if (not self.batch.get()):
-                stamp=int(3*time()) #update every 1/3 of a second
+                stamp = int(3 * time()) #update every 1/3 of a second
                 if (stamp != timestamp):
-                    timestamp=stamp #interlock
-                    self.statusMessage.set('Determining Which Side of Loop to Cut: %d of %d' %(iloop+1,Nloops))
+                    timestamp = stamp #interlock
+                    self.statusMessage.set('Determining Which Side of Loop to Cut: %d of %d' % (iloop + 1,Nloops))
                     self.master.update()
                     if STOP_CALC != 0:
                         return []
@@ -7481,7 +7481,7 @@ class Application(Frame):
                         #for jval in range(Lbeg[jloop],Lend[jloop]):
                         #    inside = inside + self.point_inside_polygon(ecoords[jval][0],ecoords[jval][1],ipoly)
                         jval = Lbeg[jloop]
-                        inside = inside + self.point_inside_polygon(ecoords[jval][0],ecoords[jval][1],ipoly)
+                        inside = inside + self.point_inside_polygon(ecoords[jval][0], ecoords[jval][1], ipoly)
                         if inside > 0:
                             Lflip[jloop] = not Lflip[jloop]
                             LoopTree[iloop][1].append(jloop)
@@ -7493,7 +7493,7 @@ class Application(Frame):
         # could flip cut side here for auto side determination
         for iloop in range(Nloops):
             if Lflip[iloop]:
-                Lcw[iloop]=not Lcw[iloop]
+                Lcw[iloop] = not Lcw[iloop]
 
         CUR_PCT = 0.0
         #################################################
@@ -7503,15 +7503,15 @@ class Application(Frame):
             self.statusMessage.set('Re-Ordering Loops')
             self.master.update()
         order_out = []
-        if len(Lflip)>0:
+        if len(Lflip) > 0:
             if Lflip[0]:
                 order_out.append([ Lend[0], Lbeg[0], Lnum[0] ])
             else:
                 order_out.append([ Lbeg[0], Lend[0], Lnum[0] ])
 
         inext = 0
-        total=len(Lbeg)
-        for i in range(total-1):
+        total = len(Lbeg)
+        for i in range(total - 1):
             Lbeg.pop(inext)
             ii = Lend.pop(inext)
             Lflip.pop(inext)
@@ -7522,16 +7522,16 @@ class Application(Frame):
 
             dx = Xcur - ecoords[ Lbeg[0] ][0]
             dy = Ycur - ecoords[ Lbeg[0] ][1]
-            min_dist = dx*dx + dy*dy
+            min_dist = dx * dx + dy * dy
 
-            inext=0
-            for j in range(1,len(Lbeg)):
+            inext = 0
+            for j in range(1, len(Lbeg)):
                 dx = Xcur - ecoords[ Lbeg[j] ][0]
                 dy = Ycur - ecoords[ Lbeg[j] ][1]
-                dist = dx*dx + dy*dy
+                dist = dx * dx + dy * dy
                 if dist < min_dist:
-                    min_dist=dist
-                    inext=j
+                    min_dist = dist
+                    inext = j
 
             if Lflip[inext]:
                 order_out.append([ Lend[inext], Lbeg[inext], Lnum[inext] ])
@@ -7539,7 +7539,7 @@ class Application(Frame):
                 order_out.append([ Lbeg[inext], Lend[inext], Lnum[inext] ])
 
         ###########################################################
-        temp_coords=[]
+        temp_coords = []
         for k in range(len(order_out)):
             [Start,End, LN] = order_out[k]
             if Start > End:
@@ -7549,15 +7549,15 @@ class Application(Frame):
             xlast = ""
             ylast = ""
             xa,ya = ecoords[Start]
-            for i in range(Start+step,End+step,step):
+            for i in range(Start + step, End + step, step):
                 if xlast != "" and ylast != "":
                     x1 = xlast
                     y1 = ylast
                 else:
-                    [x1,y1] = ecoords[i-step]
+                    [x1,y1] = ecoords[i - step]
                 [x2,y2] = ecoords[i]
 
-                Lseg = sqrt((x2-x1)**2 + (y2-y1)**2)
+                Lseg = sqrt((x2 - x1) ** 2 + (y2 - y1) ** 2)
                 if Lseg >= Zero:
                     temp_coords.append([x1,y1,x2,y2,LN,0])
                     xlast = ""
@@ -7567,7 +7567,7 @@ class Application(Frame):
                     ylast = y1
 
             if  xlast != "" and  ylast != "":
-                Llast = sqrt((x1-xa)*(x1-xa) + (y1-ya)*(y1-ya))
+                Llast = sqrt((x1 - xa) * (x1 - xa) + (y1 - ya) * (y1 - ya))
                 if len(temp_coords) > 1:
                     if Llast <= Acc and LN == temp_coords[-1][4]:
                         temp_coords[-1][2] = xa
@@ -7576,69 +7576,69 @@ class Application(Frame):
                         temp_coords.append([x1,y1,xa,ya,LN,0])
 
         #####################################################################################
-        cnt=1
-        if temp_coords!=[]:
-            loop_last=temp_coords[len(temp_coords)-1][4]
-            for i in range(len(temp_coords)-2,-1,-1):
-                loop=temp_coords[i][4]
+        cnt = 1
+        if temp_coords != []:
+            loop_last = temp_coords[len(temp_coords) - 1][4]
+            for i in range(len(temp_coords) - 2, -1, -1):
+                loop = temp_coords[i][4]
                 if loop == loop_last:
-                    cnt=cnt+1
+                    cnt = cnt + 1
                 else:
-                    if cnt<3:
-                        idel=i+1
-                        while idel < len(temp_coords) and temp_coords[idel][4]==loop_last:
+                    if cnt < 3:
+                        idel = i + 1
+                        while idel < len(temp_coords) and temp_coords[idel][4] == loop_last:
                             temp_coords.pop(idel)
-                    cnt=1
-                    loop_last=loop
+                    cnt = 1
+                    loop_last = loop
         #####################################################################################
         return temp_coords
     ### End sort_for_v_carve
 
-    def Find_Paths(self,check_coords_in,clean_dia,Radjust,clean_step,skip,direction):
-        check_coords=[]
+    def Find_Paths(self, check_coords_in, clean_dia, Radjust, clean_step, skip, direction):
+        check_coords = []
 
         if direction == "Y":
             cnt = -1
             for line in check_coords_in:
-                cnt=cnt+1
-                XY=line
+                cnt = cnt + 1
+                XY = line
                 check_coords.append([XY[1],XY[0],XY[2]])
         else:
-            check_coords=check_coords_in
+            check_coords = check_coords_in
 
-        minx_c=0
-        maxx_c=0
-        miny_c=0
-        maxy_c=0
+        minx_c = 0
+        maxx_c = 0
+        miny_c = 0
+        maxy_c = 0
         if len(check_coords) > 0:
-            minx_c = check_coords[0][0]-check_coords[0][2]
-            maxx_c = check_coords[0][0]+check_coords[0][2]
-            miny_c = check_coords[0][1]-check_coords[0][2]
-            maxy_c = check_coords[0][1]+check_coords[0][2]
+            minx_c = check_coords[0][0] - check_coords[0][2]
+            maxx_c = check_coords[0][0] + check_coords[0][2]
+            miny_c = check_coords[0][1] - check_coords[0][2]
+            maxy_c = check_coords[0][1] + check_coords[0][2]
         for line in check_coords:
-            XY    = line
-            minx_c = min(minx_c, XY[0]-XY[2] )
-            maxx_c = max(maxx_c, XY[0]+XY[2] )
-            miny_c = min(miny_c, XY[1]-XY[2] )
-            maxy_c = max(maxy_c, XY[1]+XY[2] )
+            XY = line
+            minx_c = min(minx_c, XY[0] - XY[2] )
+            maxx_c = max(maxx_c, XY[0] + XY[2] )
+            miny_c = min(miny_c, XY[1] - XY[2] )
+            maxy_c = max(maxy_c, XY[1] + XY[2] )
 
 
 
-        DX = clean_dia*clean_step
+        DX = clean_dia * clean_step
         DY = DX
-        Xclean_coords=[]
-        Xclean_coords_short=[]
+        Xclean_coords = []
+        Xclean_coords_short = []
 
         if direction != "None":
             #########################################################################
             # Find ends of horizontal lines for carving clean-up
             #########################################################################
-            loop_cnt=0
+            loop_cnt = 0
             Y = miny_c
-            line_cnt = skip-1
+            line_cnt = skip - 1
             while Y <= maxy_c:
-                line_cnt = line_cnt+1
-                X  = minx_c
+                line_cnt = line_cnt + 1
+                X = minx_c
                 x1 = X
                 x2 = X
                 x1_old = x1
@@ -7646,41 +7646,41 @@ class Application(Frame):
 
                 # Find relevant clean_coord_data
                 ################################
-                temp_coords=[]
+                temp_coords = []
                 for line in check_coords:
-                    XY=line
-                    if Y < XY[1]+XY[2] and Y > XY[1]-XY[2]:
+                    XY = line
+                    if Y < XY[1] + XY[2] and Y > XY[1] - XY[2]:
                         temp_coords.append(XY)
                 ################################
 
                 while X <= maxx_c:
                     for line in temp_coords:
-                        XY=line
+                        XY = line
                         h = XY[0]
                         k = XY[1]
-                        R = XY[2]-Radjust
-                        dist=sqrt((X-h)**2 + (Y-k)**2)
+                        R = XY[2] - Radjust
+                        dist = sqrt((X - h) ** 2 + (Y - k) ** 2)
                         if dist <= R:
-                            Root = sqrt(R**2 - (Y-k)**2)
-                            XL = h-Root
-                            XR = h+Root
+                            Root = sqrt(R ** 2 - (Y - k) ** 2)
+                            XL = h - Root
+                            XR = h + Root
                             if XL < x1:
                                 x1 = XL
                             if XR > x2:
                                 x2 = XR
-                    if x1==x2:
-                        X  = X+DX
+                    if x1 == x2:
+                        X = X + DX
                         x1 = X
                         x2 = X
                     elif (x1 == x1_old) and (x2 == x2_old):
-                        loop_cnt=loop_cnt+1
+                        loop_cnt = loop_cnt + 1
                         Xclean_coords.append([x1,Y,loop_cnt])
                         Xclean_coords.append([x2,Y,loop_cnt])
                         if line_cnt == skip:
                             Xclean_coords_short.append([x1,Y,loop_cnt])
                             Xclean_coords_short.append([x2,Y,loop_cnt])
 
-                        X  = X+DX
+                        X = X + DX
                         x1 = X
                         x2 = X
                     else:
@@ -7689,18 +7689,18 @@ class Application(Frame):
                     x2_old = x2
                 if line_cnt == skip:
                     line_cnt = 0
-                Y=Y+DY
+                Y = Y + DY
             #########################################################################
 
         if True == False:
             #########################################################################
             # loop over circles recording "pixels" that are covered by the circles
             #########################################################################
-            loop_cnt=0
+            loop_cnt = 0
             Y = miny_c
             while Y <= maxy_c:
-                line_cnt = line_cnt+1
-                X  = minx_c
+                line_cnt = line_cnt + 1
+                X = minx_c
                 x1 = X
                 x2 = X
                 x1_old = x1
@@ -7708,41 +7708,41 @@ class Application(Frame):
 
                 # Find relevant clean_coord_data
                 ################################
-                temp_coords=[]
+                temp_coords = []
                 for line in check_coords:
-                    XY=line
-                    if Y < XY[1]+XY[2] and Y > XY[1]-XY[2]:
+                    XY = line
+                    if Y < XY[1] + XY[2] and Y > XY[1] - XY[2]:
                         temp_coords.append(XY)
                 ################################
 
                 while X <= maxx_c:
                     for line in temp_coords:
-                        XY=line
+                        XY = line
                         h = XY[0]
                         k = XY[1]
-                        R = XY[2]-Radjust
-                        dist=sqrt((X-h)**2 + (Y-k)**2)
+                        R = XY[2] - Radjust
+                        dist = sqrt((X - h) ** 2 + (Y - k) ** 2)
                         if dist <= R:
-                            Root = sqrt(R**2 - (Y-k)**2)
-                            XL = h-Root
-                            XR = h+Root
+                            Root = sqrt(R ** 2 - (Y - k) ** 2)
+                            XL = h - Root
+                            XR = h + Root
                             if XL < x1:
                                 x1 = XL
                             if XR > x2:
                                 x2 = XR
-                    if x1==x2:
-                        X  = X+DX
+                    if x1 == x2:
+                        X = X + DX
                         x1 = X
                         x2 = X
                     elif (x1 == x1_old) and (x2 == x2_old):
-                        loop_cnt=loop_cnt+1
+                        loop_cnt = loop_cnt + 1
                         Xclean_coords.append([x1,Y,loop_cnt])
                         Xclean_coords.append([x2,Y,loop_cnt])
                         if line_cnt == skip:
                             Xclean_coords_short.append([x1,Y,loop_cnt])
                             Xclean_coords_short.append([x2,Y,loop_cnt])
 
-                        X  = X+DX
+                        X = X + DX
                         x1 = X
                         x2 = X
                     else:
@@ -7751,74 +7751,74 @@ class Application(Frame):
                     x2_old = x2
                 if line_cnt == skip:
                     line_cnt = 0
-                Y=Y+DY
+                Y = Y + DY
             #########################################################################
 
 
-        Xclean_coords_out=[]
-        Xclean_coords_short_out=[]
+        Xclean_coords_out = []
+        Xclean_coords_short_out = []
         if direction == "Y":
 
             cnt = -1
             for line in Xclean_coords:
-                cnt=cnt+1
-                XY=line
+                cnt = cnt + 1
+                XY = line
                 Xclean_coords_out.append([XY[1],XY[0],XY[2]])
 
             cnt = -1
             for line in Xclean_coords_short:
-                cnt=cnt+1
-                XY=line
+                cnt = cnt + 1
+                XY = line
                 Xclean_coords_short_out.append([XY[1],XY[0],XY[2]])
         else:
-            Xclean_coords_out=Xclean_coords
-            Xclean_coords_short_out=Xclean_coords_short
+            Xclean_coords_out = Xclean_coords
+            Xclean_coords_short_out = Xclean_coords_short
 
         return Xclean_coords_out,Xclean_coords_short_out
 
-    def Clean_coords_to_Path_coords(self,clean_coords_in):
-        path_coords_out=[]
+    def Clean_coords_to_Path_coords(self, clean_coords_in):
+        path_coords_out = []
         # Clean coords format ([xnormv, ynormv, rout, loop_cnt]) - self.clean_coords
         # Path coords format  ([x1,y1,x2,y2,line_cnt,char_cnt])  - self.coords
-        for i in range(1,len(clean_coords_in)):
-            if (clean_coords_in[i][3] == clean_coords_in[i-1][3]):
-                path_coords_out.append( [   clean_coords_in[i-1][0],
-                                            clean_coords_in[i-1][1],
+        for i in range(1, len(clean_coords_in)):
+            if (clean_coords_in[i][3] == clean_coords_in[i - 1][3]):
+                path_coords_out.append( [   clean_coords_in[i - 1][0],
+                                            clean_coords_in[i - 1][1],
                                             clean_coords_in[i  ][0],
                                             clean_coords_in[i  ][1],
                                             0,
                                             0])
         return path_coords_out
 
-    def Clean_Path_Calc(self,bit_type="straight"):
-        v_flop  = self.get_flop_staus(CLEAN_FLAG=True)
+    def Clean_Path_Calc(self, bit_type="straight"):
+        v_flop = self.get_flop_staus(CLEAN_FLAG=True)
         if v_flop:
-            edge=1
+            edge = 1
         else:
-            edge=0
-        loop_cnt     = 0
+            edge = 0
+        loop_cnt = 0
         loop_cnt_out = 0
         #######################################
         #reorganize clean_coords              #
         #######################################
-        if bit_type=="straight":
-            test_clean = self.clean_P.get()   + self.clean_X.get()   + self.clean_Y.get()
+        if bit_type == "straight":
+            test_clean = self.clean_P.get() + self.clean_X.get() + self.clean_Y.get()
         else:
             test_clean = self.v_clean_P.get() + self.v_clean_Y.get() + self.v_clean_X.get()
 
         rbit = self.calc_vbit_dia() / 2.0
-        check_coords=[]
+        check_coords = []
 
         self.statusbar.configure( bg = 'yellow' )
-        if bit_type=="straight":
+        if bit_type == "straight":
             self.statusMessage.set('Calculating Cleanup Cut Paths')
             self.master.update()
-            self.clean_coords_sort   = []
+            self.clean_coords_sort = []
             clean_dia = float(self.clean_dia.get()) #diameter of cleanup bit
             v_step_len = float(self.v_step_len.get())
             step_over = float(self.clean_step.get()) #percent of cut DIA
-            clean_step = step_over/100.0
-            Radjust   = clean_dia/2.0 + rbit
+            clean_step = step_over / 100.0
+            Radjust = clean_dia / 2.0 + rbit
             check_coords = self.clean_coords
 
         elif bit_type == "v-bit":
@@ -7829,54 +7829,54 @@ class Application(Frame):
             self.master.update()
             self.v_clean_coords_sort = []
 
-            clean_dia  = float(self.clean_v.get())  #effective diameter of clean-up v-bit
+            clean_dia = float(self.clean_v.get())  #effective diameter of clean-up v-bit
             if float(clean_dia) < Zero:
                 return
             # The next line allows the cutter to get within 1/4 of the
             # v-clean step of the v-carved surface.
-            offset = clean_dia/4.0
-            Radjust   =  rbit + offset
-            flat_clean_r = float(self.clean_dia.get())/2.0
+            offset = clean_dia / 4.0
+            Radjust = rbit + offset
+            flat_clean_r = float(self.clean_dia.get()) / 2.0
             for line in self.clean_coords:
-                XY    = line
+                XY = line
                 R = XY[2] - Radjust
                 if (R > 0.0) and (R < flat_clean_r - offset - Zero):
                     check_coords.append(XY)
 
-        clean_coords_out=[]
+        clean_coords_out = []
         if self.cut_type.get() == "v-carve" and len(self.clean_coords) > 1 and test_clean > 0:
-            DX = clean_dia*clean_step
+            DX = clean_dia * clean_step
             DY = DX
 
-            if bit_type=="straight":
-                MAXD=clean_dia
+            if bit_type == "straight":
+                MAXD = clean_dia
             else:
-                MAXD=sqrt(DX**2+DY**2)*1.1  #fudge factor
+                MAXD = sqrt(DX ** 2 + DY ** 2) * 1.1  #fudge factor
 
-            Xclean_coords=[]
-            Yclean_coords=[]
-            clean_coords_out=[]
+            Xclean_coords = []
+            Yclean_coords = []
+            clean_coords_out = []
 
             ## NEW STUFF FOR STRAIGHT BIT ##
-            if bit_type=="straight":
-                MaxLoop=0
-                clean_dia  = float(self.clean_dia.get()) #diameter of cleanup bit
-                step_over  = float(self.clean_step.get()) #percent of cut DIA
-                clean_step = step_over/100.0
-                Rperimeter = rbit + (clean_dia/2.0)
+            if bit_type == "straight":
+                MaxLoop = 0
+                clean_dia = float(self.clean_dia.get()) #diameter of cleanup bit
+                step_over = float(self.clean_step.get()) #percent of cut DIA
+                clean_step = step_over / 100.0
+                Rperimeter = rbit + (clean_dia / 2.0)
 
                 ###################################################
                 # Extract straight bit points from clean_coords
                 ###################################################
-                check_coords=[]
-                junk=-1
+                check_coords = []
+                junk = -1
                 for line in self.clean_coords:
                     XY = line
-                    R  = XY[2]
-                    if (R >= Rperimeter-Zero):
+                    R = XY[2]
+                    if (R >= Rperimeter - Zero):
                         check_coords.append(XY)
-                    elif (len(check_coords)>0):
-                        junk=junk-1
+                    elif (len(check_coords) > 0):
+                        junk = junk - 1
                         check_coords.append([None, None, None, junk])
                         #check_coords[len(check_coords)-1][3]=junk
                 ###################################################
@@ -7884,37 +7884,37 @@ class Application(Frame):
                 ###################################################
                 P_coords = []
                 loop_coords = self.Clean_coords_to_Path_coords(check_coords)
-                loop_coords = self.sort_for_v_carve(loop_coords,LN_START=0)
+                loop_coords = self.sort_for_v_carve(loop_coords, LN_START=0)
 
                 #######################
                 #Line fit loop_coords
                 #######################
-                P_coords=[]
+                P_coords = []
                 if loop_coords:
-                    loop_coords_lin=[]
-                    cuts=[]
+                    loop_coords_lin = []
+                    cuts = []
                     Ln_last = loop_coords[0][4]
                     for i in range(len(loop_coords)):
                         Ln = loop_coords[i][4]
                         if (Ln != Ln_last):
                             for move, (x, y, z), cent in douglas(cuts, tolerance=0.0001, plane=None):
-                                P_coords.append([x,y,clean_dia/2,Ln_last])
-                            cuts=[]
+                                P_coords.append([x,y,clean_dia / 2,Ln_last])
+                            cuts = []
                         cuts.append( [loop_coords[i][0],loop_coords[i][1],0] )
                         cuts.append( [loop_coords[i][2],loop_coords[i][3],0] )
                         Ln_last = Ln
                     if cuts:
                         for move, (x, y, z), cent in douglas(cuts, tolerance=0.0001, plane=None):
-                            P_coords.append([x,y,clean_dia/2,Ln_last])
+                            P_coords.append([x,y,clean_dia / 2,Ln_last])
                 #####################
                 loop_coords = self.Clean_coords_to_Path_coords(P_coords)
                 # Find min/max values for x,y and the highest loop number
-                x_pmin= 99999
-                x_pmax=-99999
-                y_pmin= 99999
-                y_pmax=-99999
+                x_pmin = 99999
+                x_pmax = -99999
+                y_pmin = 99999
+                y_pmax = -99999
                 for i in range(len(P_coords)):
-                    MaxLoop= max(MaxLoop,P_coords[i][3])
+                    MaxLoop = max(MaxLoop, P_coords[i][3])
                     x_pmin = min(x_pmin, P_coords[i][0])
                     x_pmax = max(x_pmax, P_coords[i][0])
                     y_pmin = min(y_pmin, P_coords[i][1])
@@ -7924,51 +7924,51 @@ class Application(Frame):
                 if (self.clean_P.get() == 1):
                     clean_coords_out = P_coords
 
-                offset = DX/2.0
+                offset = DX / 2.0
                 if (self.clean_X.get() == 1):
-                    y_pmax = y_pmax-offset
-                    y_pmin = y_pmin+offset
+                    y_pmax = y_pmax - offset
+                    y_pmin = y_pmin + offset
                     Ysize = y_pmax - y_pmin
-                    Ysteps = ceil( Ysize /(clean_dia*clean_step) )
-                    if (Ysteps>0):
+                    Ysteps = ceil( Ysize / (clean_dia * clean_step) )
+                    if (Ysteps > 0):
                         dY = Ysize / Ysteps
-                        for iY in range(0,int(Ysteps+1)):
-                            y = y_pmin + iY/Ysteps * (y_pmax-y_pmin)
-                            intXYlist=[]
-                            intXYlist = self.DetectIntersect([x_pmin-1,y],[x_pmax+1,y],loop_coords,XY_T_F=True)
+                        for iY in range(0, int(Ysteps + 1)):
+                            y = y_pmin + iY / Ysteps * (y_pmax - y_pmin)
+                            intXYlist = []
+                            intXYlist = self.DetectIntersect([x_pmin - 1,y], [x_pmax + 1,y], loop_coords, XY_T_F=True)
                             intXY_len = len(intXYlist)
 
-                            for i in range(edge,intXY_len-1-edge,2):
+                            for i in range(edge, intXY_len - 1 - edge, 2):
                                 x1 = intXYlist[i][0]
                                 y1 = intXYlist[i][1]
-                                x2 = intXYlist[i+1][0]
-                                y2 = intXYlist[i+1][1]
-                                if ((x2-x1) > offset*2):
-                                    loop_cnt=loop_cnt+1
-                                    Xclean_coords.append([x1+offset,y1,loop_cnt])
-                                    Xclean_coords.append([x2-offset,y2,loop_cnt])
+                                x2 = intXYlist[i + 1][0]
+                                y2 = intXYlist[i + 1][1]
+                                if ((x2 - x1) > offset * 2):
+                                    loop_cnt = loop_cnt + 1
+                                    Xclean_coords.append([x1 + offset,y1,loop_cnt])
+                                    Xclean_coords.append([x2 - offset,y2,loop_cnt])
 
                 if (self.clean_Y.get() == 1):
-                    x_pmax = x_pmax-offset
-                    x_pmin = x_pmin+offset
+                    x_pmax = x_pmax - offset
+                    x_pmin = x_pmin + offset
                     Xsize = x_pmax - x_pmin
-                    Xsteps = ceil( Xsize /(clean_dia*clean_step) )
-                    if (Xsteps>0):
+                    Xsteps = ceil( Xsize / (clean_dia * clean_step) )
+                    if (Xsteps > 0):
                         dX = Xsize / Xsteps
-                        for iX in range(0,int(Xsteps+1)):
-                            x = x_pmin + iX/Xsteps * (x_pmax-x_pmin)
-                            intXYlist=[]
-                            intXYlist = self.DetectIntersect([x,y_pmin-1],[x,y_pmax+1],loop_coords,XY_T_F=True)
+                        for iX in range(0, int(Xsteps + 1)):
+                            x = x_pmin + iX / Xsteps * (x_pmax - x_pmin)
+                            intXYlist = []
+                            intXYlist = self.DetectIntersect([x,y_pmin - 1], [x,y_pmax + 1], loop_coords, XY_T_F=True)
                             intXY_len = len(intXYlist)
-                            for i in range(edge,intXY_len-1-edge,2):
+                            for i in range(edge, intXY_len - 1 - edge, 2):
                                 x1 = intXYlist[i][0]
                                 y1 = intXYlist[i][1]
-                                x2 = intXYlist[i+1][0]
-                                y2 = intXYlist[i+1][1]
-                                if ((y2-y1) > offset*2):
-                                    loop_cnt=loop_cnt+1
-                                    Yclean_coords.append([x1,y1+offset,loop_cnt])
-                                    Yclean_coords.append([x2,y2-offset,loop_cnt])
+                                x2 = intXYlist[i + 1][0]
+                                y2 = intXYlist[i + 1][1]
+                                if ((y2 - y1) > offset * 2):
+                                    loop_cnt = loop_cnt + 1
+                                    Yclean_coords.append([x1,y1 + offset,loop_cnt])
+                                    Yclean_coords.append([x2,y2 - offset,loop_cnt])
             ## END NEW STUFF FOR STRAIGHT BIT ##
 
             #######################################
@@ -7978,81 +7978,81 @@ class Application(Frame):
                 #########################################################################
                 # Find ends of horizontal lines for carving clean-up
                 #########################################################################
-                Xclean_perimeter,Xclean_coords = self.Find_Paths(check_coords,clean_dia,Radjust,clean_step,skip,"X")
+                Xclean_perimeter,Xclean_coords = self.Find_Paths(check_coords, clean_dia, Radjust, clean_step, skip, "X")
 
                 #########################################################################
                 # Find ends of Vertical lines for carving clean-up
                 #########################################################################
-                Yclean_perimeter,Yclean_coords = self.Find_Paths(check_coords,clean_dia,Radjust,clean_step,skip,"Y")
+                Yclean_perimeter,Yclean_coords = self.Find_Paths(check_coords, clean_dia, Radjust, clean_step, skip, "Y")
 
                 #######################################################
                 # Find new order based on distance                    #
                 #######################################################
                 if (self.v_clean_P.get() == 1):
                     ########################################
-                    ecoords=[]
+                    ecoords = []
                     for line in Xclean_perimeter:
-                        XY=line
+                        XY = line
                         ecoords.append([XY[0],XY[1]])
 
                     for line in Yclean_perimeter:
-                        XY=line
+                        XY = line
                         ecoords.append([XY[0],XY[1]])
 
                     ################
                     ###   ends   ###
                     ################
-                    Lbeg=[]
-                    for i in range(1,len(ecoords)):
+                    Lbeg = []
+                    for i in range(1, len(ecoords)):
                         Lbeg.append(i)
 
                     ########################################
                     order_out = []
-                    if len(ecoords)>0:
+                    if len(ecoords) > 0:
                         order_out.append(Lbeg[0])
                     inext = 0
-                    total=len(Lbeg)
-                    for i in range(total-1):
-                        ii=Lbeg.pop(inext)
+                    total = len(Lbeg)
+                    for i in range(total - 1):
+                        ii = Lbeg.pop(inext)
                         Xcur = ecoords[ii][0]
                         Ycur = ecoords[ii][1]
                         dx = Xcur - ecoords[ Lbeg[0] ][0]
                         dy = Ycur - ecoords[ Lbeg[0] ][1]
-                        min_dist = dx*dx + dy*dy
+                        min_dist = dx * dx + dy * dy
 
-                        inext=0
-                        for j in range(1,len(Lbeg)):
+                        inext = 0
+                        for j in range(1, len(Lbeg)):
                             dx = Xcur - ecoords[ Lbeg[j] ][0]
                             dy = Ycur - ecoords[ Lbeg[j] ][1]
-                            dist = dx*dx + dy*dy
+                            dist = dx * dx + dy * dy
                             if dist < min_dist:
-                                min_dist=dist
-                                inext=j
+                                min_dist = dist
+                                inext = j
                         order_out.append(Lbeg[inext])
                     ###########################################################
                     x_start_loop = -8888
                     y_start_loop = -8888
-                    x_old=-999
-                    y_old=-999
+                    x_old = -999
+                    y_old = -999
                     for i in order_out:
-                        x1   = ecoords[i][0]
-                        y1   = ecoords[i][1]
-                        dx = x1-x_old
-                        dy = y1-y_old
-                        dist = sqrt(dx*dx + dy*dy)
+                        x1 = ecoords[i][0]
+                        y1 = ecoords[i][1]
+                        dx = x1 - x_old
+                        dy = y1 - y_old
+                        dist = sqrt(dx * dx + dy * dy)
                         if dist > MAXD:
-                            dx = x_start_loop-x_old
-                            dy = y_start_loop-y_old
-                            dist = sqrt(dx*dx + dy*dy)
+                            dx = x_start_loop - x_old
+                            dy = y_start_loop - y_old
+                            dist = sqrt(dx * dx + dy * dy)
                             # Fully close loop if the current point is close enough to the start of the loop
                             if dist < MAXD:
-                                clean_coords_out.append([x_start_loop,y_start_loop,clean_dia/2,loop_cnt_out])
-                            loop_cnt_out=loop_cnt_out+1
-                            x_start_loop=x1
-                            y_start_loop=y1
-                        clean_coords_out.append([x1,y1,clean_dia/2,loop_cnt_out])
-                        x_old=x1
-                        y_old=y1
+                                clean_coords_out.append([x_start_loop,y_start_loop,clean_dia / 2,loop_cnt_out])
+                            loop_cnt_out = loop_cnt_out + 1
+                            x_start_loop = x1
+                            y_start_loop = y1
+                        clean_coords_out.append([x1,y1,clean_dia / 2,loop_cnt_out])
+                        x_old = x1
+                        y_old = y1
             #####################################
             ## END V-BIT CLEANUP CALCULATIONS  ##
             #####################################
@@ -8060,66 +8060,66 @@ class Application(Frame):
             ###########################################################
             # Now deal with the horizontal line cuts
             ###########################################################
-            if (self.clean_X.get()   == 1 and bit_type != "v-bit") or \
-               (self.v_clean_X.get() == 1 and bit_type == "v-bit"):
-                x_old=-999
-                y_old=-999
-                order_out=self.Sort_Paths(Xclean_coords)
-                loop_old=-1
+            if (self.clean_X.get() == 1 and bit_type != "v-bit") or \
+                (self.v_clean_X.get() == 1 and bit_type == "v-bit"):
+                x_old = -999
+                y_old = -999
+                order_out = self.Sort_Paths(Xclean_coords)
+                loop_old = -1
                 for line in order_out:
-                    temp=line
+                    temp = line
                     if temp[0] > temp[1]:
                         step = -1
                     else:
                         step = 1
-                    for i in range(temp[0],temp[1]+step,step):
-                        x1   = Xclean_coords[i][0]
-                        y1   = Xclean_coords[i][1]
+                    for i in range(temp[0], temp[1] + step, step):
+                        x1 = Xclean_coords[i][0]
+                        y1 = Xclean_coords[i][1]
                         loop = Xclean_coords[i][2]
-                        dx = x1-x_old
-                        dy = y1-y_old
-                        dist = sqrt(dx*dx + dy*dy)
+                        dx = x1 - x_old
+                        dy = y1 - y_old
+                        dist = sqrt(dx * dx + dy * dy)
                         if dist > MAXD and loop != loop_old:
-                            loop_cnt_out=loop_cnt_out+1
-                        clean_coords_out.append([x1,y1,clean_dia/2,loop_cnt_out])
-                        x_old=x1
-                        y_old=y1
-                        loop_old=loop
+                            loop_cnt_out = loop_cnt_out + 1
+                        clean_coords_out.append([x1,y1,clean_dia / 2,loop_cnt_out])
+                        x_old = x1
+                        y_old = y1
+                        loop_old = loop
 
             ###########################################################
             # Now deal with the vertical line cuts
             ###########################################################
-            if (self.clean_Y.get()   == 1 and bit_type != "v-bit") or \
-               (self.v_clean_Y.get() == 1 and bit_type == "v-bit"):
-                x_old=-999
-                y_old=-999
-                order_out=self.Sort_Paths(Yclean_coords)
-                loop_old=-1
+            if (self.clean_Y.get() == 1 and bit_type != "v-bit") or \
+                (self.v_clean_Y.get() == 1 and bit_type == "v-bit"):
+                x_old = -999
+                y_old = -999
+                order_out = self.Sort_Paths(Yclean_coords)
+                loop_old = -1
                 for line in order_out:
-                    temp=line
+                    temp = line
                     if temp[0] > temp[1]:
                         step = -1
                     else:
                         step = 1
-                    for i in range(temp[0],temp[1]+step,step):
-                        x1   = Yclean_coords[i][0]
-                        y1   = Yclean_coords[i][1]
+                    for i in range(temp[0], temp[1] + step, step):
+                        x1 = Yclean_coords[i][0]
+                        y1 = Yclean_coords[i][1]
                         loop = Yclean_coords[i][2]
-                        dx = x1-x_old
-                        dy = y1-y_old
-                        dist = sqrt(dx*dx + dy*dy)
+                        dx = x1 - x_old
+                        dy = y1 - y_old
+                        dist = sqrt(dx * dx + dy * dy)
                         if dist > MAXD and loop != loop_old:
-                            loop_cnt_out=loop_cnt_out+1
-                        clean_coords_out.append([x1,y1,clean_dia/2,loop_cnt_out])
-                        x_old=x1
-                        y_old=y1
-                        loop_old=loop
+                            loop_cnt_out = loop_cnt_out + 1
+                        clean_coords_out.append([x1,y1,clean_dia / 2,loop_cnt_out])
+                        x_old = x1
+                        y_old = y1
+                        loop_old = loop
 
-            self.entry_set(self.Entry_CLEAN_DIA, self.Entry_CLEAN_DIA_Check()     ,1)
-            self.entry_set(self.Entry_STEP_OVER, self.Entry_STEP_OVER_Check()     ,1)
-            self.entry_set(self.Entry_V_CLEAN,     self.Entry_V_CLEAN_Check()     ,1)
+            self.entry_set(self.Entry_CLEAN_DIA, self.Entry_CLEAN_DIA_Check(), 1)
+            self.entry_set(self.Entry_STEP_OVER, self.Entry_STEP_OVER_Check(), 1)
+            self.entry_set(self.Entry_V_CLEAN, self.Entry_V_CLEAN_Check(), 1)
 
-            if bit_type=="v-bit":
+            if bit_type == "v-bit":
                 self.v_clean_coords_sort = clean_coords_out
             else:
                 self.clean_coords_sort = clean_coords_out
@@ -8134,9 +8134,9 @@ class Application(Frame):
     #####################################################
     ### Find intersecting lines
     #####################################################
-    def DetectIntersect(self, Coords0,Coords1,lcoords,XY_T_F=True):
-        [x0,y0]=Coords0
-        [x1,y1]=Coords1
+    def DetectIntersect(self, Coords0, Coords1, lcoords, XY_T_F=True):
+        [x0,y0] = Coords0
+        [x1,y1] = Coords1
         Zero = 1e-6
         all_intersects = []
         Xint_list = []
@@ -8144,54 +8144,54 @@ class Application(Frame):
         if numcoords < 1:
             return False
 
-        dx = x1-x0
-        dy = y1-y0
-        len_seg = sqrt(dx*dx+dy*dy)
+        dx = x1 - x0
+        dy = y1 - y0
+        len_seg = sqrt(dx * dx + dy * dy)
 
         if len_seg < Zero:
-            if XY_T_F==False:
+            if XY_T_F == False:
                 return False
             else:
                 return []
 
-        seg_sin = dy/len_seg
-        seg_cos = dx/len_seg
+        seg_sin = dy / len_seg
+        seg_cos = dx / len_seg
         Xint_local = 0
 
-        for ii in range(0,numcoords):
+        for ii in range(0, numcoords):
             x2 = lcoords[ii][0]
             y2 = lcoords[ii][1]
             x3 = lcoords[ii][2]
             y3 = lcoords[ii][3]
 
-            xr0 = (x2-x0)*seg_cos + (y2-y0)*seg_sin
-            yr0 = (x2-x0)*seg_sin - (y2-y0)*seg_cos
-            xr1 = (x3-x0)*seg_cos + (y3-y0)*seg_sin
-            yr1 = (x3-x0)*seg_sin - (y3-y0)*seg_cos
-            yrmax = max(yr0,yr1)
-            yrmin = min(yr0,yr1)
+            xr0 = (x2 - x0) * seg_cos + (y2 - y0) * seg_sin
+            yr0 = (x2 - x0) * seg_sin - (y2 - y0) * seg_cos
+            xr1 = (x3 - x0) * seg_cos + (y3 - y0) * seg_sin
+            yr1 = (x3 - x0) * seg_sin - (y3 - y0) * seg_cos
+            yrmax = max(yr0, yr1)
+            yrmin = min(yr0, yr1)
             if (yrmin < Zero and yrmax > Zero):
-                dxr = xr1-xr0
+                dxr = xr1 - xr0
                 if (abs(dxr) < Zero):
-                    if (xr0 > Zero and xr0 < len_seg-Zero):
+                    if (xr0 > Zero and xr0 < len_seg - Zero):
                         Xint_local = xr0 #True
                 else:
-                    dyr = yr1-yr0;
-                    mr  = dyr/dxr;
-                    br  = yr1 - mr * xr1
-                    xint= -br/mr
-                    if (xint > Zero and xint < len_seg-Zero):
+                    dyr = yr1 - yr0;
+                    mr = dyr / dxr;
+                    br = yr1 - mr * xr1
+                    xint = -br / mr
+                    if (xint > Zero and xint < len_seg - Zero):
                         Xint_local = xint #True
 
                 # Check if there was a intersection detected
                 if (Xint_local != 0):
-                    if XY_T_F==False:
+                    if XY_T_F == False:
                         return True
                     else:
                         Xint_list.append(Xint_local)
                         Xint_local = 0
 
-        if XY_T_F==False:
+        if XY_T_F == False:
             return False
         else:
             if len(Xint_list) > 0:
@@ -8215,87 +8215,87 @@ class Application(Frame):
     def PBM_Settings_Window(self):
         pbm_settings = Toplevel(width=525, height=250)
         pbm_settings.grab_set() # Use grab_set to prevent user input in the main window during calculations
-        pbm_settings.resizable(0,0)
+        pbm_settings.resizable(0, 0)
         pbm_settings.title('Bitmap Settings')
         pbm_settings.iconname("Bitmap Settings")
 
-        D_Yloc  = 12
+        D_Yloc = 12
         D_dY = 24
         xd_label_L = 12
 
-        w_label=100
-        w_entry=60
-        w_units=35
-        xd_entry_L=xd_label_L+w_label+10
-        xd_units_L=xd_entry_L+w_entry+5
+        w_label = 100
+        w_entry = 60
+        w_units = 35
+        xd_entry_L = xd_label_L + w_label + 10
+        xd_units_L = xd_entry_L + w_entry + 5
 
-        D_Yloc=D_Yloc+D_dY
-        self.Label_BMPturnpol = Label(pbm_settings,text="Turn Policy")
+        D_Yloc = D_Yloc + D_dY
+        self.Label_BMPturnpol = Label(pbm_settings, text="Turn Policy")
         self.Label_BMPturnpol.place(x=xd_label_L, y=D_Yloc, width=w_label, height=21)
 
 
         self.BMPturnpol_OptionMenu = OptionMenu(pbm_settings, self.bmp_turnpol,
-                                                    "black",
-                                                    "white",
-                                                    "right",
-                                                     "left",
-                                                     "minority",
-                                                     "majority",
-                                                     "random")
-        self.BMPturnpol_OptionMenu.place(x=xd_entry_L, y=D_Yloc, width=w_entry+40, height=23)
+                                                "black",
+                                                "white",
+                                                "right",
+                                                "left",
+                                                "minority",
+                                                "majority",
+                                                "random")
+        self.BMPturnpol_OptionMenu.place(x=xd_entry_L, y=D_Yloc, width=w_entry + 40, height=23)
 
-        D_Yloc=D_Yloc+D_dY
-        self.Label_BMPturdsize = Label(pbm_settings,text="Turd Size")
+        D_Yloc = D_Yloc + D_dY
+        self.Label_BMPturdsize = Label(pbm_settings, text="Turd Size")
         self.Label_BMPturdsize.place(x=xd_label_L, y=D_Yloc, width=w_label, height=21)
-        self.Entry_BMPturdsize = Entry(pbm_settings,width="15")
+        self.Entry_BMPturdsize = Entry(pbm_settings, width="15")
         self.Entry_BMPturdsize.place(x=xd_entry_L, y=D_Yloc, width=w_entry, height=23)
         self.Entry_BMPturdsize.configure(textvariable=self.bmp_turdsize)
         self.bmp_turdsize.trace_variable("w", self.Entry_BMPturdsize_Callback)
-        self.Label_BMPturdsize2 = Label(pbm_settings,text="Suppress speckles of up to this pixel size")
-        self.Label_BMPturdsize2.place(x=xd_entry_L+w_entry*1.5, y=D_Yloc, width=300, height=21)
-        self.entry_set(self.Entry_BMPturdsize, self.Entry_BMPturdsize_Check(),2)
+        self.Label_BMPturdsize2 = Label(pbm_settings, text="Suppress speckles of up to this pixel size")
+        self.Label_BMPturdsize2.place(x=xd_entry_L + w_entry * 1.5, y=D_Yloc, width=300, height=21)
+        self.entry_set(self.Entry_BMPturdsize, self.Entry_BMPturdsize_Check(), 2)
 
-        D_Yloc=D_Yloc+D_dY+5
-        self.Label_BMPalphamax = Label(pbm_settings,text="Alpha Max")
+        D_Yloc = D_Yloc + D_dY + 5
+        self.Label_BMPalphamax = Label(pbm_settings, text="Alpha Max")
         self.Label_BMPalphamax.place(x=xd_label_L, y=D_Yloc, width=w_label, height=21)
-        self.Entry_BMPalphamax = Entry(pbm_settings,width="15")
+        self.Entry_BMPalphamax = Entry(pbm_settings, width="15")
         self.Entry_BMPalphamax.place(x=xd_entry_L, y=D_Yloc, width=w_entry, height=23)
         self.Entry_BMPalphamax.configure(textvariable=self.bmp_alphamax)
         self.bmp_alphamax.trace_variable("w", self.Entry_BMPalphamax_Callback)
-        self.Label_BMPalphamax2 = Label(pbm_settings,text="0.0 = sharp corners, 1.33 = smoothed corners")
-        self.Label_BMPalphamax2.place(x=xd_entry_L+w_entry*1.5, y=D_Yloc, width=300, height=21)
-        self.entry_set(self.Entry_BMPalphamax, self.Entry_BMPalphamax_Check(),2)
+        self.Label_BMPalphamax2 = Label(pbm_settings, text="0.0 = sharp corners, 1.33 = smoothed corners")
+        self.Label_BMPalphamax2.place(x=xd_entry_L + w_entry * 1.5, y=D_Yloc, width=300, height=21)
+        self.entry_set(self.Entry_BMPalphamax, self.Entry_BMPalphamax_Check(), 2)
 
-        D_Yloc=D_Yloc+D_dY
-        self.Label_BMP_longcurve = Label(pbm_settings,text="Long Curve")
+        D_Yloc = D_Yloc + D_dY
+        self.Label_BMP_longcurve = Label(pbm_settings, text="Long Curve")
         self.Label_BMP_longcurve.place(x=xd_label_L, y=D_Yloc, width=w_label, height=21)
-        self.Checkbutton_BMP_longcurve = Checkbutton(pbm_settings,text="", anchor=W)
+        self.Checkbutton_BMP_longcurve = Checkbutton(pbm_settings, text="", anchor=W)
         self.Checkbutton_BMP_longcurve.place(x=xd_entry_L, y=D_Yloc, width=75, height=23)
         self.Checkbutton_BMP_longcurve.configure(variable=self.bmp_longcurve)
-        self.Label_BMP_longcurve2 = Label(pbm_settings,text="Enable Curve Optimization")
-        self.Label_BMP_longcurve2.place(x=xd_entry_L+w_entry*1.5, y=D_Yloc, width=300, height=21)
+        self.Label_BMP_longcurve2 = Label(pbm_settings, text="Enable Curve Optimization")
+        self.Label_BMP_longcurve2.place(x=xd_entry_L + w_entry * 1.5, y=D_Yloc, width=300, height=21)
 
-        D_Yloc=D_Yloc+D_dY
-        self.Label_BMPoptTolerance = Label(pbm_settings,text="Opt Tolerance")
+        D_Yloc = D_Yloc + D_dY
+        self.Label_BMPoptTolerance = Label(pbm_settings, text="Opt Tolerance")
         self.Label_BMPoptTolerance.place(x=xd_label_L, y=D_Yloc, width=w_label, height=21)
-        self.Entry_BMPoptTolerance = Entry(pbm_settings,width="15")
+        self.Entry_BMPoptTolerance = Entry(pbm_settings, width="15")
         self.Entry_BMPoptTolerance.place(x=xd_entry_L, y=D_Yloc, width=w_entry, height=23)
         self.Entry_BMPoptTolerance.configure(textvariable=self.bmp_opttolerance)
         self.bmp_opttolerance.trace_variable("w", self.Entry_BMPoptTolerance_Callback)
-        self.Label_BMPoptTolerance2 = Label(pbm_settings,text="Curve Optimization Tolerance")
-        self.Label_BMPoptTolerance2.place(x=xd_entry_L+w_entry*1.5, y=D_Yloc, width=300, height=21)
-        self.entry_set(self.Entry_BMPoptTolerance, self.Entry_BMPoptTolerance_Check(),2)
+        self.Label_BMPoptTolerance2 = Label(pbm_settings, text="Curve Optimization Tolerance")
+        self.Label_BMPoptTolerance2.place(x=xd_entry_L + w_entry * 1.5, y=D_Yloc, width=300, height=21)
+        self.entry_set(self.Entry_BMPoptTolerance, self.Entry_BMPoptTolerance_Check(), 2)
 
 
         pbm_settings.update_idletasks()
-        Ybut=int(pbm_settings.winfo_height())-30
-        Xbut=int(pbm_settings.winfo_width()/2)
+        Ybut = int(pbm_settings.winfo_height()) - 30
+        Xbut = int(pbm_settings.winfo_width() / 2)
 
-        self.PBM_Reload = Button(pbm_settings,text="Re-Load Image")
+        self.PBM_Reload = Button(pbm_settings, text="Re-Load Image")
         self.PBM_Reload.place(x=Xbut, y=Ybut, width=130, height=30, anchor="e")
         self.PBM_Reload.bind("<ButtonRelease-1>", self.Settings_ReLoad_Click)
 
-        self.PBM_Close = Button(pbm_settings,text="Close")
+        self.PBM_Close = Button(pbm_settings, text="Close")
         self.PBM_Close.place(x=Xbut, y=Ybut, width=130, height=30, anchor="w")
         self.PBM_Close.bind("<ButtonRelease-1>", self.Close_Current_Window_Click)
 
@@ -8314,7 +8314,7 @@ class Application(Frame):
     def GEN_Settings_Window(self):
         gen_settings = Toplevel(width=600, height=500)
         gen_settings.grab_set() # Use grab_set to prevent user input in the main window during calculations
-        gen_settings.resizable(0,0)
+        gen_settings.resizable(0, 0)
         gen_settings.title('Settings')
         gen_settings.iconname("Settings")
 
@@ -8329,209 +8329,209 @@ class Application(Frame):
                 pass
 
 
-        D_Yloc  = 6
+        D_Yloc = 6
         D_dY = 24
         xd_label_L = 12
 
-        dlta=40
-        w_label=110+25+dlta
-        w_entry=60
-        w_units=35
-        xd_entry_L=xd_label_L+w_label+10 +dlta
-        xd_units_L=xd_entry_L+w_entry+5
-        x_radio_offset=62
+        dlta = 40
+        w_label = 110 + 25 + dlta
+        w_entry = 60
+        w_units = 35
+        xd_entry_L = xd_label_L + w_label + 10 + dlta
+        xd_units_L = xd_entry_L + w_entry + 5
+        x_radio_offset = 62
 
         #Radio Button
-        D_Yloc=D_Yloc+D_dY
-        self.Label_Units = Label(gen_settings,text="Units")
+        D_Yloc = D_Yloc + D_dY
+        self.Label_Units = Label(gen_settings, text="Units")
         self.Label_Units.place(x=xd_label_L, y=D_Yloc, width=w_label, height=21)
 
-        self.Radio_Units_IN = Radiobutton(gen_settings,text="inch", value="in", width="100", anchor=W)
-        self.Radio_Units_IN.place(x=w_label+x_radio_offset, y=D_Yloc, width=75, height=23)
+        self.Radio_Units_IN = Radiobutton(gen_settings, text="inch", value="in", width="100", anchor=W)
+        self.Radio_Units_IN.place(x=w_label + x_radio_offset, y=D_Yloc, width=75, height=23)
         self.Radio_Units_IN.configure(variable=self.units, command=self.Entry_units_var_Callback )
 
-        self.Radio_Units_MM = Radiobutton(gen_settings,text="mm", value="mm", width="100", anchor=W)
-        self.Radio_Units_MM.place(x=w_label+x_radio_offset+60, y=D_Yloc, width=75, height=23)
+        self.Radio_Units_MM = Radiobutton(gen_settings, text="mm", value="mm", width="100", anchor=W)
+        self.Radio_Units_MM.place(x=w_label + x_radio_offset + 60, y=D_Yloc, width=75, height=23)
         self.Radio_Units_MM.configure(variable=self.units, command=self.Entry_units_var_Callback )
 
 
-        D_Yloc=D_Yloc+D_dY
-        self.Label_Xoffset = Label(gen_settings,text="X Offset")
+        D_Yloc = D_Yloc + D_dY
+        self.Label_Xoffset = Label(gen_settings, text="X Offset")
         self.Label_Xoffset.place(x=xd_label_L, y=D_Yloc, width=w_label, height=21)
-        self.Label_Xoffset_u = Label(gen_settings,textvariable=self.units, anchor=W)
+        self.Label_Xoffset_u = Label(gen_settings, textvariable=self.units, anchor=W)
         self.Label_Xoffset_u.place(x=xd_units_L, y=D_Yloc, width=w_units, height=21)
-        self.Entry_Xoffset = Entry(gen_settings,width="15")
+        self.Entry_Xoffset = Entry(gen_settings, width="15")
         self.Entry_Xoffset.place(x=xd_entry_L, y=D_Yloc, width=w_entry, height=23)
         self.Entry_Xoffset.configure(textvariable=self.xorigin)
         self.xorigin.trace_variable("w", self.Entry_Xoffset_Callback)
-        self.entry_set(self.Entry_Xoffset, self.Entry_Xoffset_Check(),2)
+        self.entry_set(self.Entry_Xoffset, self.Entry_Xoffset_Check(), 2)
 
-        D_Yloc=D_Yloc+D_dY
-        self.Label_Yoffset = Label(gen_settings,text="Y Offset")
+        D_Yloc = D_Yloc + D_dY
+        self.Label_Yoffset = Label(gen_settings, text="Y Offset")
         self.Label_Yoffset.place(x=xd_label_L, y=D_Yloc, width=w_label, height=21)
-        self.Label_Yoffset_u = Label(gen_settings,textvariable=self.units, anchor=W)
+        self.Label_Yoffset_u = Label(gen_settings, textvariable=self.units, anchor=W)
         self.Label_Yoffset_u.place(x=xd_units_L, y=D_Yloc, width=w_units, height=21)
-        self.Entry_Yoffset = Entry(gen_settings,width="15")
+        self.Entry_Yoffset = Entry(gen_settings, width="15")
         self.Entry_Yoffset.place(x=xd_entry_L, y=D_Yloc, width=w_entry, height=23)
         self.Entry_Yoffset.configure(textvariable=self.yorigin)
         self.yorigin.trace_variable("w", self.Entry_Yoffset_Callback)
-        self.entry_set(self.Entry_Yoffset,self.Entry_Yoffset_Check(),2)
+        self.entry_set(self.Entry_Yoffset, self.Entry_Yoffset_Check(), 2)
 
-        D_Yloc=D_Yloc+D_dY
-        self.Label_ArcAngle = Label(gen_settings,text="Arc Angle")
+        D_Yloc = D_Yloc + D_dY
+        self.Label_ArcAngle = Label(gen_settings, text="Arc Angle")
         self.Label_ArcAngle.place(x=xd_label_L, y=D_Yloc, width=w_label, height=21)
-        self.Label_ArcAngle_u = Label(gen_settings,text="deg", anchor=W)
+        self.Label_ArcAngle_u = Label(gen_settings, text="deg", anchor=W)
         self.Label_ArcAngle_u.place(x=xd_units_L, y=D_Yloc, width=w_units, height=21)
-        self.Entry_ArcAngle = Entry(gen_settings,width="15")
+        self.Entry_ArcAngle = Entry(gen_settings, width="15")
         self.Entry_ArcAngle.place(x=xd_entry_L, y=D_Yloc, width=w_entry, height=23)
         self.Entry_ArcAngle.configure(textvariable=self.segarc)
         self.segarc.trace_variable("w", self.Entry_ArcAngle_Callback)
-        self.entry_set(self.Entry_ArcAngle,self.Entry_ArcAngle_Check(),2)
+        self.entry_set(self.Entry_ArcAngle, self.Entry_ArcAngle_Check(), 2)
 
-        D_Yloc=D_Yloc+D_dY
-        self.Label_Accuracy = Label(gen_settings,text="Accuracy")
+        D_Yloc = D_Yloc + D_dY
+        self.Label_Accuracy = Label(gen_settings, text="Accuracy")
         self.Label_Accuracy.place(x=xd_label_L, y=D_Yloc, width=w_label, height=21)
-        self.Label_Accuracy_u = Label(gen_settings,textvariable=self.units, anchor=W)
+        self.Label_Accuracy_u = Label(gen_settings, textvariable=self.units, anchor=W)
         self.Label_Accuracy_u.place(x=xd_units_L, y=D_Yloc, width=w_units, height=21)
-        self.Entry_Accuracy = Entry(gen_settings,width="15")
+        self.Entry_Accuracy = Entry(gen_settings, width="15")
         self.Entry_Accuracy.place(x=xd_entry_L, y=D_Yloc, width=w_entry, height=23)
         self.Entry_Accuracy.configure(textvariable=self.accuracy)
         self.accuracy.trace_variable("w", self.Entry_Accuracy_Callback)
-        self.entry_set(self.Entry_Accuracy,self.Entry_Accuracy_Check(),2)
+        self.entry_set(self.Entry_Accuracy, self.Entry_Accuracy_Check(), 2)
 
-        D_Yloc=D_Yloc+D_dY
-        self.Label_ext_char = Label(gen_settings,text="Extended Characters")
+        D_Yloc = D_Yloc + D_dY
+        self.Label_ext_char = Label(gen_settings, text="Extended Characters")
         self.Label_ext_char.place(x=xd_label_L, y=D_Yloc, width=w_label, height=21)
-        self.Checkbutton_ext_char = Checkbutton(gen_settings,text="", anchor=W)
+        self.Checkbutton_ext_char = Checkbutton(gen_settings, text="", anchor=W)
         self.Checkbutton_ext_char.place(x=xd_entry_L, y=D_Yloc, width=75, height=23)
         self.Checkbutton_ext_char.configure(variable=self.ext_char)
         self.ext_char.trace_variable("w", self.Settings_ReLoad_Click)
 
-        D_Yloc=D_Yloc+D_dY
-        self.Label_arcfit = Label(gen_settings,text="Arc Fitting")
+        D_Yloc = D_Yloc + D_dY
+        self.Label_arcfit = Label(gen_settings, text="Arc Fitting")
         self.Label_arcfit.place(x=xd_label_L, y=D_Yloc, width=w_label, height=21)
-        self.Radio_arcfit_none = Radiobutton(gen_settings,text="None", \
-                                            value="none", width="110", anchor=W)
-        self.Radio_arcfit_none.place(x=w_label+x_radio_offset, y=D_Yloc, width=90, height=23)
+        self.Radio_arcfit_none = Radiobutton(gen_settings, text="None", \
+                                             value="none", width="110", anchor=W)
+        self.Radio_arcfit_none.place(x=w_label + x_radio_offset, y=D_Yloc, width=90, height=23)
         self.Radio_arcfit_none.configure(variable=self.arc_fit )
-        self.Radio_arcfit_radius = Radiobutton(gen_settings,text="Radius Format", \
-                                            value="radius", width="110", anchor=W)
-        self.Radio_arcfit_radius.place(x=w_label+x_radio_offset+65, y=D_Yloc, width=100, height=23)
+        self.Radio_arcfit_radius = Radiobutton(gen_settings, text="Radius Format", \
+                                               value="radius", width="110", anchor=W)
+        self.Radio_arcfit_radius.place(x=w_label + x_radio_offset + 65, y=D_Yloc, width=100, height=23)
         self.Radio_arcfit_radius.configure(variable=self.arc_fit )
-        self.Radio_arcfit_center = Radiobutton(gen_settings,text="Center Format", \
-                                            value="center", width="110", anchor=W)
-        self.Radio_arcfit_center.place(x=w_label+x_radio_offset+65+115, y=D_Yloc, width=100, height=23)
+        self.Radio_arcfit_center = Radiobutton(gen_settings, text="Center Format", \
+                                               value="center", width="110", anchor=W)
+        self.Radio_arcfit_center.place(x=w_label + x_radio_offset + 65 + 115, y=D_Yloc, width=100, height=23)
         self.Radio_arcfit_center.configure(variable=self.arc_fit )
 
-        D_Yloc=D_Yloc+D_dY
-        self.Label_no_com = Label(gen_settings,text="Suppress Comments")
+        D_Yloc = D_Yloc + D_dY
+        self.Label_no_com = Label(gen_settings, text="Suppress Comments")
         self.Label_no_com.place(x=xd_label_L, y=D_Yloc, width=w_label, height=21)
-        self.Checkbutton_no_com = Checkbutton(gen_settings,text="", anchor=W)
+        self.Checkbutton_no_com = Checkbutton(gen_settings, text="", anchor=W)
         self.Checkbutton_no_com.place(x=xd_entry_L, y=D_Yloc, width=75, height=23)
         self.Checkbutton_no_com.configure(variable=self.no_comments)
 
-        D_Yloc=D_Yloc+D_dY
-        self.Label_Gpre = Label(gen_settings,text="G Code Header")
+        D_Yloc = D_Yloc + D_dY
+        self.Label_Gpre = Label(gen_settings, text="G Code Header")
         self.Label_Gpre.place(x=xd_label_L, y=D_Yloc, width=w_label, height=21)
-        self.Entry_Gpre = Entry(gen_settings,width="15")
+        self.Entry_Gpre = Entry(gen_settings, width="15")
         self.Entry_Gpre.place(x=xd_entry_L, y=D_Yloc, width=300, height=23)
         self.Entry_Gpre.configure(textvariable=self.gpre)
 
-        D_Yloc=D_Yloc+D_dY
-        self.Label_Gpost = Label(gen_settings,text="G Code Postscript")
+        D_Yloc = D_Yloc + D_dY
+        self.Label_Gpost = Label(gen_settings, text="G Code Postscript")
         self.Label_Gpost.place(x=xd_label_L, y=D_Yloc, width=w_label, height=21)
         self.Entry_Gpost = Entry(gen_settings)
         self.Entry_Gpost.place(x=xd_entry_L, y=D_Yloc, width=300, height=23)
         self.Entry_Gpost.configure(textvariable=self.gpost)
 
-        D_Yloc=D_Yloc+D_dY
-        self.Label_var_dis = Label(gen_settings,text="Disable Variables")
+        D_Yloc = D_Yloc + D_dY
+        self.Label_var_dis = Label(gen_settings, text="Disable Variables")
         self.Label_var_dis.place(x=xd_label_L, y=D_Yloc, width=w_label, height=21)
-        self.Checkbutton_var_dis = Checkbutton(gen_settings,text="", anchor=W)
+        self.Checkbutton_var_dis = Checkbutton(gen_settings, text="", anchor=W)
         self.Checkbutton_var_dis.place(x=xd_entry_L, y=D_Yloc, width=75, height=23)
         self.Checkbutton_var_dis.configure(variable=self.var_dis)
 
-        D_Yloc=D_Yloc+D_dY
-        font_entry_width=215
-        self.Label_Fontdir = Label(gen_settings,text="Font Directory")
+        D_Yloc = D_Yloc + D_dY
+        font_entry_width = 215
+        self.Label_Fontdir = Label(gen_settings, text="Font Directory")
         self.Label_Fontdir.place(x=xd_label_L, y=D_Yloc, width=w_label, height=21)
-        self.Entry_Fontdir = Entry(gen_settings,width="15")
+        self.Entry_Fontdir = Entry(gen_settings, width="15")
         self.Entry_Fontdir.place(x=xd_entry_L, y=D_Yloc, width=font_entry_width, height=23)
         self.Entry_Fontdir.configure(textvariable=self.fontdir)
-        self.Fontdir = Button(gen_settings,text="Select Dir")
-        self.Fontdir.place(x=xd_entry_L+font_entry_width+10, y=D_Yloc, width=w_label-80, height=23)
+        self.Fontdir = Button(gen_settings, text="Select Dir")
+        self.Fontdir.place(x=xd_entry_L + font_entry_width + 10, y=D_Yloc, width=w_label - 80, height=23)
 
-        D_Yloc=D_Yloc+D_dY
-        self.Label_Hcalc = Label(gen_settings,text="Height Calculation")
+        D_Yloc = D_Yloc + D_dY
+        self.Label_Hcalc = Label(gen_settings, text="Height Calculation")
         self.Label_Hcalc.place(x=xd_label_L, y=D_Yloc, width=w_label, height=21)
 
-        self.Radio_Hcalc_USE = Radiobutton(gen_settings,text="Max Used", \
-                                            value="max_use", width="110", anchor=W)
-        self.Radio_Hcalc_USE.place(x=w_label+x_radio_offset, y=D_Yloc, width=90, height=23)
+        self.Radio_Hcalc_USE = Radiobutton(gen_settings, text="Max Used", \
+                                           value="max_use", width="110", anchor=W)
+        self.Radio_Hcalc_USE.place(x=w_label + x_radio_offset, y=D_Yloc, width=90, height=23)
         self.Radio_Hcalc_USE.configure(variable=self.H_CALC )
 
-        self.Radio_Hcalc_ALL = Radiobutton(gen_settings,text="Max All", \
-                                            value="max_all", width="110", anchor=W)
-        self.Radio_Hcalc_ALL.place(x=w_label+x_radio_offset+90, y=D_Yloc, width=90, height=23)
+        self.Radio_Hcalc_ALL = Radiobutton(gen_settings, text="Max All", \
+                                           value="max_all", width="110", anchor=W)
+        self.Radio_Hcalc_ALL.place(x=w_label + x_radio_offset + 90, y=D_Yloc, width=90, height=23)
         self.Radio_Hcalc_ALL.configure(variable=self.H_CALC )
 
         if self.input_type.get() != "text":
-                self.Entry_Fontdir.configure(state="disabled")
-                self.Fontdir.configure(state="disabled")
-                self.Radio_Hcalc_ALL.configure(state="disabled")
-                self.Radio_Hcalc_USE.configure(state="disabled")
+            self.Entry_Fontdir.configure(state="disabled")
+            self.Fontdir.configure(state="disabled")
+            self.Radio_Hcalc_ALL.configure(state="disabled")
+            self.Radio_Hcalc_USE.configure(state="disabled")
         else:
             self.Fontdir.bind("<ButtonRelease-1>", self.Fontdir_Click)
 
-        D_Yloc=D_Yloc+24
-        self.Label_Box = Label(gen_settings,text="Add Box/Circle")
+        D_Yloc = D_Yloc + 24
+        self.Label_Box = Label(gen_settings, text="Add Box/Circle")
         self.Label_Box.place(x=xd_label_L, y=D_Yloc, width=w_label, height=21)
 
-        self.Checkbutton_plotbox = Checkbutton(gen_settings,text="", anchor=W)
+        self.Checkbutton_plotbox = Checkbutton(gen_settings, text="", anchor=W)
         self.Checkbutton_plotbox.place(x=xd_entry_L, y=D_Yloc, width=75, height=23)
         self.Checkbutton_plotbox.configure(variable=self.plotbox)
         self.plotbox.trace_variable("w", self.Entry_Box_Callback)
 
-        self.Label_BoxGap = Label(gen_settings,text="Box/Circle Gap:", anchor=E)
-        self.Label_BoxGap.place(x=w_label+x_radio_offset+25, y=D_Yloc, width=125, height=21)
+        self.Label_BoxGap = Label(gen_settings, text="Box/Circle Gap:", anchor=E)
+        self.Label_BoxGap.place(x=w_label + x_radio_offset + 25, y=D_Yloc, width=125, height=21)
         self.Entry_BoxGap = Entry(gen_settings)
-        self.Entry_BoxGap.place(x=w_label+x_radio_offset+165, y=D_Yloc, width=w_entry, height=23)
+        self.Entry_BoxGap.place(x=w_label + x_radio_offset + 165, y=D_Yloc, width=w_entry, height=23)
         self.Entry_BoxGap.configure(textvariable=self.boxgap)
         self.boxgap.trace_variable("w", self.Entry_BoxGap_Callback)
-        self.Label_BoxGap_u = Label(gen_settings,textvariable=self.units, anchor=W)
-        self.Label_BoxGap_u.place(x=w_label+x_radio_offset+230, y=D_Yloc, width=100, height=21)
-        self.entry_set(self.Entry_BoxGap,self.Entry_BoxGap_Check(),2)
+        self.Label_BoxGap_u = Label(gen_settings, textvariable=self.units, anchor=W)
+        self.Label_BoxGap_u.place(x=w_label + x_radio_offset + 230, y=D_Yloc, width=100, height=21)
+        self.entry_set(self.Entry_BoxGap, self.Entry_BoxGap_Check(), 2)
 
-        D_Yloc=D_Yloc+D_dY
-        self.Label_v_pplot = Label(gen_settings,text="Plot During V-Carve Calculation")
+        D_Yloc = D_Yloc + D_dY
+        self.Label_v_pplot = Label(gen_settings, text="Plot During V-Carve Calculation")
         self.Label_v_pplot.place(x=xd_label_L, y=D_Yloc, width=w_label, height=21)
-        self.Checkbutton_v_pplot = Checkbutton(gen_settings,text="", anchor=W)
+        self.Checkbutton_v_pplot = Checkbutton(gen_settings, text="", anchor=W)
         self.Checkbutton_v_pplot.place(x=xd_entry_L, y=D_Yloc, width=75, height=23)
         self.Checkbutton_v_pplot.configure(variable=self.v_pplot)
 
-        D_Yloc=D_Yloc+D_dY+10
-        self.Label_SaveConfig = Label(gen_settings,text="Configuration File")
+        D_Yloc = D_Yloc + D_dY + 10
+        self.Label_SaveConfig = Label(gen_settings, text="Configuration File")
         self.Label_SaveConfig.place(x=xd_label_L, y=D_Yloc, width=w_label, height=21)
-        self.GEN_SaveConfig = Button(gen_settings,text="Save")
+        self.GEN_SaveConfig = Button(gen_settings, text="Save")
         self.GEN_SaveConfig.place(x=xd_entry_L, y=D_Yloc, width=w_entry, height=21, anchor="nw")
         self.GEN_SaveConfig.bind("<ButtonRelease-1>", self.Write_Config_File)
 
 
         ## Buttons ##
         gen_settings.update_idletasks()
-        Ybut=int(gen_settings.winfo_height())-30
-        Xbut=int(gen_settings.winfo_width()/2)
+        Ybut = int(gen_settings.winfo_height()) - 30
+        Xbut = int(gen_settings.winfo_width() / 2)
 
-        self.GEN_Reload = Button(gen_settings,text="Recalculate")
-        self.GEN_Reload.place(x=Xbut-65, y=Ybut, width=130, height=30, anchor="e")
+        self.GEN_Reload = Button(gen_settings, text="Recalculate")
+        self.GEN_Reload.place(x=Xbut - 65, y=Ybut, width=130, height=30, anchor="e")
         self.GEN_Reload.bind("<ButtonRelease-1>", self.Recalculate_Click)
 
-        self.GEN_Recalculate = Button(gen_settings,text="Re-Load Image")
+        self.GEN_Recalculate = Button(gen_settings, text="Re-Load Image")
         self.GEN_Recalculate.place(x=Xbut, y=Ybut, width=130, height=30, anchor="c")
         self.GEN_Recalculate.bind("<ButtonRelease-1>", self.Settings_ReLoad_Click)
 
-        self.GEN_Close = Button(gen_settings,text="Close")
-        self.GEN_Close.place(x=Xbut+65, y=Ybut, width=130, height=30, anchor="w")
+        self.GEN_Close = Button(gen_settings, text="Close")
+        self.GEN_Close.place(x=Xbut + 65, y=Ybut, width=130, height=30, anchor="w")
         self.GEN_Close.bind("<ButtonRelease-1>", self.Close_Current_Window_Click)
 
     ################################################################################
@@ -8540,7 +8540,7 @@ class Application(Frame):
     def VCARVE_Settings_Window(self):
         vcarve_settings = Toplevel(width=580, height=690)
         vcarve_settings.grab_set() # Use grab_set to prevent user input in the main window during calculations
-        vcarve_settings.resizable(0,0)
+        vcarve_settings.resizable(0, 0)
         vcarve_settings.title('V-Carve Settings')
         vcarve_settings.iconname("V-Carve Settings")
 
@@ -8556,192 +8556,192 @@ class Application(Frame):
                 pass
 
 
-        D_Yloc  = 12
+        D_Yloc = 12
         D_dY = 24
         xd_label_L = 12
 
-        w_label=250
-        w_entry=60
-        w_units=35
-        xd_entry_L=xd_label_L+w_label+10
-        xd_units_L=xd_entry_L+w_entry+5
+        w_label = 250
+        w_entry = 60
+        w_units = 35
+        xd_entry_L = xd_label_L + w_label + 10
+        xd_units_L = xd_entry_L + w_entry + 5
 
         #----------------------
-        self.Label_cutter_type = Label(vcarve_settings,text="Cutter Type")
+        self.Label_cutter_type = Label(vcarve_settings, text="Cutter Type")
         self.Label_cutter_type.place(x=xd_label_L, y=D_Yloc, width=w_label, height=21)
 
-        self.Radio_Type_VBIT = Radiobutton(vcarve_settings,text="V-Bit", value="VBIT",
-                                         width="100", anchor=W)
+        self.Radio_Type_VBIT = Radiobutton(vcarve_settings, text="V-Bit", value="VBIT",
+                                           width="100", anchor=W)
         self.Radio_Type_VBIT.place(x=xd_entry_L, y=D_Yloc, width=w_label, height=21)
         self.Radio_Type_VBIT.configure(variable=self.bit_shape)
 
-        D_Yloc=D_Yloc+24
-        self.Radio_Type_BALL = Radiobutton(vcarve_settings,text="Ball Nose", value="BALL",
-                                         width="100", anchor=W)
+        D_Yloc = D_Yloc + 24
+        self.Radio_Type_BALL = Radiobutton(vcarve_settings, text="Ball Nose", value="BALL",
+                                           width="100", anchor=W)
         self.Radio_Type_BALL.place(x=xd_entry_L, y=D_Yloc, width=w_label, height=21)
         self.Radio_Type_BALL.configure(variable=self.bit_shape)
 
-        D_Yloc=D_Yloc+24
-        self.Radio_Type_STRAIGHT = Radiobutton(vcarve_settings,text="Straight", value="FLAT",
-                                         width="100", anchor=W)
+        D_Yloc = D_Yloc + 24
+        self.Radio_Type_STRAIGHT = Radiobutton(vcarve_settings, text="Straight", value="FLAT",
+                                               width="100", anchor=W)
         self.Radio_Type_STRAIGHT.place(x=xd_entry_L, y=D_Yloc, width=w_label, height=21)
         self.Radio_Type_STRAIGHT.configure(variable=self.bit_shape)
 
         self.bit_shape.trace_variable("w", self.Entry_Bit_Shape_var_Callback)
         #----------------------
 
-        D_Yloc=D_Yloc+D_dY
-        self.Label_Vbitangle = Label(vcarve_settings,text="V-Bit Angle")
+        D_Yloc = D_Yloc + D_dY
+        self.Label_Vbitangle = Label(vcarve_settings, text="V-Bit Angle")
         self.Label_Vbitangle.place(x=xd_label_L, y=D_Yloc, width=w_label, height=21)
-        self.Label_Vbitangle_u = Label(vcarve_settings,text="deg", anchor=W)
+        self.Label_Vbitangle_u = Label(vcarve_settings, text="deg", anchor=W)
         self.Label_Vbitangle_u.place(x=xd_units_L, y=D_Yloc, width=w_units, height=21)
-        self.Entry_Vbitangle = Entry(vcarve_settings,width="15")
+        self.Entry_Vbitangle = Entry(vcarve_settings, width="15")
         self.Entry_Vbitangle.place(x=xd_entry_L, y=D_Yloc, width=w_entry, height=23)
         self.Entry_Vbitangle.configure(textvariable=self.v_bit_angle)
         self.v_bit_angle.trace_variable("w", self.Entry_Vbitangle_Callback)
-        self.entry_set(self.Entry_Vbitangle, self.Entry_Vbitangle_Check(),2)
+        self.entry_set(self.Entry_Vbitangle, self.Entry_Vbitangle_Check(), 2)
 
-        D_Yloc=D_Yloc+D_dY
-        self.Label_Vbitdia = Label(vcarve_settings,text="V-Bit Diameter")
+        D_Yloc = D_Yloc + D_dY
+        self.Label_Vbitdia = Label(vcarve_settings, text="V-Bit Diameter")
         self.Label_Vbitdia.place(x=xd_label_L, y=D_Yloc, width=w_label, height=21)
-        self.Label_Vbitdia_u = Label(vcarve_settings,textvariable=self.units, anchor=W)
+        self.Label_Vbitdia_u = Label(vcarve_settings, textvariable=self.units, anchor=W)
         self.Label_Vbitdia_u.place(x=xd_units_L, y=D_Yloc, width=w_units, height=21)
-        self.Entry_Vbitdia = Entry(vcarve_settings,width="15")
+        self.Entry_Vbitdia = Entry(vcarve_settings, width="15")
         self.Entry_Vbitdia.place(x=xd_entry_L, y=D_Yloc, width=w_entry, height=23)
         self.Entry_Vbitdia.configure(textvariable=self.v_bit_dia)
         self.v_bit_dia.trace_variable("w", self.Entry_Vbitdia_Callback)
-        self.entry_set(self.Entry_Vbitdia, self.Entry_Vbitdia_Check(),2)
+        self.entry_set(self.Entry_Vbitdia, self.Entry_Vbitdia_Check(), 2)
 
-        D_Yloc=D_Yloc+D_dY
-        self.Label_VDepthLimit = Label(vcarve_settings,text="Cut Depth Limit")
+        D_Yloc = D_Yloc + D_dY
+        self.Label_VDepthLimit = Label(vcarve_settings, text="Cut Depth Limit")
         self.Label_VDepthLimit.place(x=xd_label_L, y=D_Yloc, width=w_label, height=21)
-        self.Label_VDepthLimit_u = Label(vcarve_settings,textvariable=self.units, anchor=W)
+        self.Label_VDepthLimit_u = Label(vcarve_settings, textvariable=self.units, anchor=W)
         self.Label_VDepthLimit_u.place(x=xd_units_L, y=D_Yloc, width=w_units, height=21)
-        self.Entry_VDepthLimit = Entry(vcarve_settings,width="15")
+        self.Entry_VDepthLimit = Entry(vcarve_settings, width="15")
         self.Entry_VDepthLimit.place(x=xd_entry_L, y=D_Yloc, width=w_entry, height=23)
         self.Entry_VDepthLimit.configure(textvariable=self.v_depth_lim)
         self.v_depth_lim.trace_variable("w", self.Entry_VDepthLimit_Callback)
-        self.entry_set(self.Entry_VDepthLimit, self.Entry_VDepthLimit_Check(),2)
+        self.entry_set(self.Entry_VDepthLimit, self.Entry_VDepthLimit_Check(), 2)
 
-        D_Yloc=D_Yloc+D_dY
-        self.Label_maxcut = Label(vcarve_settings,text="Max Cut Depth")
+        D_Yloc = D_Yloc + D_dY
+        self.Label_maxcut = Label(vcarve_settings, text="Max Cut Depth")
         self.Label_maxcut.place(x=xd_label_L, y=D_Yloc, width=w_label, height=21)
-        self.Label_maxcut_u = Label(vcarve_settings,textvariable=self.units, anchor=W)
+        self.Label_maxcut_u = Label(vcarve_settings, textvariable=self.units, anchor=W)
         self.Label_maxcut_u.place(x=xd_units_L, y=D_Yloc, width=w_units, height=21)
-        self.Label_maxcut_i = Label(vcarve_settings,textvariable=self.maxcut, anchor=W)
+        self.Label_maxcut_i = Label(vcarve_settings, textvariable=self.maxcut, anchor=W)
         self.Label_maxcut_i.place(x=xd_entry_L, y=D_Yloc, width=w_entry, height=21)
 
-        D_Yloc=D_Yloc+D_dY+5
-        self.Label_StepSize = Label(vcarve_settings,text="Sub-Step Length")
+        D_Yloc = D_Yloc + D_dY + 5
+        self.Label_StepSize = Label(vcarve_settings, text="Sub-Step Length")
         self.Label_StepSize.place(x=xd_label_L, y=D_Yloc, width=w_label, height=21)
-        self.Label_StepSize_u = Label(vcarve_settings,textvariable=self.units, anchor=W)
+        self.Label_StepSize_u = Label(vcarve_settings, textvariable=self.units, anchor=W)
         self.Label_StepSize_u.place(x=xd_units_L, y=D_Yloc, width=w_units, height=21)
-        self.Entry_StepSize = Entry(vcarve_settings,width="15")
+        self.Entry_StepSize = Entry(vcarve_settings, width="15")
         self.Entry_StepSize.place(x=xd_entry_L, y=D_Yloc, width=w_entry, height=23)
         self.Entry_StepSize.configure(textvariable=self.v_step_len)
         self.v_step_len.trace_variable("w", self.Entry_StepSize_Callback)
-        self.entry_set(self.Entry_StepSize, self.Entry_StepSize_Check(),2)
+        self.entry_set(self.Entry_StepSize, self.Entry_StepSize_Check(), 2)
 
-        D_Yloc=D_Yloc+D_dY+12
-        self.vcarve_separator00 = Frame(vcarve_settings,height=2, bd=1, relief=SUNKEN)
-        self.vcarve_separator00.place(x=0, y=D_Yloc,width=580, height=2)
+        D_Yloc = D_Yloc + D_dY + 12
+        self.vcarve_separator00 = Frame(vcarve_settings, height=2, bd=1, relief=SUNKEN)
+        self.vcarve_separator00.place(x=0, y=D_Yloc, width=580, height=2)
 
-        D_Yloc=D_Yloc+D_dY-12
-        self.Label_v_flop = Label(vcarve_settings,text="Flip Normals (Cut Outside)")
+        D_Yloc = D_Yloc + D_dY - 12
+        self.Label_v_flop = Label(vcarve_settings, text="Flip Normals (Cut Outside)")
         self.Label_v_flop.place(x=xd_label_L, y=D_Yloc, width=w_label, height=21)
-        self.Checkbutton_v_flop = Checkbutton(vcarve_settings,text="", anchor=W)
+        self.Checkbutton_v_flop = Checkbutton(vcarve_settings, text="", anchor=W)
         self.Checkbutton_v_flop.place(x=xd_entry_L, y=D_Yloc, width=75, height=23)
         self.Checkbutton_v_flop.configure(variable=self.v_flop)
         self.v_flop.trace_variable("w", self.Entry_recalc_var_Callback)
 
-        x_radio_offset = 62-40
-        D_Yloc=D_Yloc+24
-        self.Label_vBox = Label(vcarve_settings,text="Add Box (Flip Normals)")
+        x_radio_offset = 62 - 40
+        D_Yloc = D_Yloc + 24
+        self.Label_vBox = Label(vcarve_settings, text="Add Box (Flip Normals)")
         self.Label_vBox.place(x=xd_label_L, y=D_Yloc, width=w_label, height=21)
 
-        self.Checkbutton_plotbox = Checkbutton(vcarve_settings,text="", anchor=W)
+        self.Checkbutton_plotbox = Checkbutton(vcarve_settings, text="", anchor=W)
         self.Checkbutton_plotbox.place(x=xd_entry_L, y=D_Yloc, width=75, height=23)
         self.Checkbutton_plotbox.configure(variable=self.plotbox)
         self.plotbox.trace_variable("w", self.Entry_Box_Callback)
 
-        self.Label_BoxGap = Label(vcarve_settings,text="Box Gap:", anchor=E)
-        self.Label_BoxGap.place(x=w_label+x_radio_offset+25, y=D_Yloc, width=75, height=21)
+        self.Label_BoxGap = Label(vcarve_settings, text="Box Gap:", anchor=E)
+        self.Label_BoxGap.place(x=w_label + x_radio_offset + 25, y=D_Yloc, width=75, height=21)
         self.Entry_BoxGap = Entry(vcarve_settings)
-        self.Entry_BoxGap.place(x=w_label+x_radio_offset+110, y=D_Yloc, width=w_entry, height=23)
+        self.Entry_BoxGap.place(x=w_label + x_radio_offset + 110, y=D_Yloc, width=w_entry, height=23)
         self.Entry_BoxGap.configure(textvariable=self.boxgap)
         self.boxgap.trace_variable("w", self.Entry_BoxGap_Callback)
-        self.Label_BoxGap_u = Label(vcarve_settings,textvariable=self.units, anchor=W)
-        self.Label_BoxGap_u.place(x=w_label+x_radio_offset+305, y=D_Yloc, width=100, height=21)
-        self.entry_set(self.Entry_BoxGap,self.Entry_BoxGap_Check(),2)
+        self.Label_BoxGap_u = Label(vcarve_settings, textvariable=self.units, anchor=W)
+        self.Label_BoxGap_u.place(x=w_label + x_radio_offset + 305, y=D_Yloc, width=100, height=21)
+        self.entry_set(self.Entry_BoxGap, self.Entry_BoxGap_Check(), 2)
 
-        self.Label_BoxGap_u = Label(vcarve_settings,textvariable=self.units, anchor=W)
-        self.Label_BoxGap_u.place(x=w_label+x_radio_offset+175, y=D_Yloc, width=100, height=21)
+        self.Label_BoxGap_u = Label(vcarve_settings, textvariable=self.units, anchor=W)
+        self.Label_BoxGap_u.place(x=w_label + x_radio_offset + 175, y=D_Yloc, width=100, height=21)
 
-        self.GEN_Reload = Button(vcarve_settings,text="Recalculate")
-        self.GEN_Reload.place(x=580-10, y=D_Yloc, width=90, height=25, anchor="ne")
+        self.GEN_Reload = Button(vcarve_settings, text="Recalculate")
+        self.GEN_Reload.place(x=580 - 10, y=D_Yloc, width=90, height=25, anchor="ne")
         self.GEN_Reload.bind("<ButtonRelease-1>", self.Recalculate_Click)
 
-        D_Yloc=D_Yloc+D_dY+12
-        self.vcarve_separator0 = Frame(vcarve_settings,height=2, bd=1, relief=SUNKEN)
-        self.vcarve_separator0.place(x=0, y=D_Yloc,width=580, height=2)
+        D_Yloc = D_Yloc + D_dY + 12
+        self.vcarve_separator0 = Frame(vcarve_settings, height=2, bd=1, relief=SUNKEN)
+        self.vcarve_separator0.place(x=0, y=D_Yloc, width=580, height=2)
 
-        D_Yloc=D_Yloc+D_dY-12
-        self.Label_inlay = Label(vcarve_settings,text="Prismatic (For inlay also select Add Box)")
+        D_Yloc = D_Yloc + D_dY - 12
+        self.Label_inlay = Label(vcarve_settings, text="Prismatic (For inlay also select Add Box)")
         self.Label_inlay.place(x=xd_label_L, y=D_Yloc, width=w_label, height=21)
-        self.Checkbutton_inlay = Checkbutton(vcarve_settings,text="", anchor=W)
+        self.Checkbutton_inlay = Checkbutton(vcarve_settings, text="", anchor=W)
         self.Checkbutton_inlay.place(x=xd_entry_L, y=D_Yloc, width=75, height=23)
         self.Checkbutton_inlay.configure(variable=self.inlay)
         self.inlay.trace_variable("w", self.Entry_Prismatic_Callback)
 
-        D_Yloc=D_Yloc+D_dY
-        self.Label_Allowance = Label(vcarve_settings,text="Prismatic Overcut")
+        D_Yloc = D_Yloc + D_dY
+        self.Label_Allowance = Label(vcarve_settings, text="Prismatic Overcut")
         self.Label_Allowance.place(x=xd_label_L, y=D_Yloc, width=w_label, height=21)
-        self.Label_Allowance_u = Label(vcarve_settings,textvariable=self.units, anchor=W)
+        self.Label_Allowance_u = Label(vcarve_settings, textvariable=self.units, anchor=W)
         self.Label_Allowance_u.place(x=xd_units_L, y=D_Yloc, width=w_units, height=21)
-        self.Entry_Allowance = Entry(vcarve_settings,width="15")
+        self.Entry_Allowance = Entry(vcarve_settings, width="15")
         self.Entry_Allowance.place(x=xd_entry_L, y=D_Yloc, width=w_entry, height=23)
         self.Entry_Allowance.configure(textvariable=self.allowance)
         self.allowance.trace_variable("w", self.Entry_Allowance_Callback)
-        self.entry_set(self.Entry_Allowance, self.Entry_Allowance_Check(),2)
+        self.entry_set(self.Entry_Allowance, self.Entry_Allowance_Check(), 2)
 
         ### Update Idle tasks before requesting anything from winfo
         vcarve_settings.update_idletasks()
-        center_loc=int(float(vcarve_settings.winfo_width())/2)
+        center_loc = int(float(vcarve_settings.winfo_width()) / 2)
 
         ## Multipass Settings ##
-        D_Yloc=D_Yloc+D_dY+12
-        self.vcarve_separator1 = Frame(vcarve_settings,height=2, bd=1, relief=SUNKEN)
-        self.vcarve_separator1.place(x=0, y=D_Yloc,width=580, height=2)
+        D_Yloc = D_Yloc + D_dY + 12
+        self.vcarve_separator1 = Frame(vcarve_settings, height=2, bd=1, relief=SUNKEN)
+        self.vcarve_separator1.place(x=0, y=D_Yloc, width=580, height=2)
 
-        D_Yloc=D_Yloc+D_dY-12
-        self.Label_multipass = Label(vcarve_settings,text="Multipass Cutting")
-        self.Label_multipass.place(x=center_loc, y=D_Yloc, width=w_label, height=21,anchor=CENTER)
+        D_Yloc = D_Yloc + D_dY - 12
+        self.Label_multipass = Label(vcarve_settings, text="Multipass Cutting")
+        self.Label_multipass.place(x=center_loc, y=D_Yloc, width=w_label, height=21, anchor=CENTER)
 
-        D_Yloc=D_Yloc+D_dY
-        self.Label_v_rough_stk = Label(vcarve_settings,text="V-Carve Finish Pass Stock")
+        D_Yloc = D_Yloc + D_dY
+        self.Label_v_rough_stk = Label(vcarve_settings, text="V-Carve Finish Pass Stock")
         self.Label_v_rough_stk.place(x=xd_label_L, y=D_Yloc, width=w_label, height=21)
-        self.Label_v_rough_stk_u = Label(vcarve_settings,textvariable=self.units, anchor=W)
+        self.Label_v_rough_stk_u = Label(vcarve_settings, textvariable=self.units, anchor=W)
         self.Label_v_rough_stk_u.place(x=xd_units_L, y=D_Yloc, width=w_units, height=21)
 
-        self.Label_right_v_rough_stk= Label(vcarve_settings,text="(Zero disables multipass cutting)", anchor=W)
-        self.Label_right_v_rough_stk.place(x=xd_units_L+20, y=D_Yloc, width=w_label, height=21)
+        self.Label_right_v_rough_stk = Label(vcarve_settings, text="(Zero disables multipass cutting)", anchor=W)
+        self.Label_right_v_rough_stk.place(x=xd_units_L + 20, y=D_Yloc, width=w_label, height=21)
 
-        self.Entry_v_rough_stk = Entry(vcarve_settings,width="15")
+        self.Entry_v_rough_stk = Entry(vcarve_settings, width="15")
         self.Entry_v_rough_stk.place(x=xd_entry_L, y=D_Yloc, width=w_entry, height=23)
         self.Entry_v_rough_stk.configure(textvariable=self.v_rough_stk)
         self.v_rough_stk.trace_variable("w", self.Entry_v_rough_stk_Callback)
-        self.entry_set(self.Entry_v_rough_stk, self.Entry_v_rough_stk_Check(),2)
+        self.entry_set(self.Entry_v_rough_stk, self.Entry_v_rough_stk_Check(), 2)
 
-        D_Yloc=D_Yloc+D_dY
-        self.Label_v_max_cut = Label(vcarve_settings,text="V-Carve Max Depth per Pass")
+        D_Yloc = D_Yloc + D_dY
+        self.Label_v_max_cut = Label(vcarve_settings, text="V-Carve Max Depth per Pass")
         self.Label_v_max_cut.place(x=xd_label_L, y=D_Yloc, width=w_label, height=21)
-        self.Label_v_max_cut_u = Label(vcarve_settings,textvariable=self.units, anchor=W)
+        self.Label_v_max_cut_u = Label(vcarve_settings, textvariable=self.units, anchor=W)
         self.Label_v_max_cut_u.place(x=xd_units_L, y=D_Yloc, width=w_units, height=21)
-        self.Entry_v_max_cut = Entry(vcarve_settings,width="15")
+        self.Entry_v_max_cut = Entry(vcarve_settings, width="15")
         self.Entry_v_max_cut.place(x=xd_entry_L, y=D_Yloc, width=w_entry, height=23)
         self.Entry_v_max_cut.configure(textvariable=self.v_max_cut)
         self.v_max_cut.trace_variable("w", self.Entry_v_max_cut_Callback)
-        self.entry_set(self.Entry_v_max_cut, self.Entry_v_max_cut_Check(),2)
+        self.entry_set(self.Entry_v_max_cut, self.Entry_v_max_cut_Check(), 2)
 
         if float(self.v_rough_stk.get()) == 0.0:
             self.Label_v_max_cut.configure(state="disabled")
@@ -8773,119 +8773,119 @@ class Application(Frame):
 
 
         ## Cleanup Settings ##
-        D_Yloc=D_Yloc+D_dY+12
-        self.vcarve_separator1 = Frame(vcarve_settings,height=2, bd=1, relief=SUNKEN)
-        self.vcarve_separator1.place(x=0, y=D_Yloc,width=580, height=2)
+        D_Yloc = D_Yloc + D_dY + 12
+        self.vcarve_separator1 = Frame(vcarve_settings, height=2, bd=1, relief=SUNKEN)
+        self.vcarve_separator1.place(x=0, y=D_Yloc, width=580, height=2)
 
-        right_but_loc=int(vcarve_settings.winfo_width())-10
+        right_but_loc = int(vcarve_settings.winfo_width()) - 10
         width_cb = 100
         height_cb = 35
 
-        D_Yloc=D_Yloc+D_dY-12
-        self.Label_clean = Label(vcarve_settings,text="Cleanup Operations")
-        self.Label_clean.place(x=center_loc, y=D_Yloc, width=w_label, height=21,anchor=CENTER)
+        D_Yloc = D_Yloc + D_dY - 12
+        self.Label_clean = Label(vcarve_settings, text="Cleanup Operations")
+        self.Label_clean.place(x=center_loc, y=D_Yloc, width=w_label, height=21, anchor=CENTER)
 
-        self.CLEAN_Recalculate = Button(vcarve_settings,text="Calculate\nCleanup", command=self.CLEAN_Recalculate_Click)
-        self.CLEAN_Recalculate.place(x=right_but_loc, y=D_Yloc, width=width_cb, height=height_cb*1.5, anchor="ne")
+        self.CLEAN_Recalculate = Button(vcarve_settings, text="Calculate\nCleanup", command=self.CLEAN_Recalculate_Click)
+        self.CLEAN_Recalculate.place(x=right_but_loc, y=D_Yloc, width=width_cb, height=height_cb * 1.5, anchor="ne")
 
-        D_Yloc=D_Yloc+D_dY
-        self.Label_CLEAN_DIA = Label(vcarve_settings,text="Cleanup Cut Diameter")
+        D_Yloc = D_Yloc + D_dY
+        self.Label_CLEAN_DIA = Label(vcarve_settings, text="Cleanup Cut Diameter")
         self.Label_CLEAN_DIA.place(x=xd_label_L, y=D_Yloc, width=w_label, height=21)
-        self.Label_CLEAN_DIA_u = Label(vcarve_settings,textvariable=self.units, anchor=W)
+        self.Label_CLEAN_DIA_u = Label(vcarve_settings, textvariable=self.units, anchor=W)
         self.Label_CLEAN_DIA_u.place(x=xd_units_L, y=D_Yloc, width=w_units, height=21)
-        self.Entry_CLEAN_DIA = Entry(vcarve_settings,width="15")
+        self.Entry_CLEAN_DIA = Entry(vcarve_settings, width="15")
         self.Entry_CLEAN_DIA.place(x=xd_entry_L, y=D_Yloc, width=w_entry, height=23)
         self.Entry_CLEAN_DIA.configure(textvariable=self.clean_dia)
         self.clean_dia.trace_variable("w", self.Entry_CLEAN_DIA_Callback)
-        self.entry_set(self.Entry_CLEAN_DIA, self.Entry_CLEAN_DIA_Check(),2)
+        self.entry_set(self.Entry_CLEAN_DIA, self.Entry_CLEAN_DIA_Check(), 2)
 
-        D_Yloc=D_Yloc+D_dY
-        self.Label_STEP_OVER = Label(vcarve_settings,text="Cleanup Cut Step Over")
+        D_Yloc = D_Yloc + D_dY
+        self.Label_STEP_OVER = Label(vcarve_settings, text="Cleanup Cut Step Over")
         self.Label_STEP_OVER.place(x=xd_label_L, y=D_Yloc, width=w_label, height=21)
-        self.Label_STEP_OVER_u = Label(vcarve_settings,text="%", anchor=W)
+        self.Label_STEP_OVER_u = Label(vcarve_settings, text="%", anchor=W)
         self.Label_STEP_OVER_u.place(x=xd_units_L, y=D_Yloc, width=w_units, height=21)
-        self.Entry_STEP_OVER = Entry(vcarve_settings,width="15")
+        self.Entry_STEP_OVER = Entry(vcarve_settings, width="15")
         self.Entry_STEP_OVER.place(x=xd_entry_L, y=D_Yloc, width=w_entry, height=23)
         self.Entry_STEP_OVER.configure(textvariable=self.clean_step)
         self.clean_step.trace_variable("w", self.Entry_STEP_OVER_Callback)
-        self.entry_set(self.Entry_STEP_OVER, self.Entry_STEP_OVER_Check(),2)
+        self.entry_set(self.Entry_STEP_OVER, self.Entry_STEP_OVER_Check(), 2)
 
-        D_Yloc=D_Yloc+24
-        check_delta=40
-        self.Label_clean_P = Label(vcarve_settings,text="Cleanup Cut Directions")
+        D_Yloc = D_Yloc + 24
+        check_delta = 40
+        self.Label_clean_P = Label(vcarve_settings, text="Cleanup Cut Directions")
         self.Label_clean_P.place(x=xd_label_L, y=D_Yloc, width=w_label, height=21)
 
-        self.Write_Clean = Button(vcarve_settings,text="Save Cleanup\nG-Code", command=self.Write_Clean_Click)
+        self.Write_Clean = Button(vcarve_settings, text="Save Cleanup\nG-Code", command=self.Write_Clean_Click)
         self.Write_Clean.place(x=right_but_loc, y=D_Yloc, width=width_cb, height=height_cb, anchor="e")
 
-        self.Checkbutton_clean_P = Checkbutton(vcarve_settings,text="P", anchor=W)
+        self.Checkbutton_clean_P = Checkbutton(vcarve_settings, text="P", anchor=W)
         self.Checkbutton_clean_P.configure(variable=self.clean_P)
-        self.Checkbutton_clean_P.place(x=xd_entry_L, y=D_Yloc, width=w_entry+40, height=23)
-        self.Checkbutton_clean_X = Checkbutton(vcarve_settings,text="X", anchor=W)
+        self.Checkbutton_clean_P.place(x=xd_entry_L, y=D_Yloc, width=w_entry + 40, height=23)
+        self.Checkbutton_clean_X = Checkbutton(vcarve_settings, text="X", anchor=W)
         self.Checkbutton_clean_X.configure(variable=self.clean_X)
-        self.Checkbutton_clean_X.place(x=xd_entry_L+check_delta, y=D_Yloc, width=w_entry+40, height=23)
-        self.Checkbutton_clean_Y = Checkbutton(vcarve_settings,text="Y", anchor=W)
+        self.Checkbutton_clean_X.place(x=xd_entry_L + check_delta, y=D_Yloc, width=w_entry + 40, height=23)
+        self.Checkbutton_clean_Y = Checkbutton(vcarve_settings, text="Y", anchor=W)
         self.Checkbutton_clean_Y.configure(variable=self.clean_Y)
-        self.Checkbutton_clean_Y.place(x=xd_entry_L+check_delta*2, y=D_Yloc, width=w_entry+40, height=23)
+        self.Checkbutton_clean_Y.place(x=xd_entry_L + check_delta * 2, y=D_Yloc, width=w_entry + 40, height=23)
 
-        D_Yloc=D_Yloc+12
+        D_Yloc = D_Yloc + 12
 
-        D_Yloc=D_Yloc+D_dY
-        self.Label_V_CLEAN = Label(vcarve_settings,text="V-Bit Cleanup Step")
+        D_Yloc = D_Yloc + D_dY
+        self.Label_V_CLEAN = Label(vcarve_settings, text="V-Bit Cleanup Step")
         self.Label_V_CLEAN.place(x=xd_label_L, y=D_Yloc, width=w_label, height=21)
-        self.Label_V_CLEAN_u = Label(vcarve_settings,textvariable=self.units, anchor=W)
+        self.Label_V_CLEAN_u = Label(vcarve_settings, textvariable=self.units, anchor=W)
         self.Label_V_CLEAN_u.place(x=xd_units_L, y=D_Yloc, width=w_units, height=21)
-        self.Entry_V_CLEAN = Entry(vcarve_settings,width="15")
+        self.Entry_V_CLEAN = Entry(vcarve_settings, width="15")
         self.Entry_V_CLEAN.place(x=xd_entry_L, y=D_Yloc, width=w_entry, height=23)
         self.Entry_V_CLEAN.configure(textvariable=self.clean_v)
         self.clean_v.trace_variable("w", self.Entry_V_CLEAN_Callback)
-        self.entry_set(self.Entry_V_CLEAN, self.Entry_V_CLEAN_Check(),2)
+        self.entry_set(self.Entry_V_CLEAN, self.Entry_V_CLEAN_Check(), 2)
 
-        D_Yloc=D_Yloc+24
-        self.Label_v_clean_P = Label(vcarve_settings,text="V-Bit Cut Directions")
+        D_Yloc = D_Yloc + 24
+        self.Label_v_clean_P = Label(vcarve_settings, text="V-Bit Cut Directions")
         self.Label_v_clean_P.place(x=xd_label_L, y=D_Yloc, width=w_label, height=21)
 
-        self.Write_V_Clean = Button(vcarve_settings,text="Save V Cleanup\nG-Code", command=self.Write_V_Clean_Click)
+        self.Write_V_Clean = Button(vcarve_settings, text="Save V Cleanup\nG-Code", command=self.Write_V_Clean_Click)
         self.Write_V_Clean.place(x=right_but_loc, y=D_Yloc, width=width_cb, height=height_cb, anchor="e")
 
-        self.Checkbutton_v_clean_P = Checkbutton(vcarve_settings,text="P", anchor=W)
+        self.Checkbutton_v_clean_P = Checkbutton(vcarve_settings, text="P", anchor=W)
         self.Checkbutton_v_clean_P.configure(variable=self.v_clean_P)
-        self.Checkbutton_v_clean_P.place(x=xd_entry_L, y=D_Yloc, width=w_entry+40, height=23)
-        self.Checkbutton_v_clean_X = Checkbutton(vcarve_settings,text="X", anchor=W)
+        self.Checkbutton_v_clean_P.place(x=xd_entry_L, y=D_Yloc, width=w_entry + 40, height=23)
+        self.Checkbutton_v_clean_X = Checkbutton(vcarve_settings, text="X", anchor=W)
         self.Checkbutton_v_clean_X.configure(variable=self.v_clean_X)
-        self.Checkbutton_v_clean_X.place(x=xd_entry_L+check_delta, y=D_Yloc, width=w_entry+40, height=23)
-        self.Checkbutton_v_clean_Y = Checkbutton(vcarve_settings,text="Y", anchor=W)
+        self.Checkbutton_v_clean_X.place(x=xd_entry_L + check_delta, y=D_Yloc, width=w_entry + 40, height=23)
+        self.Checkbutton_v_clean_Y = Checkbutton(vcarve_settings, text="Y", anchor=W)
         self.Checkbutton_v_clean_Y.configure(variable=self.v_clean_Y)
-        self.Checkbutton_v_clean_Y.place(x=xd_entry_L+check_delta*2, y=D_Yloc, width=w_entry+40, height=23)
+        self.Checkbutton_v_clean_Y.place(x=xd_entry_L + check_delta * 2, y=D_Yloc, width=w_entry + 40, height=23)
 
         ## V-Bit Picture ##
-        self.PHOTO = PhotoImage(format='gif',data=
-             'R0lGODlhoABQAIABAAAAAP///yH+EUNyZWF0ZWQgd2l0aCBHSU1QACH5BAEK'
-            +'AAEALAAAAACgAFAAAAL+jI+pBu2/opy02ouzvg+G7m3iSJam1XHpybbuezhk'
-            +'CFNyjZ9AS+ff6gtqdq5eMUQUKlG4GwsYW0ptPiMGmkhOtwhtzioBd7nkqBTk'
-            +'BV3LZe8Z7Vyzue75zL6t4zf6fa3vxxGoBDhIZViFKFKoeNeYwfjIJylHyWPJ'
-            +'hPmkechZEmkJ6hk2GiFaqnD6qIpq1ur6WhnL+kqLaIuKO6g7yuvnywmMJ4xJ'
-            +'PGdMidxmkpaFxDClTMar1ZA1hr0kTcecDUu0Exe0nacDy/D8ER17vgidugK+'
-            +'zq7OHB5jXf1Onkpf311HXz1+1+gBs7ZAzcB57Aj+IPUFoUNC6CbCgKMGYa3+'
-            +'cBjhBOtisUkzf2FCXjT5C+UTlSl7sQykMRQxhf8+RSxmrFrOKi9VXCwI7gbH'
-            +'h/iCGgX56SAae3+AEg36FN0+qQt10BIHj1XMIk6xJZH3D+zXd1Yhab2ybaRR'
-            +'sFXjVZR4JJOjCVtf6IQ2NuzUrt7KlrwUkB/NoXD35hM7tOZKvjy21v0D6NRI'
-            +'xZBBKovzmCTPojeJao6WeFzmz6InjiYtmtBp1Jtb9/y8eoZA1nmkxaYt5LbZ'
-            +'frhrx+29R7eNPq9JCzcVGTgdXLGLG7/qXHlCVcel+/Y5vGBRjWyR7n6OAtTs'
-            +'b9otfwdPV9R4sgux3sN7NzHWjX8htQPSfW/UgYRL888KPAllP3jgX14GRpFP'
-            +'O/85405YCZpRIIEQIsjRfAtStYgeAuUX34TwCajZYUkhJ6FizRgIgYggNlTd'
-            +'EMR1Ux5q0Q2BoXUbTVQAADs=')
+        self.PHOTO = PhotoImage(format='gif', data=
+                                'R0lGODlhoABQAIABAAAAAP///yH+EUNyZWF0ZWQgd2l0aCBHSU1QACH5BAEK'
+                                + 'AAEALAAAAACgAFAAAAL+jI+pBu2/opy02ouzvg+G7m3iSJam1XHpybbuezhk'
+                                + 'CFNyjZ9AS+ff6gtqdq5eMUQUKlG4GwsYW0ptPiMGmkhOtwhtzioBd7nkqBTk'
+                                + 'BV3LZe8Z7Vyzue75zL6t4zf6fa3vxxGoBDhIZViFKFKoeNeYwfjIJylHyWPJ'
+                                + 'hPmkechZEmkJ6hk2GiFaqnD6qIpq1ur6WhnL+kqLaIuKO6g7yuvnywmMJ4xJ'
+                                + 'PGdMidxmkpaFxDClTMar1ZA1hr0kTcecDUu0Exe0nacDy/D8ER17vgidugK+'
+                                + 'zq7OHB5jXf1Onkpf311HXz1+1+gBs7ZAzcB57Aj+IPUFoUNC6CbCgKMGYa3+'
+                                + 'cBjhBOtisUkzf2FCXjT5C+UTlSl7sQykMRQxhf8+RSxmrFrOKi9VXCwI7gbH'
+                                + 'h/iCGgX56SAae3+AEg36FN0+qQt10BIHj1XMIk6xJZH3D+zXd1Yhab2ybaRR'
+                                + 'sFXjVZR4JJOjCVtf6IQ2NuzUrt7KlrwUkB/NoXD35hM7tOZKvjy21v0D6NRI'
+                                + 'xZBBKovzmCTPojeJao6WeFzmz6InjiYtmtBp1Jtb9/y8eoZA1nmkxaYt5LbZ'
+                                + 'frhrx+29R7eNPq9JCzcVGTgdXLGLG7/qXHlCVcel+/Y5vGBRjWyR7n6OAtTs'
+                                + 'b9otfwdPV9R4sgux3sN7NzHWjX8htQPSfW/UgYRL888KPAllP3jgX14GRpFP'
+                                + 'O/85405YCZpRIIEQIsjRfAtStYgeAuUX34TwCajZYUkhJ6FizRgIgYggNlTd'
+                                + 'EMR1Ux5q0Q2BoXUbTVQAADs=')
 
-        self.Label_photo = Label(vcarve_settings,image=self.PHOTO)
-        self.Label_photo.place(x=w_label+150, y=40)
+        self.Label_photo = Label(vcarve_settings, image=self.PHOTO)
+        self.Label_photo.place(x=w_label + 150, y=40)
         self.Entry_Bit_Shape_Check()
 
         ## Buttons ##
 
-        Ybut=int(vcarve_settings.winfo_height())-30
-        Xbut=int(vcarve_settings.winfo_width()/2)
+        Ybut = int(vcarve_settings.winfo_height()) - 30
+        Xbut = int(vcarve_settings.winfo_width() / 2)
 
-        self.VCARVE_Recalculate = Button(vcarve_settings,text="Calculate V-Carve", command=self.VCARVE_Recalculate_Click)
+        self.VCARVE_Recalculate = Button(vcarve_settings, text="Calculate V-Carve", command=self.VCARVE_Recalculate_Click)
         self.VCARVE_Recalculate.place(x=Xbut, y=Ybut, width=130, height=30, anchor="e")
 
 
@@ -8894,7 +8894,7 @@ class Application(Frame):
         else:
             self.VCARVE_Recalculate.configure(state="disabled", command=None)
 
-        self.VCARVE_Close = Button(vcarve_settings,text="Close")
+        self.VCARVE_Close = Button(vcarve_settings, text="Close")
         self.VCARVE_Close.place(x=Xbut, y=Ybut, width=130, height=30, anchor="w")
         self.VCARVE_Close.bind("<ButtonRelease-1>", self.Close_Current_Window_Click)
 
@@ -8907,7 +8907,7 @@ class Gcode:
                  tolerance=0.001,
                  target=lambda s: sys.stdout.write(s + "\n"),
                  arc_fit = "none"
-                 ):
+                ):
 
         self.lastx = self.lasty = self.lastz = self.lastf = None
         self.feed = None
@@ -8923,7 +8923,7 @@ class Gcode:
         self.arc_fit = arc_fit
 
     def set_plane(self, p):
-        if (self.arc_fit!="none"):
+        if (self.arc_fit != "none"):
             assert p in (17,18,19)
             if p != self.plane:
                 self.plane = p
@@ -8967,34 +8967,34 @@ class Gcode:
         if (self.feed != self.lastf):
             fstring = self.feed
             self.lastf = self.feed
-        FORMAT  =  "%%.%df" % (self.dp)
+        FORMAT = "%%.%df" % (self.dp)
 
         if (gcode == "G2" or gcode == "G3"):
-            XC = self.lastx+I
-            YC = self.lasty+J
-            R_check_1 = sqrt( (XC-self.lastx)**2+(YC-self.lasty)**2 )
-            R_check_2 = sqrt( (XC-x         )**2+(YC-y         )**2 )
+            XC = self.lastx + I
+            YC = self.lasty + J
+            R_check_1 = sqrt( (XC - self.lastx) ** 2 + (YC - self.lasty) ** 2 )
+            R_check_2 = sqrt( (XC - x         ) ** 2 + (YC - y         ) ** 2 )
 
-            Rstring = " R"+FORMAT % ((R_check_1+R_check_2)/2.0)
-            if  abs(R_check_1-R_check_2) > Zero:
+            Rstring = " R" + FORMAT % ((R_check_1 + R_check_2) / 2.0)
+            if  abs(R_check_1 - R_check_2) > Zero:
                 message.fmessage("-- G-Code Curve Fitting Anomaly - Check Output --")
-                message.fmessage("R_start: %f R_end %f" %(R_check_1,R_check_2))
-                message.fmessage("Begining and end radii do not match: delta = %f" %(abs(R_check_1-R_check_2)))
+                message.fmessage("R_start: %f R_end %f" % (R_check_1,R_check_2))
+                message.fmessage("Begining and end radii do not match: delta = %f" % (abs(R_check_1 - R_check_2)))
 
 
         if x != self.lastx:
-                xstring = " X"+FORMAT % (x)
-                self.lastx = x
+            xstring = " X" + FORMAT % (x)
+            self.lastx = x
         if y != self.lasty:
-                ystring = " Y"+FORMAT % (y)
-                self.lasty = y
+            ystring = " Y" + FORMAT % (y)
+            self.lasty = y
         if z != self.lastz:
-                zstring = " Z"+FORMAT % (z)
-                self.lastz = z
+            zstring = " Z" + FORMAT % (z)
+            self.lastz = z
         if I != None:
-                Istring = " I"+FORMAT % (I)
+            Istring = " I" + FORMAT % (I)
         if J != None:
-                Jstring = " J"+FORMAT % (J)
+            Jstring = " J" + FORMAT % (J)
         if xstring == ystring == zstring == fstring == "":
             return
 
@@ -9060,8 +9060,8 @@ def douglas(st, tolerance=.001, plane=None, _first=True):
     L2 = st[-1]
 
     last_point = None
-    while (abs(L1[0]-L2[0]) < Zero) and (abs(L1[1]-L2[1]) < Zero) and (abs(L1[2]-L2[2]) < Zero):
-        last_point=st.pop()
+    while (abs(L1[0] - L2[0]) < Zero) and (abs(L1[1] - L2[1]) < Zero) and (abs(L1[2] - L2[2]) < Zero):
+        last_point = st.pop()
         try:
             L2 = st[-1]
         except:
@@ -9078,7 +9078,7 @@ def douglas(st, tolerance=.001, plane=None, _first=True):
 
     for i, p in enumerate(st):
         if p is L1 or p is L2: continue
-        dist  = dist_lseg(L1, L2, p)
+        dist = dist_lseg(L1, L2, p)
         distz = dist_lseg(L1, L2, p, z_only=True) #added to fix out of plane inacuracy problem
         if dist > worst_dist:
             worst = i
@@ -9097,22 +9097,22 @@ def douglas(st, tolerance=.001, plane=None, _first=True):
         if one_quadrant(plane, (c1, c2), ps, st[max_arc], pe):
             for i, (x,y,z) in enumerate(st):
                 if plane == 17:
-                    dist1 = abs(hypot(c1-x, c2-y) - min_rad)
-                    dist = sqrt(worst_distz**2 + dist1**2) #added to fix out of plane inacuracy problem
+                    dist1 = abs(hypot(c1 - x, c2 - y) - min_rad)
+                    dist = sqrt(worst_distz ** 2 + dist1 ** 2) #added to fix out of plane inacuracy problem
                 elif plane == 18:
-                    dist = abs(hypot(c1-x, c2-z) - min_rad)
+                    dist = abs(hypot(c1 - x, c2 - z) - min_rad)
                 elif plane == 19:
-                    dist = abs(hypot(c1-y, c2-z) - min_rad)
+                    dist = abs(hypot(c1 - y, c2 - z) - min_rad)
                 else: dist = MAXINT
 
                 if dist > worst_arc_dist: worst_arc_dist = dist
 
-                mx = (x+Lx)/2
-                my = (y+Ly)/2
-                mz = (z+Lz)/2
-                if plane == 17: dist = abs(hypot(c1-mx, c2-my) - min_rad)
-                elif plane == 18: dist = abs(hypot(c1-mx, c2-mz) - min_rad)
-                elif plane == 19: dist = abs(hypot(c1-my, c2-mz) - min_rad)
+                mx = (x + Lx) / 2
+                my = (y + Ly) / 2
+                mz = (z + Lz) / 2
+                if plane == 17: dist = abs(hypot(c1 - mx, c2 - my) - min_rad)
+                elif plane == 18: dist = abs(hypot(c1 - mx, c2 - mz) - min_rad)
+                elif plane == 19: dist = abs(hypot(c1 - my, c2 - mz) - min_rad)
                 else: dist = MAXINT
                 Lx, Ly, Lz = x, y, z
         else:
@@ -9131,7 +9131,7 @@ def douglas(st, tolerance=.001, plane=None, _first=True):
             yield "G2", st[-1], arc_fmt(plane, c1, c2, ps)
     elif worst_dist > tolerance:
         if _first: yield "G1", st[0], None
-        for i in douglas(st[:worst+1], tolerance, plane, False):
+        for i in douglas(st[:worst + 1], tolerance, plane, False):
             yield i
         yield "G1", st[worst], None
         for i in douglas(st[worst:], tolerance, plane, False):
@@ -9157,31 +9157,31 @@ def dist_lseg(l1, l2, p, z_only=False):
     xa, ya, za = l2
     xi, yi, zi = p
 
-    dx = xa-x0
-    dy = ya-y0
-    dz = za-z0
-    d2 = dx*dx + dy*dy + dz*dz
+    dx = xa - x0
+    dy = ya - y0
+    dz = za - z0
+    d2 = dx * dx + dy * dy + dz * dz
 
     if d2 == 0: return 0
 
-    t = (dx * (xi-x0) + dy * (yi-y0) + dz * (zi-z0)) / d2
+    t = (dx * (xi - x0) + dy * (yi - y0) + dz * (zi - z0)) / d2
     if t < 0: t = 0
     if t > 1: t = 1
 
-    if (z_only==True):
-        dist2 = (zi - z0 - t*dz)**2
+    if (z_only == True):
+        dist2 = (zi - z0 - t * dz) ** 2
     else:
-        dist2 = (xi - x0 - t*dx)**2 + (yi - y0 - t*dy)**2 + (zi - z0 - t*dz)**2
+        dist2 = (xi - x0 - t * dx) ** 2 + (yi - y0 - t * dy) ** 2 + (zi - z0 - t * dz) ** 2
 
     return dist2 ** .5
 
-def rad1(x1,y1,x2,y2,x3,y3):
-    x12 = x1-x2
-    y12 = y1-y2
-    x23 = x2-x3
-    y23 = y2-y3
-    x31 = x3-x1
-    y31 = y3-y1
+def rad1(x1, y1, x2, y2, x3, y3):
+    x12 = x1 - x2
+    y12 = y1 - y2
+    x23 = x2 - x3
+    y23 = y2 - y3
+    x31 = x3 - x1
+    y31 = y3 - y1
 
     den = abs(x12 * y23 - x23 * y12)
     if abs(den) < 1e-5: return MAXINT
@@ -9206,19 +9206,19 @@ class Point:
     def mag(self):
         return hypot(self.x, self.y)
     def mag2(self):
-        return self.x**2 + self.y**2
+        return self.x ** 2 + self.y ** 2
 
-def cent1(x1,y1,x2,y2,x3,y3):
-    P1 = Point(x1,y1)
-    P2 = Point(x2,y2)
-    P3 = Point(x3,y3)
+def cent1(x1, y1, x2, y2, x3, y3):
+    P1 = Point(x1, y1)
+    P2 = Point(x2, y2)
+    P3 = Point(x3, y3)
 
-    den = abs((P1-P2).cross(P2-P3))
+    den = abs((P1 - P2).cross(P2 - P3))
     if abs(den) < 1e-5: return MAXINT, MAXINT
 
-    alpha = (P2-P3).mag2() * (P1-P2).dot(P1-P3) / 2 / den / den
-    beta  = (P1-P3).mag2() * (P2-P1).dot(P2-P3) / 2 / den / den
-    gamma = (P1-P2).mag2() * (P3-P1).dot(P3-P2) / 2 / den / den
+    alpha = (P2 - P3).mag2() * (P1 - P2).dot(P1 - P3) / 2 / den / den
+    beta = (P1 - P3).mag2() * (P2 - P1).dot(P2 - P3) / 2 / den / den
+    gamma = (P1 - P2).mag2() * (P3 - P1).dot(P3 - P2) / 2 / den / den
 
     Pc = alpha * P1 + beta * P2 + gamma * P3
     return Pc.x, Pc.y
@@ -9228,9 +9228,9 @@ def arc_center(plane, p1, p2, p3):
     x2, y2, z2 = p2
     x3, y3, z3 = p3
 
-    if plane == 17: return cent1(x1,y1,x2,y2,x3,y3)
-    if plane == 18: return cent1(x1,z1,x2,z2,x3,z3)
-    if plane == 19: return cent1(y1,z1,y2,z2,y3,z3)
+    if plane == 17: return cent1(x1, y1, x2, y2, x3, y3)
+    if plane == 18: return cent1(x1, z1, x2, z2, x3, z3)
+    if plane == 19: return cent1(y1, z1, y2, z2, y3, z3)
 
 def arc_rad(plane, P1, P2, P3):
     if plane is None: return MAXINT
@@ -9239,33 +9239,33 @@ def arc_rad(plane, P1, P2, P3):
     x2, y2, z2 = P2
     x3, y3, z3 = P3
 
-    if plane == 17: return rad1(x1,y1,x2,y2,x3,y3)
-    if plane == 18: return rad1(x1,z1,x2,z2,x3,z3)
-    if plane == 19: return rad1(y1,z1,y2,z2,y3,z3)
+    if plane == 17: return rad1(x1, y1, x2, y2, x3, y3)
+    if plane == 18: return rad1(x1, z1, x2, z2, x3, z3)
+    if plane == 19: return rad1(y1, z1, y2, z2, y3, z3)
     return None, 0
 
-def get_pts(plane, x,y,z):
+def get_pts(plane, x, y, z):
     if plane == 17: return x,y
     if plane == 18: return x,z
     if plane == 19: return y,z
 
 def one_quadrant(plane, c, p1, p2, p3):
     xc, yc = c
-    x1, y1 = get_pts(plane, p1[0],p1[1],p1[2])
-    x2, y2 = get_pts(plane, p2[0],p2[1],p2[2])
-    x3, y3 = get_pts(plane, p3[0],p3[1],p3[2])
+    x1, y1 = get_pts(plane, p1[0], p1[1], p1[2])
+    x2, y2 = get_pts(plane, p2[0], p2[1], p2[2])
+    x3, y3 = get_pts(plane, p3[0], p3[1], p3[2])
 
     ###########################################################
     #Check the angle here and return false if it is too sharp
     ###########################################################
-    La = hypot( (x1-x2), (y1-y2) )
-    Lb = hypot( (x3-x2), (y3-y2) )
+    La = hypot( (x1 - x2), (y1 - y2) )
+    Lb = hypot( (x3 - x2), (y3 - y2) )
 
-    cos1 = (x1-x2)/La
-    sin1 = (y1-y2)/La
+    cos1 = (x1 - x2) / La
+    sin1 = (y1 - y2) / La
 
-    cos2 = (x3-x2)/Lb
-    sin2 = (y3-y2)/Lb
+    cos2 = (x3 - x2) / Lb
+    sin2 = (y3 - y2) / Lb
 
     theta_a = Get_Angle(sin1, cos1)
     theta_b = Get_Angle(sin2, cos2)
@@ -9276,7 +9276,7 @@ def one_quadrant(plane, c, p1, p2, p3):
         angle = theta_b - theta_a
 
     test_angle = 36
-    if angle > 180+test_angle or angle < 180-test_angle:
+    if angle > 180 + test_angle or angle < 180 - test_angle:
         #pass
         return False
     ###########################################################
@@ -9288,10 +9288,10 @@ def one_quadrant(plane, c, p1, p2, p3):
         return 1
 
     signs = set((
-        (sign(x1-xc),sign(y1-yc)),
-        (sign(x2-xc),sign(y2-yc)),
-        (sign(x3-xc),sign(y3-yc))
-    ))
+        (sign(x1 - xc),sign(y1 - yc)),
+        (sign(x2 - xc),sign(y2 - yc)),
+        (sign(x3 - xc),sign(y3 - yc))
+        ))
 
     if len(signs) == 1: return True
 
@@ -9312,17 +9312,17 @@ def one_quadrant(plane, c, p1, p2, p3):
 
 def arc_dir(plane, c, p1, p2, p3):
     xc, yc = c
-    x1, y1 = get_pts(plane, p1[0],p1[1],p1[2])
-    x2, y2 = get_pts(plane, p2[0],p2[1],p2[2])
-    x3, y3 = get_pts(plane, p3[0],p3[1],p3[2])
+    x1, y1 = get_pts(plane, p1[0], p1[1], p1[2])
+    x2, y2 = get_pts(plane, p2[0], p2[1], p2[2])
+    x3, y3 = get_pts(plane, p3[0], p3[1], p3[2])
 
 
     ##################################################
     signedArea = (x1 * y2 - x2 * y1) + (x2 * y3 - x3 * y2) + (x3 * y1 - x1 * y3)
     if signedArea > 0.0:
-        ccw=True
+        ccw = True
     else:
-        ccw=False
+        ccw = False
     return ccw
 
 
@@ -9364,19 +9364,19 @@ def arc_fmt(plane, c1, c2, p1):
     x, y, z = p1
     if plane == 17:
         #return "I%.4f J%.4f" % (c1-x, c2-y)
-        return [c1-x, c2-y]
+        return [c1 - x, c2 - y]
     if plane == 18:
         #return "I%.4f K%.4f" % (c1-x, c2-z)
-        return [c1-x, c2-z]
+        return [c1 - x, c2 - z]
     if plane == 19:
         #return "J%.4f K%.4f" % (c1-y, c2-z)
-        return [c1-y, c2-z]
+        return [c1 - y, c2 - z]
 
 
 
 
 def temp_icon(icon_file_name):
-    f = open(icon_file_name,'w')
+    f = open(icon_file_name, 'w')
     f.write("#define f_engrave_icon_width 64\n")
     f.write("#define f_engrave_icon_height 64\n")
     f.write("static unsigned char f_engrave_icon_bits[] = {\n")
@@ -9430,9 +9430,9 @@ def temp_icon(icon_file_name):
 ################################################################################
 root = Tk()
 app = Application(root)
-app.master.title("F-Engrave V"+version)
+app.master.title("F-Engrave V" + version)
 app.master.iconname("F-Engrave")
-app.master.minsize(780,540)
+app.master.minsize(780, 540)
 try:
     try:
         import tkFont
