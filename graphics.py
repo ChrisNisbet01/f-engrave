@@ -1,3 +1,6 @@
+from math import degrees, acos, sin, cos
+
+
 class Character:
     def __init__(self, key):
         self.key = key
@@ -36,3 +39,35 @@ class Line:
     def __repr__(self):
         return "Line([%s, %s, %s, %s])" \
             % (self.xstart, self.ystart, self.xend, self.yend)
+
+
+############################################################################
+# routine takes an sin and cos and returns the angle (between 0 and 360)   #
+############################################################################
+def Get_Angle(s, c):
+    if s >= 0.0 and c >= 0.0:
+        angle = degrees(acos(c))
+    elif s >= 0.0 and c < 0.0:
+        angle = degrees(acos(c))
+    elif s < 0.0 and c <= 0.0:
+        angle = 360 - degrees(acos(c))
+    elif (s < 0.0 and c > 0.0):
+        angle = 360 - degrees(acos(c))
+    else:
+        pass
+    if angle < 0.001 and s < 0:
+        angle == 360.0
+    if angle > 359.999 and s >= 0:
+        angle == 0.0
+    return angle
+
+
+############################################################################
+# routine takes an x and a y coords and does a coordinate transformation   #
+# to a new coordinate system at angle from the initial coordinate system   #
+# Returns new x,y tuple                                                    #
+############################################################################
+def Transform(x, y, angle):
+    newx = x * cos(angle) - y * sin(angle)
+    newy = x * sin(angle) + y * cos(angle)
+    return newx, newy
