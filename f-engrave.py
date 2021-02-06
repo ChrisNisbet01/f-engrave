@@ -2236,19 +2236,8 @@ class Application(Frame):
             bit = bit_from_shape(self.bit_shape.get(),
                                  self.v_bit_dia.get(),
                                  self.v_bit_angle.get())
-            bit_depth = bit.depth()
-
-            depth_lim = float(self.v_depth_lim.get())
-            if self.bit_shape.get() != "FLAT":
-                if depth_lim < 0.0:
-                    self.maxcut.set("%.3f" % (max(bit_depth, depth_lim)))
-                else:
-                    self.maxcut.set("%.3f" % (bit_depth))
-            else:
-                if depth_lim < 0.0:
-                    self.maxcut.set("%.3f" % (depth_lim))
-                else:
-                    self.maxcut.set("%.3f" % (bit_depth))
+            max_cut = bit.max_cut_depth(self.v_depth_lim.get())
+            self.maxcut.set("%.3f" % (max_cut))
         except:
             self.maxcut.set("error")
 
