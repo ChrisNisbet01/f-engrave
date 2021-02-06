@@ -176,6 +176,7 @@ class Gcode(list):
         FORMAT = '%%.%df' % (self.dp)
         self.depth_val = FORMAT % (depth)
         self.append_comment("Engraving Depth Z: " + self.depth_val)
+        # TODO: Support variables.
 
     def cut(self, x=None, y=None, z=None):
         # Perform a cutting move at the specified feed rate to the specified
