@@ -337,6 +337,7 @@ import os
 import re
 import struct
 from subprocess import Popen, PIPE
+from svg import SVG
 from time import time
 from tkinter_extras import ToolTip
 import webbrowser
@@ -1992,47 +1993,27 @@ class Application(Frame):
         width = ((maxx - minx) * dpi)
         height = ((maxy - miny) * dpi)
 
-        svgcode = []
-        svgcode.append('<?xml version="1.0" standalone="no"?>')
-        svgcode.append('<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"  ')
-        svgcode.append('  "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">  ')
-        svgcode.append('<svg width="%f%s" height="%f%s" viewBox="0 0 %f %f"  ' \
-                            % (width_in,self.units.get(),height_in,self.units.get(),width,height) )
-        svgcode.append('     xmlns="http://www.w3.org/2000/svg" version="1.1">')
-        svgcode.append('  <title> F-engrave Output </title>')
-        svgcode.append('  <desc>SVG File Created By F-Engrave</desc>')
+        svg = SVG(self.units.get(), width_in, height_in, width, height, dpi)
 
         # Make Circle
         if Radius_plot != 0 and self.cut_type.get() == "engrave":
-            svgcode.append('  <circle cx="%f" cy="%f" r="%f"' % (
-                ( XOrigin - self.Xzero - minx) * dpi,
-                (-YOrigin + self.Yzero + maxy) * dpi,
-                ( Radius_plot            ) * dpi) )
-            svgcode.append('        fill="none" stroke="blue" stroke-width="%f"/>' % (Thick * dpi))
+            svg.circle(XOrigin - self.Xzero - minx,
+                       -YOrigin + self.Yzero + maxy,
+                       Radius_plot,
+                       Thick)
         # End Circle
 
         for line in self.coords:
             XY = line
-            svgcode.append('  <path d="M %f %f L %f %f"' % (
-                ( XY[0] - minx) * dpi,
-                (-XY[1] + maxy) * dpi,
-                ( XY[2] - minx) * dpi,
-                (-XY[3] + maxy) * dpi) )
-            svgcode.append('        fill="none" stroke="blue" stroke-width="%f" stroke-linecap="round" stroke-linejoin="round"/>' % (Thick * dpi))
+            svg.line(XY[0] - minx,
+                     -XY[1] + maxy,
+                     XY[2] - minx,
+                     -XY[3] + maxy,
+                     Thick)
 
-        if self.input_type.get() == "text":
-            Radius_in = float(self.TRADIUS.get())
-        else:
-            Radius_in = 0.0
+        svg.close()
 
-        Thick = float(self.STHICK.get() )
-        #if self.plotbox.get() != "no_box":
-        if self.plotbox.get():
-            if Radius_in != 0:
-                Delta = Thick / 2 + float(self.boxgap.get())
-        svgcode.append('</svg>')
-
-        return svgcode
+        return svg
 
     def CopyClipboard_GCode(self):
         self.clipboard_clear()
