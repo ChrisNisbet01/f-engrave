@@ -586,7 +586,6 @@ class Application(Frame):
 
         self.segID = []
         self.gcode = []
-        self.svgcode = []
         self.coords = []
         self.vcoords = []
         self.clean_coords = []
@@ -1993,33 +1992,33 @@ class Application(Frame):
         width = ((maxx - minx) * dpi)
         height = ((maxy - miny) * dpi)
 
-        self.svgcode = []
-        self.svgcode.append('<?xml version="1.0" standalone="no"?>')
-        self.svgcode.append('<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"  ')
-        self.svgcode.append('  "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">  ')
-        self.svgcode.append('<svg width="%f%s" height="%f%s" viewBox="0 0 %f %f"  ' \
+        svgcode = []
+        svgcode.append('<?xml version="1.0" standalone="no"?>')
+        svgcode.append('<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"  ')
+        svgcode.append('  "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">  ')
+        svgcode.append('<svg width="%f%s" height="%f%s" viewBox="0 0 %f %f"  ' \
                             % (width_in,self.units.get(),height_in,self.units.get(),width,height) )
-        self.svgcode.append('     xmlns="http://www.w3.org/2000/svg" version="1.1">')
-        self.svgcode.append('  <title> F-engrave Output </title>')
-        self.svgcode.append('  <desc>SVG File Created By F-Engrave</desc>')
+        svgcode.append('     xmlns="http://www.w3.org/2000/svg" version="1.1">')
+        svgcode.append('  <title> F-engrave Output </title>')
+        svgcode.append('  <desc>SVG File Created By F-Engrave</desc>')
 
         # Make Circle
         if Radius_plot != 0 and self.cut_type.get() == "engrave":
-            self.svgcode.append('  <circle cx="%f" cy="%f" r="%f"' % (
+            svgcode.append('  <circle cx="%f" cy="%f" r="%f"' % (
                 ( XOrigin - self.Xzero - minx) * dpi,
                 (-YOrigin + self.Yzero + maxy) * dpi,
                 ( Radius_plot            ) * dpi) )
-            self.svgcode.append('        fill="none" stroke="blue" stroke-width="%f"/>' % (Thick * dpi))
+            svgcode.append('        fill="none" stroke="blue" stroke-width="%f"/>' % (Thick * dpi))
         # End Circle
 
         for line in self.coords:
             XY = line
-            self.svgcode.append('  <path d="M %f %f L %f %f"' % (
+            svgcode.append('  <path d="M %f %f L %f %f"' % (
                 ( XY[0] - minx) * dpi,
                 (-XY[1] + maxy) * dpi,
                 ( XY[2] - minx) * dpi,
                 (-XY[3] + maxy) * dpi) )
-            self.svgcode.append('        fill="none" stroke="blue" stroke-width="%f" stroke-linecap="round" stroke-linejoin="round"/>' % (Thick * dpi))
+            svgcode.append('        fill="none" stroke="blue" stroke-width="%f" stroke-linecap="round" stroke-linejoin="round"/>' % (Thick * dpi))
 
         if self.input_type.get() == "text":
             Radius_in = float(self.TRADIUS.get())
@@ -2031,7 +2030,9 @@ class Application(Frame):
         if self.plotbox.get():
             if Radius_in != 0:
                 Delta = Thick / 2 + float(self.boxgap.get())
-        self.svgcode.append('</svg>')
+        svgcode.append('</svg>')
+
+        return svgcode
 
     def CopyClipboard_GCode(self):
         self.clipboard_clear()
@@ -2043,8 +2044,8 @@ class Application(Frame):
 
     def CopyClipboard_SVG(self):
         self.clipboard_clear()
-        self.WriteSVG()
-        for line in self.svgcode:
+        svgcode = self.WriteSVG()
+        for line in svgcode:
             self.clipboard_append(line + '\n')
 
     def WriteToAxis(self):
@@ -3478,7 +3479,7 @@ class Application(Frame):
             self.statusbar.configure( bg = 'white' )
 
     def menu_File_Save_SVG_File(self):
-        self.WriteSVG()
+        svgcode = self.WriteSVG()
 
         init_dir = os.path.dirname(self.NGC_FILE)
         if ( not os.path.isdir(init_dir) ):
@@ -3504,7 +3505,7 @@ class Application(Frame):
                 self.statusMessage.set("Unable to open file for writing: %s" % (filename))
                 self.statusbar.configure( bg = 'red' )
                 return
-            for line in self.svgcode:
+            for line in svgcode:
                 try:
                     fout.write(line + '\n')
                 except:
@@ -4586,7 +4587,6 @@ class Application(Frame):
         # erase old data
         self.segID = []
         self.gcode = []
-        self.svgcode = []
         self.coords = []
         self.vcoords = []
         self.clean_coords = []
