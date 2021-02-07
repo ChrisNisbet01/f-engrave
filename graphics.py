@@ -1,4 +1,5 @@
 from math import degrees, acos, sin, cos, sqrt, atan2, radians
+from constants import Zero
 
 
 class Character:
@@ -216,3 +217,204 @@ def Clean_coords_to_Path_coords(clean_coords_in):
                 ]
             )
     return path_coords_out
+
+
+def Find_Paths(check_coords_in,
+               clean_dia,
+               Radjust,
+               clean_step,
+               skip,
+               direction):
+    check_coords = []
+
+    if direction == "Y":
+        cnt = -1
+        for line in check_coords_in:
+            cnt = cnt + 1
+            XY = line
+            check_coords.append([XY[1], XY[0], XY[2]])
+    else:
+        check_coords = check_coords_in
+
+    minx_c = 0
+    maxx_c = 0
+    miny_c = 0
+    maxy_c = 0
+    if len(check_coords) > 0:
+        minx_c = check_coords[0][0] - check_coords[0][2]
+        maxx_c = check_coords[0][0] + check_coords[0][2]
+        miny_c = check_coords[0][1] - check_coords[0][2]
+        maxy_c = check_coords[0][1] + check_coords[0][2]
+    for line in check_coords:
+        XY = line
+        minx_c = min(minx_c, XY[0] - XY[2])
+        maxx_c = max(maxx_c, XY[0] + XY[2])
+        miny_c = min(miny_c, XY[1] - XY[2])
+        maxy_c = max(maxy_c, XY[1] + XY[2])
+
+    DX = clean_dia * clean_step
+    DY = DX
+    Xclean_coords = []
+    Xclean_coords_short = []
+
+    if direction != "None":
+        # Find ends of horizontal lines for carving clean-up
+        loop_cnt = 0
+        Y = miny_c
+        line_cnt = skip - 1
+        while Y <= maxy_c:
+            line_cnt = line_cnt + 1
+            X = minx_c
+            x1 = X
+            x2 = X
+            x1_old = x1
+            x2_old = x2
+
+            # Find relevant clean_coord_data
+            ################################
+            temp_coords = []
+            for line in check_coords:
+                XY = line
+                if Y < XY[1] + XY[2] and Y > XY[1] - XY[2]:
+                    temp_coords.append(XY)
+
+            while X <= maxx_c:
+                for line in temp_coords:
+                    XY = line
+                    h = XY[0]
+                    k = XY[1]
+                    R = XY[2] - Radjust
+                    dist = sqrt((X - h) ** 2 + (Y - k) ** 2)
+                    if dist <= R:
+                        Root = sqrt(R ** 2 - (Y - k) ** 2)
+                        XL = h - Root
+                        XR = h + Root
+                        if XL < x1:
+                            x1 = XL
+                        if XR > x2:
+                            x2 = XR
+                if x1 == x2:
+                    X = X + DX
+                    x1 = X
+                    x2 = X
+                elif (x1 == x1_old) and (x2 == x2_old):
+                    loop_cnt = loop_cnt + 1
+                    Xclean_coords.append([x1, Y, loop_cnt])
+                    Xclean_coords.append([x2, Y, loop_cnt])
+                    if line_cnt == skip:
+                        Xclean_coords_short.append([x1, Y, loop_cnt])
+                        Xclean_coords_short.append([x2, Y, loop_cnt])
+
+                    X = X + DX
+                    x1 = X
+                    x2 = X
+                else:
+                    X = x2
+                x1_old = x1
+                x2_old = x2
+            if line_cnt == skip:
+                line_cnt = 0
+            Y = Y + DY
+
+    if True is False:  # Why is this code disabled?
+        # Loop over circles recording "pixels" that are covered by the circles
+        loop_cnt = 0
+        Y = miny_c
+        while Y <= maxy_c:
+            line_cnt = line_cnt + 1
+            X = minx_c
+            x1 = X
+            x2 = X
+            x1_old = x1
+            x2_old = x2
+
+            # Find relevant clean_coord_data
+            temp_coords = []
+            for line in check_coords:
+                XY = line
+                if Y < XY[1] + XY[2] and Y > XY[1] - XY[2]:
+                    temp_coords.append(XY)
+
+            while X <= maxx_c:
+                for line in temp_coords:
+                    XY = line
+                    h = XY[0]
+                    k = XY[1]
+                    R = XY[2] - Radjust
+                    dist = sqrt((X - h) ** 2 + (Y - k) ** 2)
+                    if dist <= R:
+                        Root = sqrt(R ** 2 - (Y - k) ** 2)
+                        XL = h - Root
+                        XR = h + Root
+                        if XL < x1:
+                            x1 = XL
+                        if XR > x2:
+                            x2 = XR
+                if x1 == x2:
+                    X = X + DX
+                    x1 = X
+                    x2 = X
+                elif (x1 == x1_old) and (x2 == x2_old):
+                    loop_cnt = loop_cnt + 1
+                    Xclean_coords.append([x1, Y, loop_cnt])
+                    Xclean_coords.append([x2, Y, loop_cnt])
+                    if line_cnt == skip:
+                        Xclean_coords_short.append([x1, Y, loop_cnt])
+                        Xclean_coords_short.append([x2, Y, loop_cnt])
+
+                    X = X + DX
+                    x1 = X
+                    x2 = X
+                else:
+                    X = x2
+                x1_old = x1
+                x2_old = x2
+            if line_cnt == skip:
+                line_cnt = 0
+            Y = Y + DY
+
+    Xclean_coords_out = []
+    Xclean_coords_short_out = []
+    if direction == "Y":
+
+        cnt = -1
+        for line in Xclean_coords:
+            cnt = cnt + 1
+            XY = line
+            Xclean_coords_out.append([XY[1], XY[0], XY[2]])
+
+        cnt = -1
+        for line in Xclean_coords_short:
+            cnt = cnt + 1
+            XY = line
+            Xclean_coords_short_out.append([XY[1], XY[0], XY[2]])
+    else:
+        Xclean_coords_out = Xclean_coords
+        Xclean_coords_short_out = Xclean_coords_short
+
+    return Xclean_coords_out, Xclean_coords_short_out
+
+
+def record_v_carve_data(x1,
+                        y1,
+                        phi,
+                        rout,
+                        loop_cnt,
+                        clean_flag,
+                        rbit,
+                        coords):
+
+    Lx, Ly = Transform(0, rout, -phi)
+    xnormv = x1 + Lx
+    ynormv = y1 + Ly
+    need_clean = 0
+
+    if int(clean_flag) != 1:
+        coords.append([xnormv, ynormv, rout, loop_cnt])
+        if abs(rbit - rout) <= Zero:
+            need_clean = 1
+    else:
+        if rout >= rbit:
+            coords.append([xnormv, ynormv, rout, loop_cnt])
+
+    return xnormv, ynormv, rout, need_clean

@@ -347,6 +347,7 @@ from gcode import Gcode
 import getopt
 from graphics import Get_Angle, Transform, Rotn, CoordScale, DetectIntersect
 from graphics import point_inside_polygon, Clean_coords_to_Path_coords
+from graphics import Find_Paths, record_v_carve_data
 import font
 from math import sqrt, radians, tan, acos, sin, cos, atan2, fabs, floor, ceil
 from math import degrees
@@ -5549,24 +5550,6 @@ class Application(Frame):
         ################
 
     ##################################################
-    def record_v_carve_data(self, x1, y1, phi, rout, loop_cnt, clean_flag, bit):
-        rbit = self.calc_vbit_dia(bit) / 2.0
-
-        Lx, Ly = Transform(0, rout, -phi)
-        xnormv = x1 + Lx
-        ynormv = y1 + Ly
-        need_clean = 0
-
-        if int(clean_flag) != 1:
-            self.vcoords.append([xnormv, ynormv, rout, loop_cnt])
-            if abs(rbit - rout) <= Zero:
-                need_clean = 1
-        else:
-            if rout >= rbit:
-                self.clean_coords.append([xnormv, ynormv, rout, loop_cnt])
-
-        return xnormv, ynormv, rout, need_clean
-
     def get_flop_staus(self, CLEAN_FLAG=False):
         v_flop = bool(self.v_flop.get())
 
@@ -6013,8 +5996,13 @@ class Application(Frame):
                                 1,
                                 CHK_STRING,
                             )
-                            xv, yv, rv, clean_seg = self.record_v_carve_data(
-                                x1, y1, sub_phi, rout, loop_cnt, clean_flag, bit
+                            if clean_flag != 1:
+                                coords_destination = self.vcoords
+                            else:
+                                coords_destination = self.clean_coords
+                            xv, yv, rv, clean_seg = record_v_carve_data(
+                                x1, y1, sub_phi, rout, loop_cnt, clean_flag,
+                                rbit, coords_destination
                             )
                             self.clean_segment[CUR_CNT] = bool(
                                 self.clean_segment[CUR_CNT]
@@ -6072,8 +6060,13 @@ class Application(Frame):
                         # Make the first cut drive down at an angle instead of straight down plunge
                         if cnt == 0 and not_b_carve:
                             rout = 0.0
-                        xv, yv, rv, clean_seg = self.record_v_carve_data(
-                            xpt, ypt, phi2, rout, loop_cnt, clean_flag, bit
+                        if clean_flag != 1:
+                            coords_destination = self.vcoords
+                        else:
+                            coords_destination = self.clean_coords
+                        xv, yv, rv, clean_seg = record_v_carve_data(
+                            xpt, ypt, phi2, rout, loop_cnt, clean_flag, rbit,
+                            coords_destination
                         )
 
                         self.clean_segment[CUR_CNT] = bool(
@@ -6131,9 +6124,13 @@ class Application(Frame):
                                     1,
                                     CHK_STRING,
                                 )
-                                xv, yv, rv, clean_seg = self.record_v_carve_data(
+                                if clean_flag != 1:
+                                    coords_destination = self.vcoords
+                                else:
+                                    coords_destination = self.clean_coords
+                                xv, yv, rv, clean_seg = record_v_carve_data(
                                     xa, ya, sub_phi, rout, loop_cnt, clean_flag,
-                                    bit
+                                    rbit, coords_destination
                                 )
                                 self.clean_segment[CUR_CNT] = bool(
                                     self.clean_segment[CUR_CNT]
@@ -6156,18 +6153,26 @@ class Application(Frame):
                                         0,
                                     )
 
-                            xv, yv, rv, clean_seg = self.record_v_carve_data(
+                            if clean_flag != 1:
+                                coords_destination = self.vcoords
+                            else:
+                                coords_destination = self.clean_coords
+                            xv, yv, rv, clean_seg = record_v_carve_data(
                                 xpta, ypta, phi2a, routa, loop_cnt, clean_flag,
-                                bit
+                                rbit, coords_destination
                             )
                             self.clean_segment[CUR_CNT] = bool(
                                 self.clean_segment[CUR_CNT]
                             ) or bool(clean_seg)
                         else:
                             # Add closing segment
-                            xv, yv, rv, clean_seg = self.record_v_carve_data(
+                            if clean_flag != 1:
+                                coords_destination = self.vcoords
+                            else:
+                                coords_destination = self.clean_coords
+                            xv, yv, rv, clean_seg = record_v_carve_data(
                                 xpta, ypta, phi2a, routa, loop_cnt, clean_flag,
-                                bit
+                                rbit, coords_destination
                             )
                             self.clean_segment[CUR_CNT] = bool(
                                 self.clean_segment[CUR_CNT]
@@ -6213,6 +6218,8 @@ class Application(Frame):
         #########################################
 
     def sort_for_v_carve(self, sort_coords, LN_START=0):
+        # FIXME - With a little bit of work this method could be extracted out
+        # from the application class.
         Acc = float(self.accuracy.get())
         ##########################
         ###   Create ECOORDS   ###
@@ -6576,187 +6583,6 @@ class Application(Frame):
 
     ### End sort_for_v_carve
 
-    def Find_Paths(
-        self, check_coords_in, clean_dia, Radjust, clean_step, skip, direction
-    ):
-        check_coords = []
-
-        if direction == "Y":
-            cnt = -1
-            for line in check_coords_in:
-                cnt = cnt + 1
-                XY = line
-                check_coords.append([XY[1], XY[0], XY[2]])
-        else:
-            check_coords = check_coords_in
-
-        minx_c = 0
-        maxx_c = 0
-        miny_c = 0
-        maxy_c = 0
-        if len(check_coords) > 0:
-            minx_c = check_coords[0][0] - check_coords[0][2]
-            maxx_c = check_coords[0][0] + check_coords[0][2]
-            miny_c = check_coords[0][1] - check_coords[0][2]
-            maxy_c = check_coords[0][1] + check_coords[0][2]
-        for line in check_coords:
-            XY = line
-            minx_c = min(minx_c, XY[0] - XY[2])
-            maxx_c = max(maxx_c, XY[0] + XY[2])
-            miny_c = min(miny_c, XY[1] - XY[2])
-            maxy_c = max(maxy_c, XY[1] + XY[2])
-
-        DX = clean_dia * clean_step
-        DY = DX
-        Xclean_coords = []
-        Xclean_coords_short = []
-
-        if direction != "None":
-            #########################################################################
-            # Find ends of horizontal lines for carving clean-up
-            #########################################################################
-            loop_cnt = 0
-            Y = miny_c
-            line_cnt = skip - 1
-            while Y <= maxy_c:
-                line_cnt = line_cnt + 1
-                X = minx_c
-                x1 = X
-                x2 = X
-                x1_old = x1
-                x2_old = x2
-
-                # Find relevant clean_coord_data
-                ################################
-                temp_coords = []
-                for line in check_coords:
-                    XY = line
-                    if Y < XY[1] + XY[2] and Y > XY[1] - XY[2]:
-                        temp_coords.append(XY)
-                ################################
-
-                while X <= maxx_c:
-                    for line in temp_coords:
-                        XY = line
-                        h = XY[0]
-                        k = XY[1]
-                        R = XY[2] - Radjust
-                        dist = sqrt((X - h) ** 2 + (Y - k) ** 2)
-                        if dist <= R:
-                            Root = sqrt(R ** 2 - (Y - k) ** 2)
-                            XL = h - Root
-                            XR = h + Root
-                            if XL < x1:
-                                x1 = XL
-                            if XR > x2:
-                                x2 = XR
-                    if x1 == x2:
-                        X = X + DX
-                        x1 = X
-                        x2 = X
-                    elif (x1 == x1_old) and (x2 == x2_old):
-                        loop_cnt = loop_cnt + 1
-                        Xclean_coords.append([x1, Y, loop_cnt])
-                        Xclean_coords.append([x2, Y, loop_cnt])
-                        if line_cnt == skip:
-                            Xclean_coords_short.append([x1, Y, loop_cnt])
-                            Xclean_coords_short.append([x2, Y, loop_cnt])
-
-                        X = X + DX
-                        x1 = X
-                        x2 = X
-                    else:
-                        X = x2
-                    x1_old = x1
-                    x2_old = x2
-                if line_cnt == skip:
-                    line_cnt = 0
-                Y = Y + DY
-            #########################################################################
-
-        if True is False:  # Why is this code disabled?
-            #########################################################################
-            # loop over circles recording "pixels" that are covered by the circles
-            #########################################################################
-            loop_cnt = 0
-            Y = miny_c
-            while Y <= maxy_c:
-                line_cnt = line_cnt + 1
-                X = minx_c
-                x1 = X
-                x2 = X
-                x1_old = x1
-                x2_old = x2
-
-                # Find relevant clean_coord_data
-                ################################
-                temp_coords = []
-                for line in check_coords:
-                    XY = line
-                    if Y < XY[1] + XY[2] and Y > XY[1] - XY[2]:
-                        temp_coords.append(XY)
-                ################################
-
-                while X <= maxx_c:
-                    for line in temp_coords:
-                        XY = line
-                        h = XY[0]
-                        k = XY[1]
-                        R = XY[2] - Radjust
-                        dist = sqrt((X - h) ** 2 + (Y - k) ** 2)
-                        if dist <= R:
-                            Root = sqrt(R ** 2 - (Y - k) ** 2)
-                            XL = h - Root
-                            XR = h + Root
-                            if XL < x1:
-                                x1 = XL
-                            if XR > x2:
-                                x2 = XR
-                    if x1 == x2:
-                        X = X + DX
-                        x1 = X
-                        x2 = X
-                    elif (x1 == x1_old) and (x2 == x2_old):
-                        loop_cnt = loop_cnt + 1
-                        Xclean_coords.append([x1, Y, loop_cnt])
-                        Xclean_coords.append([x2, Y, loop_cnt])
-                        if line_cnt == skip:
-                            Xclean_coords_short.append([x1, Y, loop_cnt])
-                            Xclean_coords_short.append([x2, Y, loop_cnt])
-
-                        X = X + DX
-                        x1 = X
-                        x2 = X
-                    else:
-                        X = x2
-                    x1_old = x1
-                    x2_old = x2
-                if line_cnt == skip:
-                    line_cnt = 0
-                Y = Y + DY
-            #########################################################################
-
-        Xclean_coords_out = []
-        Xclean_coords_short_out = []
-        if direction == "Y":
-
-            cnt = -1
-            for line in Xclean_coords:
-                cnt = cnt + 1
-                XY = line
-                Xclean_coords_out.append([XY[1], XY[0], XY[2]])
-
-            cnt = -1
-            for line in Xclean_coords_short:
-                cnt = cnt + 1
-                XY = line
-                Xclean_coords_short_out.append([XY[1], XY[0], XY[2]])
-        else:
-            Xclean_coords_out = Xclean_coords
-            Xclean_coords_short_out = Xclean_coords_short
-
-        return Xclean_coords_out, Xclean_coords_short_out
-
     def Clean_Path_Calc(self, bit_type="straight"):
         bit = bit_from_shape(
             self.bit_shape.get(), self.v_bit_dia.get(), self.v_bit_angle.get()
@@ -6964,14 +6790,14 @@ class Application(Frame):
                 #########################################################################
                 # Find ends of horizontal lines for carving clean-up
                 #########################################################################
-                Xclean_perimeter, Xclean_coords = self.Find_Paths(
+                Xclean_perimeter, Xclean_coords = Find_Paths(
                     check_coords, clean_dia, Radjust, clean_step, skip, "X"
                 )
 
                 #########################################################################
                 # Find ends of Vertical lines for carving clean-up
                 #########################################################################
-                Yclean_perimeter, Yclean_coords = self.Find_Paths(
+                Yclean_perimeter, Yclean_coords = Find_Paths(
                     check_coords, clean_dia, Radjust, clean_step, skip, "Y"
                 )
 
