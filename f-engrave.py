@@ -2031,11 +2031,9 @@ class Application(Frame):
                     loop = coords_out[v_index][3]
 
                     if v_index + 1 < len(coords_out):
-                        nextx = coords_out[v_index + 1][0]
                         nexty = coords_out[v_index + 1][1]
                         nextr = coords_out[v_index + 1][2]
                     else:
-                        nextx = 0
                         nexty = 0
                         nextr = 0
 
