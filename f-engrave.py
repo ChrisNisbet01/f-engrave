@@ -4452,7 +4452,6 @@ class Application(Frame):
                                 rmin = min(rmin, rtmp)
 
                         xq2 = (-B - sq_root) / (2 * A)
-                        yq2 = m * xq2 + b
 
                         if xq2 >= min(xc1, xc2) and xq2 <= max(xc1, xc2):
                             rtmp = xq2 * sq + b
