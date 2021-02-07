@@ -2031,10 +2031,8 @@ class Application(Frame):
                     loop = coords_out[v_index][3]
 
                     if v_index + 1 < len(coords_out):
-                        nexty = coords_out[v_index + 1][1]
                         nextr = coords_out[v_index + 1][2]
                     else:
-                        nexty = 0
                         nextr = 0
 
                     # Check and see if we need to move to a new discontinuous
