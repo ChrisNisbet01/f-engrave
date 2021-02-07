@@ -345,7 +345,8 @@ from douglas import douglas
 from dxf import parse_dxf, WriteDXF
 from gcode import Gcode
 import getopt
-from graphics import Get_Angle, Transform
+from graphics import Get_Angle, Transform, Rotn, CoordScale
+from graphics import point_inside_polygon
 import font
 from math import sqrt, radians, tan, acos, sin, cos, atan2, fabs, floor, ceil
 from math import degrees
@@ -4306,35 +4307,6 @@ class Application(Frame):
             ###########################################################
             self.Plot_Data()
 
-    # Routine takes an x and y. The point is rotated by angle returns new x,y
-    def Rotn(self, x, y, angle, radius):
-        # FIXME - No need for this to be a class method.
-        # Same goes for other similar methods.
-        if radius > 0.0:
-            alpha = x / radius
-            xx = (radius + y) * sin(alpha)
-            yy = (radius + y) * cos(alpha)
-        elif radius < 0.0:
-            alpha = x / radius
-            xx = (radius + y) * sin(alpha)
-            yy = (radius + y) * cos(alpha)
-        else:  # radius is 0
-            alpha = 0
-            xx = x
-            yy = y
-
-        rad = sqrt(xx * xx + yy * yy)
-        theta = atan2(yy, xx)
-        newx = rad * cos(theta + radians(angle))
-        newy = rad * sin(theta + radians(angle))
-        return newx, newy, alpha
-
-    # Routine takes an x and a y. Scales are applied and returns new x,y tuple
-    def CoordScale(self, x, y, xscale, yscale):
-        newx = x * xscale
-        newy = y * yscale
-        return newx, newy
-
     def Plot_Line(
         self, XX1, YY1, XX2, YY2, midx, midy, cszw, cszh, PlotScale, col, radius=0
     ):
@@ -5226,8 +5198,8 @@ class Application(Frame):
                 y2 = stroke.yend - yposition
 
                 # Perform scaling
-                x1, y1 = self.CoordScale(x1, y1, XScale, YScale)
-                x2, y2 = self.CoordScale(x2, y2, XScale, YScale)
+                x1, y1 = CoordScale(x1, y1, XScale, YScale)
+                x2, y2 = CoordScale(x2, y2, XScale, YScale)
 
                 self.coords.append([x1, y1, x2, y2, line_cnt, char_cnt])
 
@@ -5292,8 +5264,8 @@ class Application(Frame):
         if Radius != 0.0:
             for line in self.coords:
                 XY = line
-                XY[0], XY[1], A1 = self.Rotn(XY[0], XY[1], 0, Radius)
-                XY[2], XY[3], A2 = self.Rotn(XY[2], XY[3], 0, Radius)
+                XY[0], XY[1], A1 = Rotn(XY[0], XY[1], 0, Radius)
+                XY[2], XY[3], A2 = Rotn(XY[2], XY[3], 0, Radius)
                 maxa = max(maxa, A1, A2)
                 mina = min(mina, A1, A2)
             mida = (mina + maxa) / 2
@@ -5366,8 +5338,8 @@ class Application(Frame):
         for line in self.coords:
             XY = line
             if Angle != 0.0:
-                XY[0], XY[1], A1 = self.Rotn(XY[0], XY[1], Angle, 0)
-                XY[2], XY[3], A2 = self.Rotn(XY[2], XY[3], Angle, 0)
+                XY[0], XY[1], A1 = Rotn(XY[0], XY[1], Angle, 0)
+                XY[2], XY[3], A2 = Rotn(XY[2], XY[3], Angle, 0)
 
             if mirror_flag:
                 XY[0] = -XY[0]
@@ -5594,31 +5566,6 @@ class Application(Frame):
                 self.clean_coords.append([xnormv, ynormv, rout, loop_cnt])
 
         return xnormv, ynormv, rout, need_clean
-
-    #####################################################
-    # Determine if a point is inside a given polygon or not
-    # Polygon is a list of (x,y) pairs.
-    # http://www.ariel.com.au/a/python-point-int-poly.html
-    #####################################################
-    def point_inside_polygon(self, x, y, poly):
-        # FIXME - No need for this to be a class method.
-        n = len(poly)
-        inside = -1
-        p1x = poly[0][0]
-        p1y = poly[0][1]
-        for i in range(n + 1):
-            p2x = poly[i % n][0]
-            p2y = poly[i % n][1]
-            if y > min(p1y, p2y):
-                if y <= max(p1y, p2y):
-                    if x <= max(p1x, p2x):
-                        if p1y != p2y:
-                            xinters = (y - p1y) * (p2x - p1x) / (p2y - p1y) + p1x
-                        if p1x == p2x or x <= xinters:
-                            inside = inside * -1
-            p1x, p1y = p2x, p2y
-
-        return inside
 
     def get_flop_staus(self, CLEAN_FLAG=False):
         v_flop = bool(self.v_flop.get())
@@ -6511,7 +6458,7 @@ class Application(Frame):
                     if jloop != iloop:
                         inside = 0
                         jval = Lbeg[jloop]
-                        inside = inside + self.point_inside_polygon(
+                        inside = inside + point_inside_polygon(
                             ecoords[jval][0], ecoords[jval][1], ipoly
                         )
                         if inside > 0:
