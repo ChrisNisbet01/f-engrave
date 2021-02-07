@@ -3107,7 +3107,12 @@ class Application(Frame):
             except:
                 pass
 
-        self.Clean_Path_Calc(bit_type)
+        bit = bit_from_shape(
+            self.bit_shape.get(), self.v_bit_dia.get(), self.v_bit_angle.get()
+        )
+        bit_radius = self.calc_vbit_dia(bit) / 2.0
+
+        self.Clean_Path_Calc(bit_radius, bit_type)
 
         if self.clean_coords == []:
             return 1
@@ -6483,12 +6488,9 @@ class Application(Frame):
         #####################################################################################
         return temp_coords
 
-    ### End sort_for_v_carve
+    ### End sort_for_v_carveP
 
-    def Clean_Path_Calc(self, bit_type="straight"):
-        bit = bit_from_shape(
-            self.bit_shape.get(), self.v_bit_dia.get(), self.v_bit_angle.get()
-        )
+    def Clean_Path_Calc(self, bit_radius, bit_type="straight"):
         v_flop = self.get_flop_staus(CLEAN_FLAG=True)
         if v_flop:
             edge = 1
@@ -6506,7 +6508,6 @@ class Application(Frame):
                 self.v_clean_P.get() + self.v_clean_Y.get() + self.v_clean_X.get()
             )
 
-        rbit = self.calc_vbit_dia(bit) / 2.0
         check_coords = []
 
         self.statusbar.configure(bg="yellow")
@@ -6517,7 +6518,7 @@ class Application(Frame):
             clean_dia = float(self.clean_dia.get())  # diameter of cleanup bit
             step_over = float(self.clean_step.get())  # percent of cut DIA
             clean_step = step_over / 100.0
-            Radjust = clean_dia / 2.0 + rbit
+            Radjust = clean_dia / 2.0 + bit_radius
             check_coords = self.clean_coords
 
         elif bit_type == "v-bit":
@@ -6536,7 +6537,7 @@ class Application(Frame):
             # The next line allows the cutter to get within 1/4 of the
             # v-clean step of the v-carved surface.
             offset = clean_dia / 4.0
-            Radjust = rbit + offset
+            Radjust = bit_radius + offset
             flat_clean_r = float(self.clean_dia.get()) / 2.0
             for line in self.clean_coords:
                 XY = line
@@ -6568,7 +6569,7 @@ class Application(Frame):
                 clean_dia = float(self.clean_dia.get())  # diameter of cleanup bit
                 step_over = float(self.clean_step.get())  # percent of cut DIA
                 clean_step = step_over / 100.0
-                Rperimeter = rbit + (clean_dia / 2.0)
+                Rperimeter = bit_radius + (clean_dia / 2.0)
 
                 ###################################################
                 # Extract straight bit points from clean_coords
