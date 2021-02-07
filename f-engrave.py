@@ -327,6 +327,7 @@ import binascii
 from bit import bit_from_shape
 from constants import Zero, IN_AXIS, Plane
 from constants import MIN_METRIC_STEP_LEN, MIN_IMP_STEP_LEN
+from douglas import douglas
 from dxf import parse_dxf, WriteDXF
 from gcode import Gcode
 import getopt
