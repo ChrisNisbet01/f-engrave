@@ -346,7 +346,7 @@ from dxf import parse_dxf, WriteDXF
 from gcode import Gcode
 import getopt
 from graphics import Get_Angle, Transform, Rotn, CoordScale, DetectIntersect
-from graphics import point_inside_polygon
+from graphics import point_inside_polygon, Clean_coords_to_Path_coords
 import font
 from math import sqrt, radians, tan, acos, sin, cos, atan2, fabs, floor, ceil
 from math import degrees
@@ -6757,24 +6757,6 @@ class Application(Frame):
 
         return Xclean_coords_out, Xclean_coords_short_out
 
-    def Clean_coords_to_Path_coords(self, clean_coords_in):
-        path_coords_out = []
-        # Clean coords format ([xnormv, ynormv, rout, loop_cnt]) - self.clean_coords
-        # Path coords format  ([x1,y1,x2,y2,line_cnt,char_cnt])  - self.coords
-        for i in range(1, len(clean_coords_in)):
-            if clean_coords_in[i][3] == clean_coords_in[i - 1][3]:
-                path_coords_out.append(
-                    [
-                        clean_coords_in[i - 1][0],
-                        clean_coords_in[i - 1][1],
-                        clean_coords_in[i][0],
-                        clean_coords_in[i][1],
-                        0,
-                        0,
-                    ]
-                )
-        return path_coords_out
-
     def Clean_Path_Calc(self, bit_type="straight"):
         bit = bit_from_shape(
             self.bit_shape.get(), self.v_bit_dia.get(), self.v_bit_angle.get()
@@ -6878,7 +6860,7 @@ class Application(Frame):
                 # Calculate Straight bit "Perimeter" tool path ####
                 ###################################################
                 P_coords = []
-                loop_coords = self.Clean_coords_to_Path_coords(check_coords)
+                loop_coords = Clean_coords_to_Path_coords(check_coords)
                 loop_coords = self.sort_for_v_carve(loop_coords, LN_START=0)
 
                 #######################
@@ -6905,7 +6887,7 @@ class Application(Frame):
                         ):
                             P_coords.append([x, y, clean_dia / 2, Ln_last])
                 #####################
-                loop_coords = self.Clean_coords_to_Path_coords(P_coords)
+                loop_coords = Clean_coords_to_Path_coords(P_coords)
                 # Find min/max values for x,y and the highest loop number
                 x_pmin = 99999
                 x_pmax = -99999

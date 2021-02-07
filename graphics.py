@@ -197,3 +197,22 @@ def DetectIntersect(Coords0, Coords1, lcoords, XY_T_F=True):
                 Yint = Xint_local * seg_sin + y0
                 all_intersects.append([Xint, Yint])
         return all_intersects
+
+
+def Clean_coords_to_Path_coords(clean_coords_in):
+    path_coords_out = []
+    # Clean coords format ([xnormv, ynormv, rout, loop_cnt]) - clean_coords
+    # Path coords format  ([x1, y1, x2, y2, line_cnt, char_cnt]) - coords
+    for i in range(1, len(clean_coords_in)):
+        if clean_coords_in[i][3] == clean_coords_in[i - 1][3]:
+            path_coords_out.append(
+                [
+                    clean_coords_in[i - 1][0],
+                    clean_coords_in[i - 1][1],
+                    clean_coords_in[i][0],
+                    clean_coords_in[i][1],
+                    0,
+                    0,
+                ]
+            )
+    return path_coords_out
