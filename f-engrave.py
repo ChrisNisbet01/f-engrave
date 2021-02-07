@@ -2044,11 +2044,9 @@ class Application(Frame):
                         g.rapid(x=x1, y=y1)
                         g.plunge_z(z1)
 
-                        lasty = y1
                     else:
                         g.cut(x1, y1)
 
-                        lasty = y1
                     loop_old = loop
 
         # End multipass loop
