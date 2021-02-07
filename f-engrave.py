@@ -324,6 +324,7 @@ if PIL == True:
 
 
 import binascii
+from bit import bit_from_shape
 from constants import Zero, IN_AXIS, Plane
 from constants import MIN_METRIC_STEP_LEN, MIN_IMP_STEP_LEN
 from dxf import parse_dxf, WriteDXF
@@ -2222,42 +2223,20 @@ class Application(Frame):
         STOP_CALC = 1
 
     def calc_vbit_dia(self):
-        bit_dia = float(self.v_bit_dia.get())
-        depth_lim = float(self.v_depth_lim.get())
-        half_angle = radians( float(self.v_bit_angle.get()) / 2.0 )
-
-        if self.inlay.get() and (self.bit_shape.get() == "VBIT"):
-            allowance = float(self.allowance.get())
-            bit_dia = -2 * allowance * tan(half_angle)
-            bit_dia = max(bit_dia, 0.001)
-            return bit_dia
-
-        if depth_lim < 0.0:
-            if   self.bit_shape.get() == "VBIT":
-                bit_dia = -2 * depth_lim * tan(half_angle)
-            elif self.bit_shape.get() == "BALL":
-                R = bit_dia / 2.0
-                if (depth_lim > -R):
-                    bit_dia = 2 * sqrt( R ** 2 - (R + depth_lim) ** 2)
-                else:
-                    bit_dia = float(self.v_bit_dia.get())
-            elif self.bit_shape.get() == "FLAT":
-                R = bit_dia / 2.0
-            else:
-                pass
+        bit = bit_from_shape(self.bit_shape.get(),
+                             self.v_bit_dia.get(),
+                             self.v_bit_angle.get())
+        bit_dia = bit.diameter(self.v_depth_lim.get(),
+                               self.inlay.get(),
+                               self.allowance.get())
         return bit_dia
 
     def calc_depth_limit(self):
         try:
-            if  self.bit_shape.get() == "VBIT":
-                half_angle = radians( float(self.v_bit_angle.get()) / 2.0 )
-                bit_depth = -float(self.v_bit_dia.get()) / 2.0 / tan(half_angle)
-            elif self.bit_shape.get() == "BALL":
-                bit_depth = -float( self.v_bit_dia.get()) / 2.0
-            elif self.bit_shape.get() == "FLAT":
-                bit_depth = -float( self.v_bit_dia.get()) / 2.0
-            else:
-                pass
+            bit = bit_from_shape(self.bit_shape.get(),
+                                 self.v_bit_dia.get(),
+                                 self.v_bit_angle.get())
+            bit_depth = bit.depth()
 
             depth_lim = float(self.v_depth_lim.get())
             if self.bit_shape.get() != "FLAT":
