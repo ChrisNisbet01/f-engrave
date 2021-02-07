@@ -14,12 +14,10 @@ class Bit(object):
         self._half_angle = radians(self._angle) / 2.0
 
     def diameter(self, depth_limit=0.0, inlay=False, allowance=0.0):
-        # TODO: raise an exception. Subclasses should have their own.
-        return None
+        raise NotImplementedError
 
     def depth(self):
-        # TODO: raise an exception. Subclasses should have their own.
-        return None
+        raise NotImplementedError
 
     @property
     def angle(self):
