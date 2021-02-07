@@ -124,3 +124,76 @@ def point_inside_polygon(x, y, poly):
         p1x, p1y = p2x, p2y
 
     return inside
+
+
+# Find intersecting lines
+def DetectIntersect(Coords0, Coords1, lcoords, XY_T_F=True):
+    [x0, y0] = Coords0
+    [x1, y1] = Coords1
+    Zero = 1e-6
+    all_intersects = []
+    Xint_list = []
+    numcoords = len(lcoords)
+    if numcoords < 1:
+        return False
+
+    dx = x1 - x0
+    dy = y1 - y0
+    len_seg = sqrt(dx * dx + dy * dy)
+
+    if len_seg < Zero:
+        if not XY_T_F:
+            # Why return False? The caller would generate an
+            # exception when doing len(DetectIntersect) if
+            # XY_T_F was False (currently always True).
+            return False
+        else:
+            return []
+
+    seg_sin = dy / len_seg
+    seg_cos = dx / len_seg
+    Xint_local = 0
+
+    for ii in range(0, numcoords):
+        x2 = lcoords[ii][0]
+        y2 = lcoords[ii][1]
+        x3 = lcoords[ii][2]
+        y3 = lcoords[ii][3]
+
+        xr0 = (x2 - x0) * seg_cos + (y2 - y0) * seg_sin
+        yr0 = (x2 - x0) * seg_sin - (y2 - y0) * seg_cos
+        xr1 = (x3 - x0) * seg_cos + (y3 - y0) * seg_sin
+        yr1 = (x3 - x0) * seg_sin - (y3 - y0) * seg_cos
+        yrmax = max(yr0, yr1)
+        yrmin = min(yr0, yr1)
+        if yrmin < Zero and yrmax > Zero:
+            dxr = xr1 - xr0
+            if abs(dxr) < Zero:
+                if xr0 > Zero and xr0 < len_seg - Zero:
+                    Xint_local = xr0  # True
+            else:
+                dyr = yr1 - yr0
+                mr = dyr / dxr
+                br = yr1 - mr * xr1
+                xint = -br / mr
+                if xint > Zero and xint < len_seg - Zero:
+                    Xint_local = xint  # True
+
+            # Check if there was a intersection detected
+            if Xint_local != 0:
+                if not XY_T_F:
+                    return True
+                else:
+                    Xint_list.append(Xint_local)
+                    Xint_local = 0
+
+    if not XY_T_F:
+        return False  # Why return False?
+    else:
+        if len(Xint_list) > 0:
+            Xint_list.sort()
+            for Xint_local in Xint_list:
+                Xint = Xint_local * seg_cos + x0
+                Yint = Xint_local * seg_sin + y0
+                all_intersects.append([Xint, Yint])
+        return all_intersects
