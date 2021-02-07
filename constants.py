@@ -11,3 +11,9 @@ class Plane(IntEnum):
     xz = 18
     yz = 19
 
+class NumberCheck(IntEnum):
+    is_valid = 0
+    is_valid_no_recalc_required = 1
+    is_invalid = 2
+    is_not_a_number = 3
+

@@ -339,7 +339,7 @@ if PIL:
 
 
 from bit import bit_from_shape
-from constants import Zero, IN_AXIS, Plane
+from constants import Zero, IN_AXIS, Plane, NumberCheck
 from constants import MIN_METRIC_STEP_LEN, MIN_IMP_STEP_LEN
 from douglas import douglas
 from dxf import parse_dxf, WriteDXF
@@ -1275,35 +1275,38 @@ class Application(Frame):
         self.master.config(menu=self.menuBar)
 
     ################################################################################
-    def entry_set(self, val2, calc_flag=0, new=0):
-        if calc_flag == 0 and new == 0:
+    def entry_set(self, val2, calc_flag=NumberCheck.is_valid, new=0):
+        if calc_flag == NumberCheck.is_valid and new == 0:
             try:
                 self.statusbar.configure(bg="yellow")
                 val2.configure(bg="yellow")
                 self.statusMessage.set(" Recalculation required.")
             except:
                 pass
-        elif calc_flag == 3:
+        elif calc_flag == NumberCheck.is_not_a_number:
             try:
                 val2.configure(bg="red")
                 self.statusbar.configure(bg="red")
                 self.statusMessage.set(" Value should be a number. ")
             except:
                 pass
-        elif calc_flag == 2:
+        elif calc_flag == NumberCheck.is_invalid:
             try:
                 self.statusbar.configure(bg="red")
                 val2.configure(bg="red")
             except:
                 pass
-        elif (calc_flag == 0 or calc_flag == 1) and new == 1:
+        elif (calc_flag == NumberCheck.is_valid
+              or calc_flag == NumberCheck.is_valid_no_recalc_required) \
+                and new == 1:
             try:
                 self.statusbar.configure(bg="white")
                 self.statusMessage.set(self.bounding_box.get())
                 val2.configure(bg="white")
             except:
                 pass
-        elif (calc_flag == 1) and new == 0:
+        elif calc_flag == NumberCheck.is_valid_no_recalc_required \
+                and new == 0:
             try:
                 self.statusbar.configure(bg="white")
                 self.statusMessage.set(self.bounding_box.get())
@@ -1311,7 +1314,9 @@ class Application(Frame):
             except:
                 pass
 
-        elif (calc_flag == 0 or calc_flag == 1) and new == 2:
+        elif (calc_flag == NumberCheck.is_valid
+              or calc_flag == NumberCheck.is_valid_no_recalc_required) \
+                and new == 2:
             return 0
         return 1
 
@@ -2360,11 +2365,10 @@ class Application(Frame):
             value = float(self.YSCALE.get())
             if value <= 0.0:
                 self.statusMessage.set(" Height should be greater than 0 ")
-                # FIXME - Use an enum.
-                return 2  # Value is invalid number
+                return NumberCheck.is_invalid
         except:
-            return 3  # Value not a number
-        return 0  # Value is a valid number
+            return NumberCheck.is_not_a_number
+        return NumberCheck.is_valid
 
     def Entry_Yscale_Callback(self, varName, index, mode):
         self.entry_set(self.Entry_Yscale, self.Entry_Yscale_Check())
@@ -2375,10 +2379,10 @@ class Application(Frame):
             value = float(self.XSCALE.get())
             if value <= 0.0:
                 self.statusMessage.set(" Width should be greater than 0 ")
-                return 2  # Value is invalid number
+                return NumberCheck.is_invalid
         except:
-            return 3  # Value not a number
-        return 0  # Value is a valid number
+            return NumberCheck.is_not_a_number
+        return NumberCheck.is_valid
 
     def Entry_Xscale_Callback(self, varName, index, mode):
         self.entry_set(self.Entry_Xscale, self.Entry_Xscale_Check())
@@ -2389,10 +2393,10 @@ class Application(Frame):
             value = float(self.STHICK.get())
             if value < 0.0:
                 self.statusMessage.set(" Thickness should be greater than 0 ")
-                return 2  # Value is invalid number
+                return NumberCheck.is_invalid
         except:
-            return 3  # Value not a number
-        return 0  # Value is a valid number
+            return NumberCheck.is_not_a_number
+        return NumberCheck.is_valid
 
     def Entry_Sthick_Callback(self, varName, index, mode):
         self.entry_set(self.Entry_Sthick, self.Entry_Sthick_Check())
@@ -2405,10 +2409,10 @@ class Application(Frame):
                 self.statusMessage.set(
                     " Line space should be greater than or equal to 0 "
                 )
-                return 2  # Value is invalid number
+                return NumberCheck.is_invalid
         except:
-            return 3  # Value not a number
-        return 0  # Value is a valid number
+            return NumberCheck.is_not_a_number
+        return NumberCheck.is_valid
 
     def Entry_Lspace_Callback(self, varName, index, mode):
         self.entry_set(self.Entry_Lspace, self.Entry_Lspace_Check())
@@ -2421,10 +2425,10 @@ class Application(Frame):
                 self.statusMessage.set(
                     " Character space should be greater than or equal to 0 "
                 )
-                return 2  # Value is invalid number
+                return NumberCheck.is_invalid
         except:
-            return 3  # Value not a number
-        return 0  # Value is a valid number
+            return NumberCheck.is_not_a_number
+        return NumberCheck.is_valid
 
     def Entry_Cspace_Callback(self, varName, index, mode):
         self.entry_set(self.Entry_Cspace, self.Entry_Cspace_Check())
@@ -2437,10 +2441,10 @@ class Application(Frame):
                 self.statusMessage.set(
                     " Word space should be greater than or equal to 0 "
                 )
-                return 2  # Value is invalid number
+                return NumberCheck.is_invalid
         except:
-            return 3  # Value not a number
-        return 0  # Value is a valid number
+            return NumberCheck.is_not_a_number
+        return NumberCheck.is_valid
 
     def Entry_Wspace_Callback(self, varName, index, mode):
         self.entry_set(self.Entry_Wspace, self.Entry_Wspace_Check())
@@ -2451,10 +2455,10 @@ class Application(Frame):
             value = float(self.TANGLE.get())
             if value <= -360.0 or value >= 360.0:
                 self.statusMessage.set(" Angle should be between -360 and 360 ")
-                return 2  # Value is invalid number
+                return NumberCheck.is_invalid
         except:
-            return 3  # Value not a number
-        return 0  # Value is a valid number
+            return NumberCheck.is_not_a_number
+        return NumberCheck.is_valid
 
     def Entry_Tangle_Callback(self, varName, index, mode):
         self.entry_set(self.Entry_Tangle, self.Entry_Tangle_Check())
@@ -2465,10 +2469,10 @@ class Application(Frame):
             value = float(self.TRADIUS.get())
             if value < 0.0:
                 self.statusMessage.set(" Radius should be greater than or equal to 0 ")
-                return 2  # Value is invalid number
+                return NumberCheck.is_invalid
         except:
-            return 3  # Value not a number
-        return 0  # Value is a valid number
+            return NumberCheck.is_not_a_number
+        return NumberCheck.is_valid
 
     def Entry_Tradius_Callback(self, varName, index, mode):
         self.entry_set(self.Entry_Tradius, self.Entry_Tradius_Check())
@@ -2482,10 +2486,10 @@ class Application(Frame):
             value = float(self.FEED.get())
             if value <= 0.0:
                 self.statusMessage.set(" Feed should be greater than 0.0 ")
-                return 2  # Value is invalid number
+                return NumberCheck.is_invalid
         except:
-            return 3  # Value not a number
-        return 1  # Value is a valid number changes do not require recalc
+            return NumberCheck.is_not_a_number
+        return NumberCheck.is_valid_no_recalc_required
 
     def Entry_Feed_Callback(self, varName, index, mode):
         self.entry_set(self.Entry_Feed, self.Entry_Feed_Check())
@@ -2498,10 +2502,10 @@ class Application(Frame):
                 self.statusMessage.set(
                     " Plunge rate should be greater than or equal to 0.0 "
                 )
-                return 2  # Value is invalid number
+                return NumberCheck.is_invalid
         except:
-            return 3  # Value not a number
-        return 1  # Value is a valid number changes do not require recalc
+            return NumberCheck.is_not_a_number
+        return NumberCheck.is_valid_no_recalc_required
 
     def Entry_Plunge_Callback(self, varName, index, mode):
         self.entry_set(self.Entry_Plunge, self.Entry_Plunge_Check())
@@ -2511,8 +2515,8 @@ class Application(Frame):
         try:
             float(self.ZSAFE.get())
         except:
-            return 3  # Value not a number
-        return 1  # Value is a valid number changes do not require recalc
+            return NumberCheck.is_not_a_number
+        return NumberCheck.is_valid_no_recalc_required
 
     def Entry_Zsafe_Callback(self, varName, index, mode):
         self.entry_set(self.Entry_Zsafe, self.Entry_Zsafe_Check())
@@ -2522,8 +2526,8 @@ class Application(Frame):
         try:
             float(self.ZCUT.get())
         except:
-            return 3  # Value not a number
-        return 1  # Value is a valid number changes do not require recalc
+            return NumberCheck.is_not_a_number
+        return NumberCheck.is_valid_no_recalc_required
 
     def Entry_Zcut_Callback(self, varName, index, mode):
         self.entry_set(self.Entry_Zcut, self.Entry_Zcut_Check())
@@ -2538,8 +2542,8 @@ class Application(Frame):
         try:
             float(self.xorigin.get())
         except:
-            return 3  # Value not a number
-        return 1  # Value is a valid number changes do not require recalc
+            return NumberCheck.is_not_a_number
+        return NumberCheck.is_valid_no_recalc_required
 
     def Entry_Xoffset_Callback(self, varName, index, mode):
         self.entry_set(self.Entry_Xoffset, self.Entry_Xoffset_Check())
@@ -2549,8 +2553,8 @@ class Application(Frame):
         try:
             float(self.yorigin.get())
         except:
-            return 3  # Value not a number
-        return 1  # Value is a valid number changes do not require recalc
+            return NumberCheck.is_not_a_number
+        return NumberCheck.is_valid_no_recalc_required
 
     def Entry_Yoffset_Callback(self, varName, index, mode):
         self.entry_set(self.Entry_Yoffset, self.Entry_Yoffset_Check())
@@ -2561,10 +2565,10 @@ class Application(Frame):
             value = float(self.segarc.get())
             if value <= 0.0:
                 self.statusMessage.set(" Arc Angle should be greater than zero.")
-                return 2  # Value is invalid number
+                return NumberCheck.is_invalid
         except:
-            return 3  # Value not a number
-        return 0  # Value is a valid number
+            return NumberCheck.is_not_a_number
+        return NumberCheck.is_valid
 
     def Entry_ArcAngle_Callback(self, varName, index, mode):
         self.entry_set(self.Entry_ArcAngle, self.Entry_ArcAngle_Check())
@@ -2574,8 +2578,8 @@ class Application(Frame):
         try:
             float(self.accuracy.get())
         except:
-            return 3  # Value not a number
-        return 0  # Value is a valid number
+            return NumberCheck.is_not_a_number
+        return NumberCheck.is_valid
 
     def Entry_Accuracy_Callback(self, varName, index, mode):
         self.entry_set(self.Entry_Accuracy, self.Entry_Accuracy_Check())
@@ -2586,10 +2590,10 @@ class Application(Frame):
             value = float(self.boxgap.get())
             if value <= 0.0:
                 self.statusMessage.set(" Gap should be greater than zero.")
-                return 2  # Value is invalid number
+                return NumberCheck.is_invalid
         except:
-            return 3  # Value not a number
-        return 0  # Value is a valid number
+            return NumberCheck.is_not_a_number
+        return NumberCheck.is_valid
 
     def Entry_BoxGap_Callback(self, varName, index, mode):
         self.entry_set(self.Entry_BoxGap, self.Entry_BoxGap_Check())
@@ -2634,10 +2638,10 @@ class Application(Frame):
             value = float(self.v_bit_angle.get())
             if value < 0.0 or value > 180.0:
                 self.statusMessage.set(" Angle should be between 0 and 180 ")
-                return 2  # Value is invalid number
+                return NumberCheck.is_invalid
         except:
-            return 3  # Value not a number
-        return 1  # Value is a valid number changes do not require recalc
+            return NumberCheck.is_not_a_number
+        return NumberCheck.is_valid_no_recalc_required
 
     def Entry_Vbitangle_Callback(self, varName, index, mode):
         self.entry_set(self.Entry_Vbitangle, self.Entry_Vbitangle_Check())
@@ -2652,10 +2656,10 @@ class Application(Frame):
             value = float(self.v_bit_dia.get())
             if value <= 0.0:
                 self.statusMessage.set(" Diameter should be greater than 0 ")
-                return 2  # Value is invalid number
+                return NumberCheck.is_invalid
         except:
-            return 3  # Value not a number
-        return 0  # Value is a valid number
+            return NumberCheck.is_not_a_number
+        return NumberCheck.is_valid
 
     def Entry_Vbitdia_Callback(self, varName, index, mode):
         self.entry_set(self.Entry_Vbitdia, self.Entry_Vbitdia_Check())
@@ -2670,10 +2674,10 @@ class Application(Frame):
             value = float(self.v_depth_lim.get())
             if value > 0.0:
                 self.statusMessage.set(" Depth should be less than 0 ")
-                return 2  # Value is invalid number
+                return NumberCheck.is_invalid
         except:
-            return 3  # Value not a number
-        return 0  # Value is a valid number
+            return NumberCheck.is_not_a_number
+        return NumberCheck.is_valid
 
     def Entry_VDepthLimit_Callback(self, varName, index, mode):
         self.entry_set(self.Entry_VDepthLimit, self.Entry_VDepthLimit_Check())
@@ -2688,10 +2692,10 @@ class Application(Frame):
             value = float(self.v_drv_crner.get())
             if value <= 0.0 or value >= 180.0:
                 self.statusMessage.set(" Angle should be between 0 and 180 ")
-                return 2  # Value is invalid number
+                return NumberCheck.is_invalid
         except:
-            return 3  # Value not a number
-        return 0  # Value is a valid number
+            return NumberCheck.is_not_a_number
+        return NumberCheck.is_valid
 
     def Entry_InsideAngle_Callback(self, varName, index, mode):
         self.entry_set(self.Entry_InsideAngle, self.Entry_InsideAngle_Check())
@@ -2702,10 +2706,10 @@ class Application(Frame):
             value = float(self.v_stp_crner.get())
             if value <= 180.0 or value >= 360.0:
                 self.statusMessage.set(" Angle should be between 180 and 360 ")
-                return 2  # Value is invalid number
+                return NumberCheck.is_invalid
         except:
-            return 3  # Value not a number
-        return 0  # Value is a valid number
+            return NumberCheck.is_not_a_number
+        return NumberCheck.is_valid
 
     def Entry_OutsideAngle_Callback(self, varName, index, mode):
         self.entry_set(self.Entry_OutsideAngle, self.Entry_OutsideAngle_Check())
@@ -2716,10 +2720,10 @@ class Application(Frame):
             value = float(self.v_step_len.get())
             if value <= 0.0:
                 self.statusMessage.set(" Step size should be greater than 0 ")
-                return 2  # Value is invalid number
+                return NumberCheck.is_invalid
         except:
-            return 3  # Value not a number
-        return 0  # Value is a valid number
+            return NumberCheck.is_not_a_number
+        return NumberCheck.is_valid
 
     def Entry_StepSize_Callback(self, varName, index, mode):
         self.entry_set(self.Entry_StepSize, self.Entry_StepSize_Check())
@@ -2730,10 +2734,10 @@ class Application(Frame):
             value = float(self.allowance.get())
             if value > 0.0:
                 self.statusMessage.set(" Allowance should be less than or equal to 0 ")
-                return 2  # Value is invalid number
+                return NumberCheck.is_invalid
         except:
-            return 3  # Value not a number
-        return 0  # Value is a valid number
+            return NumberCheck.is_not_a_number
+        return NumberCheck.is_valid
 
     def Entry_Allowance_Callback(self, varName, index, mode):
         self.entry_set(self.Entry_Allowance, self.Entry_Allowance_Check())
@@ -2759,10 +2763,10 @@ class Application(Frame):
             value = float(self.v_max_cut.get())
             if value >= 0.0:
                 self.statusMessage.set(" Max Depth per Pass should be less than 0.0 ")
-                return 2  # Value is invalid number
+                return NumberCheck.is_invalid
         except:
-            return 3  # Value not a number
-        return 1  # Value is a valid number changes do not require recalc
+            return NumberCheck.is_not_a_number
+        return NumberCheck.is_valid_no_recalc_required
 
     def Entry_v_max_cut_Callback(self, varName, index, mode):
         self.entry_set(self.Entry_v_max_cut, self.Entry_v_max_cut_Check())
@@ -2775,9 +2779,9 @@ class Application(Frame):
                 self.statusMessage.set(
                     " Finish Pass Stock should be positive or zero (Zero disables multi-pass)"
                 )
-                return 2  # Value is invalid number
+                return NumberCheck.is_invalid
         except:
-            return 3  # Value not a number
+            return NumberCheck.is_not_a_number
         try:
             if float(self.v_rough_stk.get()) == 0.0:
                 self.Label_v_max_cut.configure(state="disabled")
@@ -2789,7 +2793,7 @@ class Application(Frame):
                 self.Entry_v_max_cut.configure(state="normal")
         except:
             pass
-        return 1  # Value is a valid number changes do not require recalc
+        return NumberCheck.is_valid_no_recalc_required
 
     def Entry_v_rough_stk_Callback(self, varName, index, mode):
         self.entry_set(self.Entry_v_rough_stk, self.Entry_v_rough_stk_Check())
@@ -2800,10 +2804,10 @@ class Application(Frame):
             value = float(self.clean_v.get())
             if value < 0.0:
                 self.statusMessage.set(" Angle should be greater than 0.0 ")
-                return 2  # Value is invalid number
+                return NumberCheck.is_invalid
         except:
-            return 3  # Value not a number
-        return 0  # Value is a valid number
+            return NumberCheck.is_not_a_number
+        return NumberCheck.is_valid
 
     def Entry_V_CLEAN_Callback(self, varName, index, mode):
         self.entry_set(self.Entry_V_CLEAN, self.Entry_V_CLEAN_Check())
@@ -2814,10 +2818,10 @@ class Application(Frame):
             value = float(self.clean_dia.get())
             if value <= 0.0:
                 self.statusMessage.set(" Angle should be greater than 0.0 ")
-                return 2  # Value is invalid number
+                return NumberCheck.is_invalid
         except:
-            return 3  # Value not a number
-        return 0  # Value is a valid number
+            return NumberCheck.is_not_a_number
+        return NumberCheck.is_valid
 
     def Entry_CLEAN_DIA_Callback(self, varName, index, mode):
         self.entry_set(self.Entry_CLEAN_DIA, self.Entry_CLEAN_DIA_Check())
@@ -2830,10 +2834,10 @@ class Application(Frame):
             value = float(self.clean_step.get())
             if value <= 0.0:
                 self.statusMessage.set(" Step Over should be between 0% and 100% ")
-                return 2  # Value is invalid number
+                return NumberCheck.is_invalid
         except:
-            return 3  # Value not a number
-        return 0  # Value is a valid number
+            return NumberCheck.is_not_a_number
+        return NumberCheck.is_valid
 
     def Entry_STEP_OVER_Callback(self, varName, index, mode):
         self.entry_set(self.Entry_STEP_OVER, self.Entry_STEP_OVER_Check())
@@ -2881,10 +2885,10 @@ class Application(Frame):
             value = float(self.bmp_turdsize.get())
             if value < 1.0:
                 self.statusMessage.set(" Step size should be greater or equal to 1.0 ")
-                return 2  # Value is invalid number
+                return NumberCheck.is_invalid
         except:
-            return 3  # Value not a number
-        return 0  # Value is a valid number
+            return NumberCheck.is_not_a_number
+        return NumberCheck.is_valid
 
     def Entry_BMPturdsize_Callback(self, varName, index, mode):
         self.entry_set(self.Entry_BMPturdsize, self.Entry_BMPturdsize_Check())
@@ -2895,10 +2899,10 @@ class Application(Frame):
             value = float(self.bmp_alphamax.get())
             if value < 0.0 or value > 4.0 / 3.0:
                 self.statusMessage.set(" Alpha Max should be between 0.0 and 1.333 ")
-                return 2  # Value is invalid number
+                return NumberCheck.is_invalid
         except:
-            return 3  # Value not a number
-        return 0  # Value is a valid number
+            return NumberCheck.is_not_a_number
+        return NumberCheck.is_valid
 
     def Entry_BMPalphamax_Callback(self, varName, index, mode):
         self.entry_set(self.Entry_BMPalphamax, self.Entry_BMPalphamax_Check())
@@ -2909,10 +2913,10 @@ class Application(Frame):
             value = float(self.bmp_opttolerance.get())
             if value < 0.0:
                 self.statusMessage.set(" Alpha Max should be between 0.0 and 1.333 ")
-                return 2  # Value is invalid number
+                return NumberCheck.is_invalid
         except:
-            return 3  # Value not a number
-        return 0  # Value is a valid number
+            return NumberCheck.is_not_a_number
+        return NumberCheck.is_valid
 
     def Entry_BMPoptTolerance_Callback(self, varName, index, mode):
         self.entry_set(self.Entry_BMPoptTolerance, self.Entry_BMPoptTolerance_Check())
