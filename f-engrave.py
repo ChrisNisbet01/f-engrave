@@ -1762,13 +1762,9 @@ class Application(Frame):
                         if i + 1 < temp[1] + step:
                             nextx = ecoords[i + 1][0]
                             nexty = ecoords[i + 1][1]
-                            nextloop = ecoords[i + 1][2]
                         else:
                             nextx = 0
                             nexty = 0
-                            nextloop = (
-                                -99
-                            )  # don't change this dummy number it is used below
 
                         # check and see if we need to move to a new discontinuous start point
                         if loop != loop_old:
@@ -1888,14 +1884,10 @@ class Application(Frame):
                             nextx = new_coords[v_index + 1][0]
                             nexty = new_coords[v_index + 1][1]
                             nextr = new_coords[v_index + 1][2]
-                            nextloop = new_coords[v_index + 1][3]
                         else:
                             nextx = 0
                             nexty = 0
                             nextr = 0
-                            nextloop = (
-                                -99
-                            )  # don't change this dummy number it is used below
 
                         if self.bit_shape.get() == "VBIT":
                             z1 = -r1 / tan(half_angle)
@@ -2075,12 +2067,10 @@ class Application(Frame):
                         nextx = coords_out[v_index + 1][0]
                         nexty = coords_out[v_index + 1][1]
                         nextr = coords_out[v_index + 1][2]
-                        nextloop = coords_out[v_index + 1][3]
                     else:
                         nextx = 0
                         nexty = 0
                         nextr = 0
-                        nextloop = -99
 
                     # Check and see if we need to move to a new discontinuous
                     # start point.
