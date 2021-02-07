@@ -18,6 +18,10 @@ class Bit(object):
         return None
 
     @property
+    def angle(self):
+        return self._angle
+
+    @property
     def half_angle(self):
         return self._half_angle
 
