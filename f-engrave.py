@@ -3514,9 +3514,6 @@ class Application(Frame):
 
         self.calc_depth_limit(bit)
 
-        temp_name, fileExtension = os.path.splitext(filename)
-        file_base = os.path.basename(temp_name)
-
         self.delay_calc = 0
         if self.initComplete == 1:
             self.NGC_FILE = filename
