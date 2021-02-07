@@ -4,8 +4,12 @@ from math import radians, tan, sqrt
 class Bit(object):
     def __init__(self, shape, diameter, angle):
         self._shape = shape
+        if not diameter:
+            diameter = 0.0
         self._diameter = float(diameter)
         self._radius = self._diameter / 2.0
+        if not angle:
+            angle = 0.0
         self._angle = float(angle)
         self._half_angle = radians(self._angle) / 2.0
 
