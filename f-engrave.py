@@ -5399,7 +5399,6 @@ class Application(Frame):
         #############################
         Delta = 0
         Radius_plot = 0
-        Thick_Border = float(self.STHICK.get())
         Delta = Thick / 2 + float(self.boxgap.get())
         if self.plotbox.get():  # and self.cut_type.get() != "v-carve":
             if Radius_in == 0 or self.cut_type.get() == "v-carve":
