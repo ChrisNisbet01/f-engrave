@@ -298,12 +298,10 @@ VERSION = sys.version_info[0]
 if VERSION == 3:
     from tkinter import *
     from tkinter.filedialog import *
-    import tkinter.messagebox
     MAXINT = sys.maxsize
 else:
     from Tkinter import *
     from tkFileDialog import *
-    import tkMessageBox
     MAXINT = sys.maxint
 
 if VERSION < 3 and sys.version_info[1] < 6:
@@ -336,6 +334,7 @@ import getopt
 from subprocess import Popen, PIPE
 import webbrowser
 import struct
+from messages import Message
 
 try:
     unichr
@@ -347,54 +346,9 @@ IN_AXIS   = "AXIS_PROGRESS_BAR" in os.environ
 Zero       = 0.00001
 STOP_CALC = 0
 
+message = Message(quiet=QUIET or IN_AXIS, debug=DEBUG)
+
 #raw_input("PAUSED: Press ENTER to continue")
-################################################################################
-#             Function for outputting messages to different locations          #
-#            depending on what options are enabled                             #
-################################################################################
-def fmessage(text,newline=True):
-    global IN_AXIS, QUIET
-    if (not IN_AXIS and not QUIET):
-        if newline==True:
-            try:
-                sys.stdout.write(text)
-                sys.stdout.write("\n")
-            except:
-                pass
-        else:
-            try:
-                sys.stdout.write(text)
-            except:
-                pass
-
-
-def message_box(title,message):
-    if VERSION == 3:
-        tkinter.messagebox.showinfo(title,message)
-    else:
-        tkMessageBox.showinfo(title,message)
-        pass
-
-def message_ask_ok_cancel(title, mess):
-    if VERSION == 3:
-        result=tkinter.messagebox.askokcancel(title, mess)
-    else:
-        result=tkMessageBox.askokcancel(title, mess)
-    return result
-
-################################################################################
-#                         Debug Message Box                                    #
-################################################################################
-def debug_message(message):
-    global DEBUG
-    title = "Debug Message"
-    if DEBUG:
-        if VERSION == 3:
-            tkinter.messagebox.showinfo(title,message)
-        else:
-            tkMessageBox.showinfo(title,message)
-            pass
-
 ############################################################################
 # routine takes an x and a y coords and does a coordinate transformation   #
 # to a new coordinate system at angle from the initial coordinate system   #
@@ -714,9 +668,9 @@ class BSplineClass:
 
         # Incoming inspection, fit the upper node number, etc.
         if  self.Knots_len< self.degree+1:
-            fmessage("SPLINE: degree greater than number of control points.")
+            message.fmessage("SPLINE: degree greater than number of control points.")
         if self.Knots_len != (self.CPts_len + self.degree+1):
-            fmessage("SPLINE: Knot/Control Point/degree number error.")
+            message.fmessage("SPLINE: Knot/Control Point/degree number error.")
 
     #Modified Version of Algorithm A3.2 from "THE NURBS BOOK" pg.93
     def bspline_ders_evaluate(self,n=0,u=0):
@@ -1144,7 +1098,7 @@ class DXF_CLASS:
                 try:
                     xy_data = [[e.data["10"], e.data["20"]]]
                 except:
-                    fmessage("DXF Import zero length %s Ignored" %(e.type))
+                    message.fmessage("DXF Import zero length %s Ignored" %(e.type))
                     xy_data = []
             for x,y in xy_data:
                 x1 = x
@@ -1240,7 +1194,7 @@ class DXF_CLASS:
             try:
                 xy_data = zip(e.data["10"], e.data["20"])
             except:
-                fmessage("DXF Import zero length %s Ignored" %(e.type))
+                message.fmessage("DXF Import zero length %s Ignored" %(e.type))
                 xy_data = []
 
             if xy_data!=[]:
@@ -1377,7 +1331,7 @@ class DXF_CLASS:
             try:
                 xy_data = zip(e.data["10"], e.data["20"])
             except:
-                fmessage("DXF Import zero length %s Ignored" %(e.type))
+                message.fmessage("DXF Import zero length %s Ignored" %(e.type))
                 xy_data = []
 
             for x,y in xy_data:
@@ -1445,7 +1399,7 @@ class DXF_CLASS:
                         self.add_coords([x0,y0,x1,y1],offset,scale,rotate)
 
             else:
-                fmessage("DXF Import Ignored: - %s - Entity" %(e.type))
+                message.fmessage("DXF Import Ignored: - %s - Entity" %(e.type))
 
         ########### VERTEX ###########
         elif e.type == "VERTEX":
@@ -1481,7 +1435,7 @@ class DXF_CLASS:
                 except:
                     self.bulge = 0
             else:
-                fmessage("DXF Import Ignored: - %s - Entity" %(e.type))
+                message.fmessage("DXF Import Ignored: - %s - Entity" %(e.type))
                 pass
         ########### END VERTEX ###########
         ########### INSERT ###########
@@ -1542,7 +1496,7 @@ class DXF_CLASS:
             #quietly ignore HATCH
             pass
         else:
-            fmessage("DXF Import Ignored: %s Entity" %(e.type))
+            message.fmessage("DXF Import Ignored: %s Entity" %(e.type))
             pass
 
 
@@ -1552,7 +1506,7 @@ class DXF_CLASS:
         try:
             self.read_dxf_data(fd, data)
         except:
-            fmessage("\nUnable to read input DXF data!")
+            message.fmessage("\nUnable to read input DXF data!")
             return 1
         data = iter(data)
         g_code, value = None, None
@@ -1835,9 +1789,9 @@ class Application(Frame):
                 self.TTF_AVAIL = TRUE
             else:
                 self.TTF_AVAIL = FALSE
-                fmessage("ttf2cxf_stream is not working...Bummer")
+                message.fmessage("ttf2cxf_stream is not working...Bummer")
         except:
-            fmessage("ttf2cxf_stream executable is not present/working...Bummer")
+            message.fmessage("ttf2cxf_stream executable is not present/working...Bummer")
             self.TTF_AVAIL = FALSE
 
         cmd = ["potrace","-v"]
@@ -1849,12 +1803,12 @@ class Application(Frame):
             if str.find(stdout.upper(),'POTRACE') != -1:
                 self.POTRACE_AVAIL = TRUE
                 if str.find(stdout.upper(),'1.1') == -1:
-                    fmessage("F-Engrave Requires Potrace Version 1.10 or Newer.")
+                    message.fmessage("F-Engrave Requires Potrace Version 1.10 or Newer.")
             else:
                 self.POTRACE_AVAIL = FALSE
-                fmessage("potrace is not working...Bummer")
+                message.fmessage("potrace is not working...Bummer")
         except:
-            fmessage("potrace executable is not present/working...Bummer")
+            message.fmessage("potrace executable is not present/working...Bummer")
             self.POTRACE_AVAIL = FALSE
 
         self.createWidgets()
@@ -2138,18 +2092,18 @@ class Application(Frame):
         try:
             opts, args = getopt.getopt(sys.argv[1:], "hbg:f:d:t:",["help","batch","gcode_file","fontdir=","defdir=","text="])
         except:
-            fmessage('Unable interpret command line options')
+            message.fmessage('Unable interpret command line options')
             sys.exit()
         for option, value in opts:
             if option in ('-h','--help'):
-                fmessage(' ')
-                fmessage('Usage: python f-engrave.py [-g file | -f fontdir | -d directory | -t text | -b ]')
-                fmessage('-g    : f-engrave gcode output file to read (also --gcode_file)')
-                fmessage('-f    : path to font file, directory or image file (also --fontdir)')
-                fmessage('-d    : default directory (also --defdir)')
-                fmessage('-t    : engrave text (also --text)')
-                fmessage('-b    : batch mode (also --batch)')
-                fmessage('-h    : print this help (also --help)\n')
+                message.fmessage(' ')
+                message.fmessage('Usage: python f-engrave.py [-g file | -f fontdir | -d directory | -t text | -b ]')
+                message.fmessage('-g    : f-engrave gcode output file to read (also --gcode_file)')
+                message.fmessage('-f    : path to font file, directory or image file (also --fontdir)')
+                message.fmessage('-d    : default directory (also --defdir)')
+                message.fmessage('-t    : engrave text (also --text)')
+                message.fmessage('-b    : batch mode (also --batch)')
+                message.fmessage('-h    : print this help (also --help)\n')
                 sys.exit()
             if option in ('-g','--gcode_file'):
                 self.Open_G_Code_File(value)
@@ -2169,7 +2123,7 @@ class Application(Frame):
                         self.input_type.set("image")
                         self.IMAGE_FILE = value
                 else:
-                    fmessage("File/Directory Not Found:\t%s" %(value) )
+                    message.fmessage("File/Directory Not Found:\t%s" %(value) )
 
             if option in ('-d','--defdir'):
                 self.HOME_DIR = value
@@ -2185,7 +2139,7 @@ class Application(Frame):
                 self.batch.set(1)
 
         if self.batch.get():
-            fmessage('(F-Engrave Batch Mode)')
+            message.fmessage('(F-Engrave Batch Mode)')
 
             if self.input_type.get() == "text":
                 self.Read_font_file()
@@ -2723,7 +2677,7 @@ class Application(Frame):
             except:
                 pass
 
-            if not message_ask_ok_cancel("Replace", "Replace Exiting Configuration File?\n"+configname_full):
+            if not message.message_ask_ok_cancel("Replace", "Replace Exiting Configuration File?\n"+configname_full):
                 try:
                     win_id.deiconify()
                 except:
@@ -3864,7 +3818,7 @@ class Application(Frame):
         if self.clean_segment == []:
             mess = "Calculate V-Carve must be executed\n"
             mess = mess + "prior to Calculating Cleanup"
-            message_box("Cleanup Info",mess)
+            message.message_box("Cleanup Info",mess)
         else:
             stop = self.Clean_Calc_Click("straight")
             if stop != 1:
@@ -3891,7 +3845,7 @@ class Application(Frame):
                 mess = "Calculate Cleanup must be executed\n"
                 mess = mess + "prior to saving G-Code\n"
                 mess = mess + "(Or no Cleanup paths were found)"
-                message_box("Cleanup Info",mess)
+                message.message_box("Cleanup Info",mess)
             else:
                 self.menu_File_Save_clean_G_Code_File("straight")
         else:
@@ -3899,7 +3853,7 @@ class Application(Frame):
             mess = mess + "Calculate Cleanup must be executed\n"
             mess = mess + "prior to Saving Cleanup G-Code\n"
             mess = mess + "(Or no V Cleanup paths were found)"
-            message_box("Cleanup Info",mess)
+            message.message_box("Cleanup Info",mess)
         try:
             win_id.withdraw()
             win_id.deiconify()
@@ -3919,7 +3873,7 @@ class Application(Frame):
                 mess = "Calculate Cleanup must be executed\n"
                 mess = mess + "prior to saving V Cleanup G-Code\n"
                 mess = mess + "(Or no Cleanup paths were found)"
-                message_box("Cleanup Info",mess)
+                message.message_box("Cleanup Info",mess)
             else:
                 self.menu_File_Save_clean_G_Code_File("v-bit")
         else:
@@ -3927,7 +3881,7 @@ class Application(Frame):
             mess = mess + "Calculate Cleanup must be executed\n"
             mess = mess + "prior to Saving Cleanup G-Code\n"
             mess = mess + "(Or no Cleanup paths were found)"
-            message_box("Cleanup Info",mess)
+            message.message_box("Cleanup Info",mess)
         try:
             win_id.withdraw()
             win_id.deiconify()
@@ -4818,7 +4772,7 @@ class Application(Frame):
         try:
             fin = open(filename,'r')
         except:
-            fmessage("Unable to open file: %s" %(filename))
+            message.fmessage("Unable to open file: %s" %(filename))
             return
         text_codes=[]
         ident = "fengrave_set"
@@ -5102,7 +5056,7 @@ class Application(Frame):
             mess = mess + "Only settings will be saved.\n\n"
             mess = mess + "To generate V-Carve path data Click on the"
             mess = mess + "\"Calculate V-Carve\" button on the main window."
-            if not message_ask_ok_cancel("Continue", mess ):
+            if not message.message_ask_ok_cancel("Continue", mess ):
                 return
 
         self.WriteGCode()
@@ -5268,7 +5222,7 @@ class Application(Frame):
             self.statusbar.configure( bg = 'white' )
 
     def menu_File_Quit(self):
-        if message_ask_ok_cancel("Exit", "Exiting F-Engrave...."):
+        if message.message_ask_ok_cancel("Exit", "Exiting F-Engrave...."):
             self.Quit_Click(None)
 
     def menu_View_Refresh_Callback(self, varName, index, mode):
@@ -5310,7 +5264,7 @@ class Application(Frame):
         except:
             python_version = ""
         about = about + "Python "+python_version+" (%d bit)" %(struct.calcsize("P") * 8)
-        message_box("About F-Engrave",about)
+        message.message_box("About F-Engrave",about)
 
     def menu_Help_Web(self):
         webbrowser.open_new(r"http://www.scorchworks.com/Fengrave/fengrave_doc.html")
@@ -5953,7 +5907,7 @@ class Application(Frame):
                 self.font = parse(file,SegArc)  # build stroke lists from font file
                 self.input_type.set("text")
             except:
-                fmessage("Unable To open True Type (TTF) font file: %s" %(file_full))
+                message.fmessage("Unable To open True Type (TTF) font file: %s" %(file_full))
         else:
             pass
 
@@ -6001,7 +5955,7 @@ class Application(Frame):
                 fd.close()
                 self.input_type.set("image")
             except:
-                fmessage("Unable To open Drawing Exchange File (DXF) file.")
+                message.fmessage("Unable To open Drawing Exchange File (DXF) file.")
 
         elif TYPE=='.BMP' or TYPE=='.PBM' or TYPE=='.PPM' or TYPE=='.PGM' or TYPE=='.PNM':
             try:
@@ -6031,7 +5985,7 @@ class Application(Frame):
                 self.font = parse_dxf(fd,SegArc,new_origin)  # build stroke lists from font file
                 self.input_type.set("image")
             except:
-                fmessage("Unable To create path data from bitmap File.")
+                message.fmessage("Unable To create path data from bitmap File.")
 
         elif TYPE=='.JPG' or TYPE=='.PNG' or TYPE=='.GIF' or TYPE=='.TIF':
             ###########################################################################################################
@@ -6078,11 +6032,11 @@ class Application(Frame):
                     except:
                         pass
                 except:
-                    fmessage("PIL encountered an error. Unable To create path data from the selected image File.")
-                    fmessage("Converting the image file to a BMP file may resolve the issue.")
+                    message.fmessage("PIL encountered an error. Unable To create path data from the selected image File.")
+                    message.fmessage("Converting the image file to a BMP file may resolve the issue.")
                     #^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^#
             else:
-                fmessage("PIL is required for reading JPG, PNG, GIF and TIF files.")
+                message.fmessage("PIL is required for reading JPG, PNG, GIF and TIF files.")
             ###########################################################################################################
         else:
             pass
@@ -6458,7 +6412,7 @@ class Application(Frame):
                 if (not self.batch.get()):
                     self.statusMessage.set("No Font Characters Found")
                 else:
-                    fmessage("(No Font Characters Found)")
+                    message.fmessage("(No Font Characters Found)")
             elif self.H_CALC.get() == "max_use":
                 if self.input_type.get()=="image":
                     error_text = "Image contains no design information. (Empty DXF File)"
@@ -6468,7 +6422,7 @@ class Application(Frame):
                 if (not self.batch.get()):
                     self.statusMessage.set(error_text)
                 else:
-                    fmessage("("+error_text+")")
+                    message.fmessage("("+error_text+")")
             return
         font_char_width  = max(self.font[key].get_xmax() for key in self.font)
         font_word_space =  font_char_width * (WSpaceP/100.0)
@@ -6865,11 +6819,11 @@ class Application(Frame):
         if no_font_record != []:
             if (not self.batch.get()):
                 self.statusbar.configure( bg = 'orange' )
-            fmessage('Characters not found in font file:',FALSE)
-            fmessage("(",FALSE)
+            message.fmessage('Characters not found in font file:',FALSE)
+            message.fmessage("(",FALSE)
             for entry in no_font_record:
-                fmessage( "%s," %(entry),FALSE)
-            fmessage(")")
+                message.fmessage( "%s," %(entry),FALSE)
+            message.fmessage(")")
 
         if (not self.batch.get()):
             self.Plot_Data()
@@ -7231,7 +7185,7 @@ class Application(Frame):
                     if clean_flag == 0:
                         self.clean_segment.append(0)
                     elif len(self.clean_segment) != len(self.coords):
-                        fmessage("Need to Recalculate V-Carve Path")
+                        message.fmessage("Need to Recalculate V-Carve Path")
                         break
                     else:
                         calc_flag = self.clean_segment[CUR_CNT]
@@ -9194,9 +9148,9 @@ class Gcode:
 
             Rstring = " R"+FORMAT % ((R_check_1+R_check_2)/2.0)
             if  abs(R_check_1-R_check_2) > Zero:
-                fmessage("-- G-Code Curve Fitting Anomaly - Check Output --")
-                fmessage("R_start: %f R_end %f" %(R_check_1,R_check_2))
-                fmessage("Begining and end radii do not match: delta = %f" %(abs(R_check_1-R_check_2)))
+                message.fmessage("-- G-Code Curve Fitting Anomaly - Check Output --")
+                message.fmessage("R_start: %f R_end %f" %(R_check_1,R_check_2))
+                message.fmessage("Begining and end radii do not match: delta = %f" %(abs(R_check_1-R_check_2)))
 
 
         if x != self.lastx:
@@ -9663,7 +9617,7 @@ try:
     #print(default_font.cget("size"))
     #print(default_font.cget("family"))
 except:
-    debug_message("Font Set Failed.")
+    message.debug_message("Font Set Failed.")
 
 try:
     try:
@@ -9676,7 +9630,7 @@ except:
         app.master.iconbitmap(bitmap="@f_engrave_icon")
         os.remove("f_engrave_icon")
     except:
-        fmessage("Unable to create temporary icon file.")
+        message.fmessage("Unable to create temporary icon file.")
 
 app.f_engrave_init()
 root.mainloop()
