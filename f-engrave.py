@@ -5203,7 +5203,6 @@ class Application(Frame):
                 minx_tmp = 99969.0
                 continue
 
-            first_stroke = True
             try:
                 font_line_height = self.font[ord(char)].get_ymax()
             except:
