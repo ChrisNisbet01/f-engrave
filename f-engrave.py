@@ -368,8 +368,6 @@ STOP_CALC = 0
 
 message = Message(quiet=QUIET or IN_AXIS, debug=DEBUG)
 
-# raw_input("PAUSED: Press ENTER to continue")
-
 ############################################################################
 class Application(Frame):
     def __init__(self, master):
@@ -524,7 +522,7 @@ class Application(Frame):
 
         ###########################################################################
         #                         INITILIZE VARIABLES                             #
-        #    if you want to change a default setting this is the place to do it   #
+        #    If you want to change a default setting this is the place to do it.  #
         ###########################################################################
         self.batch.set(0)
         self.show_axis.set(1)
@@ -645,11 +643,11 @@ class Application(Frame):
         self.lastx = 0
         self.lasty = 0
 
-        # Derived variables
         bit = bit_from_shape(
             self.bit_shape.get(), self.v_bit_dia.get(), self.v_bit_angle.get()
         )
 
+        # Derived variables
         self.calc_depth_limit(bit)
 
         if self.units.get() == "in":
@@ -680,7 +678,7 @@ class Application(Frame):
         self.gpost.set("M5|M2")
 
         ##########################################################################
-        ###                     END INITILIZING VARIABLES                      ###
+        ###                     END INITIALIZING VARIABLES                     ###
         ##########################################################################
         config_file = "config.ngc"
         home_config1 = self.HOME_DIR + "/" + config_file
@@ -1105,7 +1103,6 @@ class Application(Frame):
         scrollbar.pack(side=RIGHT, fill=Y)
         self.Input.pack(side=LEFT, fill=BOTH, expand=1)
         self.Input.bind("<Key>", self.Recalculate_RQD_Nocalc)
-        ## self.master.unbind("<Alt>")
 
         # GEN Setting Window Entry initialization
         self.Entry_Xoffset = Entry()
@@ -1372,14 +1369,14 @@ class Application(Frame):
                 if dist < min_dist:
                     min_dist = dist
                     inext = j
-                ###
+
                 dxe = Xcur - ecoords[Lend[j]][0]
                 dye = Ycur - ecoords[Lend[j]][1]
                 diste = dxe * dxe + dye * dye
                 if diste < min_diste:
                     min_diste = diste
                     inexte = j
-                ###
+
             if min_diste < min_dist:
                 inext = inexte
                 order_out.append([Lend[inexte], Lbeg[inexte]])
@@ -1815,9 +1812,9 @@ class Application(Frame):
                         Lend.append(i - 1)
                     loop_old = loop
                 Lend.append(i)
-                #####################################################
-                # Find new order based on distance to next begining #
-                #####################################################
+
+                # Find new order based on distance to next beginning
+
                 order_out = []
                 order_out.append([Lbeg[0], Lend[0]])
                 inext = 0
@@ -2085,7 +2082,8 @@ class Application(Frame):
                         nextr = 0
                         nextloop = -99
 
-                    # check and see if we need to move to a new discontinuous start point
+                    # Check and see if we need to move to a new discontinuous
+                    # start point.
                     if loop != loop_old:
                         z1 = Depth
                         if roughing:
@@ -2421,6 +2419,7 @@ class Application(Frame):
             value = float(self.YSCALE.get())
             if value <= 0.0:
                 self.statusMessage.set(" Height should be greater than 0 ")
+                # FIXME - Use an enum.
                 return 2  # Value is invalid number
         except:
             return 3  # Value not a number
@@ -2592,7 +2591,7 @@ class Application(Frame):
     # End Right Column #
 
     ######################################
-    #    Settings Window Call Backs      #
+    #    Settings Window Callbacks      #
     ######################################
     def Entry_Xoffset_Check(self):
         try:
@@ -2687,7 +2686,7 @@ class Application(Frame):
             pass
 
     ######################################
-    #    V-Carve Settings Call Backs     #
+    #    V-Carve Settings Callbacks     #
     ######################################
     def Entry_Vbitangle_Check(self):
         try:
@@ -2934,7 +2933,7 @@ class Application(Frame):
         self.Entry_Bit_Shape_Check()
 
     ######################################
-    # Bitmap Settings Window Call Backs  #
+    # Bitmap Settings Window Callbacks  #
     ######################################
     def Entry_BMPturdsize_Check(self):
         try:
@@ -3064,7 +3063,8 @@ class Application(Frame):
             return
 
         vcalc_status = Toplevel(width=525, height=60)
-        # Use grab_set to prevent user input in the main window during calculations
+        # Use grab_set to prevent user input in the main window during
+        # calculations
         vcalc_status.grab_set()
 
         self.statusbar2 = Label(
@@ -3119,7 +3119,8 @@ class Application(Frame):
 
         if self.clean_coords == []:
             vcalc_status = Toplevel(width=525, height=50)
-            # Use grab_set to prevent user input in the main window during calculations
+            # Use grab_set to prevent user input in the main window during
+            # calculations
             vcalc_status.grab_set()
 
             self.statusbar2 = Label(
@@ -3923,9 +3924,7 @@ class Application(Frame):
         if (self.x, self.y) == (-1, -1):
             self.x, self.y = x, y
         if abs(self.w - w) > 10 or abs(self.h - h) > 10 or update == 1:
-            ###################################################
-            #  Form changed Size (resized) adjust as required #
-            ###################################################
+            #  Form changed size (resized) - adjust as required.
             self.w = w
             self.h = h
             # canvas
@@ -4365,10 +4364,10 @@ class Application(Frame):
             ###########################################################
             self.Plot_Data()
 
-    ############################################################################
-    # routine takes an x and y the point is rotated by angle returns new x,y   #
-    ############################################################################
+    # Routine takes an x and y. The point is rotated by angle returns new x,y
     def Rotn(self, x, y, angle, radius):
+        # FIXME - No need for this to be a class method.
+        # Same goes for other similar methods.
         if radius > 0.0:
             alpha = x / radius
             xx = (radius + y) * sin(alpha)
@@ -4388,9 +4387,7 @@ class Application(Frame):
         newy = rad * sin(theta + radians(angle))
         return newx, newy, alpha
 
-    ############################################################################
-    # routine takes an x and a y scales are applied and returns new x,y tuple  #
-    ############################################################################
+    # Routine takes an x and a y. Scales are applied and returns new x,y tuple
     def CoordScale(self, x, y, xscale, yscale):
         newx = x * xscale
         newy = y * yscale
@@ -4434,9 +4431,8 @@ class Application(Frame):
 
     ############################################################################
     # Routine finds the maximum radius that can be placed in the position      #
-    # xpt,ypt witout interfearing with other line segments (rmin is max R LOL) #
+    # xpt,ypt without interfering with other line segments (rmin is max R LOL) #
     ############################################################################
-    # def find_max_circle(self,xpt,ypt,rmin,char_num,seg_sin,seg_cos,corner,Acc_delete,CHK_STRING):
     def find_max_circle(
         self, xpt, ypt, rmin, char_num, seg_sin, seg_cos, corner, CHK_STRING
     ):
@@ -4533,14 +4529,12 @@ class Application(Frame):
                     rtmp = (xc2 * xc2 + yc2 * yc2) / (2 * yc2)
                     rmin = min(rmin, rtmp)
 
-                ###### NEW V1.20 #######
                 if abs(yc1) < Zero and abs(xc1) < Zero:
                     if yc2 > Zero:
                         rmin = 0.0
                 if abs(yc2) < Zero and abs(xc2) < Zero:
                     if yc1 > Zero:
                         rmin = 0.0
-                ### END NEW V1.20 #####
 
         return rmin
 
@@ -4690,8 +4684,6 @@ class Application(Frame):
                 message.fmessage("Unable To create path data from bitmap File.")
 
         elif TYPE == ".JPG" or TYPE == ".PNG" or TYPE == ".GIF" or TYPE == ".TIF":
-            ###########################################################################################################
-            # VVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVV#
             if PIL:
                 try:
                     PIL_im = Image.open(file_full)
@@ -4760,12 +4752,10 @@ class Application(Frame):
                     message.fmessage(
                         "Converting the image file to a BMP file may resolve the issue."
                     )
-                    # ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^#
             else:
                 message.fmessage(
                     "PIL is required for reading JPG, PNG, GIF and TIF files."
                 )
-            ###########################################################################################################
         else:
             pass
 
@@ -5406,7 +5396,9 @@ class Application(Frame):
         miny = 99994.0
         minx = 99995.0
 
-        ##        ## Commented this section out in Version 1.66
+        ##        Commented this section out in Version 1.66
+        ##        because....
+
         ##        if Radius == 0.0:
         ##            if Angle == 0.0:
         ##                if flip_flag:
@@ -5470,7 +5462,7 @@ class Application(Frame):
         midy = (miny + maxy) / 2
 
         #############################
-        #   Engrave Box or circle   #
+        #   Engrave box or circle   #
         #############################
         Delta = 0
         Radius_plot = 0
@@ -5668,11 +5660,12 @@ class Application(Frame):
         return xnormv, ynormv, rout, need_clean
 
     #####################################################
-    # determine if a point is inside a given polygon or not
+    # Determine if a point is inside a given polygon or not
     # Polygon is a list of (x,y) pairs.
     # http://www.ariel.com.au/a/python-point-int-poly.html
     #####################################################
     def point_inside_polygon(self, x, y, poly):
+        # FIXME - No need for this to be a class method.
         n = len(poly)
         inside = -1
         p1x = poly[0][0]
@@ -5884,19 +5877,19 @@ class Application(Frame):
                 # Determine active partitions for each line segment #
                 #####################################################
                 coded_index = []
-                ## find the local coordinates of the line segment ends
+                # Find the local coordinates of the line segment ends
                 x1_G = XY_R[0] - self.MINX
                 y1_G = XY_R[1] - self.MINY
                 x2_G = XY_R[2] - self.MINX
                 y2_G = XY_R[3] - self.MINY
 
-                ## Find the grid box index for each line segment end
+                # Find the grid box index for each line segment end
                 X1i = int(x1_G / xPartitionLength)
                 X2i = int(x2_G / xPartitionLength)
                 Y1i = int(y1_G / yPartitionLength)
                 Y2i = int(y2_G / yPartitionLength)
 
-                ## Find the max/min grid box locations
+                # Find the max/min grid box locations
                 Xindex_min = min(X1i, X2i)
                 Xindex_max = max(X1i, X2i)
                 Yindex_min = min(Y1i, Y2i)
@@ -5907,10 +5900,11 @@ class Application(Frame):
                     if (Yindex_max > Yindex_min) and (abs(y2_G - y1_G) > Zero):
                         check_points.append([X1i, Y1i])
                         check_points.append([X2i, Y2i])
-                        ## Establish line equation variables: y=m*x+b
+                        # Establish line equation variables: y=m*x+b
                         m_G = (y2_G - y1_G) / (x2_G - x1_G)
                         b_G = y1_G - m_G * x1_G
-                        ## Add check point in each partition in the range of X values
+                        # Add check point in each partition in the range of X
+                        # values
                         x_ind_check = Xindex_min + 1
                         while x_ind_check <= Xindex_max - 1:
                             x_val = x_ind_check * xPartitionLength
@@ -5918,7 +5912,8 @@ class Application(Frame):
                             y_ind_check = int(y_val / yPartitionLength)
                             check_points.append([x_ind_check, y_ind_check])
                             x_ind_check = x_ind_check + 1
-                        ## Add check point in each partition in the range of Y values
+                        # Add check point in each partition in the range of Y
+                        # values
                         y_ind_check = Yindex_min + 1
                         while y_ind_check <= Yindex_max - 1:
                             y_val = y_ind_check * yPartitionLength
@@ -5939,8 +5934,9 @@ class Application(Frame):
                         check_points.append([x_ind_check, y_ind_check])
                         y_ind_check = y_ind_check + 1
 
-                ## For each grid box in check_points add the grid box and all adjacent grid boxes
-                ## to the list of boxes for this line segment
+                # For each grid box in check_points add the grid box and all
+                # adjacent grid boxes to the list of boxes for this line
+                # segment
                 for xy_point in check_points:
                     xy_p = xy_point
                     xIndex = xy_p[0]
@@ -5991,9 +5987,6 @@ class Application(Frame):
             CUR_CNT = -1
             START_TIME = time()
 
-            ################################################################################################################
-            ################################################################################################################
-            ################################################################################################################
             # Update canvas with modified paths
             if not self.batch.get():
                 self.Plot_Data()
@@ -6178,7 +6171,8 @@ class Application(Frame):
                     dxpt = dx / nsteps
                     dypt = dy / nsteps
 
-                    ### This makes sure the first cut start at the begining of the first segment
+                    # This makes sure the first cut start at the beginning of
+                    # the first segment
                     cnt = 0
                     if New_Loop == 1 and BIT_ANGLE != 0 and not_b_carve:
                         cnt = -1
@@ -6232,11 +6226,11 @@ class Application(Frame):
                         d_seg_cos = xtmp1 / Ltmp
                         delta = Get_Angle(d_seg_sin, d_seg_cos)
                         if delta < v_drv_crner and clean_flag != 1:
-                            # drive to corner
+                            # Drive to corner
                             self.vcoords.append([xa, ya, 0.0, loop_cnt])
 
                         elif delta > v_stp_crner:
-                            # add substeps around corner
+                            # Add sub-steps around corner
                             phisteps = max(floor((delta - 180) / dangle), 2)
                             step_phi = (delta - 180) / phisteps
                             pcnt = 0
@@ -6332,9 +6326,6 @@ class Application(Frame):
             if CUR_CNT == MAX_CNT - 1 and (not self.batch.get()):
                 self.statusMessage.set("Done -- " + self.bounding_box.get())
                 self.statusbar.configure(bg="white")
-            ################################################################################################################
-            ################################################################################################################
-            ################################################################################################################
 
         self.master.bind("<Configure>", self.Master_Configure)
         #########################################
@@ -6378,7 +6369,7 @@ class Application(Frame):
             self.statusMessage.set("Checking Input Image Data")
             self.master.update()
         ######################################################
-        ### Fully Close Closed loops and Remove Open Loops ###
+        ### Fully close closed loops and remove open loops ###
         ######################################################
         i = 0
         LObeg = []
@@ -6401,7 +6392,7 @@ class Application(Frame):
         LNend = []
         LNloop = []
         #######################################################
-        ###  For Each open loop connect to the next closest ###
+        ###  For each open loop connect to the next closest ###
         ###  loop end until all of the loops are closed     ###
         #######################################################
         Lcnt = 0
@@ -6587,8 +6578,6 @@ class Application(Frame):
                 for jloop in range(Nloops):
                     if jloop != iloop:
                         inside = 0
-                        # for jval in range(Lbeg[jloop],Lend[jloop]):
-                        #    inside = inside + self.point_inside_polygon(ecoords[jval][0],ecoords[jval][1],ipoly)
                         jval = Lbeg[jloop]
                         inside = inside + self.point_inside_polygon(
                             ecoords[jval][0], ecoords[jval][1], ipoly
@@ -6601,7 +6590,7 @@ class Application(Frame):
         #####################################################
         # Set Loop clockwise flag to the state of each loop #
         #####################################################
-        # could flip cut side here for auto side determination
+        # Could flip cut side here for auto side determination
         for iloop in range(Nloops):
             if Lflip[iloop]:
                 Lcw[iloop] = not Lcw[iloop]
@@ -7947,7 +7936,7 @@ class Application(Frame):
         vcarve_settings.update_idletasks()
         center_loc = int(float(vcarve_settings.winfo_width()) / 2)
 
-        ## Multipass Settings ##
+        ## Multi-pass Settings ##
         D_Yloc = D_Yloc + D_dY + 12
         self.vcarve_separator1 = Frame(vcarve_settings, height=2, bd=1, relief=SUNKEN)
         self.vcarve_separator1.place(x=0, y=D_Yloc, width=580, height=2)
@@ -8190,7 +8179,7 @@ class Application(Frame):
 
 
 ################################################################################
-#                          Start-up Application                                #
+#                          Start Application                                   #
 ################################################################################
 root = Tk()
 app = Application(root)
