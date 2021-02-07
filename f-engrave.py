@@ -2023,7 +2023,6 @@ class Application(Frame):
 
             if len(coords_out) > 0:
                 loop_old = -1
-                FLAG_arc = 0
                 FLAG_line = 0
                 code = " "
                 v_index = -1
