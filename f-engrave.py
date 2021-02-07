@@ -6938,7 +6938,6 @@ class Application(Frame):
                 #######################
                 P_coords = []
                 if loop_coords:
-                    loop_coords_lin = []
                     cuts = []
                     Ln_last = loop_coords[0][4]
                     for i in range(len(loop_coords)):
