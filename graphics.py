@@ -1,4 +1,4 @@
-from math import degrees, acos, sin, cos, sqrt, atan2, radians
+from math import degrees, acos, sin, cos, sqrt, atan2, radians, fabs
 from constants import Zero
 
 
@@ -418,3 +418,114 @@ def record_v_carve_data(x1,
             coords.append([xnormv, ynormv, rout, loop_cnt])
 
     return xnormv, ynormv, rout, need_clean
+
+
+############################################################################
+# Routine finds the maximum radius that can be placed in the position      #
+# xpt,ypt without interfering with other line segments (rmin is max R LOL) #
+############################################################################
+def find_max_circle(
+    xpt, ypt, rmin, char_num, seg_sin, seg_cos, corner, CHK_STRING,
+    MINX, MINY, xPartitionLength, yPartitionLength, partitionList
+):
+    rtmp = rmin
+    xIndex = int((xpt - MINX) / xPartitionLength)
+    yIndex = int((ypt - MINY) / yPartitionLength)
+
+    coords_check = []
+    R_A = abs(rmin)
+    Bcnt = -1
+    ############################################################
+    # Loop over active partitions for the current line segment #
+    ############################################################
+    for line_B in partitionList[xIndex][yIndex]:
+        Bcnt = Bcnt + 1
+        X_B = line_B[len(line_B) - 3]
+        Y_B = line_B[len(line_B) - 2]
+        R_B = line_B[len(line_B) - 1]
+        GAP = sqrt((X_B - xpt) * (X_B - xpt) + (Y_B - ypt) * (Y_B - ypt))
+        if GAP < abs(R_A + R_B):
+            coords_check.append(line_B)
+
+    for linec in coords_check:
+        XYc = linec
+        xmaxt = max(XYc[0], XYc[2]) + rmin * 2
+        xmint = min(XYc[0], XYc[2]) - rmin * 2
+        ymaxt = max(XYc[1], XYc[3]) + rmin * 2
+        ymint = min(XYc[1], XYc[3]) - rmin * 2
+        if xpt >= xmint and ypt >= ymint and xpt <= xmaxt and ypt <= ymaxt:
+            logic_full = True
+        else:
+            logic_full = False
+            continue
+
+        if CHK_STRING == "chr":
+            logic_full = logic_full and (char_num == int(XYc[5]))
+
+        if corner == 1:
+            logic_full = (
+                logic_full
+                and ((fabs(xpt - XYc[0]) > Zero)
+                     or (fabs(ypt - XYc[1]) > Zero))
+                and ((fabs(xpt - XYc[2]) > Zero)
+                     or (fabs(ypt - XYc[3]) > Zero))
+            )
+
+        if logic_full:
+            xc1 = (XYc[0] - xpt) * seg_cos - (XYc[1] - ypt) * seg_sin
+            yc1 = (XYc[0] - xpt) * seg_sin + (XYc[1] - ypt) * seg_cos
+            xc2 = (XYc[2] - xpt) * seg_cos - (XYc[3] - ypt) * seg_sin
+            yc2 = (XYc[2] - xpt) * seg_sin + (XYc[3] - ypt) * seg_cos
+
+            if fabs(xc2 - xc1) < Zero and fabs(yc2 - yc1) > Zero:
+                rtmp = fabs(xc1)
+                if max(yc1, yc2) >= rtmp and min(yc1, yc2) <= rtmp:
+                    rmin = min(rmin, rtmp)
+
+            elif fabs(yc2 - yc1) < Zero and fabs(xc2 - xc1) > Zero:
+                if max(xc1, xc2) >= 0.0 and min(xc1, xc2) <= 0.0 \
+                        and yc1 > Zero:
+                    rtmp = yc1 / 2.0
+                    rmin = min(rmin, rtmp)
+
+            if fabs(yc2 - yc1) > Zero and fabs(xc2 - xc1) > Zero:
+                m = (yc2 - yc1) / (xc2 - xc1)
+                b = yc1 - m * xc1
+                sq = m + 1 / m
+                A = 1 + m * m - 2 * m * sq
+                B = -2 * b * sq
+                C = -b * b
+                try:
+                    sq_root = sqrt(B * B - 4 * A * C)
+                    xq1 = (-B + sq_root) / (2 * A)
+
+                    if xq1 >= min(xc1, xc2) and xq1 <= max(xc1, xc2):
+                        rtmp = xq1 * sq + b
+                        if rtmp >= 0.0:
+                            rmin = min(rmin, rtmp)
+
+                    xq2 = (-B - sq_root) / (2 * A)
+
+                    if xq2 >= min(xc1, xc2) and xq2 <= max(xc1, xc2):
+                        rtmp = xq2 * sq + b
+                        if rtmp >= 0.0:
+                            rmin = min(rmin, rtmp)
+                except:
+                    pass
+
+            if yc1 > Zero:
+                rtmp = (xc1 * xc1 + yc1 * yc1) / (2 * yc1)
+                rmin = min(rmin, rtmp)
+
+            if yc2 > Zero:
+                rtmp = (xc2 * xc2 + yc2 * yc2) / (2 * yc2)
+                rmin = min(rmin, rtmp)
+
+            if abs(yc1) < Zero and abs(xc1) < Zero:
+                if yc2 > Zero:
+                    rmin = 0.0
+            if abs(yc2) < Zero and abs(xc2) < Zero:
+                if yc1 > Zero:
+                    rmin = 0.0
+
+    return rmin

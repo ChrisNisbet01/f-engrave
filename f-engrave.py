@@ -347,7 +347,7 @@ from gcode import Gcode
 import getopt
 from graphics import Get_Angle, Transform, Rotn, CoordScale, DetectIntersect
 from graphics import point_inside_polygon, Clean_coords_to_Path_coords
-from graphics import Find_Paths, record_v_carve_data
+from graphics import Find_Paths, record_v_carve_data, find_max_circle
 import font
 from math import sqrt, radians, tan, acos, sin, cos, atan2, fabs, floor, ceil
 from math import degrees
@@ -4344,114 +4344,6 @@ class Application(Frame):
                 )
             )
 
-    ############################################################################
-    # Routine finds the maximum radius that can be placed in the position      #
-    # xpt,ypt without interfering with other line segments (rmin is max R LOL) #
-    ############################################################################
-    def find_max_circle(
-        self, xpt, ypt, rmin, char_num, seg_sin, seg_cos, corner, CHK_STRING
-    ):
-        global Zero
-        rtmp = rmin
-
-        xIndex = int((xpt - self.MINX) / self.xPartitionLength)
-        yIndex = int((ypt - self.MINY) / self.yPartitionLength)
-
-        coords_check = []
-        R_A = abs(rmin)
-        Bcnt = -1
-        ############################################################
-        # Loop over active partitions for the current line segment #
-        ############################################################
-        for line_B in self.partitionList[xIndex][yIndex]:
-            Bcnt = Bcnt + 1
-            X_B = line_B[len(line_B) - 3]
-            Y_B = line_B[len(line_B) - 2]
-            R_B = line_B[len(line_B) - 1]
-            GAP = sqrt((X_B - xpt) * (X_B - xpt) + (Y_B - ypt) * (Y_B - ypt))
-            if GAP < abs(R_A + R_B):
-                coords_check.append(line_B)
-
-        for linec in coords_check:
-            XYc = linec
-            xmaxt = max(XYc[0], XYc[2]) + rmin * 2
-            xmint = min(XYc[0], XYc[2]) - rmin * 2
-            ymaxt = max(XYc[1], XYc[3]) + rmin * 2
-            ymint = min(XYc[1], XYc[3]) - rmin * 2
-            if xpt >= xmint and ypt >= ymint and xpt <= xmaxt and ypt <= ymaxt:
-                logic_full = True
-            else:
-                logic_full = False
-                continue
-
-            if CHK_STRING == "chr":
-                logic_full = logic_full and (char_num == int(XYc[5]))
-
-            if corner == 1:
-                logic_full = (
-                    logic_full
-                    and ((fabs(xpt - XYc[0]) > Zero) or (fabs(ypt - XYc[1]) > Zero))
-                    and ((fabs(xpt - XYc[2]) > Zero) or (fabs(ypt - XYc[3]) > Zero))
-                )
-
-            if logic_full:
-                xc1 = (XYc[0] - xpt) * seg_cos - (XYc[1] - ypt) * seg_sin
-                yc1 = (XYc[0] - xpt) * seg_sin + (XYc[1] - ypt) * seg_cos
-                xc2 = (XYc[2] - xpt) * seg_cos - (XYc[3] - ypt) * seg_sin
-                yc2 = (XYc[2] - xpt) * seg_sin + (XYc[3] - ypt) * seg_cos
-
-                if fabs(xc2 - xc1) < Zero and fabs(yc2 - yc1) > Zero:
-                    rtmp = fabs(xc1)
-                    if max(yc1, yc2) >= rtmp and min(yc1, yc2) <= rtmp:
-                        rmin = min(rmin, rtmp)
-
-                elif fabs(yc2 - yc1) < Zero and fabs(xc2 - xc1) > Zero:
-                    if max(xc1, xc2) >= 0.0 and min(xc1, xc2) <= 0.0 and yc1 > Zero:
-                        rtmp = yc1 / 2.0
-                        rmin = min(rmin, rtmp)
-
-                if fabs(yc2 - yc1) > Zero and fabs(xc2 - xc1) > Zero:
-                    m = (yc2 - yc1) / (xc2 - xc1)
-                    b = yc1 - m * xc1
-                    sq = m + 1 / m
-                    A = 1 + m * m - 2 * m * sq
-                    B = -2 * b * sq
-                    C = -b * b
-                    try:
-                        sq_root = sqrt(B * B - 4 * A * C)
-                        xq1 = (-B + sq_root) / (2 * A)
-
-                        if xq1 >= min(xc1, xc2) and xq1 <= max(xc1, xc2):
-                            rtmp = xq1 * sq + b
-                            if rtmp >= 0.0:
-                                rmin = min(rmin, rtmp)
-
-                        xq2 = (-B - sq_root) / (2 * A)
-
-                        if xq2 >= min(xc1, xc2) and xq2 <= max(xc1, xc2):
-                            rtmp = xq2 * sq + b
-                            if rtmp >= 0.0:
-                                rmin = min(rmin, rtmp)
-                    except:
-                        pass
-
-                if yc1 > Zero:
-                    rtmp = (xc1 * xc1 + yc1 * yc1) / (2 * yc1)
-                    rmin = min(rmin, rtmp)
-
-                if yc2 > Zero:
-                    rtmp = (xc2 * xc2 + yc2 * yc2) / (2 * yc2)
-                    rmin = min(rmin, rtmp)
-
-                if abs(yc1) < Zero and abs(xc1) < Zero:
-                    if yc2 > Zero:
-                        rmin = 0.0
-                if abs(yc2) < Zero and abs(xc2) < Zero:
-                    if yc1 > Zero:
-                        rmin = 0.0
-
-        return rmin
-
     def Recalculate_RQD_Nocalc(self, event):
         self.statusbar.configure(bg="yellow")
         self.Input.configure(bg="yellow")
@@ -5705,15 +5597,13 @@ class Application(Frame):
                 xPartitionLength = 1
             if yPartitionLength < Zero:
                 yPartitionLength = 1
-            self.xPartitionLength = xPartitionLength
-            self.yPartitionLength = yPartitionLength
 
-            self.partitionList = []
+            partitionList = []
 
             for xCount in range(0, xN):
-                self.partitionList.append([])
+                partitionList.append([])
                 for yCount in range(0, yN):
-                    self.partitionList[xCount].append([])
+                    partitionList[xCount].append([])
 
             ###############################
             # End Setup Grid Partitions   #
@@ -5816,7 +5706,7 @@ class Application(Frame):
                     line_R_appended.append(X_R)
                     line_R_appended.append(Y_R)
                     line_R_appended.append(R_R)
-                    self.partitionList[int(thisIndex % xN)][int(thisIndex / xN)].append(
+                    partitionList[int(thisIndex % xN)][int(thisIndex / xN)].append(
                         line_R_appended
                     )
             #########################################################
@@ -5986,7 +5876,7 @@ class Application(Frame):
                             sub_seg_cos = cos(sub_phi)
                             sub_seg_sin = sin(sub_phi)
 
-                            rout = self.find_max_circle(
+                            rout = find_max_circle(
                                 x1,
                                 y1,
                                 rmax,
@@ -5995,6 +5885,11 @@ class Application(Frame):
                                 sub_seg_cos,
                                 1,
                                 CHK_STRING,
+                                self.MINX,
+                                self.MINY,
+                                xPartitionLength,
+                                yPartitionLength,
+                                partitionList
                             )
                             if clean_flag != 1:
                                 coords_destination = self.vcoords
@@ -6054,8 +5949,10 @@ class Application(Frame):
                         xpt = x1 + dxpt * cnt
                         ypt = y1 + dypt * cnt
 
-                        rout = self.find_max_circle(
-                            xpt, ypt, rmax, char_num, seg_sin, seg_cos, 0, CHK_STRING
+                        rout = find_max_circle(
+                            xpt, ypt, rmax, char_num, seg_sin, seg_cos, 0,
+                            CHK_STRING, self.MINX, self.MINY,
+                            xPartitionLength, yPartitionLength, partitionList
                         )
                         # Make the first cut drive down at an angle instead of straight down plunge
                         if cnt == 0 and not_b_carve:
@@ -6114,7 +6011,7 @@ class Application(Frame):
                                 sub_seg_cos = cos(sub_phi)
                                 sub_seg_sin = sin(sub_phi)
 
-                                rout = self.find_max_circle(
+                                rout = find_max_circle(
                                     xa,
                                     ya,
                                     rmax,
@@ -6123,6 +6020,11 @@ class Application(Frame):
                                     sub_seg_cos,
                                     1,
                                     CHK_STRING,
+                                    self.MINX,
+                                    self.MINY,
+                                    xPartitionLength,
+                                    yPartitionLength,
+                                    partitionList
                                 )
                                 if clean_flag != 1:
                                     coords_destination = self.vcoords
