@@ -5689,7 +5689,6 @@ class Application(Frame):
             rbit = self.calc_vbit_dia(bit) / 2.0
             clean_dia = float(self.clean_dia.get())
 
-            r_inlay_top = self.calc_r_inlay_top(bit)
             if clean_flag != 1:
                 rmax = rbit
             else:
