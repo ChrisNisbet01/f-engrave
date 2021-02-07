@@ -5027,7 +5027,7 @@ class Application(Frame):
             String = "F"
             Radius_in = 0.0
         try:
-            SegArc = float(self.segarc.get())
+            float(self.segarc.get())
             YScale_in = float(self.YSCALE.get())
             CSpaceP = float(self.CSPACE.get())
             WSpaceP = float(self.WSPACE.get())
