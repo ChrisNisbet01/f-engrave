@@ -5170,8 +5170,6 @@ class Application(Frame):
 
         font_line_space = (font_line_height - font_line_depth + Thick / YScale) * LSpace
 
-        max_vals = []
-
         xposition = 0.0
         yposition = 0.0
         line_cnt = 0.0
