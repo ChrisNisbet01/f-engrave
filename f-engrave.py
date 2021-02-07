@@ -1745,8 +1745,6 @@ class Application(Frame):
                     else:
                         step = 1
 
-                    code = " "
-
                     loop_old = -1
 
                     for i in range(temp[0], temp[1] + step, step):
@@ -1859,7 +1857,6 @@ class Application(Frame):
                     zmin = zmin + maxDZ
 
                     loop_old = -1
-                    code = " "
 
                     v_index = -1
 
