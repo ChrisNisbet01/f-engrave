@@ -7296,7 +7296,6 @@ class Application(Frame):
         w_label = 100
         w_entry = 60
         xd_entry_L = xd_label_L + w_label + 10
-        xd_units_L = xd_entry_L + w_entry + 5
 
         D_Yloc = D_Yloc + D_dY
         self.Label_BMPturnpol = Label(pbm_settings, text="Turn Policy")
