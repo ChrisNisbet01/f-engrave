@@ -301,20 +301,16 @@ if VERSION == 3:
     from tkinter import Radiobutton, Toplevel, BooleanVar, StringVar, Canvas
     from tkinter import Scrollbar, Listbox, Frame, Text, Menu, VERTICAL
     from tkinter import ALL, FLAT, Event, BOTTOM, OptionMenu
-    from tkinter import *
     from tkinter.filedialog import askdirectory, askopenfilename
     from tkinter.filedialog import asksaveasfilename
-    from tkinter.filedialog import *
 else:
     from Tkinter import END, RIGHT, LEFT, CENTER, Tk, Button, Checkbutton
     from Tkinter import Label, PhotoImage, X, Y, W, E, SW, BOTH, Entry, SUNKEN
     from Tkinter import Radiobutton, Toplevel, BooleanVar, StringVar, Canvas
     from Tkinter import Scrollbar, Listbox, Frame, Text, Menu, VERTICAL
     from Tkinter import ALL, FLAT, Event, BOTTOM, OptionMenu
-    from Tkinter import *
     from tkFileDialog import askdirectory, askopenfilename
     from tkFileDialog import asksaveasfilename
-    from tkFileDialog import *
 
 if VERSION < 3 and sys.version_info[1] < 6:
     def next(item):
