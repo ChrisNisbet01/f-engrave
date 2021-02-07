@@ -6981,7 +6981,6 @@ class Application(Frame):
                     Ysize = y_pmax - y_pmin
                     Ysteps = ceil(Ysize / (clean_dia * clean_step))
                     if Ysteps > 0:
-                        dY = Ysize / Ysteps
                         for iY in range(0, int(Ysteps + 1)):
                             y = y_pmin + iY / Ysteps * (y_pmax - y_pmin)
                             intXYlist = []
