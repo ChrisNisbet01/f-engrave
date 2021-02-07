@@ -2005,7 +2005,6 @@ class Application(Frame):
             rough_again = False
             zmin = zmin + maxDZ
 
-            first_stroke = True
             ########################################################################
             # The clean coords have already been sorted so we can just write them  #
             ########################################################################
