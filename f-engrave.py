@@ -7008,7 +7008,6 @@ class Application(Frame):
                     Xsize = x_pmax - x_pmin
                     Xsteps = ceil(Xsize / (clean_dia * clean_step))
                     if Xsteps > 0:
-                        dX = Xsize / Xsteps
                         for iX in range(0, int(Xsteps + 1)):
                             x = x_pmin + iX / Xsteps * (x_pmax - x_pmin)
                             intXYlist = []
