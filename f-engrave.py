@@ -1734,7 +1734,6 @@ class Application(Frame):
                 dist = 999
                 lastx = -999
                 lasty = -999
-                lastz = 0
                 z1 = 0
                 nextz = 0
 
@@ -1908,13 +1907,11 @@ class Application(Frame):
 
                             lastx = x1
                             lasty = y1
-                            lastz = z1
                             g.cut(x1, y1, z1)
                         else:
                             g.cut(x1, y1, z1)
                             lastx = x1
                             lasty = y1
-                            lastz = z1
                         loop_old = loop
                     g.flush()
                 g.flush()
