@@ -296,10 +296,24 @@ import sys
 VERSION = sys.version_info[0]
 
 if VERSION == 3:
+    from tkinter import END, RIGHT, LEFT, CENTER, Tk, Button, Checkbutton
+    from tkinter import Label, PhotoImage, X, Y, W, E, SW, BOTH, Entry, SUNKEN
+    from tkinter import Radiobutton, Toplevel, BooleanVar, StringVar, Canvas
+    from tkinter import Scrollbar, Listbox, Frame, Text, Menu, VERTICAL
+    from tkinter import ALL, FLAT, Event, BOTTOM, OptionMenu
     from tkinter import *
+    from tkinter.filedialog import askdirectory, askopenfilename
+    from tkinter.filedialog import asksaveasfilename
     from tkinter.filedialog import *
 else:
+    from Tkinter import END, RIGHT, LEFT, CENTER, Tk, Button, Checkbutton
+    from Tkinter import Label, PhotoImage, X, Y, W, E, SW, BOTH, Entry, SUNKEN
+    from Tkinter import Radiobutton, Toplevel, BooleanVar, StringVar, Canvas
+    from Tkinter import Scrollbar, Listbox, Frame, Text, Menu, VERTICAL
+    from Tkinter import ALL, FLAT, Event, BOTTOM, OptionMenu
     from Tkinter import *
+    from tkFileDialog import askdirectory, askopenfilename
+    from tkFileDialog import asksaveasfilename
     from tkFileDialog import *
 
 if VERSION < 3 and sys.version_info[1] < 6:
@@ -314,7 +328,7 @@ except:
     pass
 
 PIL = True
-if PIL == True:
+if PIL:
     try:
         from PIL import Image
         Image.MAX_IMAGE_PIXELS = None
@@ -323,7 +337,6 @@ if PIL == True:
         sys.stdout.write("PIL Not loaded.\n")
 
 
-import binascii
 from bit import bit_from_shape
 from constants import Zero, IN_AXIS, Plane
 from constants import MIN_METRIC_STEP_LEN, MIN_IMP_STEP_LEN
@@ -331,9 +344,10 @@ from douglas import douglas
 from dxf import parse_dxf, WriteDXF
 from gcode import Gcode
 import getopt
-from graphics import Character, Line, Get_Angle, Transform
+from graphics import Get_Angle, Transform
 import font
-from math import *
+from math import sqrt, radians, tan, acos, sin, cos, atan2, fabs, floor, ceil
+from math import degrees
 from messages import Message
 import os
 import re
@@ -382,15 +396,15 @@ class Application(Frame):
             if VERSION == 3:
                 stdout = bytes.decode(stdout)
             if str.find(stdout.upper(), 'POTRACE') != -1:
-                self.POTRACE_AVAIL = TRUE
+                self.POTRACE_AVAIL = True
                 if str.find(stdout.upper(), '1.1') == -1:
                     message.fmessage("F-Engrave Requires Potrace Version 1.10 or Newer.")
             else:
-                self.POTRACE_AVAIL = FALSE
+                self.POTRACE_AVAIL = False
                 message.fmessage("potrace is not working...Bummer")
         except:
             message.fmessage("potrace executable is not present/working...Bummer")
-            self.POTRACE_AVAIL = FALSE
+            self.POTRACE_AVAIL = False
 
         self.createWidgets()
 
@@ -1042,7 +1056,7 @@ class Application(Frame):
         top_File.add("command", label = "Read Settings from File", \
                      command = self.menu_File_Open_G_Code_File)
         top_File.add_separator()
-        if self.POTRACE_AVAIL == TRUE:
+        if self.POTRACE_AVAIL:
             top_File.add("command", label = "Open DXF/Image", \
                          command = self.menu_File_Open_DXF_File)
         else:
@@ -1099,7 +1113,7 @@ class Application(Frame):
                          command = self.GEN_Settings_Window)
         top_Settings.add("command", label = "V-Carve Settings", \
                          command = self.VCARVE_Settings_Window)
-        if self.POTRACE_AVAIL == TRUE:
+        if self.POTRACE_AVAIL:
             top_Settings.add("command", label = "Bitmap Import Settings", \
                              command = self.PBM_Settings_Window)
 
@@ -1512,23 +1526,23 @@ class Application(Frame):
             order_out = self.Sort_Paths(ecoords)
             ###########################
 
-            while (rough_again == True or roughing == True):
-                if (rough_again == False):
+            while rough_again or roughing:
+                if not rough_again:
                     roughing = False
                     maxDZ = -99999
                 rough_again = False
                 zmin = zmin + maxDZ
 
                 z1 = Depth
-                if ( roughing ):
+                if roughing:
                     z1 = z1 + rough_stock
-                if ( z1 < zmin):
+                if z1 < zmin:
                     z1 = zmin
                     rough_again = True
                 zmax = zmin - maxDZ
 
-                if (self.bit_shape.get() == "FLAT") \
-                        and (self.cut_type.get() != "engrave"):
+                if self.bit_shape.get() == "FLAT" \
+                        and self.cut_type.get() != "engrave":
                     g.set_depth(z1)
 
                 dist = 999
@@ -1658,8 +1672,8 @@ class Application(Frame):
                 ################################
                 if ((rough_stock > 0) and(-maxDZ < rough_stock)):
                     rough_stock = -maxDZ
-                while (rough_again == True or roughing == True):
-                    if (rough_again == False):
+                while rough_again or roughing:
+                    if not rough_again:
                         roughing = False
                         maxDZ = -99999
                     rough_again = False
@@ -1768,8 +1782,6 @@ class Application(Frame):
 
         return g
 
-    ################################################################################
-
     #############################
     # Write Cleanup G-code File #
     #############################
@@ -1784,7 +1796,7 @@ class Application(Frame):
         if self.inlay.get():
             Depth = Depth + float(self.allowance.get())
 
-        g = Gcode(message=message,
+        g = Gcode(message,
                   safetyheight=SafeZ,
                   tolerance=float(self.accuracy.get()),
                   arc_fit=self.arc_fit.get(),
@@ -1827,8 +1839,8 @@ class Application(Frame):
         ################################
         if ((rough_stock > 0) and(-maxDZ < rough_stock)):
             rough_stock = -maxDZ
-        while (rough_again == True or roughing == True):
-            if (rough_again == False):
+        while rough_again or roughing:
+            if not rough_again:
                 roughing = False
                 maxDZ = -99999
             rough_again = False
@@ -2979,7 +2991,7 @@ class Application(Frame):
         if ( not os.path.isdir(init_dir) ):
             init_dir = self.HOME_DIR
 
-        if self.POTRACE_AVAIL == TRUE:
+        if self.POTRACE_AVAIL:
             if PIL:
                 fileselect = askopenfilename(filetypes=[("DXF/Image Files", ("*.dxf","*.png","*.bmp","*.tif")),
                                                         ("DXF Files","*.dxf"), \
@@ -4309,7 +4321,7 @@ class Application(Frame):
         y_bot = cszh / 2 + (maxy - midy) / PlotScale
         y_top = cszh / 2 + (miny - midy) / PlotScale
 
-        if self.show_box.get() == True:
+        if self.show_box.get():
             self.segID.append( self.PreviewCanvas.create_rectangle(
                 x_lft, y_bot, x_rgt, y_top, fill="gray80", outline="gray80", width = 0) )
 
@@ -4320,7 +4332,7 @@ class Application(Frame):
             Ry_top = cszh / 2 + (-Radius_in + midy) / PlotScale
             self.segID.append( self.PreviewCanvas.create_oval(Rx_lft, Ry_bot, Rx_rgt, Ry_top, outline="gray90", width = 0, dash=3) )
 
-        if self.show_thick.get() == True:
+        if self.show_thick.get():
             plot_width = Thick / PlotScale
         else:
             plot_width = 1.0
@@ -4383,6 +4395,11 @@ class Application(Frame):
             rold = -1
 
             if self.show_v_path.get():
+                # Avoid pylava warnings
+                rold = 0
+                xold = 0
+                yold = 0
+
                 for line in self.vcoords:
                     XY = line
                     x1 = XY[0]
@@ -4410,6 +4427,10 @@ class Application(Frame):
         ########################################
         if self.cut_type.get() == "v-carve":
             loop_old = -1
+            # Avoid pylava warnings
+            xold = 0
+            yold = 0
+
             for line in self.clean_coords_sort:
                 XY = line
                 x1 = XY[0]
@@ -4424,6 +4445,10 @@ class Application(Frame):
                 yold = y1
 
             loop_old = -1
+            # Avoid pylava warnings
+            xold = 0
+            yold = 0
+
             for line in self.clean_coords_sort:
                 XY = line
                 x1 = XY[0]
@@ -4438,6 +4463,10 @@ class Application(Frame):
                 yold = y1
 
             loop_old = -1
+            # Avoid pylava warnings
+            xold = 0
+            yold = 0
+
             for line in self.v_clean_coords_sort:
                 XY = line
                 x1 = XY[0]
@@ -4456,7 +4485,7 @@ class Application(Frame):
         # End V-carve Plotting Stuff
         #########################################
 
-        if self.show_axis.get() == True:
+        if self.show_axis.get():
             # Plot coordinate system origin
             self.segID.append( self.PreviewCanvas.create_line(axis_x1, axis_y1, \
                                                               axis_x2, axis_y1, \
@@ -4563,7 +4592,7 @@ class Application(Frame):
         ################################
         ##      Font Index Preview    ##
         ################################
-        if self.fontdex.get() == True:
+        if self.fontdex.get():
             Radius_in = 0.0
             String = ""
             for key in self.font:
@@ -4641,13 +4670,13 @@ class Application(Frame):
         font_char_space = font_char_width * (CSpaceP / 100.0)
 
         if Radius_in != 0.0:
-            if self.outer.get() == True:
-                if self.upper.get() == True:
+            if self.outer.get():
+                if self.upper.get():
                     Radius = Radius_in + Thick / 2 + YScale * (-font_line_depth)
                 else:
                     Radius = -Radius_in - Thick / 2 - YScale * (font_line_height)
             else:
-                if self.upper.get() == True:
+                if self.upper.get():
                     Radius = Radius_in - Thick / 2 - YScale * (font_line_height)
                 else:
                     Radius = -Radius_in + Thick / 2 + YScale * (-font_line_depth)
@@ -4800,7 +4829,7 @@ class Application(Frame):
             if self.justify.get() == "Right":
                 for line in self.coords:
                     XY = line
-                    if self.upper.get() == True:
+                    if self.upper.get():
                         XY[0],XY[1] = Transform(XY[0], XY[1], maxa)
                         XY[2],XY[3] = Transform(XY[2], XY[3], maxa)
                     else:
@@ -4851,12 +4880,12 @@ class Application(Frame):
                 XY[0],XY[1],A1 = self.Rotn(XY[0], XY[1], Angle, 0)
                 XY[2],XY[3],A2 = self.Rotn(XY[2], XY[3], Angle, 0)
 
-            if mirror_flag == True:
+            if mirror_flag:
                 XY[0] = -XY[0]
                 XY[2] = -XY[2]
                 v_flop = not(v_flop)
 
-            if flip_flag == True:
+            if flip_flag:
                 XY[1] = -XY[1]
                 XY[3] = -XY[3]
                 v_flop = not(v_flop)
@@ -5029,10 +5058,10 @@ class Application(Frame):
         if no_font_record != []:
             if (not self.batch.get()):
                 self.statusbar.configure( bg = 'orange' )
-            message.fmessage('Characters not found in font file:', FALSE)
-            message.fmessage("(", FALSE)
+            message.fmessage('Characters not found in font file:', False)
+            message.fmessage("(", False)
             for entry in no_font_record:
-                message.fmessage( "%s," % (entry), FALSE)
+                message.fmessage( "%s," % (entry), False)
             message.fmessage(")")
 
         if (not self.batch.get()):
@@ -5089,7 +5118,7 @@ class Application(Frame):
     def get_flop_staus(self, CLEAN_FLAG=False):
         v_flop = bool(self.v_flop.get())
 
-        if (self.input_type.get() == "text") and (CLEAN_FLAG == False):
+        if self.input_type.get() == "text" and not CLEAN_FLAG:
             if self.plotbox.get():
                 v_flop = not(v_flop)
             if self.mirror.get():
@@ -5135,7 +5164,7 @@ class Application(Frame):
         #########################################
         # V-Carve Stuff
         #########################################
-        if self.cut_type.get() == "v-carve" and self.fontdex.get() == False:
+        if self.cut_type.get() == "v-carve" and not self.fontdex.get():
 
             v_flop = self.get_flop_staus()
             if (not self.batch.get()):
@@ -5187,7 +5216,7 @@ class Application(Frame):
             if ((self.input_type.get() == "image") and (clean_flag == 0)):
                 self.coords = self.sort_for_v_carve(self.coords)
 
-            if (DXF_FLAG == True):
+            if DXF_FLAG:
                 return
             ##########################################################################
 
@@ -5690,7 +5719,7 @@ class Application(Frame):
             [Xstart, Ystart] = ecoords[Start]
 
             OPEN = True
-            while OPEN == True and len(LObeg) > 0:
+            while OPEN and len(LObeg) > 0:
                 [Xend,Yend] = ecoords[End]
                 dist_beg_min = sqrt((Xend - Xstart) ** 2 + (Yend - Ystart) ** 2)
                 dist_end_min = dist_beg_min
@@ -5748,7 +5777,7 @@ class Application(Frame):
                     LNend.append(kend)
                     End = kend
 
-            if OPEN == True and len(LObeg) == 0:
+            if OPEN and len(LObeg) == 0:
                 ecoords.append(ecoords[End])
                 ecoords.append(ecoords[Start])
                 LNloop.append(Lcnt)
@@ -6073,7 +6102,7 @@ class Application(Frame):
                 Y = Y + DY
             #########################################################################
 
-        if True == False:
+        if True is False: # Why is this code disabled?
             #########################################################################
             # loop over circles recording "pixels" that are covered by the circles
             #########################################################################
@@ -6530,7 +6559,7 @@ class Application(Frame):
         len_seg = sqrt(dx * dx + dy * dy)
 
         if len_seg < Zero:
-            if XY_T_F == False:
+            if not XY_T_F:
                 return False
             else:
                 return []
@@ -6566,13 +6595,13 @@ class Application(Frame):
 
                 # Check if there was a intersection detected
                 if (Xint_local != 0):
-                    if XY_T_F == False:
+                    if not XY_T_F:
                         return True
                     else:
                         Xint_list.append(Xint_local)
                         Xint_local = 0
 
-        if XY_T_F == False:
+        if not XY_T_F:
             return False
         else:
             if len(Xint_list) > 0:
