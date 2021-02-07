@@ -6853,7 +6853,6 @@ class Application(Frame):
             self.master.update()
             self.clean_coords_sort = []
             clean_dia = float(self.clean_dia.get())  # diameter of cleanup bit
-            v_step_len = float(self.v_step_len.get())
             step_over = float(self.clean_step.get())  # percent of cut DIA
             clean_step = step_over / 100.0
             Radjust = clean_dia / 2.0 + rbit
