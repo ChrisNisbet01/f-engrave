@@ -2238,7 +2238,6 @@ class Application(Frame):
             pass
 
     def CLEAN_Recalculate_Click(self):
-        TSTART = time()
         win_id = self.grab_current()
         if self.clean_segment == []:
             mess = "Calculate V-Carve must be executed\n"
@@ -2256,7 +2255,6 @@ class Application(Frame):
             win_id.grab_set()
         except:
             pass
-        # print "time for cleanup calculations: ",time()-TSTART
 
     def Write_Clean_Click(self):
         win_id = self.grab_current()
