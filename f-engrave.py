@@ -1753,10 +1753,8 @@ class Application(Frame):
                         loop = ecoords[i][2]
 
                         if i + 1 < temp[1] + step:
-                            nextx = ecoords[i + 1][0]
                             nexty = ecoords[i + 1][1]
                         else:
-                            nextx = 0
                             nexty = 0
 
                         # check and see if we need to move to a new discontinuous start point
@@ -1868,11 +1866,9 @@ class Application(Frame):
                         loop = new_coords[v_index][3]
 
                         if v_index + 1 < len(new_coords):
-                            nextx = new_coords[v_index + 1][0]
                             nexty = new_coords[v_index + 1][1]
                             nextr = new_coords[v_index + 1][2]
                         else:
-                            nextx = 0
                             nexty = 0
                             nextr = 0
 
