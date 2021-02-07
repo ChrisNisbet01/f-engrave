@@ -6487,7 +6487,6 @@ class Application(Frame):
         global STOP_CALC
         STOP_CALC = 0
         for iloop in range(Nloops):
-            CUR_PCT = float(iloop) / Nloops * 100.0
             if not self.batch.get():
                 stamp = int(3 * time())  # update every 1/3 of a second
                 if stamp != timestamp:
@@ -6523,7 +6522,6 @@ class Application(Frame):
             if Lflip[iloop]:
                 Lcw[iloop] = not Lcw[iloop]
 
-        CUR_PCT = 0.0
         #################################################
         # Find new order based on distance to next beg  #
         #################################################
