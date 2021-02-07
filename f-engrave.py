@@ -2023,7 +2023,6 @@ class Application(Frame):
 
             if len(coords_out) > 0:
                 loop_old = -1
-                code = " "
                 v_index = -1
                 while v_index < len(coords_out) - 1:
                     v_index = v_index + 1
