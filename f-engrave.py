@@ -2028,7 +2028,6 @@ class Application(Frame):
                     v_index = v_index + 1
                     x1 = coords_out[v_index][0]
                     y1 = coords_out[v_index][1]
-                    r1 = coords_out[v_index][2]
                     loop = coords_out[v_index][3]
 
                     if v_index + 1 < len(coords_out):
