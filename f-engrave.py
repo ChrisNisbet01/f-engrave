@@ -2508,7 +2508,7 @@ class Application(Frame):
     #############################
     def Entry_Zsafe_Check(self):
         try:
-            value = float(self.ZSAFE.get())
+            float(self.ZSAFE.get())
         except:
             return 3  # Value not a number
         return 1  # Value is a valid number changes do not require recalc
@@ -2519,7 +2519,7 @@ class Application(Frame):
     #############################
     def Entry_Zcut_Check(self):
         try:
-            value = float(self.ZCUT.get())
+            float(self.ZCUT.get())
         except:
             return 3  # Value not a number
         return 1  # Value is a valid number changes do not require recalc
@@ -2535,7 +2535,7 @@ class Application(Frame):
     ######################################
     def Entry_Xoffset_Check(self):
         try:
-            value = float(self.xorigin.get())
+            float(self.xorigin.get())
         except:
             return 3  # Value not a number
         return 1  # Value is a valid number changes do not require recalc
@@ -2546,7 +2546,7 @@ class Application(Frame):
     #############################
     def Entry_Yoffset_Check(self):
         try:
-            value = float(self.yorigin.get())
+            float(self.yorigin.get())
         except:
             return 3  # Value not a number
         return 1  # Value is a valid number changes do not require recalc
@@ -2571,7 +2571,7 @@ class Application(Frame):
     #############################
     def Entry_Accuracy_Check(self):
         try:
-            value = float(self.accuracy.get())
+            float(self.accuracy.get())
         except:
             return 3  # Value not a number
         return 0  # Value is a valid number
