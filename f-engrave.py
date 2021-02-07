@@ -7295,7 +7295,6 @@ class Application(Frame):
 
         w_label = 100
         w_entry = 60
-        w_units = 35
         xd_entry_L = xd_label_L + w_label + 10
         xd_units_L = xd_entry_L + w_entry + 5
 
