@@ -1752,11 +1752,6 @@ class Application(Frame):
                         y1 = ecoords[i][1]
                         loop = ecoords[i][2]
 
-                        if i + 1 < temp[1] + step:
-                            nexty = ecoords[i + 1][1]
-                        else:
-                            nexty = 0
-
                         # check and see if we need to move to a new discontinuous start point
                         if loop != loop_old:
                             g.flush()
@@ -1866,10 +1861,8 @@ class Application(Frame):
                         loop = new_coords[v_index][3]
 
                         if v_index + 1 < len(new_coords):
-                            nexty = new_coords[v_index + 1][1]
                             nextr = new_coords[v_index + 1][2]
                         else:
-                            nexty = 0
                             nextr = 0
 
                         if self.bit_shape.get() == "VBIT":
