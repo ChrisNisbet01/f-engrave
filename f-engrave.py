@@ -4357,7 +4357,7 @@ class Application(Frame):
         xIndex = int((xpt - self.MINX) / self.xPartitionLength)
         yIndex = int((ypt - self.MINY) / self.yPartitionLength)
 
-        self.coords_check = []
+        coords_check = []
         R_A = abs(rmin)
         Bcnt = -1
         ############################################################
@@ -4370,9 +4370,9 @@ class Application(Frame):
             R_B = line_B[len(line_B) - 1]
             GAP = sqrt((X_B - xpt) * (X_B - xpt) + (Y_B - ypt) * (Y_B - ypt))
             if GAP < abs(R_A + R_B):
-                self.coords_check.append(line_B)
+                coords_check.append(line_B)
 
-        for linec in self.coords_check:
+        for linec in coords_check:
             XYc = linec
             xmaxt = max(XYc[0], XYc[2]) + rmin * 2
             xmint = min(XYc[0], XYc[2]) - rmin * 2
