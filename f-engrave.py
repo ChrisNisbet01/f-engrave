@@ -1745,7 +1745,6 @@ class Application(Frame):
                     else:
                         step = 1
 
-                    y_center_last = 999
                     FLAG_arc = 0
                     FLAG_line = 0
                     code = " "
@@ -1862,7 +1861,6 @@ class Application(Frame):
                     zmin = zmin + maxDZ
 
                     loop_old = -1
-                    y_center_last = 999
                     FLAG_arc = 0
                     FLAG_line = 0
                     code = " "
