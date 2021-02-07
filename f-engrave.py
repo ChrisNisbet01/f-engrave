@@ -2071,8 +2071,6 @@ class Application(Frame):
 
         maxx = -99919.0
         maxy = -99929.0
-        maxa = -99939.0
-        mina = 99949.0
         miny = 99959.0
         minx = 99969.0
         for line in self.coords:
