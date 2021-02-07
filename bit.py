@@ -25,6 +25,10 @@ class Bit(object):
     def radius(self):
         return self._radius
 
+    @property
+    def shape(self):
+        return self._shape
+
 
 class VBit(Bit):
     def __init__(self, shape, diameter, angle):

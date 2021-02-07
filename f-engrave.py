@@ -646,7 +646,11 @@ class Application(Frame):
         self.lasty = 0
 
         # Derived variables
-        self.calc_depth_limit()
+        bit = bit_from_shape(
+            self.bit_shape.get(), self.v_bit_dia.get(), self.v_bit_angle.get()
+        )
+
+        self.calc_depth_limit(bit)
 
         if self.units.get() == "in":
             self.funits.set("in/min")
@@ -1602,6 +1606,10 @@ class Application(Frame):
 
     ################################################################################
     def WriteGCode(self, config_file=False):
+        bit = bit_from_shape(
+            self.bit_shape.get(), self.v_bit_dia.get(), self.v_bit_angle.get()
+        )
+
         SafeZ = float(self.ZSAFE.get())
         Acc = float(self.accuracy.get())
         Depth = float(self.ZCUT.get())
@@ -1657,7 +1665,7 @@ class Application(Frame):
                 ###   Create Flat Cut ECOORDS   ###
                 ###################################
                 if len(self.vcoords) > 0:
-                    rbit = self.calc_vbit_dia() / 2.0
+                    rbit = self.calc_vbit_dia(bit) / 2.0
                     loopa_old = self.vcoords[0][3]
                     loop = 0
                     for i in range(1, len(self.vcoords)):
@@ -1970,8 +1978,11 @@ class Application(Frame):
     #############################
     def WRITE_CLEAN_UP(self, bit_type="straight"):
         SafeZ = float(self.ZSAFE.get())
+        bit = bit_from_shape(
+            self.bit_shape.get(), self.v_bit_dia.get(), self.v_bit_angle.get()
+        )
 
-        self.calc_depth_limit()
+        self.calc_depth_limit(bit)
         try:
             Depth = float(self.maxcut.get())
         except:
@@ -2376,20 +2387,14 @@ class Application(Frame):
         global STOP_CALC
         STOP_CALC = 1
 
-    def calc_vbit_dia(self):
-        bit = bit_from_shape(
-            self.bit_shape.get(), self.v_bit_dia.get(), self.v_bit_angle.get()
-        )
+    def calc_vbit_dia(self, bit):
         bit_dia = bit.diameter(
             self.v_depth_lim.get(), self.inlay.get(), self.allowance.get()
         )
         return bit_dia
 
-    def calc_depth_limit(self):
+    def calc_depth_limit(self, bit):
         try:
-            bit = bit_from_shape(
-                self.bit_shape.get(), self.v_bit_dia.get(), self.v_bit_angle.get()
-            )
             max_cut = bit.max_cut_depth(self.v_depth_lim.get())
             self.maxcut.set("%.3f" % (max_cut))
         except:
@@ -2695,7 +2700,10 @@ class Application(Frame):
 
     def Entry_Vbitangle_Callback(self, varName, index, mode):
         self.entry_set(self.Entry_Vbitangle, self.Entry_Vbitangle_Check())
-        self.calc_depth_limit()
+        bit = bit_from_shape(
+            self.bit_shape.get(), self.v_bit_dia.get(), self.v_bit_angle.get()
+        )
+        self.calc_depth_limit(bit)
 
     #############################
     def Entry_Vbitdia_Check(self):
@@ -2710,7 +2718,10 @@ class Application(Frame):
 
     def Entry_Vbitdia_Callback(self, varName, index, mode):
         self.entry_set(self.Entry_Vbitdia, self.Entry_Vbitdia_Check())
-        self.calc_depth_limit()
+        bit = bit_from_shape(
+            self.bit_shape.get(), self.v_bit_dia.get(), self.v_bit_angle.get()
+        )
+        self.calc_depth_limit(bit)
 
     #############################
     def Entry_VDepthLimit_Check(self):
@@ -2725,7 +2736,10 @@ class Application(Frame):
 
     def Entry_VDepthLimit_Callback(self, varName, index, mode):
         self.entry_set(self.Entry_VDepthLimit, self.Entry_VDepthLimit_Check())
-        self.calc_depth_limit()
+        bit = bit_from_shape(
+            self.bit_shape.get(), self.v_bit_dia.get(), self.v_bit_angle.get()
+        )
+        self.calc_depth_limit(bit)
 
     #############################
     def Entry_InsideAngle_Check(self):
@@ -2886,22 +2900,25 @@ class Application(Frame):
     #############################
 
     def Entry_Bit_Shape_Check(self):
-        self.calc_depth_limit()
+        bit = bit_from_shape(
+            self.bit_shape.get(), self.v_bit_dia.get(), self.v_bit_angle.get()
+        )
+        self.calc_depth_limit(bit)
 
         try:
-            if self.bit_shape.get() == "VBIT":
+            if bit.shape == "VBIT":
                 self.Label_Vbitangle.configure(state="normal")
                 self.Label_Vbitangle_u.configure(state="normal")
                 self.Entry_Vbitangle.configure(state="normal")
                 self.Label_photo.configure(state="normal")
                 self.Label_Vbitdia.configure(text="V-Bit Diameter")
-            elif self.bit_shape.get() == "BALL":
+            elif bit.shape == "BALL":
                 self.Label_Vbitangle.configure(state="disabled")
                 self.Label_Vbitangle_u.configure(state="disabled")
                 self.Entry_Vbitangle.configure(state="disabled")
                 self.Label_photo.configure(state="disabled")
                 self.Label_Vbitdia.configure(text="Ball Nose Bit Diameter")
-            elif self.bit_shape.get() == "FLAT":
+            elif bit.shape == "FLAT":
                 self.Label_Vbitangle.configure(state="disabled")
                 self.Label_Vbitangle_u.configure(state="disabled")
                 self.Entry_Vbitangle.configure(state="disabled")
@@ -3543,13 +3560,17 @@ class Application(Frame):
                     except:
                         self.default_text = self.default_text + "%c" % (chr(int(Ch)))
 
+        bit = bit_from_shape(
+            self.bit_shape.get(), self.v_bit_dia.get(), self.v_bit_angle.get()
+        )
+
         if self.units.get() == "in":
             self.funits.set("in/min")
         else:
             self.units.set("mm")
             self.funits.set("mm/min")
 
-        self.calc_depth_limit()
+        self.calc_depth_limit(bit)
 
         temp_name, fileExtension = os.path.splitext(filename)
         file_base = os.path.basename(temp_name)
@@ -4767,6 +4788,9 @@ class Application(Frame):
         # erase old segs/display objects
         self.PreviewCanvas.delete(ALL)
         self.segID = []
+        bit = bit_from_shape(
+            self.bit_shape.get(), self.v_bit_dia.get(), self.v_bit_angle.get()
+        )
 
         cszw = int(self.PreviewCanvas.cget("width"))
         cszh = int(self.PreviewCanvas.cget("height"))
@@ -4883,8 +4907,8 @@ class Application(Frame):
                     r = XY[2]
                     color = "black"
 
-                    rbit = self.calc_vbit_dia() / 2.0
-                    if self.bit_shape.get() == "FLAT":
+                    rbit = self.calc_vbit_dia(bit) / 2.0
+                    if bit.shape == "FLAT":
                         if r >= rbit:
                             self.Plot_Circ(
                                 x1, y1, midx, midy, cszw, cszh, PlotScale, color, r, 1
@@ -5623,8 +5647,8 @@ class Application(Frame):
         ################
 
     ##################################################
-    def record_v_carve_data(self, x1, y1, phi, rout, loop_cnt, clean_flag):
-        rbit = self.calc_vbit_dia() / 2.0
+    def record_v_carve_data(self, x1, y1, phi, rout, loop_cnt, clean_flag, bit):
+        rbit = self.calc_vbit_dia(bit) / 2.0
         r_clean = float(self.clean_dia.get()) / 2.0
 
         Lx, Ly = Transform(0, rout, -phi)
@@ -5683,6 +5707,9 @@ class Application(Frame):
         timestamp = 0
         self.master.unbind("<Configure>")
         STOP_CALC = 0
+        bit = bit_from_shape(
+            self.bit_shape.get(), self.v_bit_dia.get(), self.v_bit_angle.get()
+        )
 
         if self.units.get() == "mm":
             if float(self.v_step_len.get()) < MIN_METRIC_STEP_LEN:
@@ -5733,7 +5760,7 @@ class Application(Frame):
 
             dline = float(self.v_step_len.get())
             ###############################################################
-            rbit = self.calc_vbit_dia() / 2.0
+            rbit = self.calc_vbit_dia(bit) / 2.0
             clean_dia = float(self.clean_dia.get())
 
             r_inlay_top = self.calc_r_inlay_top()
@@ -6113,7 +6140,7 @@ class Application(Frame):
                                 CHK_STRING,
                             )
                             xv, yv, rv, clean_seg = self.record_v_carve_data(
-                                x1, y1, sub_phi, rout, loop_cnt, clean_flag
+                                x1, y1, sub_phi, rout, loop_cnt, clean_flag, bit
                             )
                             self.clean_segment[CUR_CNT] = bool(
                                 self.clean_segment[CUR_CNT]
@@ -6171,7 +6198,7 @@ class Application(Frame):
                         if cnt == 0 and not_b_carve:
                             rout = 0.0
                         xv, yv, rv, clean_seg = self.record_v_carve_data(
-                            xpt, ypt, phi2, rout, loop_cnt, clean_flag
+                            xpt, ypt, phi2, rout, loop_cnt, clean_flag, bit
                         )
 
                         self.clean_segment[CUR_CNT] = bool(
@@ -6230,7 +6257,8 @@ class Application(Frame):
                                     CHK_STRING,
                                 )
                                 xv, yv, rv, clean_seg = self.record_v_carve_data(
-                                    xa, ya, sub_phi, rout, loop_cnt, clean_flag
+                                    xa, ya, sub_phi, rout, loop_cnt, clean_flag,
+                                    bit
                                 )
                                 self.clean_segment[CUR_CNT] = bool(
                                     self.clean_segment[CUR_CNT]
@@ -6254,7 +6282,8 @@ class Application(Frame):
                                     )
 
                             xv, yv, rv, clean_seg = self.record_v_carve_data(
-                                xpta, ypta, phi2a, routa, loop_cnt, clean_flag
+                                xpta, ypta, phi2a, routa, loop_cnt, clean_flag,
+                                bit
                             )
                             self.clean_segment[CUR_CNT] = bool(
                                 self.clean_segment[CUR_CNT]
@@ -6262,7 +6291,8 @@ class Application(Frame):
                         else:
                             # Add closing segment
                             xv, yv, rv, clean_seg = self.record_v_carve_data(
-                                xpta, ypta, phi2a, routa, loop_cnt, clean_flag
+                                xpta, ypta, phi2a, routa, loop_cnt, clean_flag,
+                                bit
                             )
                             self.clean_segment[CUR_CNT] = bool(
                                 self.clean_segment[CUR_CNT]
@@ -6878,6 +6908,9 @@ class Application(Frame):
         return path_coords_out
 
     def Clean_Path_Calc(self, bit_type="straight"):
+        bit = bit_from_shape(
+            self.bit_shape.get(), self.v_bit_dia.get(), self.v_bit_angle.get()
+        )
         v_flop = self.get_flop_staus(CLEAN_FLAG=True)
         if v_flop:
             edge = 1
@@ -6895,7 +6928,7 @@ class Application(Frame):
                 self.v_clean_P.get() + self.v_clean_Y.get() + self.v_clean_X.get()
             )
 
-        rbit = self.calc_vbit_dia() / 2.0
+        rbit = self.calc_vbit_dia(bit) / 2.0
         check_coords = []
 
         self.statusbar.configure(bg="yellow")
