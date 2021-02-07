@@ -374,7 +374,7 @@ class Application(Frame):
         Frame.__init__(self, master)
         self.w = 780
         self.h = 490
-        frame = Frame(master, width=self.w, height=self.h)
+        Frame(master, width=self.w, height=self.h)
         self.master = master
         self.x = -1
         self.y = -1
