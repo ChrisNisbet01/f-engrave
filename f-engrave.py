@@ -368,6 +368,7 @@ STOP_CALC = 0
 
 message = Message(quiet=QUIET or IN_AXIS, debug=DEBUG)
 
+
 ############################################################################
 class Application(Frame):
     def __init__(self, master):
