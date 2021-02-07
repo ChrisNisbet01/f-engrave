@@ -5700,8 +5700,6 @@ class Application(Frame):
             else:
                 v_drv_crner = float(self.v_drv_crner.get())
 
-            Acc = float(self.accuracy.get())
-
             CHK_STRING = str(self.v_check_all.get())
             not_b_carve = not bool(self.bit_shape.get() == "BALL")
 
