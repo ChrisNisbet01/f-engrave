@@ -15,15 +15,15 @@ else:
 ####################################
 # Gcode class for creating G-Code
 ####################################
-class Gcode:
+class Gcode(list):
     def __init__(self,
+                 message,
                  safetyheight=0.04,
                  tolerance=0.001,
-                 target=lambda s: sys.stdout.write(s + "\n"),
                  arc_fit="none",
                  metric=False,
-                 enable_variables=False,
-                 message=None):
+                 enable_variables=False):
+        super(Gcode, self).__init__()
 
         self.lastx = self.lasty = self.lastz = self.lastf = None
         self.feed = None
@@ -40,7 +40,7 @@ class Gcode:
 
         self.safetyheight = safetyheight
         self.tolerance = tolerance
-        self.write = target
+        self.write = lambda s: self.append(s)
         self.arc_fit = arc_fit
         self.message = message
 
@@ -65,7 +65,8 @@ class Gcode:
         for move, (x, y, z), cent in \
                 douglas(self.cuts, self.tolerance, self.plane):
             if cent:
-                self.move_common(x, y, z, I=cent[0], J=cent[1], gcode=move)
+                self.move_common(x, y, z, I_offset=cent[0], J_offset=cent[1],
+                                 gcode=move)
             else:
                 self.move_common(x, y, z, gcode="G1")
         self.cuts = []
@@ -84,9 +85,9 @@ class Gcode:
             cmd = "G2"
         else:
             cmd = "G3"
-        self.move_common(I=I_offset, J=J_offset, gcode=cmd)
+        self.move_common(I_offset=I_offset, J_offset=J_offset, gcode=cmd)
 
-    def move_common(self, x=None, y=None, z=None, I_offset=None, J=None,
+    def move_common(self, x=None, y=None, z=None, I_offset=None, J_offset=None,
                     gcode="G0", feed=None):
         if feed is None:
             feed = self.feed
@@ -106,7 +107,7 @@ class Gcode:
 
         if (gcode == "G2" or gcode == "G3"):
             XC = self.lastx + I_offset
-            YC = self.lasty + J
+            YC = self.lasty + J_offset
             R_check_1 = sqrt((XC - self.lastx) ** 2 + (YC - self.lasty) ** 2)
             R_check_2 = sqrt((XC - x) ** 2 + (YC - y) ** 2)
 
@@ -131,8 +132,8 @@ class Gcode:
             self.lastz = z
         if I_offset:
             Istring = " I" + FORMAT % (I_offset)
-        if J:
-            Jstring = " J" + FORMAT % (J)
+        if J_offset:
+            Jstring = " J" + FORMAT % (J_offset)
         if xstring == ystring == zstring == fstring == Istring == \
                 Jstring == "":
             return

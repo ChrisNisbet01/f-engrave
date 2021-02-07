@@ -727,9 +727,10 @@ class Application(Frame):
             self.DoIt()
             if self.cut_type.get() == "v-carve":
                 self.V_Carve_It()
-            self.WriteGCode()
 
-            for line in self.gcode:
+            gcode = self.WriteGCode()
+
+            for line in gcode:
                 try:
                     sys.stdout.write(line + '\n')
                 except:
@@ -1235,7 +1236,7 @@ class Application(Frame):
         return order_out
 
     def Write_Config_File(self, event):
-        self.WriteGCode(config_file=True)
+        gcode = self.WriteGCode(config_file=True)
         config_file = "config.ngc"
         configname_full = self.HOME_DIR + "/" + config_file
 
@@ -1262,7 +1263,8 @@ class Application(Frame):
             self.statusMessage.set("Unable to open file for writing: %s" % (configname_full))
             self.statusbar.configure( bg = 'red' )
             return
-        for line in self.gcode:
+
+        for line in gcode:
             try:
                 fout.write(line + '\n')
             except:
@@ -1396,27 +1398,24 @@ class Application(Frame):
         Acc = float(self.accuracy.get())
         Depth = float(self.ZCUT.get())
 
-        self.gcode = []
-
         if self.batch.get():
             String = self.default_text
         else:
             String = self.Input.get(1.0, END)
 
-        g = Gcode(safetyheight=SafeZ,
+        g = Gcode(message,
+                  safetyheight=SafeZ,
                   tolerance=Acc,
-                  target=lambda s: self.gcode.append(s),
                   arc_fit=self.arc_fit.get(),
                   metric=self.units.get() != "in",
-                  enable_variables=not self.var_dis.get(),
-                  message)
+                  enable_variables=not self.var_dis.get())
 
         if config_file or not self.no_comments.get():
             self.append_author_to_gcode(g)
             self.append_settings_to_gcode(g, String)
 
         if (config_file):
-            return
+            return g
 
         g.set_plane(Plane.xy)
         g.set_depth(Depth)
@@ -1513,7 +1512,8 @@ class Application(Frame):
                     rough_again = True
                 zmax = zmin - maxDZ
 
-                if (self.bit_shape.get() == "FLAT") and (self.cut_type.get() != "engrave"):
+                if (self.bit_shape.get() == "FLAT") \
+                        and (self.cut_type.get() != "engrave"):
                     g.set_depth(z1)
 
                 dist = 999
@@ -1750,6 +1750,8 @@ class Application(Frame):
 
         # Postamble
         g.append_postamble(self.gpost.get())
+
+        return g
 
     ################################################################################
 
@@ -2035,8 +2037,8 @@ class Application(Frame):
         self.clipboard_clear()
         if (self.Check_All_Variables() > 0):
             return
-        self.WriteGCode()
-        for line in self.gcode:
+        gcode = self.WriteGCode()
+        for line in gcode:
             self.clipboard_append(line + '\n')
 
     def CopyClipboard_SVG(self):
@@ -2048,8 +2050,8 @@ class Application(Frame):
     def WriteToAxis(self):
         if (self.Check_All_Variables() > 0):
             return
-        self.WriteGCode()
-        for line in self.gcode:
+        gcode = self.WriteGCode()
+        for line in gcode:
             try:
                 sys.stdout.write(line + '\n')
             except:
@@ -3342,7 +3344,7 @@ class Application(Frame):
 
 
     def menu_File_Save_Settings_File(self):
-        self.WriteGCode(config_file=True)
+        gcode = self.WriteGCode(config_file=True)
         init_dir = os.path.dirname(self.NGC_FILE)
         if ( not os.path.isdir(init_dir) ):
             init_dir = self.HOME_DIR
@@ -3368,7 +3370,7 @@ class Application(Frame):
                 self.statusMessage.set("Unable to open file for writing: %s" % (filename))
                 self.statusbar.configure( bg = 'red' )
                 return
-            for line in self.gcode:
+            for line in gcode:
                 try:
                     fout.write(line + '\n')
                 except:
@@ -3390,7 +3392,7 @@ class Application(Frame):
             if not message.message_ask_ok_cancel("Continue", mess ):
                 return
 
-        self.WriteGCode()
+        gcode = self.WriteGCode()
         init_dir = os.path.dirname(self.NGC_FILE)
         if ( not os.path.isdir(init_dir) ):
             init_dir = self.HOME_DIR
@@ -3417,7 +3419,7 @@ class Application(Frame):
                 self.statusMessage.set("Unable to open file for writing: %s" % (filename))
                 self.statusbar.configure( bg = 'red' )
                 return
-            for line in self.gcode:
+            for line in gcode:
                 try:
                     fout.write(line + '\n')
                 except:
