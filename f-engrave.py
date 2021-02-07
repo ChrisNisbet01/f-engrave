@@ -2030,11 +2030,6 @@ class Application(Frame):
                     y1 = coords_out[v_index][1]
                     loop = coords_out[v_index][3]
 
-                    if v_index + 1 < len(coords_out):
-                        nextr = coords_out[v_index + 1][2]
-                    else:
-                        nextr = 0
-
                     # Check and see if we need to move to a new discontinuous
                     # start point.
                     if loop != loop_old:
