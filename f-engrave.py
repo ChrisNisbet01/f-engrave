@@ -5575,7 +5575,6 @@ class Application(Frame):
     ##################################################
     def record_v_carve_data(self, x1, y1, phi, rout, loop_cnt, clean_flag, bit):
         rbit = self.calc_vbit_dia(bit) / 2.0
-        r_clean = float(self.clean_dia.get()) / 2.0
 
         Lx, Ly = Transform(0, rout, -phi)
         xnormv = x1 + Lx
