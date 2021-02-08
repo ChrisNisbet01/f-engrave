@@ -36,254 +36,375 @@
     Version 0.2 - Added V-Carve code
                 - Fixed potential inf loop
                 - Added pan and zoom
-                - Moved Font file read out of calculation loop (increased speed)
+                - Moved Font file read out of calculation loop (increased
+                  speed)
 
     Version 0.3 - Bug fix for flip normals and flip text
                 - Moved depth scalar calc out of for loop
 
     Version 0.4 - Added importing for DXF files
-                - Added import True Type fonts using the ttf2cxf_stream helper program
+                - Added import True Type fonts using the ttf2cxf_stream helper
+                  program
                 - Fixed line thickness display when zooming
 
-    Version 0.5 - Added support for more DXF entity types POLYLINE and LEADER (leaders won't have arrow heads)
+    Version 0.5 - Added support for more DXF entity types POLYLINE and LEADER
+                  (leaders won't have arrow heads)
                 - Added global accuracy setting
-                - Added straight line detection in v-carve output (reduces number of G1 commands and output file size)
+                - Added straight line detection in v-carve output (reduces
+                  number of G1 commands and output file size)
                 - Improved handling of closed loops in v-carving
                 - Added global variable named "Zero" for non-zero checks
 
-    Version 0.6 - Added import Portable BitMap (PBM) images using Potrace as a helper program
-                - Default directory for opening PBM and DXF files is now set to the current font directory
-                - Default directory for and saving is now set to the users home directory
-                - Helper programs should now be found if they are in the global search path or F-Engrave
-                    script folder (Previously the helper programs needed to be in f-engrave script folder)
+    Version 0.6 - Added import Portable BitMap (PBM) images using Potrace as a
+                  helper program
+                - Default directory for opening PBM and DXF files is now set to
+                  the current font directory
+                - Default directory for and saving is now set to the users home
+                  directory
+                - Helper programs should now be found if they are in the global
+                  search path or F-Engrave script folder (Previously the helper
+                  programs needed to be in f-engrave script folder)
 
-    Version 0.7 - Increased speed of v-carve calculation for large designs.  Approximately 20 times faster now.
-                - Added window that displays status and contains a stop button for v-carve calculations
-                - Fixed display so that it no longer freezes during long calculations
-                - Fixed divide by zero error for certain fonts (Bug in Versions 0.5 and 0.6)
+    Version 0.7 - Increased speed of v-carve calculation for large designs.
+                  Approximately 20 times faster now.
+                - Added window that displays status and contains a stop button
+                  for v-carve calculations
+                - Fixed display so that it no longer freezes during long
+                  calculations
+                - Fixed divide by zero error for certain fonts (Bug in Versions
+                  0.5 and 0.6)
 
     Version 0.8 - Changed interface when working with image (DXF or PBM) files.
-                - Added post processing logic to reduce number and distance of rapid moves
-                - Fixed bug in DXF code that caused failure to import some DXF files.
-                - Changed settings dialogs to allow recalculation and v-carving from the dialog window to preview settings
-                - Added some logic for determining default .ngc names and directory when saving
-                - Remove option for steps around corner (now internally calculated based on step length and bit geometry)
+                - Added post processing logic to reduce number and distance of
+                  rapid moves
+                - Fixed bug in DXF code that caused failure to import some DXF
+                  files.
+                - Changed settings dialogs to allow recalculation and v-carving
+                  from the dialog window to preview settings
+                - Added some logic for determining default .ngc names and
+                  directory when saving
+                - Remove option for steps around corner (now internally
+                  calculated based on step length and bit geometry)
 
     Version 0.9 - Added arc fitting to g-code output
-                - Fixed extended characters up to 255 (now uses numbers for the font index rather than the character)
-                - Added option for a second operation g-code output file to clean-up islands and adjacent areas of a v-carving
+                - Fixed extended characters up to 255 (now uses numbers for the
+                  font index rather than the character)
+                - Added option for a second operation g-code output file to
+                  clean-up islands and adjacent areas of a v-carving
                 - Cleaned up some GUI bugs introduced in Version 0.8
                 - Remove flip border normals option
                 - Default to check "all" instead of current character "chr"
-                - Changed the percent complete calculation to use the % of the total segment length rather than the segment count
+                - Changed the percent complete calculation to use the % of the
+                  total segment length rather than the segment count
 
-    Version 0.91 - Fixed bug that caused Radius setting from text mode to affect image mode
+    Version 0.91 - Fixed bug that caused Radius setting from text mode to
+                   affect image mode
                  - Fixed bug that caused some DXF files to fail erroneously
 
-    Version 0.92 - Fixed bug that caused some buttons on the v-carve setting to not show up.
+    Version 0.92 - Fixed bug that caused some buttons on the v-carve setting to
+                   not show up.
 
     Version 0.93 - Fixed bug that caused bad g-code in some cases.
 
-    Version 1.00 - Added support for DXF polyline entity "bulges" (CamBam uses polyline bulges in DXF exports)
-                 - Modified code to be compatible with Python 3.  (F-Engrave now works with Python 2.5 through 3.3)
+    Version 1.00 - Added support for DXF polyline entity "bulges" (CamBam uses
+                   polyline bulges in DXF exports)
+                 - Modified code to be compatible with Python 3.  (F-Engrave
+                   now works with Python 2.5 through 3.3)
                  - Removed stale references to grid the grid geometry manager
                  - Made minor user interface changes
 
-    Version 1.01 - Fixed bug importing text information from g-code file in Python 3
-                 - Put additional restriction on arc fitting to prevent arcing straight lines
+    Version 1.01 - Fixed bug importing text information from g-code file in
+                   Python 3
+                 - Put additional restriction on arc fitting to prevent arcing
+                   straight lines
 
-    Version 1.02 - Put more restrictions on arc fitting to prevent huge erroneous circles
+    Version 1.02 - Put more restrictions on arc fitting to prevent huge
+                   erroneous circles
                  - Added key binding for CTRL-g to copy g-code to clipboard
 
     Version 1.10 - Added Command line option to set the default directory
-                 - Added setting option for disabling the use of variable in the g-code output
-                 - Added option for b-carving (using a ball end mill in v-carve mode)
+                 - Added setting option for disabling the use of variable in
+                   the g-code output
+                 - Added option for b-carving (using a ball end mill in v-carve
+                   mode)
                  - Added the text to be engraved to the top of the ngc file
                  - Added max depth to the v-carve settings
-                 - Eliminated failure to save g-code file when the  image file name contains extended characters.
-                 - Changed the default .ngc/.svg file name when saving. Now it always uses the base of the image file name.
-                 - Changed the default behavior for v-carve step size. now the default in or mm value is always
-                   reset (0.010in or 0.25mm) when switching between unit types.  This will ensure that metric users
-                   will start with a good default step size setting.
+                 - Eliminated failure to save g-code file when the image file
+                   name contains extended characters.
+                 - Changed the default .ngc/.svg file name when saving. Now it
+                   always uses the base of the image file name.
+                 - Changed the default behavior for v-carve step size. Now the
+                   default in or mm value is always reset (0.010in or 0.25mm)
+                   when switching between unit types.  This will ensure that
+                   metric users will start with a good default step size
+                   setting.
 
     Version 1.11 - Fixed error when saving clean up g-code.
-                 - Removed Extra spaces from beginning of g-code preamble and post-amble
-                 - Added arc fitting to the variables that are saved to and read from the g-code output file
+                 - Removed Extra spaces from beginning of g-code preamble and
+                   post-amble
+                 - Added arc fitting to the variables that are saved to and
+                   read from the g-code output file
 
-    Version 1.12 - Added logic to add newline to g-code preamble and g-code post-amble whenever a pipe character "|" is input
+    Version 1.12 - Added logic to add newline to g-code preamble and g-code
+                   post-amble whenever a pipe character "|" is input
 
-    Version 1.13 - Fixed bug preventing clean up tool-paths when the "Cut Depth Limit" variable is used.
+    Version 1.13 - Fixed bug preventing clean up tool-paths when the "Cut Depth
+                   Limit" variable is used.
 
-    Version 1.14 - Fixed bug preventing the use of the Cut Depth Limit when b-carving
+    Version 1.14 - Fixed bug preventing the use of the Cut Depth Limit when
+                   b-carving
                  - Updated website info in help menu
 
     Version 1.20 - Added option to enable extended (Unicode) characters
-                 - Also made a small change to the v-carve algorithm to fix a special case.
+                 - Also made a small change to the v-carve algorithm to fix a
+                   special case.
 
-    Version 1.21 - Added more command line options including a batch mode with no GUI
+    Version 1.21 - Added more command line options including a batch mode with
+                   no GUI
 
     Version 1.22 - Fixed three bugs associated with importing dxf files
                  - Fixed bug associated with clean up calculations
                  - Changed minimum allowable line spacing from one to zero
 
-    Version 1.30 - When importing DXF files F-Engrave no longer relies on the direction of the
-                   loop (clockwise/counter-clockwise) to determines which side to cut.  Now F-Engrave
-                   determines which loops are inside of other loops and flips the directions automatically.
-                 - Added a new option for "V-Carve Loop Accuracy" in v-carve settings.  This setting
-                   tells F-Engrave to ignore features smaller than the set value.  This allows F-Engrave
-                   to ignore small DXF imperfections that resulted in bad tool paths.
+    Version 1.30 - When importing DXF files F-Engrave no longer relies on the
+                   direction of the loop (clockwise/counter-clockwise) to
+                   determine which side to cut.  Now F-Engrave determines which
+                   loops are inside of other loops and flips the directions
+                   automatically.
+                 - Added a new option for "V-Carve Loop Accuracy" in v-carve
+                   settings.  This setting tells F-Engrave to ignore features
+                   smaller than the set value.  This allows F-Engrave to ignore
+                   small DXF imperfections that resulted in bad tool paths.
 
-    Version 1.31 - Fixed bug that was preventing batch mode from working in V1.30
+    Version 1.31 - Fixed bug that was preventing batch mode from working in
+                   V1.30
 
-    Version 1.32 - Added limit to the length of the engraved text included in g-code file
-                   comment (to prevent error with long engraved text)
-                 - Changed number of decimal places output when in mm mode to 3 (still 4 places for inches)
-                 - Changed g-code format for G2/G3 arcs to center format arcs (generally preferred format)
-                 - Hard coded G90 and G91.1 into g-code output to make sure the output will be interpreted
-                   correctly by g-code interpreters.
+    Version 1.32 - Added limit to the length of the engraved text included in
+                   g-code file comment (to prevent error with long engraved
+                   text)
+                 - Changed number of decimal places output when in mm mode to 3
+                   (still 4 places for inches)
+                 - Changed g-code format for G2/G3 arcs to center format arcs
+                   (generally preferred format)
+                 - Hard coded G90 and G91.1 into g-code output to make sure the
+                   output will be interpreted correctly by g-code interpreters.
 
-    Version 1.33 - Added option to scale original input image size rather than specify a image height
+    Version 1.33 - Added option to scale original input image size rather than
+                   specify a image height
 
-    Version 1.34 - Eliminated G91.1 code when arc fitting is disabled.  When arc fitting is disabled
-                   the code (G91.1) is not needed and it may cause problems for interpretors that do not
-                   support that code (i.e. ShapeOko)
+    Version 1.34 - Eliminated G91.1 code when arc fitting is disabled.  When
+                   arc fitting is disabled the code (G91.1) is not needed and
+                   it may cause problems for interpretors that do not support
+                   that code (i.e. ShapeOko)
 
-    Version 1.35 - Fixed importing of ellipse features from DXF files. Ellipse end overlapped the beginning
-                   of the ellipse.
-                 - Fixed saving long text to .ncg files.  Long text was truncated when a .ngc file was opened.
+    Version 1.35 - Fixed importing of ellipse features from DXF files. Ellipse
+                   end overlapped the beginning of the ellipse.
+                 - Fixed saving long text to .ncg files.  Long text was
+                   truncated when a .ngc file was opened.
 
-    Version 1.36 - Fixed major bug preventing saving .ncg files when the text was not a long string.
+    Version 1.36 - Fixed major bug preventing saving .ngc files when the text
+                   was not a long string.
 
-    Version 1.37 - Added logic to ignore very small line segments that caused problems v-carving some graphic input files.
+    Version 1.37 - Added logic to ignore very small line segments that caused
+                   problems v-carving some graphic input files.
 
-    Version 1.38 - Changed default origin to the DXF input file origin when height is set by percentage of DXF image size.
+    Version 1.38 - Changed default origin to the DXF input file origin when
+                   height is set by percentage of DXF image size.
 
-    Version 1.39 - Fixed bug in v-carving routine resulting in failed v-carve calculation. (Bug introduced in Version 1.37)
+    Version 1.39 - Fixed bug in v-carving routine resulting in failed v-carve
+                   calculation. (Bug introduced in Version 1.37)
 
-    Version 1.40 - Added code to increased v-carving speed (based on input from geo01005)
-                 - Windows executable file now generated from Python 2.5 with Psyco support (significant speed increase)
-                 - Changed Default Origin behavior (for DXF/Image files) to be the origin of the DXF file or lower left
-                   corner of the input image.
-                 - Added automatic scaling of all linear dimensions values when changing between units (in/mm)
-                 - Fixed bug in clean up function in the v-carve menu.  (the bug resulted in excessive Z motions in some cases)
-                 - Fixed bug resulting in the last step of v-carving for any given loop to be skipped/incorrect.
+    Version 1.40 - Added code to increased v-carving speed (based on input from
+                   geo01005)
+                 - Windows executable file now generated from Python 2.5 with
+                   Psyco support (significant speed increase)
+                 - Changed Default Origin behavior (for DXF/Image files) to be
+                   the origin of the DXF file or lower left corner of the input
+                   image.
+                 - Added automatic scaling of all linear dimensions values when
+                   changing between units (in/mm)
+                 - Fixed bug in clean up function in the v-carve menu.  (the
+                   bug resulted in excessive Z motions in some cases)
+                 - Fixed bug resulting in the last step of v-carving for any
+                   given loop to be skipped/incorrect.
 
-    Version 1.41 - Adjusted global Zero value (previous value resulted in rounding errors in some cases)
-                 - Removed use of accuracy (Acc) in the v-carve circle calculation
+    Version 1.41 - Adjusted global Zero value (previous value resulted in
+                   rounding errors in some cases)
+                 - Removed use of accuracy (Acc) in the v-carve circle
+                   calculation
 
     Version 1.42 - Changed default to disable variables in g-code output.
 
-    Version 1.43 - Fixed bug in v-carve cleanup routing that caused some areas to not be cleaned up.
+    Version 1.43 - Fixed bug in v-carve cleanup routing that caused some areas
+                   to not be cleaned up.
 
-    Version 1.44 - Fixed really bad bug in v-carve cleanup for bitmap images introduced in V1.43
+    Version 1.44 - Fixed really bad bug in v-carve cleanup for bitmap images
+                   introduced in V1.43
 
     Version 1.45 - Added multi-pass cutting for v-carving
-                 - Removed "Inside Corner Angle" and "Outside Corner Angle" options
+                 - Removed "Inside Corner Angle" and "Outside Corner Angle"
+                   options
 
-    Version 1.46 - Fixed bug which cause double cutting of v-carve pattern when multi-pass cutting was disabled
+    Version 1.46 - Fixed bug which cause double cutting of v-carve pattern when
+                   multi-pass cutting was disabled
 
-    Version 1.47 - Added ability to read more types of DXF files (files using BLOCKS with the INSERT command)
+    Version 1.47 - Added ability to read more types of DXF files (files using
+                   BLOCKS with the INSERT command)
                  - Fixed errors when running batch mode for v-carving.
-                 - Added .tap to the drop down list of file extensions in the file save dialog
+                 - Added .tap to the drop down list of file extensions in the
+                   file save dialog
 
-    Version 1.48 - Fixed another bug in the multi-pass code resulting in multi-pass cutting when multi-pass cutting was disabled.
+    Version 1.48 - Fixed another bug in the multi-pass code resulting in
+                   multi-pass cutting when multi-pass cutting was disabled.
 
-    Version 1.49 - Added option to suppress option recovery comments in the g-code output
-                 - Added button in "General Settings" to automatically save a configuration (config.ngc) file
+    Version 1.49 - Added option to suppress option recovery comments in the
+                   g-code output
+                 - Added button in "General Settings" to automatically save a
+                   configuration (config.ngc) file
 
-    Version 1.50 - Modified helper program (ttf2cxf_stream) and F-Engrave interaction with it to better control the line
+    Version 1.50 - Modified helper program (ttf2cxf_stream) and F-Engrave
+                   interaction with it to better control the line
                  - segment approximation of arcs.
                  - Added straight cutter support
-                 - Added option to create prismatic cuts (inverse of v-carve).  This option opens the
-                   possibility of making v-carve inlays.
+                 - Added option to create prismatic cuts (inverse of v-carve).
+                   This option opens the possibility of making v-carve inlays.
                  - Fixed minor bug in the v-bit cleanup tool-path generation
-                 - Changed the behavior when using inverting normals for v-carving.  Now a box is automatically
-                   generated to bound the cutting on the outside of the design/lettering.  The size of the box is
-                   controlled by the Box/Circle Gap setting in the general settings.
+                 - Changed the behavior when using inverting normals for
+                   v-carving.  Now a box is automatically generated to bound
+                   the cutting on the outside of the design/lettering.  The
+                   size of the box is controlled by the Box/Circle Gap setting
+                   in the general settings.
                  - Removed v-carve accuracy setting
-                 - Added option for radius format g-code arcs when arc fitting.  This will help compatibility
-                   with g-code interpreters that are missing support for center format arcs.
+                 - Added option for radius format g-code arcs when arc fitting.
+                   This will help compatibility with g-code interpreters that
+                   are missing support for center format arcs.
 
-    Version 1.51 - Added Plunge feed rate setting (if set to zero the normal feed rate applies)
-                 - Removed default coolant start/stop M codes for the header and footer
-                 - Changed default footer to include a newline character between the M codes another Shapeoko/GRBL problem.
-                 - Fixed some Python 3 incompatibilities with reading configuration files
+    Version 1.51 - Added Plunge feed rate setting (if set to zero the normal
+                   feed rate applies)
+                 - Removed default coolant start/stop M codes for the header
+                   and footer
+                 - Changed default footer to include a newline character
+                   between the M codes another Shapeoko/GRBL problem.
+                 - Fixed some Python 3 incompatibilities with reading
+                   configuration files
 
     Version 1.52 - Fixed potential divide by zero error in DXF reader
-                 - Text mode now includes space for leading carriage returns (i.e. Carriage returns before text characters)
+                 - Text mode now includes space for leading carriage returns
+                   (i.e. Carriage returns before text characters)
 
-    Version 1.53 - Changed space for leading carriage returns to only apply at 0,90,270 and 180 degree rotations.
-                 - Added floating tool tips to the options on the main window (hover over the option labels to see the tool tip text)
+    Version 1.53 - Changed space for leading carriage returns to only apply at
+                   0,90,270 and 180 degree rotations.
+                 - Added floating tool tips to the options on the main window
+                   (hover over the option labels to see the tool tip text)
 
-    Version 1.54 - Fixed bug that resulted in errors if the path to a file contained the text of an F-Engrave setting variable
-                 - Reduced time to open existing g-code files by eliminating unnecessary recalculation calls.
-                 - Added configuration variable to remember the last. Folder location used when a configuration file is saved.
-                 - Added support for most jpg, gif, tif and png files (it is still best to use Bitmaps)
-                 - After saving a new configuration file the settings menu will now pop back to the top (sometimes it would get buried under other windows)
-                 - Now searches current folder and home folder for image files when opening existing g-code files.
-                   previously the image file needed to be in the exact path location as when the file was saved
+    Version 1.54 - Fixed bug that resulted in errors if the path to a file
+                   contained the text of an F-Engrave setting variable
+                 - Reduced time to open existing g-code files by eliminating
+                   unnecessary recalculation calls.
+                 - Added configuration variable to remember the last. Folder
+                   location used when a configuration file is saved.
+                 - Added support for most jpg, gif, tif and png files (it is
+                   still best to use Bitmaps)
+                 - After saving a new configuration file the settings menu will
+                   now pop back to the top (sometimes it would get buried under
+                   other windows)
+                 - Now searches current folder and home folder for image files
+                   when opening existing g-code files.
+                   previously the image file needed to be in the exact path
+                   location as when the file was saved
 
-    Version 1.55 - Fixed error in line/curve fitting that resulted in bad output with high Accuracy settings
-                 - Fixed missing parentheses on file close commands (resulted in problems when using PyPy
-                 - Suppress comments in g-code should now suppress all full line g-code comments
-                 - Fixed error that resulted in cutting outside the lines with large Accuracy settings
+    Version 1.55 - Fixed error in line/curve fitting that resulted in bad
+                   output with high Accuracy settings
+                 - Fixed missing parentheses on file close commands (resulted
+                   in problems when using PyPy
+                 - Suppress comments in g-code should now suppress all full
+                   line g-code comments
+                 - Fixed error that resulted in cutting outside the lines with
+                   large Accuracy settings
 
-    Version 1.56 - Changed line/curve fitting to use Douglas-Peucker curve fitting routine originally from LinuxCNC image2gcode
-                 - Re-enabled the use of #2 variable when engraving with variable enabled (was broken in previous version)
+    Version 1.56 - Changed line/curve fitting to use Douglas-Peucker curve
+                   fitting routine originally from LinuxCNC image2gcode
+                 - Re-enabled the use of #2 variable when engraving with
+                   variable enabled (was broken in previous version)
                  - Fixed SVG export (was broken in previous version)
 
-    Version 1.57 - Fixed feed rate. Changes in 1.56 resulted in feed rate not being written to g-code file.
+    Version 1.57 - Fixed feed rate. Changes in 1.56 resulted in feed rate not
+                   being written to g-code file.
 
-    Version 1.58 - Fixed some special cases which resulted in errors being thrown (v-carve single lines)
-                 - Changed the default settings to be more compatible with incomplete g-code interpretors like GRBL
+    Version 1.58 - Fixed some special cases which resulted in errors being
+                   thrown (v-carve single lines)
+                 - Changed the default settings to be more compatible with
+                   incomplete g-code interpretors like GRBL
 
     Version 1.59 - Fixed bug in arc fitting
-                 - Rewrote Cleanup operation calculations (fixes a bug that resulted in some areas not being cleaned up
-                 - Changed flip normals behavior, There are now two options: Flip Normals and Add Box (Flip Normals)
-                 - Changed prismatic cut to allow the use of either of the two Flip normals options (one of the two
-                   Flip normals options must be selected for the inlay cuts to be performed properly
+                 - Rewrote Cleanup operation calculations (fixes a bug that
+                   resulted in some areas not being cleaned up
+                 - Changed flip normals behavior, There are now two options:
+                   Flip Normals and Add Box (Flip Normals)
+                 - Changed prismatic cut to allow the use of either of the two
+                   Flip normals options (one of the two Flip normals options
+                   must be selected for the inlay cuts to be performed properly
                  - Added DXF Export option (with and without auto closed loops)
 
     Version 1.60 - Fixed divide by zero error in some cleanup sceneries.
 
-    Version 1.61 - Fixed a bug that prevented opening DXF files that contain no features with positive Y coordinates
+    Version 1.61 - Fixed a bug that prevented opening DXF files that contain no
+                   features with positive Y coordinates
 
-    Version 1.62 - Fixed a bug that resulted in bad cleanup tool paths in some situations
+    Version 1.62 - Fixed a bug that resulted in bad cleanup tool paths in some
+                   situations
 
-    Version 1.63 - Removed code that loaded _imaging module.  The module is not needed
-                 - Changed "Open F-Engrave G-Code File" "Read Settings From File"
+    Version 1.63 - Removed code that loaded _imaging module.  The module is not
+                   needed
+                 - Changed "Open F-Engrave G-Code File" to
+                   "Read Settings From File"
                  - Added "Save Setting to File" file option in File menu
-                 - Fixed v-bit cleanup step over. Generated step was twice the input cleanup step.
+                 - Fixed v-bit cleanup step over. Generated step was twice the
+                   input cleanup step.
                  - Updated icon.
-                 - Added console version of application to windows distribution. For batch mode in Windows.
-    Version 1.64 - Fixed bug that created erroneous lines in some circumstances during v-carving.
+                 - Added console version of application to windows
+                   distribution. For batch mode in Windows.
+    Version 1.64 - Fixed bug that created erroneous lines in some circumstances
+                   during v-carving.
                  - Mapped save function to Control-S for easier g-code saving
 
-    Version 1.65 - Fixed bug in sort_for_v_carve that resulted in an error for certain designs.
+    Version 1.65 - Fixed bug in sort_for_v_carve that resulted in an error for
+                   certain designs.
 
-    Version 1.66 - Fixed a problem with the origin when wrapping text in some cases.
-                 - Decreased number of updates while doing computations which increases overall calculation speed.
-                 - Fixed problem that can cause the program to freeze if the saved settings contain errors.
+    Version 1.66 - Fixed a problem with the origin when wrapping text in some
+                   cases.
+                 - Decreased number of updates while doing computations which
+                   increases overall calculation speed.
+                 - Fixed problem that can cause the program to freeze if the
+                   saved settings contain errors.
 
 
     Version 1.67 - Improved DXF import for DXF files with some incomplete data
-                 - Fixed curve fitting upon g-code export.  Limited curve fitting angle to avoid curve fitting sharp corners.
+                 - Fixed curve fitting upon g-code export.  Limited curve
+                   fitting angle to avoid curve fitting sharp corners.
 
-    Version 1.68 - Fixed typo in code introduced in v1.67 that broke curve fitting.
+    Version 1.68 - Fixed typo in code introduced in v1.67 that broke curve
+                   fitting.
 
     Version 1.69 - A couple of minor fixes to keep things working in Python 3.x
-                 - Added ability to disable ploting of v-carve toolpath and area
-                 - Fixed problem causing v-carve path to go outside of design bounds for very thin design sections.
-    Version 1.70 - Fixed a bug introduced in V1.69 that caused v-carving cleanup calculations to fail sometimes.
+                 - Added ability to disable ploting of v-carve toolpath and
+                   area
+                 - Fixed problem causing v-carve path to go outside of design
+                   bounds for very thin design sections.
+    Version 1.70 - Fixed a bug introduced in V1.69 that caused v-carving
+                   cleanup calculations to fail sometimes.
 
-    Version 1.71 - Changed Potrace version that is distributed with F-Engrave from 1.10 to 1.16
+    Version 1.71 - Changed Potrace version that is distributed with F-Engrave
+                   from 1.10 to 1.16
                  - Fixed problem with cleanup cutting wrong area for some cases
 
-    Version 1.72 - Fixed a bug that resulted in bad cleanup tool paths in some situations
+    Version 1.72 - Fixed a bug that resulted in bad cleanup tool paths in some
+                   situations
                  - Explicitly set the font for the GUI
 
     Version 1.73 - Made importing png images with clear backgrounds work better
-                 - Added PNG and TIF to the image file types that show up by default
+                 - Added PNG and TIF to the image file types that show up by
+                   default
 
     """
 
@@ -410,7 +531,9 @@ class Application(Frame):
                 self.POTRACE_AVAIL = False
                 message.fmessage("potrace is not working...Bummer")
         except:
-            message.fmessage("potrace executable is not present/working...Bummer")
+            message.fmessage(
+                "potrace executable is not present/working...Bummer"
+            )
             self.POTRACE_AVAIL = False
 
         self.createWidgets()
@@ -524,10 +647,8 @@ class Application(Frame):
         self.current_input_file = StringVar()
         self.bounding_box = StringVar()
 
-        ###########################################################################
-        #                         INITILIZE VARIABLES                             #
-        #    If you want to change a default setting this is the place to do it.  #
-        ###########################################################################
+        # INITILIZE VARIABLES
+        # If you want to change a default setting this is the place to do it.
         self.batch.set(0)
         self.show_axis.set(1)
         self.show_box.set(1)
@@ -660,30 +781,24 @@ class Application(Frame):
             self.units.set("mm")
             self.funits.set("mm/min")
 
-        ##########################################################################
-        #                         G-Code Default Preamble                        #
-        ##########################################################################
-        # G17        ; sets XY plane                                             #
-        # G64 P0.003 ; G64 P- (motion blending tolerance set to 0.003) This is   #
-        #              the default in engrave.py                                 #
-        # G64        ; G64 without P option keeps the best speed possible, no    #
-        #              matter how far away from the programmed point you end up. #
-        # M3 S3000   ; Spindle start at 3000                                     #
-        ##########################################################################
+        # G-Code Default Preamble
+        # G17        ; sets XY plane
+        # G64 P0.003 ; G64 P- (motion blending tolerance set to 0.003) This is
+        #              the default in engrave.py
+        # G64        ; G64 without P option keeps the best speed possible, no
+        #              matter how far away from the programmed point you end
+        #              up.
+        # M3 S3000   ; Spindle start at 3000
         self.gpre.set("G17 G64 P0.001 M3 S3000")
 
-        ##########################################################################
-        #                        G-Code Default Postamble                        #
-        ##########################################################################
-        # M5 ; Stop Spindle                                                      #
-        # M9 ; Turn all coolant off                                              #
-        # M2 ; End Program                                                       #
-        ##########################################################################
+        # G-Code Default Postamble
+        # M5 ; Stop Spindle
+        # M9 ; Turn all coolant off
+        # M2 ; End Program
         self.gpost.set("M5|M2")
 
-        ##########################################################################
-        ###                     END INITIALIZING VARIABLES                     ###
-        ##########################################################################
+        # END INITIALIZING VARIABLES
+
         config_file = "config.ngc"
         home_config1 = self.HOME_DIR + "/" + config_file
         config_file2 = ".fengraverc"
@@ -700,7 +815,14 @@ class Application(Frame):
             opts, args = getopt.getopt(
                 sys.argv[1:],
                 "hbg:f:d:t:",
-                ["help", "batch", "gcode_file", "fontdir=", "defdir=", "text="],
+                [
+                    "help",
+                    "batch",
+                    "gcode_file",
+                    "fontdir=",
+                    "defdir=",
+                    "text=",
+                ],
             )
         except:
             message.fmessage("Unable interpret command line options")
@@ -709,13 +831,16 @@ class Application(Frame):
             if option in ("-h", "--help"):
                 message.fmessage(" ")
                 message.fmessage(
-                    "Usage: python f-engrave.py [-g file | -f fontdir | -d directory | -t text | -b ]"
+                    "Usage: python f-engrave.py [-g file | -f fontdir | "
+                    "-d directory | -t text | -b ]"
                 )
                 message.fmessage(
-                    "-g    : f-engrave gcode output file to read (also --gcode_file)"
+                    "-g    : f-engrave gcode output file to read "
+                    "(also --gcode_file)"
                 )
                 message.fmessage(
-                    "-f    : path to font file, directory or image file (also --fontdir)"
+                    "-f    : path to font file, directory or image file "
+                    "(also --fontdir)"
                 )
                 message.fmessage("-d    : default directory (also --defdir)")
                 message.fmessage("-t    : engrave text (also --text)")
@@ -735,7 +860,9 @@ class Application(Frame):
                     if TYPE == ".CXF" or TYPE == ".TTF":
                         self.input_type.set("text")
                         self.fontdir.set(dirname)
-                        self.fontfile.set(os.path.basename(fileName) + fileExtension)
+                        self.fontfile.set(
+                            os.path.basename(fileName) + fileExtension
+                        )
                     else:
                         self.input_type.set("image")
                         self.IMAGE_FILE = value
@@ -776,13 +903,15 @@ class Application(Frame):
                     sys.stdout.write("(skipping line)\n")
             sys.exit()
 
-        ##########################################################################
-
         # make a Status Bar
         self.statusMessage = StringVar()
         self.statusMessage.set("")
         self.statusbar = Label(
-            self.master, textvariable=self.statusMessage, bd=1, relief=SUNKEN, height=1
+            self.master,
+            textvariable=self.statusMessage,
+            bd=1,
+            relief=SUNKEN,
+            height=1,
         )
         self.statusbar.pack(anchor=SW, fill=X, side=BOTTOM)
         self.statusMessage.set("Welcome to F-Engrave")
@@ -795,7 +924,10 @@ class Application(Frame):
         lbframe = Frame(self.master)
         self.PreviewCanvas_frame = lbframe
         self.PreviewCanvas = Canvas(
-            lbframe, width=self.w - 525, height=self.h - 200, background="grey75"
+            lbframe,
+            width=self.w - 525,
+            height=self.h - 200,
+            background="grey75",
         )
         self.PreviewCanvas.pack(side=LEFT, fill=BOTH, expand=1)
         self.PreviewCanvas_frame.place(x=230, y=10)
@@ -814,58 +946,78 @@ class Application(Frame):
             self.master, text="Text Font Properties:", anchor=W
         )
 
-        self.Label_Yscale = Label(self.master, text="Text Height", anchor=CENTER)
-        self.Label_Yscale_u = Label(self.master, textvariable=self.units, anchor=W)
+        self.Label_Yscale = Label(
+            self.master, text="Text Height", anchor=CENTER
+        )
+        self.Label_Yscale_u = Label(
+            self.master, textvariable=self.units, anchor=W
+        )
         self.Label_Yscale_pct = Label(self.master, text="%", anchor=W)
         self.Entry_Yscale = Entry(self.master, width="15")
         self.Entry_Yscale.configure(textvariable=self.YSCALE)
         self.Entry_Yscale.bind("<Return>", self.Recalculate_Click)
         self.YSCALE.trace_variable("w", self.Entry_Yscale_Callback)
         self.Label_Yscale_ToolTip = ToolTip(
-            self.Label_Yscale, text="Character height of a single line of text."
+            self.Label_Yscale,
+            text="Character height of a single line of text.",
         )
         # or the height of an imported image. (DXF, BMP, etc.)')
 
         self.NormalColor = self.Entry_Yscale.cget("bg")
 
         self.Label_Sthick = Label(self.master, text="Line Thickness")
-        self.Label_Sthick_u = Label(self.master, textvariable=self.units, anchor=W)
+        self.Label_Sthick_u = Label(
+            self.master, textvariable=self.units, anchor=W
+        )
         self.Entry_Sthick = Entry(self.master, width="15")
         self.Entry_Sthick.configure(textvariable=self.STHICK)
         self.Entry_Sthick.bind("<Return>", self.Recalculate_Click)
         self.STHICK.trace_variable("w", self.Entry_Sthick_Callback)
         self.Label_Sthick_ToolTip = ToolTip(
             self.Label_Sthick,
-            text="Thickness or width of engraved lines. Set this to your engraving cutter diameter.  This setting only affects the displayed lines not the g-code output.",
+            text="Thickness or width of engraved lines. "
+            "Set this to your engraving cutter diameter.  "
+            "This setting only affects the displayed lines, not the g-code "
+            "output.",
         )
 
-        self.Label_Xscale = Label(self.master, text="Text Width", anchor=CENTER)
+        self.Label_Xscale = Label(
+            self.master, text="Text Width", anchor=CENTER
+        )
         self.Label_Xscale_u = Label(self.master, text="%", anchor=W)
         self.Entry_Xscale = Entry(self.master, width="15")
         self.Entry_Xscale.configure(textvariable=self.XSCALE)
         self.Entry_Xscale.bind("<Return>", self.Recalculate_Click)
         self.XSCALE.trace_variable("w", self.Entry_Xscale_Callback)
         self.Label_Xscale_ToolTip = ToolTip(
-            self.Label_Xscale, text="Scaling factor for the width of characters."
+            self.Label_Xscale,
+            text="Scaling factor for the width of characters.",
         )
 
         self.Label_useIMGsize = Label(self.master, text="Set Height as %")
-        self.Checkbutton_useIMGsize = Checkbutton(self.master, text=" ", anchor=W)
+        self.Checkbutton_useIMGsize = Checkbutton(
+            self.master, text=" ", anchor=W
+        )
         self.Checkbutton_useIMGsize.configure(
             variable=self.useIMGsize, command=self.useIMGsize_var_Callback
         )
 
-        self.Label_Cspace = Label(self.master, text="Char Spacing", anchor=CENTER)
+        self.Label_Cspace = Label(
+            self.master, text="Char Spacing", anchor=CENTER
+        )
         self.Label_Cspace_u = Label(self.master, text="%", anchor=W)
         self.Entry_Cspace = Entry(self.master, width="15")
         self.Entry_Cspace.configure(textvariable=self.CSPACE)
         self.Entry_Cspace.bind("<Return>", self.Recalculate_Click)
         self.CSPACE.trace_variable("w", self.Entry_Cspace_Callback)
         self.Label_Cspace_ToolTip = ToolTip(
-            self.Label_Cspace, text="Character spacing as a percent of character width."
+            self.Label_Cspace,
+            text="Character spacing as a percent of character width.",
         )
 
-        self.Label_Wspace = Label(self.master, text="Word Spacing", anchor=CENTER)
+        self.Label_Wspace = Label(
+            self.master, text="Word Spacing", anchor=CENTER
+        )
         self.Label_Wspace_u = Label(self.master, text="%", anchor=W)
         self.Entry_Wspace = Entry(self.master, width="15")
         self.Entry_Wspace.configure(textvariable=self.WSPACE)
@@ -873,31 +1025,42 @@ class Application(Frame):
         self.WSPACE.trace_variable("w", self.Entry_Wspace_Callback)
         self.Label_Wspace_ToolTip = ToolTip(
             self.Label_Wspace,
-            text="Width of the space character. This is determined as a percentage of the maximum width of the characters in the currently selected font.",
+            text="Width of the space character. This is determined as a "
+            "percentage of the maximum width of the characters in the "
+            "currently selected font.",
         )
 
-        self.Label_Lspace = Label(self.master, text="Line Spacing", anchor=CENTER)
+        self.Label_Lspace = Label(
+            self.master, text="Line Spacing", anchor=CENTER
+        )
         self.Entry_Lspace = Entry(self.master, width="15")
         self.Entry_Lspace.configure(textvariable=self.LSPACE)
         self.Entry_Lspace.bind("<Return>", self.Recalculate_Click)
         self.LSPACE.trace_variable("w", self.Entry_Lspace_Callback)
         self.Label_Lspace_ToolTip = ToolTip(
             self.Label_Lspace,
-            text='The vertical spacing between lines of text. This is a multiple of the text height previously input. A vertical spacing of 1.0 could result in consecutive lines of text touching each other if the maximum height character is directly below a character that extends the lowest (like a "g").',
+            text="The vertical spacing between lines of text. This is a "
+            "multiple of the text height previously input. A vertical "
+            "spacing of 1.0 could result in consecutive lines of text "
+            "touching each other if the maximum height character is directly "
+            "below a character that extends the lowest (like a 'g').",
         )
 
         self.Label_pos_orient = Label(
             self.master, text="Text Position and Orientation:", anchor=W
         )
 
-        self.Label_Tangle = Label(self.master, text="Text Angle", anchor=CENTER)
+        self.Label_Tangle = Label(
+            self.master, text="Text Angle", anchor=CENTER
+        )
         self.Label_Tangle_u = Label(self.master, text="deg", anchor=W)
         self.Entry_Tangle = Entry(self.master, width="15")
         self.Entry_Tangle.configure(textvariable=self.TANGLE)
         self.Entry_Tangle.bind("<Return>", self.Recalculate_Click)
         self.TANGLE.trace_variable("w", self.Entry_Tangle_Callback)
         self.Label_Tangle_ToolTip = ToolTip(
-            self.Label_Tangle, text="Rotation of the text or image from horizontal."
+            self.Label_Tangle,
+            text="Rotation of the text or image from horizontal.",
         )
 
         self.Label_Justify = Label(self.master, text="Justify", anchor=CENTER)
@@ -911,7 +1074,8 @@ class Application(Frame):
         )
         self.Label_Justify_ToolTip = ToolTip(
             self.Label_Justify,
-            text="Justify determins how to align multiple lines of text. Left side, Right side or Centered.",
+            text="Justify determins how to align multiple lines of text. "
+            "Left side, Right side or Centered.",
         )
 
         self.Label_Origin = Label(self.master, text="Origin", anchor=CENTER)
@@ -932,7 +1096,8 @@ class Application(Frame):
         )
         self.Label_Origin_ToolTip = ToolTip(
             self.Label_Origin,
-            text="Origin determins where the X and Y zero position is located relative to the engraving.",
+            text="Origin determins where the X and Y zero position is located"
+            " relative to the engraving.",
         )
 
         self.Label_flip = Label(self.master, text="Flip Text")
@@ -941,7 +1106,8 @@ class Application(Frame):
         self.flip.trace_variable("w", self.Entry_recalc_var_Callback)
         self.Label_flip_ToolTip = ToolTip(
             self.Label_flip,
-            text="Selecting Flip Text/Image mirrors the design about a horizontal line",
+            text="Selecting Flip Text/Image mirrors the design about a "
+            "horizontal line",
         )
 
         self.Label_mirror = Label(self.master, text="Mirror Text")
@@ -950,22 +1116,29 @@ class Application(Frame):
         self.mirror.trace_variable("w", self.Entry_recalc_var_Callback)
         self.Label_mirror_ToolTip = ToolTip(
             self.Label_mirror,
-            text="Selecting Mirror Text/Image mirrors the design about a vertical line.",
+            text="Selecting Mirror Text/Image mirrors the design about a "
+            "vertical line.",
         )
 
         self.Label_text_on_arc = Label(
             self.master, text="Text on Circle Properties:", anchor=W
         )
 
-        self.Label_Tradius = Label(self.master, text="Circle Radius", anchor=CENTER)
-        self.Label_Tradius_u = Label(self.master, textvariable=self.units, anchor=W)
+        self.Label_Tradius = Label(
+            self.master, text="Circle Radius", anchor=CENTER
+        )
+        self.Label_Tradius_u = Label(
+            self.master, textvariable=self.units, anchor=W
+        )
         self.Entry_Tradius = Entry(self.master, width="15")
         self.Entry_Tradius.configure(textvariable=self.TRADIUS)
         self.Entry_Tradius.bind("<Return>", self.Recalculate_Click)
         self.TRADIUS.trace_variable("w", self.Entry_Tradius_Callback)
         self.Label_Tradius_ToolTip = ToolTip(
             self.Label_Tradius,
-            text="Circle radius is the radius of the circle that the text in the input box is placed on. If the circle radius is set to 0.0 the text is not placed on a circle.",
+            text="Circle radius is the radius of the circle that the text in "
+            "the input box is placed on. If the circle radius is set to 0.0 "
+            "the text is not placed on a circle.",
         )
 
         self.Label_outer = Label(self.master, text="Outside circle")
@@ -974,7 +1147,8 @@ class Application(Frame):
         self.outer.trace_variable("w", self.Entry_recalc_var_Callback)
         self.Label_outer_ToolTip = ToolTip(
             self.Label_outer,
-            text="Select whether the text is placed so that is falls on the inside of the circle radius or the outside of the circle radius.",
+            text="Select whether the text is placed so that is falls on the "
+            "inside of the circle radius or the outside of the circle radius.",
         )
 
         self.Label_upper = Label(self.master, text="Top of Circle")
@@ -983,7 +1157,8 @@ class Application(Frame):
         self.upper.trace_variable("w", self.Entry_recalc_var_Callback)
         self.Label_upper_ToolTip = ToolTip(
             self.Label_upper,
-            text="Select whether the text is placed on the top of the circle of on the bottom of the circle (i.e. concave down or concave up).",
+            text="Select whether the text is placed on the top of the circle "
+            "of on the bottom of the circle (i.e. concave down or concave up).",
         )
 
         self.separator1 = Frame(height=2, bd=1, relief=SUNKEN)
@@ -993,50 +1168,65 @@ class Application(Frame):
         # End Left Column #
 
         # Right Column #
-        self.Label_gcode_opt = Label(self.master, text="Gcode Properties:", anchor=W)
+        self.Label_gcode_opt = Label(
+            self.master, text="Gcode Properties:", anchor=W
+        )
 
         self.Label_Feed = Label(self.master, text="Feed Rate")
-        self.Label_Feed_u = Label(self.master, textvariable=self.funits, anchor=W)
+        self.Label_Feed_u = Label(
+            self.master, textvariable=self.funits, anchor=W
+        )
         self.Entry_Feed = Entry(self.master, width="15")
         self.Entry_Feed.configure(textvariable=self.FEED)
         self.Entry_Feed.bind("<Return>", self.Recalculate_Click)
         self.FEED.trace_variable("w", self.Entry_Feed_Callback)
         self.Label_Feed_ToolTip = ToolTip(
             self.Label_Feed,
-            text="Specify the tool feed rate that is output in the g-code output file.",
+            text="Specify the tool feed rate that is output in the g-code "
+            "output file.",
         )
 
         self.Label_Plunge = Label(self.master, text="Plunge Rate")
-        self.Label_Plunge_u = Label(self.master, textvariable=self.funits, anchor=W)
+        self.Label_Plunge_u = Label(
+            self.master, textvariable=self.funits, anchor=W
+        )
         self.Entry_Plunge = Entry(self.master, width="15")
         self.Entry_Plunge.configure(textvariable=self.PLUNGE)
         self.Entry_Plunge.bind("<Return>", self.Recalculate_Click)
         self.PLUNGE.trace_variable("w", self.Entry_Plunge_Callback)
         self.Label_Plunge_ToolTip = ToolTip(
             self.Label_Plunge,
-            text="Plunge Rate sets the feed rate for vertical moves into the material being cut.\n\nWhen Plunge Rate is set to zero plunge feeds are equal to Feed Rate.",
+            text="Plunge Rate sets the feed rate for vertical moves into the "
+            "material being cut.\n\nWhen Plunge Rate is set to zero plunge "
+            "feeds are equal to Feed Rate.",
         )
 
         self.Label_Zsafe = Label(self.master, text="Z Safe")
-        self.Label_Zsafe_u = Label(self.master, textvariable=self.units, anchor=W)
+        self.Label_Zsafe_u = Label(
+            self.master, textvariable=self.units, anchor=W
+        )
         self.Entry_Zsafe = Entry(self.master, width="15")
         self.Entry_Zsafe.configure(textvariable=self.ZSAFE)
         self.Entry_Zsafe.bind("<Return>", self.Recalculate_Click)
         self.ZSAFE.trace_variable("w", self.Entry_Zsafe_Callback)
         self.Label_Zsafe_ToolTip = ToolTip(
             self.Label_Zsafe,
-            text="Z location that the tool will be sent to prior to any rapid moves.",
+            text="Z location that the tool will be sent to prior to any rapid"
+            " moves.",
         )
 
         self.Label_Zcut = Label(self.master, text="Engrave Depth")
-        self.Label_Zcut_u = Label(self.master, textvariable=self.units, anchor=W)
+        self.Label_Zcut_u = Label(
+            self.master, textvariable=self.units, anchor=W
+        )
         self.Entry_Zcut = Entry(self.master, width="15")
         self.Entry_Zcut.configure(textvariable=self.ZCUT)
         self.Entry_Zcut.bind("<Return>", self.Recalculate_Click)
         self.ZCUT.trace_variable("w", self.Entry_Zcut_Callback)
         self.Label_Zcut_ToolTip = ToolTip(
             self.Label_Zcut,
-            text="Depth of the engraving cut. This setting has no effect when the v-carve option is selected.",
+            text="Depth of the engraving cut. This setting has no effect when "
+            "the v-carve option is selected.",
         )
 
         self.Checkbutton_fontdex = Checkbutton(
@@ -1100,7 +1290,11 @@ class Application(Frame):
         self.Input_frame = lbframe
         scrollbar = Scrollbar(lbframe, orient=VERTICAL)
         self.Input = Text(
-            lbframe, width="40", height="12", yscrollcommand=scrollbar.set, bg="white"
+            lbframe,
+            width="40",
+            height="12",
+            yscrollcommand=scrollbar.set,
+            bg="white",
         )
         self.Input.insert(END, self.default_text)
         scrollbar.config(command=self.Input.yview)
@@ -1148,15 +1342,21 @@ class Application(Frame):
         top_File.add_separator()
         if self.POTRACE_AVAIL:
             top_File.add(
-                "command", label="Open DXF/Image", command=self.menu_File_Open_DXF_File
+                "command",
+                label="Open DXF/Image",
+                command=self.menu_File_Open_DXF_File,
             )
         else:
             top_File.add(
-                "command", label="Open DXF", command=self.menu_File_Open_DXF_File
+                "command",
+                label="Open DXF",
+                command=self.menu_File_Open_DXF_File,
             )
         top_File.add_separator()
         top_File.add(
-            "command", label="Save G-Code", command=self.menu_File_Save_G_Code_File
+            "command",
+            label="Save G-Code",
+            command=self.menu_File_Save_G_Code_File,
         )
         top_File.add_separator()
         top_File.add(
@@ -1172,7 +1372,9 @@ class Application(Frame):
         )
         if IN_AXIS:
             top_File.add(
-                "command", label="Write To Axis and Exit", command=self.WriteToAxis
+                "command",
+                label="Write To Axis and Exit",
+                command=self.WriteToAxis,
             )
         else:
             top_File.add("command", label="Exit", command=self.menu_File_Quit)
@@ -1192,16 +1394,24 @@ class Application(Frame):
         self.menuBar.add("cascade", label="Edit", menu=top_Edit)
 
         top_View = Menu(self.menuBar, tearoff=0)
-        top_View.add("command", label="Recalculate", command=self.menu_View_Recalculate)
+        top_View.add(
+            "command", label="Recalculate", command=self.menu_View_Recalculate
+        )
         top_View.add_separator()
 
         top_View.add(
-            "command", label="Zoom In <Page Up>", command=self.menu_View_Zoom_in
+            "command",
+            label="Zoom In <Page Up>",
+            command=self.menu_View_Zoom_in,
         )
         top_View.add(
-            "command", label="Zoom Out <Page Down>", command=self.menu_View_Zoom_out
+            "command",
+            label="Zoom Out <Page Down>",
+            command=self.menu_View_Zoom_out,
         )
-        top_View.add("command", label="Zoom Fit <F5>", command=self.menu_View_Refresh)
+        top_View.add(
+            "command", label="Zoom Fit <F5>", command=self.menu_View_Refresh
+        )
 
         top_View.add_separator()
 
@@ -1234,10 +1444,14 @@ class Application(Frame):
 
         top_Settings = Menu(self.menuBar, tearoff=0)
         top_Settings.add(
-            "command", label="General Settings", command=self.GEN_Settings_Window
+            "command",
+            label="General Settings",
+            command=self.GEN_Settings_Window,
         )
         top_Settings.add(
-            "command", label="V-Carve Settings", command=self.VCARVE_Settings_Window
+            "command",
+            label="V-Carve Settings",
+            command=self.VCARVE_Settings_Window,
         )
         if self.POTRACE_AVAIL:
             top_Settings.add(
@@ -1271,13 +1485,16 @@ class Application(Frame):
         self.menuBar.add("cascade", label="Settings", menu=top_Settings)
 
         top_Help = Menu(self.menuBar, tearoff=0)
-        top_Help.add("command", label="About (E-Mail)", command=self.menu_Help_About)
-        top_Help.add("command", label="Help (Web Page)", command=self.menu_Help_Web)
+        top_Help.add(
+            "command", label="About (E-Mail)", command=self.menu_Help_About
+        )
+        top_Help.add(
+            "command", label="Help (Web Page)", command=self.menu_Help_Web
+        )
         self.menuBar.add("cascade", label="Help", menu=top_Help)
 
         self.master.config(menu=self.menuBar)
 
-    ################################################################################
     def entry_set(self, val2, calc_flag=NumberCheck.is_valid, new=0):
         if calc_flag == NumberCheck.is_valid and new == 0:
             try:
@@ -1299,17 +1516,17 @@ class Application(Frame):
                 val2.configure(bg="red")
             except:
                 pass
-        elif (calc_flag == NumberCheck.is_valid
-              or calc_flag == NumberCheck.is_valid_no_recalc_required) \
-                and new == 1:
+        elif (
+            calc_flag == NumberCheck.is_valid
+            or calc_flag == NumberCheck.is_valid_no_recalc_required
+        ) and new == 1:
             try:
                 self.statusbar.configure(bg="white")
                 self.statusMessage.set(self.bounding_box.get())
                 val2.configure(bg="white")
             except:
                 pass
-        elif calc_flag == NumberCheck.is_valid_no_recalc_required \
-                and new == 0:
+        elif calc_flag == NumberCheck.is_valid_no_recalc_required and new == 0:
             try:
                 self.statusbar.configure(bg="white")
                 self.statusMessage.set(self.bounding_box.get())
@@ -1317,9 +1534,10 @@ class Application(Frame):
             except:
                 pass
 
-        elif (calc_flag == NumberCheck.is_valid
-              or calc_flag == NumberCheck.is_valid_no_recalc_required) \
-                and new == 2:
+        elif (
+            calc_flag == NumberCheck.is_valid
+            or calc_flag == NumberCheck.is_valid_no_recalc_required
+        ) and new == 2:
             return 0
         return 1
 
@@ -1338,7 +1556,8 @@ class Application(Frame):
                 pass
 
             if not message.message_ask_ok_cancel(
-                "Replace", "Replace Exiting Configuration File?\n" + configname_full
+                "Replace",
+                "Replace Exiting Configuration File?\n" + configname_full,
             ):
                 try:
                     win_id.deiconify()
@@ -1361,7 +1580,9 @@ class Application(Frame):
             except:
                 fout.write("(skipping line)\n")
         fout.close()
-        self.statusMessage.set("Configuration File Saved: %s" % (configname_full))
+        self.statusMessage.set(
+            "Configuration File Saved: %s" % (configname_full)
+        )
         self.statusbar.configure(bg="white")
         try:
             win_id.deiconify()
@@ -1373,7 +1594,8 @@ class Application(Frame):
         gcode.append_comment("by Scorch - 2021")
 
     def append_cleanup_comments_to_gcode(
-            self, gcode, cleanup_bit_type, BitDia, bit_angle, Units):
+        self, gcode, cleanup_bit_type, BitDia, bit_angle, Units
+    ):
         gcode.append_comment(" This file is a secondary operation for ")
         gcode.append_comment(" cleaning up a V-carve. ")
 
@@ -1384,16 +1606,16 @@ class Application(Frame):
         else:
             gcode.append_comment(" The tool paths were calculated based ")
             gcode.append_comment(" on using a v-bit with a ")
-            gcode.append_comment(
-                " angle of %.4f Degrees " % (bit_angle)
-            )
+            gcode.append_comment(" angle of %.4f Degrees " % (bit_angle))
 
         gcode.append_comment(
             "========================================================="
         )
 
     def append_settings_to_gcode(self, gcode, text):
-        gcode.append_comment("Settings used in f-engrave when this file was created")
+        gcode.append_comment(
+            "Settings used in f-engrave when this file was created"
+        )
         if self.input_type.get() == "text":
             String_short = text
             max_len = 40
@@ -1416,17 +1638,33 @@ class Application(Frame):
         gcode.append_comment(
             "fengrave_set show_thick  %s " % (int(self.show_thick.get()))
         )
-        gcode.append_comment("fengrave_set flip        %s " % (int(self.flip.get())))
-        gcode.append_comment("fengrave_set mirror      %s " % (int(self.mirror.get())))
-        gcode.append_comment("fengrave_set outer       %s " % (int(self.outer.get())))
-        gcode.append_comment("fengrave_set upper       %s " % (int(self.upper.get())))
-        gcode.append_comment("fengrave_set v_flop      %s " % (int(self.v_flop.get())))
-        gcode.append_comment("fengrave_set v_pplot     %s " % (int(self.v_pplot.get())))
-        gcode.append_comment("fengrave_set inlay       %s " % (int(self.inlay.get())))
+        gcode.append_comment(
+            "fengrave_set flip        %s " % (int(self.flip.get()))
+        )
+        gcode.append_comment(
+            "fengrave_set mirror      %s " % (int(self.mirror.get()))
+        )
+        gcode.append_comment(
+            "fengrave_set outer       %s " % (int(self.outer.get()))
+        )
+        gcode.append_comment(
+            "fengrave_set upper       %s " % (int(self.upper.get()))
+        )
+        gcode.append_comment(
+            "fengrave_set v_flop      %s " % (int(self.v_flop.get()))
+        )
+        gcode.append_comment(
+            "fengrave_set v_pplot     %s " % (int(self.v_pplot.get()))
+        )
+        gcode.append_comment(
+            "fengrave_set inlay       %s " % (int(self.inlay.get()))
+        )
         gcode.append_comment(
             "fengrave_set bmp_long    %s " % (int(self.bmp_longcurve.get()))
         )
-        gcode.append_comment("fengrave_set var_dis     %s " % (int(self.var_dis.get())))
+        gcode.append_comment(
+            "fengrave_set var_dis     %s " % (int(self.var_dis.get()))
+        )
         gcode.append_comment(
             "fengrave_set ext_char    %s " % (int(self.ext_char.get()))
         )
@@ -1436,7 +1674,9 @@ class Application(Frame):
         gcode.append_comment(
             "fengrave_set no_comments %s " % (int(self.no_comments.get()))
         )
-        gcode.append_comment("fengrave_set plotbox     %s " % (int(self.plotbox.get())))
+        gcode.append_comment(
+            "fengrave_set plotbox     %s " % (int(self.plotbox.get()))
+        )
         gcode.append_comment(
             "fengrave_set show_v_path %s " % (int(self.show_v_path.get()))
         )
@@ -1445,51 +1685,121 @@ class Application(Frame):
         )
 
         # STRING
-        gcode.append_comment("fengrave_set arc_fit    %s " % (self.arc_fit.get()))
-        gcode.append_comment("fengrave_set YSCALE     %s " % (self.YSCALE.get()))
-        gcode.append_comment("fengrave_set XSCALE     %s " % (self.XSCALE.get()))
-        gcode.append_comment("fengrave_set LSPACE     %s " % (self.LSPACE.get()))
-        gcode.append_comment("fengrave_set CSPACE     %s " % (self.CSPACE.get()))
-        gcode.append_comment("fengrave_set WSPACE     %s " % (self.WSPACE.get()))
-        gcode.append_comment("fengrave_set TANGLE     %s " % (self.TANGLE.get()))
-        gcode.append_comment("fengrave_set TRADIUS    %s " % (self.TRADIUS.get()))
-        gcode.append_comment("fengrave_set ZSAFE      %s " % (self.ZSAFE.get()))
+        gcode.append_comment(
+            "fengrave_set arc_fit    %s " % (self.arc_fit.get())
+        )
+        gcode.append_comment(
+            "fengrave_set YSCALE     %s " % (self.YSCALE.get())
+        )
+        gcode.append_comment(
+            "fengrave_set XSCALE     %s " % (self.XSCALE.get())
+        )
+        gcode.append_comment(
+            "fengrave_set LSPACE     %s " % (self.LSPACE.get())
+        )
+        gcode.append_comment(
+            "fengrave_set CSPACE     %s " % (self.CSPACE.get())
+        )
+        gcode.append_comment(
+            "fengrave_set WSPACE     %s " % (self.WSPACE.get())
+        )
+        gcode.append_comment(
+            "fengrave_set TANGLE     %s " % (self.TANGLE.get())
+        )
+        gcode.append_comment(
+            "fengrave_set TRADIUS    %s " % (self.TRADIUS.get())
+        )
+        gcode.append_comment(
+            "fengrave_set ZSAFE      %s " % (self.ZSAFE.get())
+        )
         gcode.append_comment("fengrave_set ZCUT       %s " % (self.ZCUT.get()))
-        gcode.append_comment("fengrave_set STHICK     %s " % (self.STHICK.get()))
-        gcode.append_comment("fengrave_set origin     %s " % (self.origin.get()))
-        gcode.append_comment("fengrave_set justify    %s " % (self.justify.get()))
-        gcode.append_comment("fengrave_set units      %s " % (self.units.get()))
+        gcode.append_comment(
+            "fengrave_set STHICK     %s " % (self.STHICK.get())
+        )
+        gcode.append_comment(
+            "fengrave_set origin     %s " % (self.origin.get())
+        )
+        gcode.append_comment(
+            "fengrave_set justify    %s " % (self.justify.get())
+        )
+        gcode.append_comment(
+            "fengrave_set units      %s " % (self.units.get())
+        )
 
-        gcode.append_comment("fengrave_set xorigin    %s " % (self.xorigin.get()))
-        gcode.append_comment("fengrave_set yorigin    %s " % (self.yorigin.get()))
-        gcode.append_comment("fengrave_set segarc     %s " % (self.segarc.get()))
-        gcode.append_comment("fengrave_set accuracy   %s " % (self.accuracy.get()))
+        gcode.append_comment(
+            "fengrave_set xorigin    %s " % (self.xorigin.get())
+        )
+        gcode.append_comment(
+            "fengrave_set yorigin    %s " % (self.yorigin.get())
+        )
+        gcode.append_comment(
+            "fengrave_set segarc     %s " % (self.segarc.get())
+        )
+        gcode.append_comment(
+            "fengrave_set accuracy   %s " % (self.accuracy.get())
+        )
 
         gcode.append_comment("fengrave_set FEED       %s " % (self.FEED.get()))
-        gcode.append_comment("fengrave_set PLUNGE     %s " % (self.PLUNGE.get()))
+        gcode.append_comment(
+            "fengrave_set PLUNGE     %s " % (self.PLUNGE.get())
+        )
         gcode.append_comment(
             "fengrave_set fontfile   \042%s\042 " % (self.fontfile.get())
         )
-        gcode.append_comment("fengrave_set H_CALC     %s " % (self.H_CALC.get()))
-        gcode.append_comment("fengrave_set boxgap     %s " % (self.boxgap.get()))
-        gcode.append_comment("fengrave_set cut_type    %s " % (self.cut_type.get()))
-        gcode.append_comment("fengrave_set bit_shape   %s " % (self.bit_shape.get()))
-        gcode.append_comment("fengrave_set v_bit_angle %s " % (self.v_bit_angle.get()))
-        gcode.append_comment("fengrave_set v_bit_dia   %s " % (self.v_bit_dia.get()))
-        gcode.append_comment("fengrave_set v_drv_crner %s " % (self.v_drv_crner.get()))
-        gcode.append_comment("fengrave_set v_stp_crner %s " % (self.v_stp_crner.get()))
-        gcode.append_comment("fengrave_set v_step_len  %s " % (self.v_step_len.get()))
-        gcode.append_comment("fengrave_set allowance   %s " % (self.allowance.get()))
+        gcode.append_comment(
+            "fengrave_set H_CALC     %s " % (self.H_CALC.get())
+        )
+        gcode.append_comment(
+            "fengrave_set boxgap     %s " % (self.boxgap.get())
+        )
+        gcode.append_comment(
+            "fengrave_set cut_type    %s " % (self.cut_type.get())
+        )
+        gcode.append_comment(
+            "fengrave_set bit_shape   %s " % (self.bit_shape.get())
+        )
+        gcode.append_comment(
+            "fengrave_set v_bit_angle %s " % (self.v_bit_angle.get())
+        )
+        gcode.append_comment(
+            "fengrave_set v_bit_dia   %s " % (self.v_bit_dia.get())
+        )
+        gcode.append_comment(
+            "fengrave_set v_drv_crner %s " % (self.v_drv_crner.get())
+        )
+        gcode.append_comment(
+            "fengrave_set v_stp_crner %s " % (self.v_stp_crner.get())
+        )
+        gcode.append_comment(
+            "fengrave_set v_step_len  %s " % (self.v_step_len.get())
+        )
+        gcode.append_comment(
+            "fengrave_set allowance   %s " % (self.allowance.get())
+        )
 
-        gcode.append_comment("fengrave_set v_max_cut   %s " % (self.v_max_cut.get()))
-        gcode.append_comment("fengrave_set v_rough_stk %s " % (self.v_rough_stk.get()))
+        gcode.append_comment(
+            "fengrave_set v_max_cut   %s " % (self.v_max_cut.get())
+        )
+        gcode.append_comment(
+            "fengrave_set v_rough_stk %s " % (self.v_rough_stk.get())
+        )
 
-        gcode.append_comment("fengrave_set v_depth_lim  %s " % (self.v_depth_lim.get()))
+        gcode.append_comment(
+            "fengrave_set v_depth_lim  %s " % (self.v_depth_lim.get())
+        )
 
-        gcode.append_comment("fengrave_set v_check_all %s " % (self.v_check_all.get()))
-        gcode.append_comment("fengrave_set bmp_turnp   %s " % (self.bmp_turnpol.get()))
-        gcode.append_comment("fengrave_set bmp_turds   %s " % (self.bmp_turdsize.get()))
-        gcode.append_comment("fengrave_set bmp_alpha   %s " % (self.bmp_alphamax.get()))
+        gcode.append_comment(
+            "fengrave_set v_check_all %s " % (self.v_check_all.get())
+        )
+        gcode.append_comment(
+            "fengrave_set bmp_turnp   %s " % (self.bmp_turnpol.get())
+        )
+        gcode.append_comment(
+            "fengrave_set bmp_turds   %s " % (self.bmp_turdsize.get())
+        )
+        gcode.append_comment(
+            "fengrave_set bmp_alpha   %s " % (self.bmp_alphamax.get())
+        )
         gcode.append_comment(
             "fengrave_set bmp_optto   %s " % (self.bmp_opttolerance.get())
         )
@@ -1497,15 +1807,29 @@ class Application(Frame):
         gcode.append_comment(
             "fengrave_set fontdir    \042%s\042 " % (self.fontdir.get())
         )
-        gcode.append_comment("fengrave_set gpre        %s " % (self.gpre.get()))
-        gcode.append_comment("fengrave_set gpost       %s " % (self.gpost.get()))
+        gcode.append_comment(
+            "fengrave_set gpre        %s " % (self.gpre.get())
+        )
+        gcode.append_comment(
+            "fengrave_set gpost       %s " % (self.gpost.get())
+        )
 
-        gcode.append_comment("fengrave_set imagefile   \042%s\042 " % (self.IMAGE_FILE))
-        gcode.append_comment("fengrave_set input_type  %s " % (self.input_type.get()))
+        gcode.append_comment(
+            "fengrave_set imagefile   \042%s\042 " % (self.IMAGE_FILE)
+        )
+        gcode.append_comment(
+            "fengrave_set input_type  %s " % (self.input_type.get())
+        )
 
-        gcode.append_comment("fengrave_set clean_dia   %s " % (self.clean_dia.get()))
-        gcode.append_comment("fengrave_set clean_step  %s " % (self.clean_step.get()))
-        gcode.append_comment("fengrave_set clean_v     %s " % (self.clean_v.get()))
+        gcode.append_comment(
+            "fengrave_set clean_dia   %s " % (self.clean_dia.get())
+        )
+        gcode.append_comment(
+            "fengrave_set clean_step  %s " % (self.clean_step.get())
+        )
+        gcode.append_comment(
+            "fengrave_set clean_v     %s " % (self.clean_v.get())
+        )
         clean_out = "%d,%d,%d,%d,%d,%d" % (
             self.clean_P.get(),
             self.clean_X.get(),
@@ -1530,7 +1854,8 @@ class Application(Frame):
         gcode.append_comment("fengrave_set TCODE   %s" % (str_data))
 
         gcode.append_comment(
-            "fengrave_set NGC_DIR  \042%s\042 " % (os.path.dirname(self.NGC_FILE))
+            "fengrave_set NGC_DIR  \042%s\042 "
+            % (os.path.dirname(self.NGC_FILE))
         )
         gcode.append_comment("Fontfile: %s " % (self.fontfile.get()))
 
@@ -1538,7 +1863,6 @@ class Application(Frame):
             "#########################################################"
         )
 
-    ################################################################################
     def WriteGCode(self, config_file=False):
         bit = bit_from_shape(
             self.bit_shape.get(), self.v_bit_dia.get(), self.v_bit_angle.get()
@@ -1593,7 +1917,9 @@ class Application(Frame):
 
         if self.cut_type.get() == "engrave" or self.bit_shape.get() == "FLAT":
             ecoords = []
-            if (self.bit_shape.get() == "FLAT") and (self.cut_type.get() != "engrave"):
+            if (self.bit_shape.get() == "FLAT") and (
+                self.cut_type.get() != "engrave"
+            ):
                 Acc = float(self.v_step_len.get()) * 1.5  # fudge factor
                 ###################################
                 ###   Create Flat Cut ECOORDS   ###
@@ -1638,7 +1964,8 @@ class Application(Frame):
                     dx = oldx - x1
                     dy = oldy - y1
                     dist = sqrt(dx * dx + dy * dy)
-                    # check and see if we need to move to a new discontinuous start point
+                    # check and see if we need to move to a new discontinuous
+                    # start point
                     if (dist > Acc) or first_stroke:
                         loop = loop + 1
                         first_stroke = False
@@ -1664,7 +1991,10 @@ class Application(Frame):
                     rough_again = True
                 zmax = zmin - maxDZ
 
-                if self.bit_shape.get() == "FLAT" and self.cut_type.get() != "engrave":
+                if (
+                    self.bit_shape.get() == "FLAT"
+                    and self.cut_type.get() != "engrave"
+                ):
                     g.set_depth(z1)
 
                 dist = 999
@@ -1687,7 +2017,8 @@ class Application(Frame):
                         y1 = ecoords[i][1]
                         loop = ecoords[i][2]
 
-                        # check and see if we need to move to a new discontinuous start point
+                        # check and see if we need to move to a new
+                        # discontinuous start point
                         if loop != loop_old:
                             g.flush()
                             dx = x1 - lastx
@@ -1835,7 +2166,8 @@ class Application(Frame):
                         if ((z1 > zmax) and (nextz > zmax)) and (roughing):
                             loop_old = -1
                             continue
-                        # check and see if we need to move to a new discontinuous start point
+                        # check and see if we need to move to a new
+                        # discontinuous start point
                         if loop != loop_old:
                             g.safety()
                             g.rapid(x=x1, y=y1)
@@ -1859,7 +2191,9 @@ class Application(Frame):
         Radius_plot = float(self.RADIUS_PLOT)
         if Radius_plot != 0 and self.cut_type.get() == "engrave":
             g.safety()
-            g.rapid(x=-Radius_plot - self.Xzero + XOrigin, y=YOrigin - self.Yzero)
+            g.rapid(
+                x=-Radius_plot - self.Xzero + XOrigin, y=YOrigin - self.Yzero
+            )
             g.plunge_z()
             g.arc(cw=True, I_offset=Radius_plot, J_offset=0.0)
         # End Circle
@@ -1901,8 +2235,11 @@ class Application(Frame):
         if not self.no_comments.get():
             self.append_author_to_gcode(g)
             self.append_cleanup_comments_to_gcode(
-                g, bit_type, float(self.clean_dia.get()), bit.angle,
-                self.units.get()
+                g,
+                bit_type,
+                float(self.clean_dia.get()),
+                bit.angle,
+                self.units.get(),
             )
 
         g.set_depth(Depth)
@@ -1941,9 +2278,8 @@ class Application(Frame):
             rough_again = False
             zmin = zmin + maxDZ
 
-            ########################################################################
-            # The clean coords have already been sorted so we can just write them  #
-            ########################################################################
+            # The clean coords have already been sorted so we can just write
+            # them
 
             order_out = Sort_Paths(coords_out, 3)
             new_coords = []
@@ -2049,7 +2385,9 @@ class Application(Frame):
 
         for line in self.coords:
             XY = line
-            svg.line(XY[0] - minx, -XY[1] + maxy, XY[2] - minx, -XY[3] + maxy, Thick)
+            svg.line(
+                XY[0] - minx, -XY[1] + maxy, XY[2] - minx, -XY[3] + maxy, Thick
+            )
 
         svg.close()
 
@@ -2383,7 +2721,9 @@ class Application(Frame):
         try:
             value = float(self.TANGLE.get())
             if value <= -360.0 or value >= 360.0:
-                self.statusMessage.set(" Angle should be between -360 and 360 ")
+                self.statusMessage.set(
+                    " Angle should be between -360 and 360 "
+                )
                 return NumberCheck.is_invalid
         except:
             return NumberCheck.is_not_a_number
@@ -2397,7 +2737,9 @@ class Application(Frame):
         try:
             value = float(self.TRADIUS.get())
             if value < 0.0:
-                self.statusMessage.set(" Radius should be greater than or equal to 0 ")
+                self.statusMessage.set(
+                    " Radius should be greater than or equal to 0 "
+                )
                 return NumberCheck.is_invalid
         except:
             return NumberCheck.is_not_a_number
@@ -2493,7 +2835,9 @@ class Application(Frame):
         try:
             value = float(self.segarc.get())
             if value <= 0.0:
-                self.statusMessage.set(" Arc Angle should be greater than zero.")
+                self.statusMessage.set(
+                    " Arc Angle should be greater than zero."
+                )
                 return NumberCheck.is_invalid
         except:
             return NumberCheck.is_not_a_number
@@ -2641,7 +2985,9 @@ class Application(Frame):
         return NumberCheck.is_valid
 
     def Entry_OutsideAngle_Callback(self, varName, index, mode):
-        self.entry_set(self.Entry_OutsideAngle, self.Entry_OutsideAngle_Check())
+        self.entry_set(
+            self.Entry_OutsideAngle, self.Entry_OutsideAngle_Check()
+        )
 
     #############################
     def Entry_StepSize_Check(self):
@@ -2662,7 +3008,9 @@ class Application(Frame):
         try:
             value = float(self.allowance.get())
             if value > 0.0:
-                self.statusMessage.set(" Allowance should be less than or equal to 0 ")
+                self.statusMessage.set(
+                    " Allowance should be less than or equal to 0 "
+                )
                 return NumberCheck.is_invalid
         except:
             return NumberCheck.is_not_a_number
@@ -2691,7 +3039,9 @@ class Application(Frame):
         try:
             value = float(self.v_max_cut.get())
             if value >= 0.0:
-                self.statusMessage.set(" Max Depth per Pass should be less than 0.0 ")
+                self.statusMessage.set(
+                    " Max Depth per Pass should be less than 0.0 "
+                )
                 return NumberCheck.is_invalid
         except:
             return NumberCheck.is_not_a_number
@@ -2706,7 +3056,8 @@ class Application(Frame):
             value = float(self.v_rough_stk.get())
             if value < 0.0:
                 self.statusMessage.set(
-                    " Finish Pass Stock should be positive or zero (Zero disables multi-pass)"
+                    " Finish Pass Stock should be positive or zero "
+                    "(Zero disables multi-pass)"
                 )
                 return NumberCheck.is_invalid
         except:
@@ -2762,7 +3113,9 @@ class Application(Frame):
         try:
             value = float(self.clean_step.get())
             if value <= 0.0:
-                self.statusMessage.set(" Step Over should be between 0% and 100% ")
+                self.statusMessage.set(
+                    " Step Over should be between 0% and 100% "
+                )
                 return NumberCheck.is_invalid
         except:
             return NumberCheck.is_not_a_number
@@ -2813,7 +3166,9 @@ class Application(Frame):
         try:
             value = float(self.bmp_turdsize.get())
             if value < 1.0:
-                self.statusMessage.set(" Step size should be greater or equal to 1.0 ")
+                self.statusMessage.set(
+                    " Step size should be greater or equal to 1.0 "
+                )
                 return NumberCheck.is_invalid
         except:
             return NumberCheck.is_not_a_number
@@ -2827,7 +3182,9 @@ class Application(Frame):
         try:
             value = float(self.bmp_alphamax.get())
             if value < 0.0 or value > 4.0 / 3.0:
-                self.statusMessage.set(" Alpha Max should be between 0.0 and 1.333 ")
+                self.statusMessage.set(
+                    " Alpha Max should be between 0.0 and 1.333 "
+                )
                 return NumberCheck.is_invalid
         except:
             return NumberCheck.is_not_a_number
@@ -2841,14 +3198,18 @@ class Application(Frame):
         try:
             value = float(self.bmp_opttolerance.get())
             if value < 0.0:
-                self.statusMessage.set(" Alpha Max should be between 0.0 and 1.333 ")
+                self.statusMessage.set(
+                    " Alpha Max should be between 0.0 and 1.333 "
+                )
                 return NumberCheck.is_invalid
         except:
             return NumberCheck.is_not_a_number
         return NumberCheck.is_valid
 
     def Entry_BMPoptTolerance_Callback(self, varName, index, mode):
-        self.entry_set(self.Entry_BMPoptTolerance, self.Entry_BMPoptTolerance_Check())
+        self.entry_set(
+            self.Entry_BMPoptTolerance, self.Entry_BMPoptTolerance_Check()
+        )
 
     #############################
 
@@ -2875,53 +3236,86 @@ class Application(Frame):
         GEN_error_cnt = (
             self.entry_set(self.Entry_Xoffset, self.Entry_Xoffset_Check(), 2)
             + self.entry_set(self.Entry_Yoffset, self.Entry_Yoffset_Check(), 2)
-            + self.entry_set(self.Entry_ArcAngle, self.Entry_ArcAngle_Check(), 2)
-            + self.entry_set(self.Entry_Accuracy, self.Entry_Accuracy_Check(), 2)
+            + self.entry_set(
+                self.Entry_ArcAngle, self.Entry_ArcAngle_Check(), 2
+            )
+            + self.entry_set(
+                self.Entry_Accuracy, self.Entry_Accuracy_Check(), 2
+            )
             + self.entry_set(self.Entry_BoxGap, self.Entry_BoxGap_Check(), 2)
             + self.entry_set(self.Entry_Xoffset, self.Entry_Xoffset_Check(), 2)
             + self.entry_set(self.Entry_Yoffset, self.Entry_Yoffset_Check(), 2)
-            + self.entry_set(self.Entry_ArcAngle, self.Entry_ArcAngle_Check(), 2)
-            + self.entry_set(self.Entry_Accuracy, self.Entry_Accuracy_Check(), 2)
+            + self.entry_set(
+                self.Entry_ArcAngle, self.Entry_ArcAngle_Check(), 2
+            )
+            + self.entry_set(
+                self.Entry_Accuracy, self.Entry_Accuracy_Check(), 2
+            )
             + self.entry_set(self.Entry_BoxGap, self.Entry_BoxGap_Check(), 2)
         )
 
         VCARVE_error_cnt = (
-            self.entry_set(self.Entry_Vbitangle, self.Entry_Vbitangle_Check(), 2)
+            self.entry_set(
+                self.Entry_Vbitangle, self.Entry_Vbitangle_Check(), 2
+            )
             + self.entry_set(self.Entry_Vbitdia, self.Entry_Vbitdia_Check(), 2)
-            + self.entry_set(self.Entry_InsideAngle, self.Entry_InsideAngle_Check(), 2)
+            + self.entry_set(
+                self.Entry_InsideAngle, self.Entry_InsideAngle_Check(), 2
+            )
             + self.entry_set(
                 self.Entry_OutsideAngle, self.Entry_OutsideAngle_Check(), 2
             )
-            + self.entry_set(self.Entry_StepSize, self.Entry_StepSize_Check(), 2)
-            + self.entry_set(self.Entry_CLEAN_DIA, self.Entry_CLEAN_DIA_Check(), 2)
-            + self.entry_set(self.Entry_STEP_OVER, self.Entry_STEP_OVER_Check(), 2)
-            + self.entry_set(self.Entry_Allowance, self.Entry_Allowance_Check(), 2)
-            + self.entry_set(self.Entry_VDepthLimit, self.Entry_VDepthLimit_Check(), 2)
+            + self.entry_set(
+                self.Entry_StepSize, self.Entry_StepSize_Check(), 2
+            )
+            + self.entry_set(
+                self.Entry_CLEAN_DIA, self.Entry_CLEAN_DIA_Check(), 2
+            )
+            + self.entry_set(
+                self.Entry_STEP_OVER, self.Entry_STEP_OVER_Check(), 2
+            )
+            + self.entry_set(
+                self.Entry_Allowance, self.Entry_Allowance_Check(), 2
+            )
+            + self.entry_set(
+                self.Entry_VDepthLimit, self.Entry_VDepthLimit_Check(), 2
+            )
         )
 
         PBM_error_cnt = (
             self.entry_set(
-                self.Entry_BMPoptTolerance, self.Entry_BMPoptTolerance_Check(), 2
+                self.Entry_BMPoptTolerance,
+                self.Entry_BMPoptTolerance_Check(),
+                2,
             )
-            + self.entry_set(self.Entry_BMPturdsize, self.Entry_BMPturdsize_Check(), 2)
-            + self.entry_set(self.Entry_BMPalphamax, self.Entry_BMPalphamax_Check(), 2)
+            + self.entry_set(
+                self.Entry_BMPturdsize, self.Entry_BMPturdsize_Check(), 2
+            )
+            + self.entry_set(
+                self.Entry_BMPalphamax, self.Entry_BMPalphamax_Check(), 2
+            )
         )
 
-        ERROR_cnt = MAIN_error_cnt + GEN_error_cnt + VCARVE_error_cnt + PBM_error_cnt
+        ERROR_cnt = (
+            MAIN_error_cnt + GEN_error_cnt + VCARVE_error_cnt + PBM_error_cnt
+        )
 
         if ERROR_cnt > 0:
             self.statusbar.configure(bg="red")
         if PBM_error_cnt > 0:
             self.statusMessage.set(
-                " Entry Error Detected: Check Entry Values in PBM Settings Window "
+                " Entry Error Detected: Check Entry Values in PBM "
+                "Settings Window "
             )
         if VCARVE_error_cnt > 0:
             self.statusMessage.set(
-                " Entry Error Detected: Check Entry Values in V-Carve Settings Window "
+                " Entry Error Detected: Check Entry Values in V-Carve "
+                "Settings Window "
             )
         if GEN_error_cnt > 0:
             self.statusMessage.set(
-                " Entry Error Detected: Check Entry Values in General Settings Window "
+                " Entry Error Detected: Check Entry Values in General "
+                "Settings Window "
             )
         if MAIN_error_cnt > 0:
             self.statusMessage.set(
@@ -2960,7 +3354,9 @@ class Application(Frame):
         self.Checkbutton_v_pplot = Checkbutton(
             vcalc_status, text="Plot During V-Carve Calculation", anchor=W
         )
-        self.Checkbutton_v_pplot.place(x=130 + 12 + 12, y=34, width=300, height=23)
+        self.Checkbutton_v_pplot.place(
+            x=130 + 12 + 12, y=34, width=300, height=23
+        )
         self.Checkbutton_v_pplot.configure(variable=self.v_pplot)
 
         vcalc_status.resizable(0, 0)
@@ -3069,11 +3465,17 @@ class Application(Frame):
             self.PLUNGE.set("%.3g" % (float(self.PLUNGE.get()) * factor))
             self.boxgap.set("%.3g" % (float(self.boxgap.get()) * factor))
             self.v_bit_dia.set("%.3g" % (float(self.v_bit_dia.get()) * factor))
-            self.v_depth_lim.set("%.3g" % (float(self.v_depth_lim.get()) * factor))
-            self.v_step_len.set("%.3g" % (float(self.v_step_len.get()) * factor))
+            self.v_depth_lim.set(
+                "%.3g" % (float(self.v_depth_lim.get()) * factor)
+            )
+            self.v_step_len.set(
+                "%.3g" % (float(self.v_step_len.get()) * factor)
+            )
             self.allowance.set("%.3g" % (float(self.allowance.get()) * factor))
             self.v_max_cut.set("%.3g" % (float(self.v_max_cut.get()) * factor))
-            self.v_rough_stk.set("%.3g" % (float(self.v_rough_stk.get()) * factor))
+            self.v_rough_stk.set(
+                "%.3g" % (float(self.v_rough_stk.get()) * factor)
+            )
             self.xorigin.set("%.3g" % (float(self.xorigin.get()) * factor))
             self.yorigin.set("%.3g" % (float(self.yorigin.get()) * factor))
             self.accuracy.set("%.3g" % (float(self.accuracy.get()) * factor))
@@ -3095,9 +3497,13 @@ class Application(Frame):
             else:
                 image_height = 50
         if self.useIMGsize.get():
-            self.YSCALE.set("%.3g" % (100 * float(self.YSCALE.get()) / image_height))
+            self.YSCALE.set(
+                "%.3g" % (100 * float(self.YSCALE.get()) / image_height)
+            )
         else:
-            self.YSCALE.set("%.3g" % (float(self.YSCALE.get()) / 100 * image_height))
+            self.YSCALE.set(
+                "%.3g" % (float(self.YSCALE.get()) / 100 * image_height)
+            )
 
         self.menu_View_Refresh()
         self.Recalc_RQD()
@@ -3162,7 +3568,10 @@ class Application(Frame):
         if not os.path.isdir(init_dir):
             init_dir = self.HOME_DIR
         fileselect = askopenfilename(
-            filetypes=[("F-Engrave G-code Files", "*.ngc"), ("All Files", "*")],
+            filetypes=[
+                ("F-Engrave G-code Files", "*.ngc"),
+                ("All Files", "*"),
+            ],
             initialdir=init_dir,
         )
 
@@ -3178,10 +3587,19 @@ class Application(Frame):
             if PIL:
                 fileselect = askopenfilename(
                     filetypes=[
-                        ("DXF/Image Files", ("*.dxf", "*.png", "*.bmp", "*.tif")),
+                        (
+                            "DXF/Image Files",
+                            ("*.dxf", "*.png", "*.bmp", "*.tif"),
+                        ),
                         ("DXF Files", "*.dxf"),
-                        ("Bitmap Files", ("*.bmp", "*.pbm", "*.ppm", "*.pgm", "*.pnm")),
-                        ("Slower Image Files", ("*.jpg", "*.png", "*.gif", "*.tif")),
+                        (
+                            "Bitmap Files",
+                            ("*.bmp", "*.pbm", "*.ppm", "*.pgm", "*.pnm"),
+                        ),
+                        (
+                            "Slower Image Files",
+                            ("*.jpg", "*.png", "*.gif", "*.tif"),
+                        ),
                         ("All Files", "*"),
                     ],
                     initialdir=init_dir,
@@ -3191,10 +3609,20 @@ class Application(Frame):
                     filetypes=[
                         (
                             "DXF/Bitmap Files",
-                            ("*.dxf", "*.bmp", "*.pbm", "*.ppm", "*.pgm", "*.pnm"),
+                            (
+                                "*.dxf",
+                                "*.bmp",
+                                "*.pbm",
+                                "*.ppm",
+                                "*.pgm",
+                                "*.pnm",
+                            ),
                         ),
                         ("DXF Files", "*.dxf"),
-                        ("Bitmap Files", ("*.bmp", "*.pbm", "*.ppm", "*.pgm", "*.pnm")),
+                        (
+                            "Bitmap Files",
+                            ("*.bmp", "*.pbm", "*.ppm", "*.pgm", "*.pnm"),
+                        ),
                         ("All Files", "*"),
                     ],
                     initialdir=init_dir,
@@ -3235,11 +3663,15 @@ class Application(Frame):
                             pass
                 # BOOL
                 elif "show_axis" in input_code:
-                    self.show_axis.set(line[line.find("show_axis") :].split()[1])
+                    self.show_axis.set(
+                        line[line.find("show_axis") :].split()[1]
+                    )
                 elif "show_box" in input_code:
                     self.show_box.set(line[line.find("show_box") :].split()[1])
                 elif "show_thick" in input_code:
-                    self.show_thick.set(line[line.find("show_thick") :].split()[1])
+                    self.show_thick.set(
+                        line[line.find("show_thick") :].split()[1]
+                    )
                 elif "flip" in input_code:
                     self.flip.set(line[line.find("flip") :].split()[1])
                 elif "mirror" in input_code:
@@ -3255,17 +3687,27 @@ class Application(Frame):
                 elif "inlay" in input_code:
                     self.inlay.set(line[line.find("inlay") :].split()[1])
                 elif "bmp_long" in input_code:
-                    self.bmp_longcurve.set(line[line.find("bmp_long") :].split()[1])
+                    self.bmp_longcurve.set(
+                        line[line.find("bmp_long") :].split()[1]
+                    )
                 elif "ext_char" in input_code:
                     self.ext_char.set(line[line.find("ext_char") :].split()[1])
                 elif "useIMGsize" in input_code:
-                    self.useIMGsize.set(line[line.find("useIMGsize") :].split()[1])
+                    self.useIMGsize.set(
+                        line[line.find("useIMGsize") :].split()[1]
+                    )
                 elif "no_comments" in input_code:
-                    self.no_comments.set(line[line.find("no_comments") :].split()[1])
+                    self.no_comments.set(
+                        line[line.find("no_comments") :].split()[1]
+                    )
                 elif "show_v_path" in input_code:
-                    self.show_v_path.set(line[line.find("show_v_path") :].split()[1])
+                    self.show_v_path.set(
+                        line[line.find("show_v_path") :].split()[1]
+                    )
                 elif "show_v_area" in input_code:
-                    self.show_v_area.set(line[line.find("show_v_area") :].split()[1])
+                    self.show_v_area.set(
+                        line[line.find("show_v_area") :].split()[1]
+                    )
 
                 elif "plotbox" in input_code:
                     if line[line.find("plotbox") :].split()[1] == "box":
@@ -3273,11 +3715,15 @@ class Application(Frame):
                     elif line[line.find("plotbox") :].split()[1] == "no_box":
                         self.plotbox.set(0)
                     else:
-                        self.plotbox.set(line[line.find("plotbox") :].split()[1])
+                        self.plotbox.set(
+                            line[line.find("plotbox") :].split()[1]
+                        )
 
                 # STRING
                 elif "fontdir" in input_code:
-                    self.fontdir.set(line[line.find("fontdir") :].split("\042")[1])
+                    self.fontdir.set(
+                        line[line.find("fontdir") :].split("\042")[1]
+                    )
                 elif "gpre" in input_code:
                     gpre_tmp = ""
                     for word in line[line.find("gpre") :].split():
@@ -3335,7 +3781,9 @@ class Application(Frame):
                 elif "PLUNGE" in input_code:
                     self.PLUNGE.set(line[line.find("PLUNGE") :].split()[1])
                 elif "fontfile" in input_code:
-                    self.fontfile.set(line[line.find("fontfile") :].split("\042")[1])
+                    self.fontfile.set(
+                        line[line.find("fontfile") :].split("\042")[1]
+                    )
                 elif "H_CALC" in input_code:
                     self.H_CALC.set(line[line.find("H_CALC") :].split()[1])
                 elif "boxgap" in input_code:
@@ -3345,45 +3793,83 @@ class Application(Frame):
                 elif "cut_type" in input_code:
                     self.cut_type.set(line[line.find("cut_type") :].split()[1])
                 elif "bit_shape" in input_code:
-                    self.bit_shape.set(line[line.find("bit_shape") :].split()[1])
+                    self.bit_shape.set(
+                        line[line.find("bit_shape") :].split()[1]
+                    )
                 elif "v_bit_angle" in input_code:
-                    self.v_bit_angle.set(line[line.find("v_bit_angle") :].split()[1])
+                    self.v_bit_angle.set(
+                        line[line.find("v_bit_angle") :].split()[1]
+                    )
                 elif "v_bit_dia" in input_code:
-                    self.v_bit_dia.set(line[line.find("v_bit_dia") :].split()[1])
+                    self.v_bit_dia.set(
+                        line[line.find("v_bit_dia") :].split()[1]
+                    )
                 elif "v_drv_crner" in input_code:
-                    self.v_drv_crner.set(line[line.find("v_drv_crner") :].split()[1])
+                    self.v_drv_crner.set(
+                        line[line.find("v_drv_crner") :].split()[1]
+                    )
                 elif "v_stp_crner" in input_code:
-                    self.v_stp_crner.set(line[line.find("v_stp_crner") :].split()[1])
+                    self.v_stp_crner.set(
+                        line[line.find("v_stp_crner") :].split()[1]
+                    )
                 elif "v_step_len" in input_code:
-                    self.v_step_len.set(line[line.find("v_step_len") :].split()[1])
+                    self.v_step_len.set(
+                        line[line.find("v_step_len") :].split()[1]
+                    )
                 elif "allowance" in input_code:
-                    self.allowance.set(line[line.find("allowance") :].split()[1])
+                    self.allowance.set(
+                        line[line.find("allowance") :].split()[1]
+                    )
                 elif "v_max_cut" in input_code:
-                    self.v_max_cut.set(line[line.find("v_max_cut") :].split()[1])
+                    self.v_max_cut.set(
+                        line[line.find("v_max_cut") :].split()[1]
+                    )
                 elif "v_rough_stk" in input_code:
-                    self.v_rough_stk.set(line[line.find("v_rough_stk") :].split()[1])
+                    self.v_rough_stk.set(
+                        line[line.find("v_rough_stk") :].split()[1]
+                    )
                 elif "var_dis" in input_code:
                     self.var_dis.set(line[line.find("var_dis") :].split()[1])
                 elif "v_depth_lim" in input_code:
-                    self.v_depth_lim.set(line[line.find("v_depth_lim") :].split()[1])
+                    self.v_depth_lim.set(
+                        line[line.find("v_depth_lim") :].split()[1]
+                    )
                 elif "v_check_all" in input_code:
-                    self.v_check_all.set(line[line.find("v_check_all") :].split()[1])
+                    self.v_check_all.set(
+                        line[line.find("v_check_all") :].split()[1]
+                    )
                 elif "bmp_turnp" in input_code:
-                    self.bmp_turnpol.set(line[line.find("bmp_turnp") :].split()[1])
+                    self.bmp_turnpol.set(
+                        line[line.find("bmp_turnp") :].split()[1]
+                    )
                 elif "bmp_turds" in input_code:
-                    self.bmp_turdsize.set(line[line.find("bmp_turds") :].split()[1])
+                    self.bmp_turdsize.set(
+                        line[line.find("bmp_turds") :].split()[1]
+                    )
                 elif "bmp_alpha" in input_code:
-                    self.bmp_alphamax.set(line[line.find("bmp_alpha") :].split()[1])
+                    self.bmp_alphamax.set(
+                        line[line.find("bmp_alpha") :].split()[1]
+                    )
                 elif "bmp_optto" in input_code:
-                    self.bmp_opttolerance.set(line[line.find("bmp_optto") :].split()[1])
+                    self.bmp_opttolerance.set(
+                        line[line.find("bmp_optto") :].split()[1]
+                    )
                 elif "imagefile" in input_code:
-                    self.IMAGE_FILE = line[line.find("imagefile") :].split("\042")[1]
+                    self.IMAGE_FILE = line[line.find("imagefile") :].split(
+                        "\042"
+                    )[1]
                 elif "input_type" in input_code:
-                    self.input_type.set(line[line.find("input_type") :].split()[1])
+                    self.input_type.set(
+                        line[line.find("input_type") :].split()[1]
+                    )
                 elif "clean_dia" in input_code:
-                    self.clean_dia.set(line[line.find("clean_dia") :].split()[1])
+                    self.clean_dia.set(
+                        line[line.find("clean_dia") :].split()[1]
+                    )
                 elif "clean_step" in input_code:
-                    self.clean_step.set(line[line.find("clean_step") :].split()[1])
+                    self.clean_step.set(
+                        line[line.find("clean_step") :].split()[1]
+                    )
                 elif "clean_v" in input_code:
                     self.clean_v.set(line[line.find("clean_v") :].split()[1])
                 elif "clean_paths" in input_code:
@@ -3437,9 +3923,13 @@ class Application(Frame):
                 self.default_text = ""
                 for Ch in text_codes:
                     try:
-                        self.default_text = self.default_text + "%c" % (unichr(int(Ch)))
+                        self.default_text = self.default_text + "%c" % (
+                            unichr(int(Ch))
+                        )
                     except:
-                        self.default_text = self.default_text + "%c" % (chr(int(Ch)))
+                        self.default_text = self.default_text + "%c" % (
+                            chr(int(Ch))
+                        )
 
         bit = bit_from_shape(
             self.bit_shape.get(), self.v_bit_dia.get(), self.v_bit_angle.get()
@@ -3755,7 +4245,9 @@ class Application(Frame):
         message.message_box("About F-Engrave", about)
 
     def menu_Help_Web(self):
-        webbrowser.open_new(r"http://www.scorchworks.com/Fengrave/fengrave_doc.html")
+        webbrowser.open_new(
+            r"http://www.scorchworks.com/Fengrave/fengrave_doc.html"
+        )
 
     def KEY_ESC(self, event):
         pass  # A stop calculation command may go here
@@ -3813,7 +4305,9 @@ class Application(Frame):
                 self.Label_font_prop.configure(text="Text Font Properties:")
                 self.Label_Yscale.configure(text="Text Height")
                 self.Label_Xscale.configure(text="Text Width")
-                self.Label_pos_orient.configure(text="Text Position and Orientation:")
+                self.Label_pos_orient.configure(
+                    text="Text Position and Orientation:"
+                )
                 self.Label_Tangle.configure(text="Text Angle")
                 self.Label_flip.configure(text="Flip Text")
                 self.Label_mirror.configure(text="Mirror Text")
@@ -3835,15 +4329,27 @@ class Application(Frame):
                     x=x_label_L, y=Yloc, width=w_label * 2, height=21
                 )
                 Yloc = Yloc + 24
-                self.Label_Yscale.place(x=x_label_L, y=Yloc, width=w_label, height=21)
+                self.Label_Yscale.place(
+                    x=x_label_L, y=Yloc, width=w_label, height=21
+                )
                 self.Label_Yscale_pct.place_forget()
-                self.Label_Yscale_u.place(x=x_units_L, y=Yloc, width=w_units, height=21)
-                self.Entry_Yscale.place(x=x_entry_L, y=Yloc, width=w_entry, height=23)
+                self.Label_Yscale_u.place(
+                    x=x_units_L, y=Yloc, width=w_units, height=21
+                )
+                self.Entry_Yscale.place(
+                    x=x_entry_L, y=Yloc, width=w_entry, height=23
+                )
 
                 Yloc = Yloc + 24
-                self.Label_Sthick.place(x=x_label_L, y=Yloc, width=w_label, height=21)
-                self.Label_Sthick_u.place(x=x_units_L, y=Yloc, width=w_units, height=21)
-                self.Entry_Sthick.place(x=x_entry_L, y=Yloc, width=w_entry, height=23)
+                self.Label_Sthick.place(
+                    x=x_label_L, y=Yloc, width=w_label, height=21
+                )
+                self.Label_Sthick_u.place(
+                    x=x_units_L, y=Yloc, width=w_units, height=21
+                )
+                self.Entry_Sthick.place(
+                    x=x_entry_L, y=Yloc, width=w_entry, height=23
+                )
 
                 if self.cut_type.get() != "engrave":
                     self.Entry_Sthick.configure(state="disabled")
@@ -3855,23 +4361,45 @@ class Application(Frame):
                     self.Label_Sthick_u.configure(state="normal")
 
                 Yloc = Yloc + 24
-                self.Label_Xscale.place(x=x_label_L, y=Yloc, width=w_label, height=21)
-                self.Label_Xscale_u.place(x=x_units_L, y=Yloc, width=w_units, height=21)
-                self.Entry_Xscale.place(x=x_entry_L, y=Yloc, width=w_entry, height=23)
+                self.Label_Xscale.place(
+                    x=x_label_L, y=Yloc, width=w_label, height=21
+                )
+                self.Label_Xscale_u.place(
+                    x=x_units_L, y=Yloc, width=w_units, height=21
+                )
+                self.Entry_Xscale.place(
+                    x=x_entry_L, y=Yloc, width=w_entry, height=23
+                )
 
                 Yloc = Yloc + 24
-                self.Label_Cspace.place(x=x_label_L, y=Yloc, width=w_label, height=21)
-                self.Label_Cspace_u.place(x=x_units_L, y=Yloc, width=w_units, height=21)
-                self.Entry_Cspace.place(x=x_entry_L, y=Yloc, width=w_entry, height=23)
+                self.Label_Cspace.place(
+                    x=x_label_L, y=Yloc, width=w_label, height=21
+                )
+                self.Label_Cspace_u.place(
+                    x=x_units_L, y=Yloc, width=w_units, height=21
+                )
+                self.Entry_Cspace.place(
+                    x=x_entry_L, y=Yloc, width=w_entry, height=23
+                )
 
                 Yloc = Yloc + 24
-                self.Label_Wspace.place(x=x_label_L, y=Yloc, width=w_label, height=21)
-                self.Label_Wspace_u.place(x=x_units_L, y=Yloc, width=w_units, height=21)
-                self.Entry_Wspace.place(x=x_entry_L, y=Yloc, width=w_entry, height=23)
+                self.Label_Wspace.place(
+                    x=x_label_L, y=Yloc, width=w_label, height=21
+                )
+                self.Label_Wspace_u.place(
+                    x=x_units_L, y=Yloc, width=w_units, height=21
+                )
+                self.Entry_Wspace.place(
+                    x=x_entry_L, y=Yloc, width=w_entry, height=23
+                )
 
                 Yloc = Yloc + 24
-                self.Label_Lspace.place(x=x_label_L, y=Yloc, width=w_label, height=21)
-                self.Entry_Lspace.place(x=x_entry_L, y=Yloc, width=w_entry, height=23)
+                self.Label_Lspace.place(
+                    x=x_label_L, y=Yloc, width=w_label, height=21
+                )
+                self.Entry_Lspace.place(
+                    x=x_entry_L, y=Yloc, width=w_entry, height=23
+                )
 
                 Yloc = Yloc + 24 + 12
                 self.separator1.place(
@@ -3883,30 +4411,44 @@ class Application(Frame):
                 )
 
                 Yloc = Yloc + 24
-                self.Label_Tangle.place(x=x_label_L, y=Yloc, width=w_label, height=21)
-                self.Label_Tangle_u.place(x=x_units_L, y=Yloc, width=w_units, height=21)
-                self.Entry_Tangle.place(x=x_entry_L, y=Yloc, width=w_entry, height=23)
+                self.Label_Tangle.place(
+                    x=x_label_L, y=Yloc, width=w_label, height=21
+                )
+                self.Label_Tangle_u.place(
+                    x=x_units_L, y=Yloc, width=w_units, height=21
+                )
+                self.Entry_Tangle.place(
+                    x=x_entry_L, y=Yloc, width=w_entry, height=23
+                )
 
                 Yloc = Yloc + 24
-                self.Label_Justify.place(x=x_label_L, y=Yloc, width=w_label, height=21)
+                self.Label_Justify.place(
+                    x=x_label_L, y=Yloc, width=w_label, height=21
+                )
                 self.Justify_OptionMenu.place(
                     x=x_entry_L, y=Yloc, width=w_entry + 40, height=23
                 )
 
                 Yloc = Yloc + 24
-                self.Label_Origin.place(x=x_label_L, y=Yloc, width=w_label, height=21)
+                self.Label_Origin.place(
+                    x=x_label_L, y=Yloc, width=w_label, height=21
+                )
                 self.Origin_OptionMenu.place(
                     x=x_entry_L, y=Yloc, width=w_entry + 40, height=23
                 )
 
                 Yloc = Yloc + 24
-                self.Label_flip.place(x=x_label_L, y=Yloc, width=w_label, height=21)
+                self.Label_flip.place(
+                    x=x_label_L, y=Yloc, width=w_label, height=21
+                )
                 self.Checkbutton_flip.place(
                     x=x_entry_L, y=Yloc, width=w_entry + 40, height=23
                 )
 
                 Yloc = Yloc + 24
-                self.Label_mirror.place(x=x_label_L, y=Yloc, width=w_label, height=21)
+                self.Label_mirror.place(
+                    x=x_label_L, y=Yloc, width=w_label, height=21
+                )
                 self.Checkbutton_mirror.place(
                     x=x_entry_L, y=Yloc, width=w_entry + 40, height=23
                 )
@@ -3921,20 +4463,28 @@ class Application(Frame):
                 )
 
                 Yloc = Yloc + 24
-                self.Label_Tradius.place(x=x_label_L, y=Yloc, width=w_label, height=21)
+                self.Label_Tradius.place(
+                    x=x_label_L, y=Yloc, width=w_label, height=21
+                )
                 self.Label_Tradius_u.place(
                     x=x_units_L, y=Yloc, width=w_units, height=21
                 )
-                self.Entry_Tradius.place(x=x_entry_L, y=Yloc, width=w_entry, height=23)
+                self.Entry_Tradius.place(
+                    x=x_entry_L, y=Yloc, width=w_entry, height=23
+                )
 
                 Yloc = Yloc + 24
-                self.Label_outer.place(x=x_label_L, y=Yloc, width=w_label, height=21)
+                self.Label_outer.place(
+                    x=x_label_L, y=Yloc, width=w_label, height=21
+                )
                 self.Checkbutton_outer.place(
                     x=x_entry_L, y=Yloc, width=w_entry + 40, height=23
                 )
 
                 Yloc = Yloc + 24
-                self.Label_upper.place(x=x_label_L, y=Yloc, width=w_label, height=21)
+                self.Label_upper.place(
+                    x=x_label_L, y=Yloc, width=w_label, height=21
+                )
                 self.Checkbutton_upper.place(
                     x=x_entry_L, y=Yloc, width=w_entry + 40, height=23
                 )
@@ -3961,28 +4511,48 @@ class Application(Frame):
                 )
 
                 Yloc = Yloc + 24
-                self.Entry_Feed.place(x=x_entry_R, y=Yloc, width=w_entry, height=23)
-                self.Label_Feed.place(x=x_label_R, y=Yloc, width=w_label, height=21)
+                self.Entry_Feed.place(
+                    x=x_entry_R, y=Yloc, width=w_entry, height=23
+                )
+                self.Label_Feed.place(
+                    x=x_label_R, y=Yloc, width=w_label, height=21
+                )
                 self.Label_Feed_u.place(
                     x=x_units_R, y=Yloc, width=w_units + 15, height=21
                 )
 
                 Yloc = Yloc + 24
-                self.Entry_Plunge.place(x=x_entry_R, y=Yloc, width=w_entry, height=23)
-                self.Label_Plunge.place(x=x_label_R, y=Yloc, width=w_label, height=21)
+                self.Entry_Plunge.place(
+                    x=x_entry_R, y=Yloc, width=w_entry, height=23
+                )
+                self.Label_Plunge.place(
+                    x=x_label_R, y=Yloc, width=w_label, height=21
+                )
                 self.Label_Plunge_u.place(
                     x=x_units_R, y=Yloc, width=w_units + 15, height=21
                 )
 
                 Yloc = Yloc + 24
-                self.Entry_Zsafe.place(x=x_entry_R, y=Yloc, width=w_entry, height=23)
-                self.Label_Zsafe.place(x=x_label_R, y=Yloc, width=w_label, height=21)
-                self.Label_Zsafe_u.place(x=x_units_R, y=Yloc, width=w_units, height=21)
+                self.Entry_Zsafe.place(
+                    x=x_entry_R, y=Yloc, width=w_entry, height=23
+                )
+                self.Label_Zsafe.place(
+                    x=x_label_R, y=Yloc, width=w_label, height=21
+                )
+                self.Label_Zsafe_u.place(
+                    x=x_units_R, y=Yloc, width=w_units, height=21
+                )
 
                 Yloc = Yloc + 24
-                self.Label_Zcut.place(x=x_label_R, y=Yloc, width=w_label, height=21)
-                self.Label_Zcut_u.place(x=x_units_R, y=Yloc, width=w_units, height=21)
-                self.Entry_Zcut.place(x=x_entry_R, y=Yloc, width=w_entry, height=23)
+                self.Label_Zcut.place(
+                    x=x_label_R, y=Yloc, width=w_label, height=21
+                )
+                self.Label_Zcut_u.place(
+                    x=x_units_R, y=Yloc, width=w_units, height=21
+                )
+                self.Entry_Zcut.place(
+                    x=x_entry_R, y=Yloc, width=w_entry, height=23
+                )
 
                 if self.cut_type.get() != "engrave":
                     self.Entry_Zcut.configure(state="disabled")
@@ -3994,11 +4564,16 @@ class Application(Frame):
                     self.Label_Zcut_u.configure(state="normal")
 
                 Yloc = Yloc + 24 + 6
-                self.Label_List_Box.place(x=x_label_R + 0, y=Yloc, width=113, height=22)
+                self.Label_List_Box.place(
+                    x=x_label_R + 0, y=Yloc, width=113, height=22
+                )
 
                 Yloc = Yloc + 24
                 self.Listbox_1_frame.place(
-                    x=x_label_R + 0, y=Yloc, width=160 + 25, height=self.h - 324
+                    x=x_label_R + 0,
+                    y=Yloc,
+                    width=160 + 25,
+                    height=self.h - 324,
                 )
                 self.Label_fontfile.place(
                     x=x_label_R, y=self.h - 165, width=w_label + 75, height=21
@@ -4013,14 +4588,22 @@ class Application(Frame):
                 self.Recalculate.place(x=12, y=Ybut, width=95, height=30)
 
                 Ybut = self.h - 60
-                self.V_Carve_Calc.place(x=x_label_R, y=Ybut, width=100, height=30)
+                self.V_Carve_Calc.place(
+                    x=x_label_R, y=Ybut, width=100, height=30
+                )
 
                 Ybut = self.h - 105
-                self.Radio_Cut_E.place(x=x_label_R, y=Ybut, width=185, height=23)
+                self.Radio_Cut_E.place(
+                    x=x_label_R, y=Ybut, width=185, height=23
+                )
                 Ybut = self.h - 85
-                self.Radio_Cut_V.place(x=x_label_R, y=Ybut, width=185, height=23)
+                self.Radio_Cut_V.place(
+                    x=x_label_R, y=Ybut, width=185, height=23
+                )
 
-                self.PreviewCanvas.configure(width=self.w - 455, height=self.h - 160)
+                self.PreviewCanvas.configure(
+                    width=self.w - 455, height=self.h - 160
+                )
                 self.PreviewCanvas_frame.place(x=220, y=10)
                 self.Input_Label.place(
                     x=222, y=self.h - 130, width=112, height=21, anchor=W
@@ -4033,7 +4616,9 @@ class Application(Frame):
                 self.Label_font_prop.configure(text="Image Properties:")
                 self.Label_Yscale.configure(text="Image Height")
                 self.Label_Xscale.configure(text="Image Width")
-                self.Label_pos_orient.configure(text="Image Position and Orientation:")
+                self.Label_pos_orient.configure(
+                    text="Image Position and Orientation:"
+                )
                 self.Label_Tangle.configure(text="Image Angle")
                 self.Label_flip.configure(text="Flip Image")
                 self.Label_mirror.configure(text="Mirror Image")
@@ -4051,7 +4636,9 @@ class Application(Frame):
                     x=x_label_L, y=Yloc, width=w_label * 2, height=21
                 )
                 Yloc = Yloc + 24
-                self.Label_Yscale.place(x=x_label_L, y=Yloc, width=w_label, height=21)
+                self.Label_Yscale.place(
+                    x=x_label_L, y=Yloc, width=w_label, height=21
+                )
                 if self.useIMGsize.get():
                     self.Label_Yscale_u.place_forget()
                     self.Label_Yscale_pct.place(
@@ -4063,7 +4650,9 @@ class Application(Frame):
                         x=x_units_L, y=Yloc, width=w_units, height=21
                     )
 
-                self.Entry_Yscale.place(x=x_entry_L, y=Yloc, width=w_entry, height=23)
+                self.Entry_Yscale.place(
+                    x=x_entry_L, y=Yloc, width=w_entry, height=23
+                )
 
                 Yloc = Yloc + 24
                 self.Label_useIMGsize.place(
@@ -4074,9 +4663,15 @@ class Application(Frame):
                 )
 
                 Yloc = Yloc + 24
-                self.Label_Sthick.place(x=x_label_L, y=Yloc, width=w_label, height=21)
-                self.Label_Sthick_u.place(x=x_units_L, y=Yloc, width=w_units, height=21)
-                self.Entry_Sthick.place(x=x_entry_L, y=Yloc, width=w_entry, height=23)
+                self.Label_Sthick.place(
+                    x=x_label_L, y=Yloc, width=w_label, height=21
+                )
+                self.Label_Sthick_u.place(
+                    x=x_units_L, y=Yloc, width=w_units, height=21
+                )
+                self.Entry_Sthick.place(
+                    x=x_entry_L, y=Yloc, width=w_entry, height=23
+                )
                 if self.cut_type.get() != "engrave":
                     self.Entry_Sthick.configure(state="disabled")
                     self.Label_Sthick.configure(state="disabled")
@@ -4087,9 +4682,15 @@ class Application(Frame):
                     self.Label_Sthick_u.configure(state="normal")
 
                 Yloc = Yloc + 24
-                self.Label_Xscale.place(x=x_label_L, y=Yloc, width=w_label, height=21)
-                self.Label_Xscale_u.place(x=x_units_L, y=Yloc, width=w_units, height=21)
-                self.Entry_Xscale.place(x=x_entry_L, y=Yloc, width=w_entry, height=23)
+                self.Label_Xscale.place(
+                    x=x_label_L, y=Yloc, width=w_label, height=21
+                )
+                self.Label_Xscale_u.place(
+                    x=x_units_L, y=Yloc, width=w_units, height=21
+                )
+                self.Entry_Xscale.place(
+                    x=x_entry_L, y=Yloc, width=w_entry, height=23
+                )
 
                 self.Label_Cspace.place_forget()
                 self.Label_Cspace_u.place_forget()
@@ -4112,27 +4713,39 @@ class Application(Frame):
                 )
 
                 Yloc = Yloc + 24
-                self.Label_Tangle.place(x=x_label_L, y=Yloc, width=w_label, height=21)
-                self.Label_Tangle_u.place(x=x_units_L, y=Yloc, width=w_units, height=21)
-                self.Entry_Tangle.place(x=x_entry_L, y=Yloc, width=w_entry, height=23)
+                self.Label_Tangle.place(
+                    x=x_label_L, y=Yloc, width=w_label, height=21
+                )
+                self.Label_Tangle_u.place(
+                    x=x_units_L, y=Yloc, width=w_units, height=21
+                )
+                self.Entry_Tangle.place(
+                    x=x_entry_L, y=Yloc, width=w_entry, height=23
+                )
 
                 self.Label_Justify.place_forget()
                 self.Justify_OptionMenu.place_forget()
 
                 Yloc = Yloc + 24
-                self.Label_Origin.place(x=x_label_L, y=Yloc, width=w_label, height=21)
+                self.Label_Origin.place(
+                    x=x_label_L, y=Yloc, width=w_label, height=21
+                )
                 self.Origin_OptionMenu.place(
                     x=x_entry_L, y=Yloc, width=w_entry + 40, height=23
                 )
 
                 Yloc = Yloc + 24
-                self.Label_flip.place(x=x_label_L, y=Yloc, width=w_label, height=21)
+                self.Label_flip.place(
+                    x=x_label_L, y=Yloc, width=w_label, height=21
+                )
                 self.Checkbutton_flip.place(
                     x=x_entry_L, y=Yloc, width=w_entry + 40, height=23
                 )
 
                 Yloc = Yloc + 24
-                self.Label_mirror.place(x=x_label_L, y=Yloc, width=w_label, height=21)
+                self.Label_mirror.place(
+                    x=x_label_L, y=Yloc, width=w_label, height=21
+                )
                 self.Checkbutton_mirror.place(
                     x=x_entry_L, y=Yloc, width=w_entry + 40, height=23
                 )
@@ -4163,28 +4776,48 @@ class Application(Frame):
                 )
 
                 Yloc = Yloc + 24
-                self.Entry_Feed.place(x=x_entry_R, y=Yloc, width=w_entry, height=23)
-                self.Label_Feed.place(x=x_label_R, y=Yloc, width=w_label, height=21)
+                self.Entry_Feed.place(
+                    x=x_entry_R, y=Yloc, width=w_entry, height=23
+                )
+                self.Label_Feed.place(
+                    x=x_label_R, y=Yloc, width=w_label, height=21
+                )
                 self.Label_Feed_u.place(
                     x=x_units_R, y=Yloc, width=w_units + 15, height=21
                 )
 
                 Yloc = Yloc + 24
-                self.Entry_Plunge.place(x=x_entry_R, y=Yloc, width=w_entry, height=23)
-                self.Label_Plunge.place(x=x_label_R, y=Yloc, width=w_label, height=21)
+                self.Entry_Plunge.place(
+                    x=x_entry_R, y=Yloc, width=w_entry, height=23
+                )
+                self.Label_Plunge.place(
+                    x=x_label_R, y=Yloc, width=w_label, height=21
+                )
                 self.Label_Plunge_u.place(
                     x=x_units_R, y=Yloc, width=w_units + 15, height=21
                 )
 
                 Yloc = Yloc + 24
-                self.Entry_Zsafe.place(x=x_entry_R, y=Yloc, width=w_entry, height=23)
-                self.Label_Zsafe.place(x=x_label_R, y=Yloc, width=w_label, height=21)
-                self.Label_Zsafe_u.place(x=x_units_R, y=Yloc, width=w_units, height=21)
+                self.Entry_Zsafe.place(
+                    x=x_entry_R, y=Yloc, width=w_entry, height=23
+                )
+                self.Label_Zsafe.place(
+                    x=x_label_R, y=Yloc, width=w_label, height=21
+                )
+                self.Label_Zsafe_u.place(
+                    x=x_units_R, y=Yloc, width=w_units, height=21
+                )
 
                 Yloc = Yloc + 24
-                self.Label_Zcut.place(x=x_label_R, y=Yloc, width=w_label, height=21)
-                self.Label_Zcut_u.place(x=x_units_R, y=Yloc, width=w_units, height=21)
-                self.Entry_Zcut.place(x=x_entry_R, y=Yloc, width=w_entry, height=23)
+                self.Label_Zcut.place(
+                    x=x_label_R, y=Yloc, width=w_label, height=21
+                )
+                self.Label_Zcut_u.place(
+                    x=x_units_R, y=Yloc, width=w_units, height=21
+                )
+                self.Entry_Zcut.place(
+                    x=x_entry_R, y=Yloc, width=w_entry, height=23
+                )
 
                 if self.cut_type.get() != "engrave":
                     self.Entry_Zcut.configure(state="disabled")
@@ -4227,7 +4860,9 @@ class Application(Frame):
                     x=x_label_R + offset_R, y=Ybut, width=w_label, height=23
                 )
 
-                self.PreviewCanvas.configure(width=self.w - 240, height=self.h - 45)
+                self.PreviewCanvas.configure(
+                    width=self.w - 240, height=self.h - 45
+                )
                 self.PreviewCanvas_frame.place(x=230, y=10)
                 self.Input_Label.place_forget()
                 self.Input_frame.place_forget()
@@ -4241,7 +4876,18 @@ class Application(Frame):
             self.Plot_Data()
 
     def Plot_Line(
-        self, XX1, YY1, XX2, YY2, midx, midy, cszw, cszh, PlotScale, col, radius=0
+        self,
+        XX1,
+        YY1,
+        XX2,
+        YY2,
+        midx,
+        midy,
+        cszw,
+        cszh,
+        PlotScale,
+        col,
+        radius=0,
     ):
         x1 = cszw / 2 + (XX1 - midx) / PlotScale
         x2 = cszw / 2 + (XX2 - midx) / PlotScale
@@ -4257,7 +4903,9 @@ class Application(Frame):
             )
         )
 
-    def Plot_Circ(self, XX1, YY1, midx, midy, cszw, cszh, PlotScale, color, Rad, fill):
+    def Plot_Circ(
+        self, XX1, YY1, midx, midy, cszw, cszh, PlotScale, color, Rad, fill
+    ):
         dd = Rad
         x1 = cszw / 2 + (XX1 - dd - midx) / PlotScale
         x2 = cszw / 2 + (XX1 + dd - midx) / PlotScale
@@ -4316,7 +4964,9 @@ class Application(Frame):
         if self.font:
             self.input_type.set("text")
         else:
-            self.statusMessage.set("Unable to open font file: %s" % (file_full))
+            self.statusMessage.set(
+                "Unable to open font file: %s" % (file_full)
+            )
             self.statusbar.configure(bg="red")
 
         if not self.batch.get():
@@ -4338,7 +4988,9 @@ class Application(Frame):
             if not os.path.isfile(file_full):
                 file_full = self.HOME_DIR + "/" + file_name
                 if not os.path.isfile(file_full):
-                    file_full = os.path.dirname(self.NGC_FILE) + "/" + file_name
+                    file_full = (
+                        os.path.dirname(self.NGC_FILE) + "/" + file_name
+                    )
                     if not os.path.isfile(file_full):
                         return
         self.IMAGE_FILE = file_full
@@ -4363,7 +5015,9 @@ class Application(Frame):
                 fd.close()
                 self.input_type.set("image")
             except:
-                message.fmessage("Unable To open Drawing Exchange File (DXF) file.")
+                message.fmessage(
+                    "Unable To open Drawing Exchange File (DXF) file."
+                )
 
         elif (
             TYPE == ".BMP"
@@ -4419,9 +5073,16 @@ class Application(Frame):
                 )  # build stroke lists from font file
                 self.input_type.set("image")
             except:
-                message.fmessage("Unable To create path data from bitmap File.")
+                message.fmessage(
+                    "Unable To create path data from bitmap File."
+                )
 
-        elif TYPE == ".JPG" or TYPE == ".PNG" or TYPE == ".GIF" or TYPE == ".TIF":
+        elif (
+            TYPE == ".JPG"
+            or TYPE == ".PNG"
+            or TYPE == ".GIF"
+            or TYPE == ".TIF"
+        ):
             if PIL:
                 try:
                     PIL_im = Image.open(file_full)
@@ -4485,10 +5146,12 @@ class Application(Frame):
                         pass
                 except:
                     message.fmessage(
-                        "PIL encountered an error. Unable To create path data from the selected image File."
+                        "PIL encountered an error. Unable To create path data"
+                        " from the selected image File."
                     )
                     message.fmessage(
-                        "Converting the image file to a BMP file may resolve the issue."
+                        "Converting the image file to a BMP file may resolve "
+                        "the issue."
                     )
             else:
                 message.fmessage(
@@ -4500,10 +5163,16 @@ class Application(Frame):
         # Reset Entry Fields in Bitmap Settings
         if not self.batch.get():
             self.entry_set(
-                self.Entry_BMPoptTolerance, self.Entry_BMPoptTolerance_Check(), 1
+                self.Entry_BMPoptTolerance,
+                self.Entry_BMPoptTolerance_Check(),
+                1,
             )
-            self.entry_set(self.Entry_BMPturdsize, self.Entry_BMPturdsize_Check(), 1)
-            self.entry_set(self.Entry_BMPalphamax, self.Entry_BMPalphamax_Check(), 1)
+            self.entry_set(
+                self.Entry_BMPturdsize, self.Entry_BMPturdsize_Check(), 1
+            )
+            self.entry_set(
+                self.Entry_BMPalphamax, self.Entry_BMPalphamax_Check(), 1
+            )
             self.entry_set(self.Entry_ArcAngle, self.Entry_ArcAngle_Check(), 1)
             self.menu_View_Refresh()
 
@@ -4543,7 +5212,8 @@ class Application(Frame):
             Radius_in = 0.0
 
         PlotScale = max(
-            (maxx - minx + Thick) / (cszw - buff), (maxy - miny + Thick) / (cszh - buff)
+            (maxx - minx + Thick) / (cszw - buff),
+            (maxy - miny + Thick) / (cszh - buff),
         )
         if PlotScale <= 0:
             PlotScale = 1.0
@@ -4562,7 +5232,13 @@ class Application(Frame):
         if self.show_box.get():
             self.segID.append(
                 self.PreviewCanvas.create_rectangle(
-                    x_lft, y_bot, x_rgt, y_top, fill="gray80", outline="gray80", width=0
+                    x_lft,
+                    y_bot,
+                    x_rgt,
+                    y_top,
+                    fill="gray80",
+                    outline="gray80",
+                    width=0,
                 )
             )
 
@@ -4573,7 +5249,13 @@ class Application(Frame):
             Ry_top = cszh / 2 + (-Radius_in + midy) / PlotScale
             self.segID.append(
                 self.PreviewCanvas.create_oval(
-                    Rx_lft, Ry_bot, Rx_rgt, Ry_top, outline="gray90", width=0, dash=3
+                    Rx_lft,
+                    Ry_bot,
+                    Rx_rgt,
+                    Ry_top,
+                    outline="gray90",
+                    width=0,
+                    dash=3,
                 )
             )
 
@@ -4610,7 +5292,13 @@ class Application(Frame):
             y2 = cszh / 2 - (XY[3] - midy) / PlotScale
             self.segID.append(
                 self.PreviewCanvas.create_line(
-                    x1, y1, x2, y2, fill="black", width=plot_width, capstyle="round"
+                    x1,
+                    y1,
+                    x2,
+                    y2,
+                    fill="black",
+                    width=plot_width,
+                    capstyle="round",
                 )
             )
         XOrigin = float(self.xorigin.get())
@@ -4640,7 +5328,16 @@ class Application(Frame):
                     if bit.shape == "FLAT":
                         if r >= rbit:
                             self.Plot_Circ(
-                                x1, y1, midx, midy, cszw, cszh, PlotScale, color, r, 1
+                                x1,
+                                y1,
+                                midx,
+                                midy,
+                                cszw,
+                                cszh,
+                                PlotScale,
+                                color,
+                                r,
+                                1,
                             )
                     else:
                         if self.inlay.get():
@@ -4658,7 +5355,16 @@ class Application(Frame):
                             )
                         else:
                             self.Plot_Circ(
-                                x1, y1, midx, midy, cszw, cszh, PlotScale, color, r, 1
+                                x1,
+                                y1,
+                                midx,
+                                midy,
+                                cszw,
+                                cszh,
+                                PlotScale,
+                                color,
+                                r,
+                                1,
                             )
 
             loop_old = -1
@@ -4677,7 +5383,8 @@ class Application(Frame):
                     r = XY[2]
                     loop = XY[3]
                     color = "white"
-                    # check and see if we need to move to a new discontinuous start point
+                    # check and see if we need to move to a new discontinuous
+                    # start point
                     plot_flat = False
                     if self.bit_shape.get() == "FLAT":
                         if (r == rold) and (r >= rbit):
@@ -4687,7 +5394,16 @@ class Application(Frame):
 
                     if (loop == loop_old) and plot_flat:
                         self.Plot_Line(
-                            xold, yold, x1, y1, midx, midy, cszw, cszh, PlotScale, color
+                            xold,
+                            yold,
+                            x1,
+                            y1,
+                            midx,
+                            midy,
+                            cszw,
+                            cszh,
+                            PlotScale,
+                            color,
                         )
                     loop_old = loop
                     rold = r
@@ -4712,7 +5428,17 @@ class Application(Frame):
                 color = "brown"
                 if loop == loop_old:
                     self.Plot_Line(
-                        xold, yold, x1, y1, midx, midy, cszw, cszh, PlotScale, color, r
+                        xold,
+                        yold,
+                        x1,
+                        y1,
+                        midx,
+                        midy,
+                        cszw,
+                        cszh,
+                        PlotScale,
+                        color,
+                        r,
                     )
                 loop_old = loop
                 xold = x1
@@ -4729,10 +5455,20 @@ class Application(Frame):
                 y1 = XY[1]
                 loop = XY[3]
                 color = "white"
-                # check and see if we need to move to a new discontinuous start point
+                # check and see if we need to move to a new discontinuous
+                # start point
                 if loop == loop_old:
                     self.Plot_Line(
-                        xold, yold, x1, y1, midx, midy, cszw, cszh, PlotScale, color
+                        xold,
+                        yold,
+                        x1,
+                        y1,
+                        midx,
+                        midy,
+                        cszw,
+                        cszh,
+                        PlotScale,
+                        color,
                     )
                 loop_old = loop
                 xold = x1
@@ -4752,7 +5488,16 @@ class Application(Frame):
                 color = "yellow"
                 if loop == loop_old:
                     self.Plot_Line(
-                        xold, yold, x1, y1, midx, midy, cszw, cszh, PlotScale, color
+                        xold,
+                        yold,
+                        x1,
+                        y1,
+                        midx,
+                        midy,
+                        cszw,
+                        cszh,
+                        PlotScale,
+                        color,
                     )
                 loop_old = loop
                 xold = x1
@@ -4775,9 +5520,7 @@ class Application(Frame):
                 )
             )
 
-    ############################################################################
-    #                         Perform  Calculations                            #
-    ############################################################################
+    # Perform  Calculations
     def DoIt(self):
         if (self.delay_calc == 1) or (self.delay_calc == 1):
             return
@@ -4907,14 +5650,22 @@ class Application(Frame):
                 font_used_height = max(
                     self.font[ord(char)].get_ymax(), font_used_height
                 )
-                font_used_width = max(self.font[ord(char)].get_xmax(), font_used_width)
-                font_used_depth = min(self.font[ord(char)].get_ymin(), font_used_depth)
+                font_used_width = max(
+                    self.font[ord(char)].get_xmax(), font_used_width
+                )
+                font_used_depth = min(
+                    self.font[ord(char)].get_ymin(), font_used_depth
+                )
             except:
                 pass
 
         if self.H_CALC.get() == "max_all":
-            font_line_height = max(self.font[key].get_ymax() for key in self.font)
-            font_line_depth = min(self.font[key].get_ymin() for key in self.font)
+            font_line_height = max(
+                self.font[key].get_ymax() for key in self.font
+            )
+            font_line_depth = min(
+                self.font[key].get_ymin() for key in self.font
+            )
         elif self.H_CALC.get() == "max_use":
             font_line_height = font_used_height
             font_line_depth = font_used_depth
@@ -4924,7 +5675,9 @@ class Application(Frame):
                 YScale = YScale_in / 100.0
             else:
                 try:
-                    YScale = (YScale_in - Thick) / (font_line_height - font_line_depth)
+                    YScale = (YScale_in - Thick) / (
+                        font_line_height - font_line_depth
+                    )
                 except:
                     YScale = 0.1
                 if YScale <= Zero:
@@ -4940,10 +5693,13 @@ class Application(Frame):
             elif self.H_CALC.get() == "max_use":
                 if self.input_type.get() == "image":
                     error_text = (
-                        "Image contains no design information. (Empty DXF File)"
+                        "Image contains no design information. "
+                        "(Empty DXF File)"
                     )
                 else:
-                    error_text = "Input Characters Were Not Found in the Current Font"
+                    error_text = (
+                        "Input Characters Were Not Found in the Current Font"
+                    )
 
                 if not self.batch.get():
                     self.statusMessage.set(error_text)
@@ -4959,18 +5715,28 @@ class Application(Frame):
         if Radius_in != 0.0:
             if self.outer.get():
                 if self.upper.get():
-                    Radius = Radius_in + Thick / 2 + YScale * (-font_line_depth)
+                    Radius = (
+                        Radius_in + Thick / 2 + YScale * (-font_line_depth)
+                    )
                 else:
-                    Radius = -Radius_in - Thick / 2 - YScale * (font_line_height)
+                    Radius = (
+                        -Radius_in - Thick / 2 - YScale * (font_line_height)
+                    )
             else:
                 if self.upper.get():
-                    Radius = Radius_in - Thick / 2 - YScale * (font_line_height)
+                    Radius = (
+                        Radius_in - Thick / 2 - YScale * (font_line_height)
+                    )
                 else:
-                    Radius = -Radius_in + Thick / 2 + YScale * (-font_line_depth)
+                    Radius = (
+                        -Radius_in + Thick / 2 + YScale * (-font_line_depth)
+                    )
         else:
             Radius = Radius_in
 
-        font_line_space = (font_line_height - font_line_depth + Thick / YScale) * LSpace
+        font_line_space = (
+            font_line_height - font_line_depth + Thick / YScale
+        ) * LSpace
 
         xposition = 0.0
         yposition = 0.0
@@ -5014,7 +5780,8 @@ class Application(Frame):
                         flag = 1
                 if flag == 0:
                     no_font_record.append(char)
-                    message2 = ", CHECK OUTPUT! Some characters not found in font file."
+                    message2 = ", CHECK OUTPUT! "
+                    "Some characters not found in font file."
                 continue
             for stroke in self.font[ord(char)].stroke_list:
                 x1 = stroke.xstart + xposition
@@ -5033,7 +5800,9 @@ class Application(Frame):
                 miny_tmp = min(miny_tmp, y1, y2)
                 maxy_tmp = max(maxy_tmp, y1, y2)
 
-            char_width = self.font[ord(char)].get_xmax()  # move over for next character
+            char_width = self.font[
+                ord(char)
+            ].get_xmax()  # move over for next character
             xposition += font_char_space + char_width
         # END Char in String
 
@@ -5061,8 +5830,12 @@ class Application(Frame):
                 XY = line
                 line_num = int(XY[4])
                 try:
-                    self.coords[cnt][0] = XY[0] + (maxx - line_maxx[line_num]) / 2
-                    self.coords[cnt][2] = XY[2] + (maxx - line_maxx[line_num]) / 2
+                    self.coords[cnt][0] = (
+                        XY[0] + (maxx - line_maxx[line_num]) / 2
+                    )
+                    self.coords[cnt][2] = (
+                        XY[2] + (maxx - line_maxx[line_num]) / 2
+                    )
                 except:
                     pass
                 cnt = cnt + 1
@@ -5204,37 +5977,93 @@ class Application(Frame):
         Delta = Thick / 2 + float(self.boxgap.get())
         if self.plotbox.get():  # and self.cut_type.get() != "v-carve":
             if Radius_in == 0 or self.cut_type.get() == "v-carve":
-                #    #Add coords for box
-                #    self.coords.append([ minx-Delta, miny-Delta, maxx+Delta, miny-Delta, 0, 0])
-                #    self.coords.append([ maxx+Delta, miny-Delta, maxx+Delta, maxy+Delta, 0, 0])
-                #    self.coords.append([ maxx+Delta, maxy+Delta, minx-Delta, maxy+Delta, 0, 0])
-                #    self.coords.append([ minx-Delta, maxy+Delta, minx-Delta, miny-Delta, 0, 0])
+                # Add coords for box
+                # self.coords.append([ minx-Delta, miny-Delta, maxx+Delta, miny-Delta, 0, 0])
+                # self.coords.append([ maxx+Delta, miny-Delta, maxx+Delta, maxy+Delta, 0, 0])
+                # self.coords.append([ maxx+Delta, maxy+Delta, minx-Delta, maxy+Delta, 0, 0])
+                # self.coords.append([ minx-Delta, maxy+Delta, minx-Delta, miny-Delta, 0, 0])
 
                 if bool(self.mirror.get()) ^ bool(self.flip.get()):
                     self.coords.append(
-                        [minx - Delta, miny - Delta, minx - Delta, maxy + Delta, 0, 0]
+                        [
+                            minx - Delta,
+                            miny - Delta,
+                            minx - Delta,
+                            maxy + Delta,
+                            0,
+                            0,
+                        ]
                     )
                     self.coords.append(
-                        [minx - Delta, maxy + Delta, maxx + Delta, maxy + Delta, 0, 0]
+                        [
+                            minx - Delta,
+                            maxy + Delta,
+                            maxx + Delta,
+                            maxy + Delta,
+                            0,
+                            0,
+                        ]
                     )
                     self.coords.append(
-                        [maxx + Delta, maxy + Delta, maxx + Delta, miny - Delta, 0, 0]
+                        [
+                            maxx + Delta,
+                            maxy + Delta,
+                            maxx + Delta,
+                            miny - Delta,
+                            0,
+                            0,
+                        ]
                     )
                     self.coords.append(
-                        [maxx + Delta, miny - Delta, minx - Delta, miny - Delta, 0, 0]
+                        [
+                            maxx + Delta,
+                            miny - Delta,
+                            minx - Delta,
+                            miny - Delta,
+                            0,
+                            0,
+                        ]
                     )
                 else:
                     self.coords.append(
-                        [minx - Delta, miny - Delta, maxx + Delta, miny - Delta, 0, 0]
+                        [
+                            minx - Delta,
+                            miny - Delta,
+                            maxx + Delta,
+                            miny - Delta,
+                            0,
+                            0,
+                        ]
                     )
                     self.coords.append(
-                        [maxx + Delta, miny - Delta, maxx + Delta, maxy + Delta, 0, 0]
+                        [
+                            maxx + Delta,
+                            miny - Delta,
+                            maxx + Delta,
+                            maxy + Delta,
+                            0,
+                            0,
+                        ]
                     )
                     self.coords.append(
-                        [maxx + Delta, maxy + Delta, minx - Delta, maxy + Delta, 0, 0]
+                        [
+                            maxx + Delta,
+                            maxy + Delta,
+                            minx - Delta,
+                            maxy + Delta,
+                            0,
+                            0,
+                        ]
                     )
                     self.coords.append(
-                        [minx - Delta, maxy + Delta, minx - Delta, miny - Delta, 0, 0]
+                        [
+                            minx - Delta,
+                            maxy + Delta,
+                            minx - Delta,
+                            miny - Delta,
+                            0,
+                            0,
+                        ]
                     )
 
                 if self.cut_type.get() != "v-carve":
@@ -5410,7 +6239,8 @@ class Application(Frame):
             self.v_clean_coords_sort = []
             self.clean_segment = []
         elif self.clean_coords_sort != [] or self.v_clean_coords_sort != []:
-            # If there is existing cleanup data clear the screen before computing.
+            # If there is existing cleanup data clear the screen before
+            # computing.
             self.clean_coords = []
             self.clean_coords_sort = []
             self.v_clean_coords_sort = []
@@ -5469,16 +6299,15 @@ class Application(Frame):
             if dangle < 2.0:
                 dangle = 2.0
 
-            ##VVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVV
             if (self.input_type.get() == "image") and (clean_flag == 0):
                 self.coords = sort_for_v_carve(
                     self.coords,
                     float(self.accuracy.get()),
-                    self.sort_for_v_carve_status_callback)
+                    self.sort_for_v_carve_status_callback,
+                )
 
             if DXF_FLAG:
                 return
-            ##########################################################################
 
             # set variable for first point in loop
             xa = 9999
@@ -5552,7 +6381,8 @@ class Application(Frame):
                 x2_R = XY_R[2]
                 y2_R = XY_R[3]
                 LENGTH = sqrt(
-                    (x2_R - x1_R) * (x2_R - x1_R) + (y2_R - y1_R) * (y2_R - y1_R)
+                    (x2_R - x1_R) * (x2_R - x1_R)
+                    + (y2_R - y1_R) * (y2_R - y1_R)
                 )
 
                 R_R = LENGTH / 2 + rmax
@@ -5629,7 +6459,9 @@ class Application(Frame):
                     xIndex = xy_p[0]
                     yIndex = xy_p[1]
                     for i in range(max(xIndex - 1, 0), min(xN, xIndex + 2)):
-                        for j in range(max(yIndex - 1, 0), min(yN, yIndex + 2)):
+                        for j in range(
+                            max(yIndex - 1, 0), min(yN, yIndex + 2)
+                        ):
                             coded_index.append(int(i + j * xN))
 
                 codedIndexSet = set(coded_index)
@@ -5640,14 +6472,14 @@ class Application(Frame):
                     line_R_appended.append(X_R)
                     line_R_appended.append(Y_R)
                     line_R_appended.append(R_R)
-                    partitionList[int(thisIndex % xN)][int(thisIndex / xN)].append(
-                        line_R_appended
-                    )
+                    partitionList[int(thisIndex % xN)][
+                        int(thisIndex / xN)
+                    ].append(line_R_appended)
             #########################################################
             # End Determine active partitions for each line segment #
             #########################################################
-            ## Loop through again just to determine the total length of segments
-            ## For the percent complete calculation
+            # Loop through again just to determine the total length of segments
+            # For the percent complete calculation
             if v_index >= len(self.coords):
                 v_index = len(self.coords)
             v_ind = v_index
@@ -5682,7 +6514,7 @@ class Application(Frame):
                 calc_flag = 1
                 for line in range(len(self.coords)):
                     CUR_CNT = CUR_CNT + 1
-                    ####################################################
+
                     if clean_flag == 0:
                         self.clean_segment.append(0)
                     elif len(self.clean_segment) != len(self.coords):
@@ -5696,7 +6528,6 @@ class Application(Frame):
                         if stamp != timestamp:
                             timestamp = stamp  # interlock
 
-                            ####################################################
                             CUR_PCT = float(CUR_LENGTH) / TOT_LENGTH * 100.0
                             if CUR_PCT > 0.0:
                                 MIN_REMAIN = (
@@ -5705,13 +6536,19 @@ class Application(Frame):
                                     * (100 - CUR_PCT)
                                     / CUR_PCT
                                 )
-                                MIN_TOTAL = 100.0 / CUR_PCT * (time() - START_TIME) / 60
+                                MIN_TOTAL = (
+                                    100.0
+                                    / CUR_PCT
+                                    * (time() - START_TIME)
+                                    / 60
+                                )
                             else:
                                 MIN_REMAIN = -1
                                 MIN_TOTAL = -1
 
                             self.statusMessage.set(
-                                "%.1f %% ( %.1f Minutes Remaining | %.1f Minutes Total )"
+                                "%.1f %% ( %.1f Minutes Remaining "
+                                "| %.1f Minutes Total )"
                                 % (CUR_PCT, MIN_REMAIN, MIN_TOTAL)
                             )
                             self.statusbar.configure(bg="yellow")
@@ -5741,8 +6578,8 @@ class Application(Frame):
                     if Lseg < Zero:  # was Acc
                         continue
 
-                    # calculate the sin and cos of the coord transformation needed for
-                    # the distance calculations
+                    # calculate the sin and cos of the coord transformation
+                    # needed for the distance calculations
                     seg_sin = dy / Lseg
                     seg_cos = -dx / Lseg
                     phi = Get_Angle(seg_sin, seg_cos)
@@ -5750,18 +6587,18 @@ class Application(Frame):
                     if calc_flag != 0:
                         CUR_LENGTH = CUR_LENGTH + Lseg
                     else:
-                        theta = phi  # commented out in V1.62 brought back in V1.72
+                        theta = (
+                            phi  # commented out in V1.62 brought back in V1.72
+                        )
                         x0 = x2  # commented out in V1.62 brought back in V1.72
                         y0 = y2  # commented out in V1.62 brought back in V1.72
-                        seg_sin0 = (
-                            seg_sin  # commented out in V1.62 brought back in V1.72
-                        )
-                        seg_cos0 = (
-                            seg_cos  # commented out in V1.62 brought back in V1.72
-                        )
-                        char_num0 = (
-                            char_num  # commented out in V1.62 brought back in V1.72
-                        )
+                        seg_sin0 = seg_sin  # commented out in V1.62 brought
+                                            # back in V1.72
+                        seg_cos0 = seg_cos  # commented out in V1.62 brought
+                                            # back in V1.72
+                        char_num0 = char_num  # commented out in V1.62 brought
+                                              # back in V1.72
+                        # Brought back because...
                         continue
 
                     if (
@@ -5769,7 +6606,6 @@ class Application(Frame):
                         or (fabs(y1 - y0) > Zero)
                         or (char_num != char_num0)
                     ):
-                        # if char_num != char_num0:
                         New_Loop = 1
                         loop_cnt = loop_cnt + 1
                         xa = float(x1)
@@ -5823,15 +6659,21 @@ class Application(Frame):
                                 self.MINY,
                                 xPartitionLength,
                                 yPartitionLength,
-                                partitionList
+                                partitionList,
                             )
                             if clean_flag != 1:
                                 coords_destination = self.vcoords
                             else:
                                 coords_destination = self.clean_coords
                             xv, yv, rv, clean_seg = record_v_carve_data(
-                                x1, y1, sub_phi, rout, loop_cnt, clean_flag,
-                                rbit, coords_destination
+                                x1,
+                                y1,
+                                sub_phi,
+                                rout,
+                                loop_cnt,
+                                clean_flag,
+                                rbit,
+                                coords_destination,
                             )
                             self.clean_segment[CUR_CNT] = bool(
                                 self.clean_segment[CUR_CNT]
@@ -5862,7 +6704,8 @@ class Application(Frame):
                     seg_cos0 = seg_cos
                     char_num0 = char_num
 
-                    # Calculate the number of steps then the dx and dy for each step
+                    # Calculate the number of steps then the dx and dy for each
+                    # step.
                     # Don't calculate at the joints.
                     nsteps = max(floor(Lseg / dline), 2)
                     dxpt = dx / nsteps
@@ -5879,16 +6722,28 @@ class Application(Frame):
                     phi2 = radians(Get_Angle(seg_sin, seg_cos))
                     while cnt < nsteps - 1:
                         cnt = cnt + 1
-                        # determine location of next step along outline (xpt, ypt)
+                        # determine location of next step along outline
+                        # (xpt, ypt)
                         xpt = x1 + dxpt * cnt
                         ypt = y1 + dypt * cnt
 
                         rout = find_max_circle(
-                            xpt, ypt, rmax, char_num, seg_sin, seg_cos, 0,
-                            CHK_STRING, self.MINX, self.MINY,
-                            xPartitionLength, yPartitionLength, partitionList
+                            xpt,
+                            ypt,
+                            rmax,
+                            char_num,
+                            seg_sin,
+                            seg_cos,
+                            0,
+                            CHK_STRING,
+                            self.MINX,
+                            self.MINY,
+                            xPartitionLength,
+                            yPartitionLength,
+                            partitionList,
                         )
-                        # Make the first cut drive down at an angle instead of straight down plunge
+                        # Make the first cut drive down at an angle instead of
+                        # straight down plunge
                         if cnt == 0 and not_b_carve:
                             rout = 0.0
                         if clean_flag != 1:
@@ -5896,8 +6751,14 @@ class Application(Frame):
                         else:
                             coords_destination = self.clean_coords
                         xv, yv, rv, clean_seg = record_v_carve_data(
-                            xpt, ypt, phi2, rout, loop_cnt, clean_flag, rbit,
-                            coords_destination
+                            xpt,
+                            ypt,
+                            phi2,
+                            rout,
+                            loop_cnt,
+                            clean_flag,
+                            rbit,
+                            coords_destination,
                         )
 
                         self.clean_segment[CUR_CNT] = bool(
@@ -5910,7 +6771,16 @@ class Application(Frame):
                         ):
                             self.master.update_idletasks()
                             self.Plot_Circ(
-                                xv, yv, midx, midy, cszw, cszh, PlotScale, "blue", rv, 0
+                                xv,
+                                yv,
+                                midx,
+                                midy,
+                                cszw,
+                                cszh,
+                                PlotScale,
+                                "blue",
+                                rv,
+                                0,
                             )
 
                         if New_Loop == 1 and cnt == 1:
@@ -5958,15 +6828,21 @@ class Application(Frame):
                                     self.MINY,
                                     xPartitionLength,
                                     yPartitionLength,
-                                    partitionList
+                                    partitionList,
                                 )
                                 if clean_flag != 1:
                                     coords_destination = self.vcoords
                                 else:
                                     coords_destination = self.clean_coords
                                 xv, yv, rv, clean_seg = record_v_carve_data(
-                                    xa, ya, sub_phi, rout, loop_cnt, clean_flag,
-                                    rbit, coords_destination
+                                    xa,
+                                    ya,
+                                    sub_phi,
+                                    rout,
+                                    loop_cnt,
+                                    clean_flag,
+                                    rbit,
+                                    coords_destination,
                                 )
                                 self.clean_segment[CUR_CNT] = bool(
                                     self.clean_segment[CUR_CNT]
@@ -5994,8 +6870,14 @@ class Application(Frame):
                             else:
                                 coords_destination = self.clean_coords
                             xv, yv, rv, clean_seg = record_v_carve_data(
-                                xpta, ypta, phi2a, routa, loop_cnt, clean_flag,
-                                rbit, coords_destination
+                                xpta,
+                                ypta,
+                                phi2a,
+                                routa,
+                                loop_cnt,
+                                clean_flag,
+                                rbit,
+                                coords_destination,
                             )
                             self.clean_segment[CUR_CNT] = bool(
                                 self.clean_segment[CUR_CNT]
@@ -6007,8 +6889,14 @@ class Application(Frame):
                             else:
                                 coords_destination = self.clean_coords
                             xv, yv, rv, clean_seg = record_v_carve_data(
-                                xpta, ypta, phi2a, routa, loop_cnt, clean_flag,
-                                rbit, coords_destination
+                                xpta,
+                                ypta,
+                                phi2a,
+                                routa,
+                                loop_cnt,
+                                clean_flag,
+                                rbit,
+                                coords_destination,
                             )
                             self.clean_segment[CUR_CNT] = bool(
                                 self.clean_segment[CUR_CNT]
@@ -6021,28 +6909,42 @@ class Application(Frame):
                     self.entry_set(
                         self.Entry_Vbitangle, self.Entry_Vbitangle_Check(), 1
                     )
-                    self.entry_set(self.Entry_Vbitdia, self.Entry_Vbitdia_Check(), 1)
                     self.entry_set(
-                        self.Entry_VDepthLimit, self.Entry_VDepthLimit_Check(), 1
+                        self.Entry_Vbitdia, self.Entry_Vbitdia_Check(), 1
                     )
                     self.entry_set(
-                        self.Entry_InsideAngle, self.Entry_InsideAngle_Check(), 1
+                        self.Entry_VDepthLimit,
+                        self.Entry_VDepthLimit_Check(),
+                        1,
                     )
                     self.entry_set(
-                        self.Entry_OutsideAngle, self.Entry_OutsideAngle_Check(), 1
+                        self.Entry_InsideAngle,
+                        self.Entry_InsideAngle_Check(),
+                        1,
                     )
-                    self.entry_set(self.Entry_StepSize, self.Entry_StepSize_Check(), 1)
+                    self.entry_set(
+                        self.Entry_OutsideAngle,
+                        self.Entry_OutsideAngle_Check(),
+                        1,
+                    )
+                    self.entry_set(
+                        self.Entry_StepSize, self.Entry_StepSize_Check(), 1
+                    )
                     self.entry_set(
                         self.Entry_Allowance, self.Entry_Allowance_Check(), 1
                     )
-                    self.entry_set(self.Entry_Accuracy, self.Entry_Accuracy_Check(), 1)
+                    self.entry_set(
+                        self.Entry_Accuracy, self.Entry_Accuracy_Check(), 1
+                    )
                     self.entry_set(
                         self.Entry_CLEAN_DIA, self.Entry_CLEAN_DIA_Check(), 1
                     )
                     self.entry_set(
                         self.Entry_STEP_OVER, self.Entry_STEP_OVER_Check(), 1
                     )
-                    self.entry_set(self.Entry_V_CLEAN, self.Entry_V_CLEAN_Check(), 1)
+                    self.entry_set(
+                        self.Entry_V_CLEAN, self.Entry_V_CLEAN_Check(), 1
+                    )
 
             if CUR_CNT == MAX_CNT - 1 and (not self.batch.get()):
                 self.statusMessage.set("Done -- " + self.bounding_box.get())
@@ -6054,10 +6956,7 @@ class Application(Frame):
         #########################################
 
     def sort_for_v_carve_status_callback(
-            self,
-            status=None,
-            initialize=False,
-            check_for_timeout=False
+        self, status=None, initialize=False, check_for_timeout=False
     ):
         if not self.batch.get():
             if initialize:
@@ -6093,10 +6992,14 @@ class Application(Frame):
         # reorganize clean_coords              #
         #######################################
         if bit_type == "straight":
-            test_clean = self.clean_P.get() + self.clean_X.get() + self.clean_Y.get()
+            test_clean = (
+                self.clean_P.get() + self.clean_X.get() + self.clean_Y.get()
+            )
         else:
             test_clean = (
-                self.v_clean_P.get() + self.v_clean_Y.get() + self.v_clean_X.get()
+                self.v_clean_P.get()
+                + self.v_clean_Y.get()
+                + self.v_clean_X.get()
             )
 
         check_coords = []
@@ -6157,7 +7060,9 @@ class Application(Frame):
             ## NEW STUFF FOR STRAIGHT BIT ##
             if bit_type == "straight":
                 MaxLoop = 0
-                clean_dia = float(self.clean_dia.get())  # diameter of cleanup bit
+                clean_dia = float(
+                    self.clean_dia.get()
+                )  # diameter of cleanup bit
                 step_over = float(self.clean_step.get())  # percent of cut DIA
                 clean_step = step_over / 100.0
                 Rperimeter = bit_radius + (clean_dia / 2.0)
@@ -6184,7 +7089,8 @@ class Application(Frame):
                 loop_coords = sort_for_v_carve(
                     loop_coords,
                     float(self.accuracy.get()),
-                    self.sort_for_v_carve_status_callback)
+                    self.sort_for_v_carve_status_callback,
+                )
 
                 #######################
                 # Line fit loop_coords
@@ -6251,8 +7157,12 @@ class Application(Frame):
                                 y2 = intXYlist[i + 1][1]
                                 if (x2 - x1) > offset * 2:
                                     loop_cnt = loop_cnt + 1
-                                    Xclean_coords.append([x1 + offset, y1, loop_cnt])
-                                    Xclean_coords.append([x2 - offset, y2, loop_cnt])
+                                    Xclean_coords.append(
+                                        [x1 + offset, y1, loop_cnt]
+                                    )
+                                    Xclean_coords.append(
+                                        [x2 - offset, y2, loop_cnt]
+                                    )
 
                 if self.clean_Y.get() == 1:
                     x_pmax = x_pmax - offset
@@ -6276,24 +7186,24 @@ class Application(Frame):
                                 y2 = intXYlist[i + 1][1]
                                 if (y2 - y1) > offset * 2:
                                     loop_cnt = loop_cnt + 1
-                                    Yclean_coords.append([x1, y1 + offset, loop_cnt])
-                                    Yclean_coords.append([x2, y2 - offset, loop_cnt])
+                                    Yclean_coords.append(
+                                        [x1, y1 + offset, loop_cnt]
+                                    )
+                                    Yclean_coords.append(
+                                        [x2, y2 - offset, loop_cnt]
+                                    )
             ## END NEW STUFF FOR STRAIGHT BIT ##
 
             #######################################
             ## START V-BIT CLEANUP CALCULATIONS  ##
             #######################################
             elif bit_type == "v-bit":
-                #########################################################################
                 # Find ends of horizontal lines for carving clean-up
-                #########################################################################
                 Xclean_perimeter, Xclean_coords = Find_Paths(
                     check_coords, clean_dia, Radjust, clean_step, skip, "X"
                 )
 
-                #########################################################################
                 # Find ends of Vertical lines for carving clean-up
-                #########################################################################
                 Yclean_perimeter, Yclean_coords = Find_Paths(
                     check_coords, clean_dia, Radjust, clean_step, skip, "Y"
                 )
@@ -6342,7 +7252,7 @@ class Application(Frame):
                                 min_dist = dist
                                 inext = j
                         order_out.append(Lbeg[inext])
-                    ###########################################################
+
                     x_start_loop = -8888
                     y_start_loop = -8888
                     x_old = -999
@@ -6357,7 +7267,8 @@ class Application(Frame):
                             dx = x_start_loop - x_old
                             dy = y_start_loop - y_old
                             dist = sqrt(dx * dx + dy * dy)
-                            # Fully close loop if the current point is close enough to the start of the loop
+                            # Fully close loop if the current point is close
+                            # enough to the start of the loop
                             if dist < MAXD:
                                 clean_coords_out.append(
                                     [
@@ -6370,7 +7281,9 @@ class Application(Frame):
                             loop_cnt_out = loop_cnt_out + 1
                             x_start_loop = x1
                             y_start_loop = y1
-                        clean_coords_out.append([x1, y1, clean_dia / 2, loop_cnt_out])
+                        clean_coords_out.append(
+                            [x1, y1, clean_dia / 2, loop_cnt_out]
+                        )
                         x_old = x1
                         y_old = y1
             #####################################
@@ -6402,7 +7315,9 @@ class Application(Frame):
                         dist = sqrt(dx * dx + dy * dy)
                         if dist > MAXD and loop != loop_old:
                             loop_cnt_out = loop_cnt_out + 1
-                        clean_coords_out.append([x1, y1, clean_dia / 2, loop_cnt_out])
+                        clean_coords_out.append(
+                            [x1, y1, clean_dia / 2, loop_cnt_out]
+                        )
                         x_old = x1
                         y_old = y1
                         loop_old = loop
@@ -6432,13 +7347,19 @@ class Application(Frame):
                         dist = sqrt(dx * dx + dy * dy)
                         if dist > MAXD and loop != loop_old:
                             loop_cnt_out = loop_cnt_out + 1
-                        clean_coords_out.append([x1, y1, clean_dia / 2, loop_cnt_out])
+                        clean_coords_out.append(
+                            [x1, y1, clean_dia / 2, loop_cnt_out]
+                        )
                         x_old = x1
                         y_old = y1
                         loop_old = loop
 
-            self.entry_set(self.Entry_CLEAN_DIA, self.Entry_CLEAN_DIA_Check(), 1)
-            self.entry_set(self.Entry_STEP_OVER, self.Entry_STEP_OVER_Check(), 1)
+            self.entry_set(
+                self.Entry_CLEAN_DIA, self.Entry_CLEAN_DIA_Check(), 1
+            )
+            self.entry_set(
+                self.Entry_STEP_OVER, self.Entry_STEP_OVER_Check(), 1
+            )
             self.entry_set(self.Entry_V_CLEAN, self.Entry_V_CLEAN_Check(), 1)
 
             if bit_type == "v-bit":
@@ -6453,18 +7374,19 @@ class Application(Frame):
     # End Reorganize                       #
     #######################################
 
-    ################################################################################
-    #                         Bitmap Settings Window                              #
-    ################################################################################
+    # Bitmap Settings Window
     # Algorithm options:
-    # -z, --turnpolicy policy    - how to resolve ambiguities in path decomposition
-    # -t, --turdsize n           - suppress speckles of up to this size (default 2)
+    # -z, --turnpolicy policy    - how to resolve ambiguities in path
+    #                              decomposition
+    # -t, --turdsize n           - suppress speckles of up to this size
+    #                              (default 2)
     # -a, --alphama n           - corner threshold parameter (default 1)
     # -n, --longcurve            - turn off curve optimization
     # -O, --opttolerance n       - curve optimization tolerance (default 0.2)
     def PBM_Settings_Window(self):
         pbm_settings = Toplevel(width=525, height=250)
-        pbm_settings.grab_set()  # Use grab_set to prevent user input in the main window during calculations
+        pbm_settings.grab_set()  # Use grab_set to prevent user input in the
+                                 # main window during calculations
         pbm_settings.resizable(0, 0)
         pbm_settings.title("Bitmap Settings")
         pbm_settings.iconname("Bitmap Settings")
@@ -6479,7 +7401,9 @@ class Application(Frame):
 
         D_Yloc = D_Yloc + D_dY
         self.Label_BMPturnpol = Label(pbm_settings, text="Turn Policy")
-        self.Label_BMPturnpol.place(x=xd_label_L, y=D_Yloc, width=w_label, height=21)
+        self.Label_BMPturnpol.place(
+            x=xd_label_L, y=D_Yloc, width=w_label, height=21
+        )
 
         self.BMPturnpol_OptionMenu = OptionMenu(
             pbm_settings,
@@ -6498,9 +7422,13 @@ class Application(Frame):
 
         D_Yloc = D_Yloc + D_dY
         self.Label_BMPturdsize = Label(pbm_settings, text="Turd Size")
-        self.Label_BMPturdsize.place(x=xd_label_L, y=D_Yloc, width=w_label, height=21)
+        self.Label_BMPturdsize.place(
+            x=xd_label_L, y=D_Yloc, width=w_label, height=21
+        )
         self.Entry_BMPturdsize = Entry(pbm_settings, width="15")
-        self.Entry_BMPturdsize.place(x=xd_entry_L, y=D_Yloc, width=w_entry, height=23)
+        self.Entry_BMPturdsize.place(
+            x=xd_entry_L, y=D_Yloc, width=w_entry, height=23
+        )
         self.Entry_BMPturdsize.configure(textvariable=self.bmp_turdsize)
         self.bmp_turdsize.trace_variable("w", self.Entry_BMPturdsize_Callback)
         self.Label_BMPturdsize2 = Label(
@@ -6509,13 +7437,19 @@ class Application(Frame):
         self.Label_BMPturdsize2.place(
             x=xd_entry_L + w_entry * 1.5, y=D_Yloc, width=300, height=21
         )
-        self.entry_set(self.Entry_BMPturdsize, self.Entry_BMPturdsize_Check(), 2)
+        self.entry_set(
+            self.Entry_BMPturdsize, self.Entry_BMPturdsize_Check(), 2
+        )
 
         D_Yloc = D_Yloc + D_dY + 5
         self.Label_BMPalphamax = Label(pbm_settings, text="Alpha Max")
-        self.Label_BMPalphamax.place(x=xd_label_L, y=D_Yloc, width=w_label, height=21)
+        self.Label_BMPalphamax.place(
+            x=xd_label_L, y=D_Yloc, width=w_label, height=21
+        )
         self.Entry_BMPalphamax = Entry(pbm_settings, width="15")
-        self.Entry_BMPalphamax.place(x=xd_entry_L, y=D_Yloc, width=w_entry, height=23)
+        self.Entry_BMPalphamax.place(
+            x=xd_entry_L, y=D_Yloc, width=w_entry, height=23
+        )
         self.Entry_BMPalphamax.configure(textvariable=self.bmp_alphamax)
         self.bmp_alphamax.trace_variable("w", self.Entry_BMPalphamax_Callback)
         self.Label_BMPalphamax2 = Label(
@@ -6524,12 +7458,18 @@ class Application(Frame):
         self.Label_BMPalphamax2.place(
             x=xd_entry_L + w_entry * 1.5, y=D_Yloc, width=300, height=21
         )
-        self.entry_set(self.Entry_BMPalphamax, self.Entry_BMPalphamax_Check(), 2)
+        self.entry_set(
+            self.Entry_BMPalphamax, self.Entry_BMPalphamax_Check(), 2
+        )
 
         D_Yloc = D_Yloc + D_dY
         self.Label_BMP_longcurve = Label(pbm_settings, text="Long Curve")
-        self.Label_BMP_longcurve.place(x=xd_label_L, y=D_Yloc, width=w_label, height=21)
-        self.Checkbutton_BMP_longcurve = Checkbutton(pbm_settings, text="", anchor=W)
+        self.Label_BMP_longcurve.place(
+            x=xd_label_L, y=D_Yloc, width=w_label, height=21
+        )
+        self.Checkbutton_BMP_longcurve = Checkbutton(
+            pbm_settings, text="", anchor=W
+        )
         self.Checkbutton_BMP_longcurve.place(
             x=xd_entry_L, y=D_Yloc, width=75, height=23
         )
@@ -6550,8 +7490,12 @@ class Application(Frame):
         self.Entry_BMPoptTolerance.place(
             x=xd_entry_L, y=D_Yloc, width=w_entry, height=23
         )
-        self.Entry_BMPoptTolerance.configure(textvariable=self.bmp_opttolerance)
-        self.bmp_opttolerance.trace_variable("w", self.Entry_BMPoptTolerance_Callback)
+        self.Entry_BMPoptTolerance.configure(
+            textvariable=self.bmp_opttolerance
+        )
+        self.bmp_opttolerance.trace_variable(
+            "w", self.Entry_BMPoptTolerance_Callback
+        )
         self.Label_BMPoptTolerance2 = Label(
             pbm_settings, text="Curve Optimization Tolerance"
         )
@@ -6572,7 +7516,9 @@ class Application(Frame):
 
         self.PBM_Close = Button(pbm_settings, text="Close")
         self.PBM_Close.place(x=Xbut, y=Ybut, width=130, height=30, anchor="w")
-        self.PBM_Close.bind("<ButtonRelease-1>", self.Close_Current_Window_Click)
+        self.PBM_Close.bind(
+            "<ButtonRelease-1>", self.Close_Current_Window_Click
+        )
 
         try:
             pbm_settings.iconbitmap(bitmap="@emblem64")
@@ -6584,12 +7530,11 @@ class Application(Frame):
             except:
                 pass
 
-    ################################################################################
-    #                         General Settings Window                              #
-    ################################################################################
+    # General Settings Window
     def GEN_Settings_Window(self):
         gen_settings = Toplevel(width=600, height=500)
-        gen_settings.grab_set()  # Use grab_set to prevent user input in the main window during calculations
+        gen_settings.grab_set()  # Use grab_set to prevent user input in the
+                                 # main window during calculations
         gen_settings.resizable(0, 0)
         gen_settings.title("Settings")
         gen_settings.iconname("Settings")
@@ -6619,7 +7564,9 @@ class Application(Frame):
         # Radio Button
         D_Yloc = D_Yloc + D_dY
         self.Label_Units = Label(gen_settings, text="Units")
-        self.Label_Units.place(x=xd_label_L, y=D_Yloc, width=w_label, height=21)
+        self.Label_Units.place(
+            x=xd_label_L, y=D_Yloc, width=w_label, height=21
+        )
 
         self.Radio_Units_IN = Radiobutton(
             gen_settings, text="inch", value="in", width="100", anchor=W
@@ -6643,59 +7590,97 @@ class Application(Frame):
 
         D_Yloc = D_Yloc + D_dY
         self.Label_Xoffset = Label(gen_settings, text="X Offset")
-        self.Label_Xoffset.place(x=xd_label_L, y=D_Yloc, width=w_label, height=21)
-        self.Label_Xoffset_u = Label(gen_settings, textvariable=self.units, anchor=W)
-        self.Label_Xoffset_u.place(x=xd_units_L, y=D_Yloc, width=w_units, height=21)
+        self.Label_Xoffset.place(
+            x=xd_label_L, y=D_Yloc, width=w_label, height=21
+        )
+        self.Label_Xoffset_u = Label(
+            gen_settings, textvariable=self.units, anchor=W
+        )
+        self.Label_Xoffset_u.place(
+            x=xd_units_L, y=D_Yloc, width=w_units, height=21
+        )
         self.Entry_Xoffset = Entry(gen_settings, width="15")
-        self.Entry_Xoffset.place(x=xd_entry_L, y=D_Yloc, width=w_entry, height=23)
+        self.Entry_Xoffset.place(
+            x=xd_entry_L, y=D_Yloc, width=w_entry, height=23
+        )
         self.Entry_Xoffset.configure(textvariable=self.xorigin)
         self.xorigin.trace_variable("w", self.Entry_Xoffset_Callback)
         self.entry_set(self.Entry_Xoffset, self.Entry_Xoffset_Check(), 2)
 
         D_Yloc = D_Yloc + D_dY
         self.Label_Yoffset = Label(gen_settings, text="Y Offset")
-        self.Label_Yoffset.place(x=xd_label_L, y=D_Yloc, width=w_label, height=21)
-        self.Label_Yoffset_u = Label(gen_settings, textvariable=self.units, anchor=W)
-        self.Label_Yoffset_u.place(x=xd_units_L, y=D_Yloc, width=w_units, height=21)
+        self.Label_Yoffset.place(
+            x=xd_label_L, y=D_Yloc, width=w_label, height=21
+        )
+        self.Label_Yoffset_u = Label(
+            gen_settings, textvariable=self.units, anchor=W
+        )
+        self.Label_Yoffset_u.place(
+            x=xd_units_L, y=D_Yloc, width=w_units, height=21
+        )
         self.Entry_Yoffset = Entry(gen_settings, width="15")
-        self.Entry_Yoffset.place(x=xd_entry_L, y=D_Yloc, width=w_entry, height=23)
+        self.Entry_Yoffset.place(
+            x=xd_entry_L, y=D_Yloc, width=w_entry, height=23
+        )
         self.Entry_Yoffset.configure(textvariable=self.yorigin)
         self.yorigin.trace_variable("w", self.Entry_Yoffset_Callback)
         self.entry_set(self.Entry_Yoffset, self.Entry_Yoffset_Check(), 2)
 
         D_Yloc = D_Yloc + D_dY
         self.Label_ArcAngle = Label(gen_settings, text="Arc Angle")
-        self.Label_ArcAngle.place(x=xd_label_L, y=D_Yloc, width=w_label, height=21)
+        self.Label_ArcAngle.place(
+            x=xd_label_L, y=D_Yloc, width=w_label, height=21
+        )
         self.Label_ArcAngle_u = Label(gen_settings, text="deg", anchor=W)
-        self.Label_ArcAngle_u.place(x=xd_units_L, y=D_Yloc, width=w_units, height=21)
+        self.Label_ArcAngle_u.place(
+            x=xd_units_L, y=D_Yloc, width=w_units, height=21
+        )
         self.Entry_ArcAngle = Entry(gen_settings, width="15")
-        self.Entry_ArcAngle.place(x=xd_entry_L, y=D_Yloc, width=w_entry, height=23)
+        self.Entry_ArcAngle.place(
+            x=xd_entry_L, y=D_Yloc, width=w_entry, height=23
+        )
         self.Entry_ArcAngle.configure(textvariable=self.segarc)
         self.segarc.trace_variable("w", self.Entry_ArcAngle_Callback)
         self.entry_set(self.Entry_ArcAngle, self.Entry_ArcAngle_Check(), 2)
 
         D_Yloc = D_Yloc + D_dY
         self.Label_Accuracy = Label(gen_settings, text="Accuracy")
-        self.Label_Accuracy.place(x=xd_label_L, y=D_Yloc, width=w_label, height=21)
-        self.Label_Accuracy_u = Label(gen_settings, textvariable=self.units, anchor=W)
-        self.Label_Accuracy_u.place(x=xd_units_L, y=D_Yloc, width=w_units, height=21)
+        self.Label_Accuracy.place(
+            x=xd_label_L, y=D_Yloc, width=w_label, height=21
+        )
+        self.Label_Accuracy_u = Label(
+            gen_settings, textvariable=self.units, anchor=W
+        )
+        self.Label_Accuracy_u.place(
+            x=xd_units_L, y=D_Yloc, width=w_units, height=21
+        )
         self.Entry_Accuracy = Entry(gen_settings, width="15")
-        self.Entry_Accuracy.place(x=xd_entry_L, y=D_Yloc, width=w_entry, height=23)
+        self.Entry_Accuracy.place(
+            x=xd_entry_L, y=D_Yloc, width=w_entry, height=23
+        )
         self.Entry_Accuracy.configure(textvariable=self.accuracy)
         self.accuracy.trace_variable("w", self.Entry_Accuracy_Callback)
         self.entry_set(self.Entry_Accuracy, self.Entry_Accuracy_Check(), 2)
 
         D_Yloc = D_Yloc + D_dY
         self.Label_ext_char = Label(gen_settings, text="Extended Characters")
-        self.Label_ext_char.place(x=xd_label_L, y=D_Yloc, width=w_label, height=21)
-        self.Checkbutton_ext_char = Checkbutton(gen_settings, text="", anchor=W)
-        self.Checkbutton_ext_char.place(x=xd_entry_L, y=D_Yloc, width=75, height=23)
+        self.Label_ext_char.place(
+            x=xd_label_L, y=D_Yloc, width=w_label, height=21
+        )
+        self.Checkbutton_ext_char = Checkbutton(
+            gen_settings, text="", anchor=W
+        )
+        self.Checkbutton_ext_char.place(
+            x=xd_entry_L, y=D_Yloc, width=75, height=23
+        )
         self.Checkbutton_ext_char.configure(variable=self.ext_char)
         self.ext_char.trace_variable("w", self.Settings_ReLoad_Click)
 
         D_Yloc = D_Yloc + D_dY
         self.Label_arcfit = Label(gen_settings, text="Arc Fitting")
-        self.Label_arcfit.place(x=xd_label_L, y=D_Yloc, width=w_label, height=21)
+        self.Label_arcfit.place(
+            x=xd_label_L, y=D_Yloc, width=w_label, height=21
+        )
         self.Radio_arcfit_none = Radiobutton(
             gen_settings, text="None", value="none", width="110", anchor=W
         )
@@ -6704,25 +7689,40 @@ class Application(Frame):
         )
         self.Radio_arcfit_none.configure(variable=self.arc_fit)
         self.Radio_arcfit_radius = Radiobutton(
-            gen_settings, text="Radius Format", value="radius", width="110", anchor=W
+            gen_settings,
+            text="Radius Format",
+            value="radius",
+            width="110",
+            anchor=W,
         )
         self.Radio_arcfit_radius.place(
             x=w_label + x_radio_offset + 65, y=D_Yloc, width=100, height=23
         )
         self.Radio_arcfit_radius.configure(variable=self.arc_fit)
         self.Radio_arcfit_center = Radiobutton(
-            gen_settings, text="Center Format", value="center", width="110", anchor=W
+            gen_settings,
+            text="Center Format",
+            value="center",
+            width="110",
+            anchor=W,
         )
         self.Radio_arcfit_center.place(
-            x=w_label + x_radio_offset + 65 + 115, y=D_Yloc, width=100, height=23
+            x=w_label + x_radio_offset + 65 + 115,
+            y=D_Yloc,
+            width=100,
+            height=23,
         )
         self.Radio_arcfit_center.configure(variable=self.arc_fit)
 
         D_Yloc = D_Yloc + D_dY
         self.Label_no_com = Label(gen_settings, text="Suppress Comments")
-        self.Label_no_com.place(x=xd_label_L, y=D_Yloc, width=w_label, height=21)
+        self.Label_no_com.place(
+            x=xd_label_L, y=D_Yloc, width=w_label, height=21
+        )
         self.Checkbutton_no_com = Checkbutton(gen_settings, text="", anchor=W)
-        self.Checkbutton_no_com.place(x=xd_entry_L, y=D_Yloc, width=75, height=23)
+        self.Checkbutton_no_com.place(
+            x=xd_entry_L, y=D_Yloc, width=75, height=23
+        )
         self.Checkbutton_no_com.configure(variable=self.no_comments)
 
         D_Yloc = D_Yloc + D_dY
@@ -6734,22 +7734,30 @@ class Application(Frame):
 
         D_Yloc = D_Yloc + D_dY
         self.Label_Gpost = Label(gen_settings, text="G Code Postscript")
-        self.Label_Gpost.place(x=xd_label_L, y=D_Yloc, width=w_label, height=21)
+        self.Label_Gpost.place(
+            x=xd_label_L, y=D_Yloc, width=w_label, height=21
+        )
         self.Entry_Gpost = Entry(gen_settings)
         self.Entry_Gpost.place(x=xd_entry_L, y=D_Yloc, width=300, height=23)
         self.Entry_Gpost.configure(textvariable=self.gpost)
 
         D_Yloc = D_Yloc + D_dY
         self.Label_var_dis = Label(gen_settings, text="Disable Variables")
-        self.Label_var_dis.place(x=xd_label_L, y=D_Yloc, width=w_label, height=21)
+        self.Label_var_dis.place(
+            x=xd_label_L, y=D_Yloc, width=w_label, height=21
+        )
         self.Checkbutton_var_dis = Checkbutton(gen_settings, text="", anchor=W)
-        self.Checkbutton_var_dis.place(x=xd_entry_L, y=D_Yloc, width=75, height=23)
+        self.Checkbutton_var_dis.place(
+            x=xd_entry_L, y=D_Yloc, width=75, height=23
+        )
         self.Checkbutton_var_dis.configure(variable=self.var_dis)
 
         D_Yloc = D_Yloc + D_dY
         font_entry_width = 215
         self.Label_Fontdir = Label(gen_settings, text="Font Directory")
-        self.Label_Fontdir.place(x=xd_label_L, y=D_Yloc, width=w_label, height=21)
+        self.Label_Fontdir.place(
+            x=xd_label_L, y=D_Yloc, width=w_label, height=21
+        )
         self.Entry_Fontdir = Entry(gen_settings, width="15")
         self.Entry_Fontdir.place(
             x=xd_entry_L, y=D_Yloc, width=font_entry_width, height=23
@@ -6765,10 +7773,16 @@ class Application(Frame):
 
         D_Yloc = D_Yloc + D_dY
         self.Label_Hcalc = Label(gen_settings, text="Height Calculation")
-        self.Label_Hcalc.place(x=xd_label_L, y=D_Yloc, width=w_label, height=21)
+        self.Label_Hcalc.place(
+            x=xd_label_L, y=D_Yloc, width=w_label, height=21
+        )
 
         self.Radio_Hcalc_USE = Radiobutton(
-            gen_settings, text="Max Used", value="max_use", width="110", anchor=W
+            gen_settings,
+            text="Max Used",
+            value="max_use",
+            width="110",
+            anchor=W,
         )
         self.Radio_Hcalc_USE.place(
             x=w_label + x_radio_offset, y=D_Yloc, width=90, height=23
@@ -6776,7 +7790,11 @@ class Application(Frame):
         self.Radio_Hcalc_USE.configure(variable=self.H_CALC)
 
         self.Radio_Hcalc_ALL = Radiobutton(
-            gen_settings, text="Max All", value="max_all", width="110", anchor=W
+            gen_settings,
+            text="Max All",
+            value="max_all",
+            width="110",
+            anchor=W,
         )
         self.Radio_Hcalc_ALL.place(
             x=w_label + x_radio_offset + 90, y=D_Yloc, width=90, height=23
@@ -6796,36 +7814,53 @@ class Application(Frame):
         self.Label_Box.place(x=xd_label_L, y=D_Yloc, width=w_label, height=21)
 
         self.Checkbutton_plotbox = Checkbutton(gen_settings, text="", anchor=W)
-        self.Checkbutton_plotbox.place(x=xd_entry_L, y=D_Yloc, width=75, height=23)
+        self.Checkbutton_plotbox.place(
+            x=xd_entry_L, y=D_Yloc, width=75, height=23
+        )
         self.Checkbutton_plotbox.configure(variable=self.plotbox)
         self.plotbox.trace_variable("w", self.Entry_Box_Callback)
 
-        self.Label_BoxGap = Label(gen_settings, text="Box/Circle Gap:", anchor=E)
+        self.Label_BoxGap = Label(
+            gen_settings, text="Box/Circle Gap:", anchor=E
+        )
         self.Label_BoxGap.place(
             x=w_label + x_radio_offset + 25, y=D_Yloc, width=125, height=21
         )
         self.Entry_BoxGap = Entry(gen_settings)
         self.Entry_BoxGap.place(
-            x=w_label + x_radio_offset + 165, y=D_Yloc, width=w_entry, height=23
+            x=w_label + x_radio_offset + 165,
+            y=D_Yloc,
+            width=w_entry,
+            height=23,
         )
         self.Entry_BoxGap.configure(textvariable=self.boxgap)
         self.boxgap.trace_variable("w", self.Entry_BoxGap_Callback)
-        self.Label_BoxGap_u = Label(gen_settings, textvariable=self.units, anchor=W)
+        self.Label_BoxGap_u = Label(
+            gen_settings, textvariable=self.units, anchor=W
+        )
         self.Label_BoxGap_u.place(
             x=w_label + x_radio_offset + 230, y=D_Yloc, width=100, height=21
         )
         self.entry_set(self.Entry_BoxGap, self.Entry_BoxGap_Check(), 2)
 
         D_Yloc = D_Yloc + D_dY
-        self.Label_v_pplot = Label(gen_settings, text="Plot During V-Carve Calculation")
-        self.Label_v_pplot.place(x=xd_label_L, y=D_Yloc, width=w_label, height=21)
+        self.Label_v_pplot = Label(
+            gen_settings, text="Plot During V-Carve Calculation"
+        )
+        self.Label_v_pplot.place(
+            x=xd_label_L, y=D_Yloc, width=w_label, height=21
+        )
         self.Checkbutton_v_pplot = Checkbutton(gen_settings, text="", anchor=W)
-        self.Checkbutton_v_pplot.place(x=xd_entry_L, y=D_Yloc, width=75, height=23)
+        self.Checkbutton_v_pplot.place(
+            x=xd_entry_L, y=D_Yloc, width=75, height=23
+        )
         self.Checkbutton_v_pplot.configure(variable=self.v_pplot)
 
         D_Yloc = D_Yloc + D_dY + 10
         self.Label_SaveConfig = Label(gen_settings, text="Configuration File")
-        self.Label_SaveConfig.place(x=xd_label_L, y=D_Yloc, width=w_label, height=21)
+        self.Label_SaveConfig.place(
+            x=xd_label_L, y=D_Yloc, width=w_label, height=21
+        )
         self.GEN_SaveConfig = Button(gen_settings, text="Save")
         self.GEN_SaveConfig.place(
             x=xd_entry_L, y=D_Yloc, width=w_entry, height=21, anchor="nw"
@@ -6838,23 +7873,32 @@ class Application(Frame):
         Xbut = int(gen_settings.winfo_width() / 2)
 
         self.GEN_Reload = Button(gen_settings, text="Recalculate")
-        self.GEN_Reload.place(x=Xbut - 65, y=Ybut, width=130, height=30, anchor="e")
+        self.GEN_Reload.place(
+            x=Xbut - 65, y=Ybut, width=130, height=30, anchor="e"
+        )
         self.GEN_Reload.bind("<ButtonRelease-1>", self.Recalculate_Click)
 
         self.GEN_Recalculate = Button(gen_settings, text="Re-Load Image")
-        self.GEN_Recalculate.place(x=Xbut, y=Ybut, width=130, height=30, anchor="c")
-        self.GEN_Recalculate.bind("<ButtonRelease-1>", self.Settings_ReLoad_Click)
+        self.GEN_Recalculate.place(
+            x=Xbut, y=Ybut, width=130, height=30, anchor="c"
+        )
+        self.GEN_Recalculate.bind(
+            "<ButtonRelease-1>", self.Settings_ReLoad_Click
+        )
 
         self.GEN_Close = Button(gen_settings, text="Close")
-        self.GEN_Close.place(x=Xbut + 65, y=Ybut, width=130, height=30, anchor="w")
-        self.GEN_Close.bind("<ButtonRelease-1>", self.Close_Current_Window_Click)
+        self.GEN_Close.place(
+            x=Xbut + 65, y=Ybut, width=130, height=30, anchor="w"
+        )
+        self.GEN_Close.bind(
+            "<ButtonRelease-1>", self.Close_Current_Window_Click
+        )
 
-    ################################################################################
-    #                         V-Carve Settings window                              #
-    ################################################################################
+    # V-Carve Settings window
     def VCARVE_Settings_Window(self):
         vcarve_settings = Toplevel(width=580, height=690)
-        vcarve_settings.grab_set()  # Use grab_set to prevent user input in the main window during calculations
+        vcarve_settings.grab_set()  # Use grab_set to prevent user input in the
+                                    # main window during calculations
         vcarve_settings.resizable(0, 0)
         vcarve_settings.title("V-Carve Settings")
         vcarve_settings.iconname("V-Carve Settings")
@@ -6881,26 +7925,42 @@ class Application(Frame):
 
         # ----------------------
         self.Label_cutter_type = Label(vcarve_settings, text="Cutter Type")
-        self.Label_cutter_type.place(x=xd_label_L, y=D_Yloc, width=w_label, height=21)
+        self.Label_cutter_type.place(
+            x=xd_label_L, y=D_Yloc, width=w_label, height=21
+        )
 
         self.Radio_Type_VBIT = Radiobutton(
             vcarve_settings, text="V-Bit", value="VBIT", width="100", anchor=W
         )
-        self.Radio_Type_VBIT.place(x=xd_entry_L, y=D_Yloc, width=w_label, height=21)
+        self.Radio_Type_VBIT.place(
+            x=xd_entry_L, y=D_Yloc, width=w_label, height=21
+        )
         self.Radio_Type_VBIT.configure(variable=self.bit_shape)
 
         D_Yloc = D_Yloc + 24
         self.Radio_Type_BALL = Radiobutton(
-            vcarve_settings, text="Ball Nose", value="BALL", width="100", anchor=W
+            vcarve_settings,
+            text="Ball Nose",
+            value="BALL",
+            width="100",
+            anchor=W,
         )
-        self.Radio_Type_BALL.place(x=xd_entry_L, y=D_Yloc, width=w_label, height=21)
+        self.Radio_Type_BALL.place(
+            x=xd_entry_L, y=D_Yloc, width=w_label, height=21
+        )
         self.Radio_Type_BALL.configure(variable=self.bit_shape)
 
         D_Yloc = D_Yloc + 24
         self.Radio_Type_STRAIGHT = Radiobutton(
-            vcarve_settings, text="Straight", value="FLAT", width="100", anchor=W
+            vcarve_settings,
+            text="Straight",
+            value="FLAT",
+            width="100",
+            anchor=W,
         )
-        self.Radio_Type_STRAIGHT.place(x=xd_entry_L, y=D_Yloc, width=w_label, height=21)
+        self.Radio_Type_STRAIGHT.place(
+            x=xd_entry_L, y=D_Yloc, width=w_label, height=21
+        )
         self.Radio_Type_STRAIGHT.configure(variable=self.bit_shape)
 
         self.bit_shape.trace_variable("w", self.Entry_Bit_Shape_var_Callback)
@@ -6908,69 +7968,117 @@ class Application(Frame):
 
         D_Yloc = D_Yloc + D_dY
         self.Label_Vbitangle = Label(vcarve_settings, text="V-Bit Angle")
-        self.Label_Vbitangle.place(x=xd_label_L, y=D_Yloc, width=w_label, height=21)
+        self.Label_Vbitangle.place(
+            x=xd_label_L, y=D_Yloc, width=w_label, height=21
+        )
         self.Label_Vbitangle_u = Label(vcarve_settings, text="deg", anchor=W)
-        self.Label_Vbitangle_u.place(x=xd_units_L, y=D_Yloc, width=w_units, height=21)
+        self.Label_Vbitangle_u.place(
+            x=xd_units_L, y=D_Yloc, width=w_units, height=21
+        )
         self.Entry_Vbitangle = Entry(vcarve_settings, width="15")
-        self.Entry_Vbitangle.place(x=xd_entry_L, y=D_Yloc, width=w_entry, height=23)
+        self.Entry_Vbitangle.place(
+            x=xd_entry_L, y=D_Yloc, width=w_entry, height=23
+        )
         self.Entry_Vbitangle.configure(textvariable=self.v_bit_angle)
         self.v_bit_angle.trace_variable("w", self.Entry_Vbitangle_Callback)
         self.entry_set(self.Entry_Vbitangle, self.Entry_Vbitangle_Check(), 2)
 
         D_Yloc = D_Yloc + D_dY
         self.Label_Vbitdia = Label(vcarve_settings, text="V-Bit Diameter")
-        self.Label_Vbitdia.place(x=xd_label_L, y=D_Yloc, width=w_label, height=21)
-        self.Label_Vbitdia_u = Label(vcarve_settings, textvariable=self.units, anchor=W)
-        self.Label_Vbitdia_u.place(x=xd_units_L, y=D_Yloc, width=w_units, height=21)
+        self.Label_Vbitdia.place(
+            x=xd_label_L, y=D_Yloc, width=w_label, height=21
+        )
+        self.Label_Vbitdia_u = Label(
+            vcarve_settings, textvariable=self.units, anchor=W
+        )
+        self.Label_Vbitdia_u.place(
+            x=xd_units_L, y=D_Yloc, width=w_units, height=21
+        )
         self.Entry_Vbitdia = Entry(vcarve_settings, width="15")
-        self.Entry_Vbitdia.place(x=xd_entry_L, y=D_Yloc, width=w_entry, height=23)
+        self.Entry_Vbitdia.place(
+            x=xd_entry_L, y=D_Yloc, width=w_entry, height=23
+        )
         self.Entry_Vbitdia.configure(textvariable=self.v_bit_dia)
         self.v_bit_dia.trace_variable("w", self.Entry_Vbitdia_Callback)
         self.entry_set(self.Entry_Vbitdia, self.Entry_Vbitdia_Check(), 2)
 
         D_Yloc = D_Yloc + D_dY
         self.Label_VDepthLimit = Label(vcarve_settings, text="Cut Depth Limit")
-        self.Label_VDepthLimit.place(x=xd_label_L, y=D_Yloc, width=w_label, height=21)
+        self.Label_VDepthLimit.place(
+            x=xd_label_L, y=D_Yloc, width=w_label, height=21
+        )
         self.Label_VDepthLimit_u = Label(
             vcarve_settings, textvariable=self.units, anchor=W
         )
-        self.Label_VDepthLimit_u.place(x=xd_units_L, y=D_Yloc, width=w_units, height=21)
+        self.Label_VDepthLimit_u.place(
+            x=xd_units_L, y=D_Yloc, width=w_units, height=21
+        )
         self.Entry_VDepthLimit = Entry(vcarve_settings, width="15")
-        self.Entry_VDepthLimit.place(x=xd_entry_L, y=D_Yloc, width=w_entry, height=23)
+        self.Entry_VDepthLimit.place(
+            x=xd_entry_L, y=D_Yloc, width=w_entry, height=23
+        )
         self.Entry_VDepthLimit.configure(textvariable=self.v_depth_lim)
         self.v_depth_lim.trace_variable("w", self.Entry_VDepthLimit_Callback)
-        self.entry_set(self.Entry_VDepthLimit, self.Entry_VDepthLimit_Check(), 2)
+        self.entry_set(
+            self.Entry_VDepthLimit, self.Entry_VDepthLimit_Check(), 2
+        )
 
         D_Yloc = D_Yloc + D_dY
         self.Label_maxcut = Label(vcarve_settings, text="Max Cut Depth")
-        self.Label_maxcut.place(x=xd_label_L, y=D_Yloc, width=w_label, height=21)
-        self.Label_maxcut_u = Label(vcarve_settings, textvariable=self.units, anchor=W)
-        self.Label_maxcut_u.place(x=xd_units_L, y=D_Yloc, width=w_units, height=21)
-        self.Label_maxcut_i = Label(vcarve_settings, textvariable=self.maxcut, anchor=W)
-        self.Label_maxcut_i.place(x=xd_entry_L, y=D_Yloc, width=w_entry, height=21)
+        self.Label_maxcut.place(
+            x=xd_label_L, y=D_Yloc, width=w_label, height=21
+        )
+        self.Label_maxcut_u = Label(
+            vcarve_settings, textvariable=self.units, anchor=W
+        )
+        self.Label_maxcut_u.place(
+            x=xd_units_L, y=D_Yloc, width=w_units, height=21
+        )
+        self.Label_maxcut_i = Label(
+            vcarve_settings, textvariable=self.maxcut, anchor=W
+        )
+        self.Label_maxcut_i.place(
+            x=xd_entry_L, y=D_Yloc, width=w_entry, height=21
+        )
 
         D_Yloc = D_Yloc + D_dY + 5
         self.Label_StepSize = Label(vcarve_settings, text="Sub-Step Length")
-        self.Label_StepSize.place(x=xd_label_L, y=D_Yloc, width=w_label, height=21)
+        self.Label_StepSize.place(
+            x=xd_label_L, y=D_Yloc, width=w_label, height=21
+        )
         self.Label_StepSize_u = Label(
             vcarve_settings, textvariable=self.units, anchor=W
         )
-        self.Label_StepSize_u.place(x=xd_units_L, y=D_Yloc, width=w_units, height=21)
+        self.Label_StepSize_u.place(
+            x=xd_units_L, y=D_Yloc, width=w_units, height=21
+        )
         self.Entry_StepSize = Entry(vcarve_settings, width="15")
-        self.Entry_StepSize.place(x=xd_entry_L, y=D_Yloc, width=w_entry, height=23)
+        self.Entry_StepSize.place(
+            x=xd_entry_L, y=D_Yloc, width=w_entry, height=23
+        )
         self.Entry_StepSize.configure(textvariable=self.v_step_len)
         self.v_step_len.trace_variable("w", self.Entry_StepSize_Callback)
         self.entry_set(self.Entry_StepSize, self.Entry_StepSize_Check(), 2)
 
         D_Yloc = D_Yloc + D_dY + 12
-        self.vcarve_separator00 = Frame(vcarve_settings, height=2, bd=1, relief=SUNKEN)
+        self.vcarve_separator00 = Frame(
+            vcarve_settings, height=2, bd=1, relief=SUNKEN
+        )
         self.vcarve_separator00.place(x=0, y=D_Yloc, width=580, height=2)
 
         D_Yloc = D_Yloc + D_dY - 12
-        self.Label_v_flop = Label(vcarve_settings, text="Flip Normals (Cut Outside)")
-        self.Label_v_flop.place(x=xd_label_L, y=D_Yloc, width=w_label, height=21)
-        self.Checkbutton_v_flop = Checkbutton(vcarve_settings, text="", anchor=W)
-        self.Checkbutton_v_flop.place(x=xd_entry_L, y=D_Yloc, width=75, height=23)
+        self.Label_v_flop = Label(
+            vcarve_settings, text="Flip Normals (Cut Outside)"
+        )
+        self.Label_v_flop.place(
+            x=xd_label_L, y=D_Yloc, width=w_label, height=21
+        )
+        self.Checkbutton_v_flop = Checkbutton(
+            vcarve_settings, text="", anchor=W
+        )
+        self.Checkbutton_v_flop.place(
+            x=xd_entry_L, y=D_Yloc, width=75, height=23
+        )
         self.Checkbutton_v_flop.configure(variable=self.v_flop)
         self.v_flop.trace_variable("w", self.Entry_recalc_var_Callback)
 
@@ -6979,8 +8087,12 @@ class Application(Frame):
         self.Label_vBox = Label(vcarve_settings, text="Add Box (Flip Normals)")
         self.Label_vBox.place(x=xd_label_L, y=D_Yloc, width=w_label, height=21)
 
-        self.Checkbutton_plotbox = Checkbutton(vcarve_settings, text="", anchor=W)
-        self.Checkbutton_plotbox.place(x=xd_entry_L, y=D_Yloc, width=75, height=23)
+        self.Checkbutton_plotbox = Checkbutton(
+            vcarve_settings, text="", anchor=W
+        )
+        self.Checkbutton_plotbox.place(
+            x=xd_entry_L, y=D_Yloc, width=75, height=23
+        )
         self.Checkbutton_plotbox.configure(variable=self.plotbox)
         self.plotbox.trace_variable("w", self.Entry_Box_Callback)
 
@@ -6990,48 +8102,71 @@ class Application(Frame):
         )
         self.Entry_BoxGap = Entry(vcarve_settings)
         self.Entry_BoxGap.place(
-            x=w_label + x_radio_offset + 110, y=D_Yloc, width=w_entry, height=23
+            x=w_label + x_radio_offset + 110,
+            y=D_Yloc,
+            width=w_entry,
+            height=23,
         )
         self.Entry_BoxGap.configure(textvariable=self.boxgap)
         self.boxgap.trace_variable("w", self.Entry_BoxGap_Callback)
-        self.Label_BoxGap_u = Label(vcarve_settings, textvariable=self.units, anchor=W)
+        self.Label_BoxGap_u = Label(
+            vcarve_settings, textvariable=self.units, anchor=W
+        )
         self.Label_BoxGap_u.place(
             x=w_label + x_radio_offset + 305, y=D_Yloc, width=100, height=21
         )
         self.entry_set(self.Entry_BoxGap, self.Entry_BoxGap_Check(), 2)
 
-        self.Label_BoxGap_u = Label(vcarve_settings, textvariable=self.units, anchor=W)
+        self.Label_BoxGap_u = Label(
+            vcarve_settings, textvariable=self.units, anchor=W
+        )
         self.Label_BoxGap_u.place(
             x=w_label + x_radio_offset + 175, y=D_Yloc, width=100, height=21
         )
 
         self.GEN_Reload = Button(vcarve_settings, text="Recalculate")
-        self.GEN_Reload.place(x=580 - 10, y=D_Yloc, width=90, height=25, anchor="ne")
+        self.GEN_Reload.place(
+            x=580 - 10, y=D_Yloc, width=90, height=25, anchor="ne"
+        )
         self.GEN_Reload.bind("<ButtonRelease-1>", self.Recalculate_Click)
 
         D_Yloc = D_Yloc + D_dY + 12
-        self.vcarve_separator0 = Frame(vcarve_settings, height=2, bd=1, relief=SUNKEN)
+        self.vcarve_separator0 = Frame(
+            vcarve_settings, height=2, bd=1, relief=SUNKEN
+        )
         self.vcarve_separator0.place(x=0, y=D_Yloc, width=580, height=2)
 
         D_Yloc = D_Yloc + D_dY - 12
         self.Label_inlay = Label(
             vcarve_settings, text="Prismatic (For inlay also select Add Box)"
         )
-        self.Label_inlay.place(x=xd_label_L, y=D_Yloc, width=w_label, height=21)
-        self.Checkbutton_inlay = Checkbutton(vcarve_settings, text="", anchor=W)
-        self.Checkbutton_inlay.place(x=xd_entry_L, y=D_Yloc, width=75, height=23)
+        self.Label_inlay.place(
+            x=xd_label_L, y=D_Yloc, width=w_label, height=21
+        )
+        self.Checkbutton_inlay = Checkbutton(
+            vcarve_settings, text="", anchor=W
+        )
+        self.Checkbutton_inlay.place(
+            x=xd_entry_L, y=D_Yloc, width=75, height=23
+        )
         self.Checkbutton_inlay.configure(variable=self.inlay)
         self.inlay.trace_variable("w", self.Entry_Prismatic_Callback)
 
         D_Yloc = D_Yloc + D_dY
         self.Label_Allowance = Label(vcarve_settings, text="Prismatic Overcut")
-        self.Label_Allowance.place(x=xd_label_L, y=D_Yloc, width=w_label, height=21)
+        self.Label_Allowance.place(
+            x=xd_label_L, y=D_Yloc, width=w_label, height=21
+        )
         self.Label_Allowance_u = Label(
             vcarve_settings, textvariable=self.units, anchor=W
         )
-        self.Label_Allowance_u.place(x=xd_units_L, y=D_Yloc, width=w_units, height=21)
+        self.Label_Allowance_u.place(
+            x=xd_units_L, y=D_Yloc, width=w_units, height=21
+        )
         self.Entry_Allowance = Entry(vcarve_settings, width="15")
-        self.Entry_Allowance.place(x=xd_entry_L, y=D_Yloc, width=w_entry, height=23)
+        self.Entry_Allowance.place(
+            x=xd_entry_L, y=D_Yloc, width=w_entry, height=23
+        )
         self.Entry_Allowance.configure(textvariable=self.allowance)
         self.allowance.trace_variable("w", self.Entry_Allowance_Callback)
         self.entry_set(self.Entry_Allowance, self.Entry_Allowance_Check(), 2)
@@ -7042,7 +8177,9 @@ class Application(Frame):
 
         ## Multi-pass Settings ##
         D_Yloc = D_Yloc + D_dY + 12
-        self.vcarve_separator1 = Frame(vcarve_settings, height=2, bd=1, relief=SUNKEN)
+        self.vcarve_separator1 = Frame(
+            vcarve_settings, height=2, bd=1, relief=SUNKEN
+        )
         self.vcarve_separator1.place(x=0, y=D_Yloc, width=580, height=2)
 
         D_Yloc = D_Yloc + D_dY - 12
@@ -7055,11 +8192,15 @@ class Application(Frame):
         self.Label_v_rough_stk = Label(
             vcarve_settings, text="V-Carve Finish Pass Stock"
         )
-        self.Label_v_rough_stk.place(x=xd_label_L, y=D_Yloc, width=w_label, height=21)
+        self.Label_v_rough_stk.place(
+            x=xd_label_L, y=D_Yloc, width=w_label, height=21
+        )
         self.Label_v_rough_stk_u = Label(
             vcarve_settings, textvariable=self.units, anchor=W
         )
-        self.Label_v_rough_stk_u.place(x=xd_units_L, y=D_Yloc, width=w_units, height=21)
+        self.Label_v_rough_stk_u.place(
+            x=xd_units_L, y=D_Yloc, width=w_units, height=21
+        )
 
         self.Label_right_v_rough_stk = Label(
             vcarve_settings, text="(Zero disables multipass cutting)", anchor=W
@@ -7069,20 +8210,32 @@ class Application(Frame):
         )
 
         self.Entry_v_rough_stk = Entry(vcarve_settings, width="15")
-        self.Entry_v_rough_stk.place(x=xd_entry_L, y=D_Yloc, width=w_entry, height=23)
+        self.Entry_v_rough_stk.place(
+            x=xd_entry_L, y=D_Yloc, width=w_entry, height=23
+        )
         self.Entry_v_rough_stk.configure(textvariable=self.v_rough_stk)
         self.v_rough_stk.trace_variable("w", self.Entry_v_rough_stk_Callback)
-        self.entry_set(self.Entry_v_rough_stk, self.Entry_v_rough_stk_Check(), 2)
+        self.entry_set(
+            self.Entry_v_rough_stk, self.Entry_v_rough_stk_Check(), 2
+        )
 
         D_Yloc = D_Yloc + D_dY
-        self.Label_v_max_cut = Label(vcarve_settings, text="V-Carve Max Depth per Pass")
-        self.Label_v_max_cut.place(x=xd_label_L, y=D_Yloc, width=w_label, height=21)
+        self.Label_v_max_cut = Label(
+            vcarve_settings, text="V-Carve Max Depth per Pass"
+        )
+        self.Label_v_max_cut.place(
+            x=xd_label_L, y=D_Yloc, width=w_label, height=21
+        )
         self.Label_v_max_cut_u = Label(
             vcarve_settings, textvariable=self.units, anchor=W
         )
-        self.Label_v_max_cut_u.place(x=xd_units_L, y=D_Yloc, width=w_units, height=21)
+        self.Label_v_max_cut_u.place(
+            x=xd_units_L, y=D_Yloc, width=w_units, height=21
+        )
         self.Entry_v_max_cut = Entry(vcarve_settings, width="15")
-        self.Entry_v_max_cut.place(x=xd_entry_L, y=D_Yloc, width=w_entry, height=23)
+        self.Entry_v_max_cut.place(
+            x=xd_entry_L, y=D_Yloc, width=w_entry, height=23
+        )
         self.Entry_v_max_cut.configure(textvariable=self.v_max_cut)
         self.v_max_cut.trace_variable("w", self.Entry_v_max_cut_Callback)
         self.entry_set(self.Entry_v_max_cut, self.Entry_v_max_cut_Check(), 2)
@@ -7116,7 +8269,9 @@ class Application(Frame):
 
         ## Cleanup Settings ##
         D_Yloc = D_Yloc + D_dY + 12
-        self.vcarve_separator1 = Frame(vcarve_settings, height=2, bd=1, relief=SUNKEN)
+        self.vcarve_separator1 = Frame(
+            vcarve_settings, height=2, bd=1, relief=SUNKEN
+        )
         self.vcarve_separator1.place(x=0, y=D_Yloc, width=580, height=2)
 
         right_but_loc = int(vcarve_settings.winfo_width()) - 10
@@ -7143,73 +8298,120 @@ class Application(Frame):
         )
 
         D_Yloc = D_Yloc + D_dY
-        self.Label_CLEAN_DIA = Label(vcarve_settings, text="Cleanup Cut Diameter")
-        self.Label_CLEAN_DIA.place(x=xd_label_L, y=D_Yloc, width=w_label, height=21)
+        self.Label_CLEAN_DIA = Label(
+            vcarve_settings, text="Cleanup Cut Diameter"
+        )
+        self.Label_CLEAN_DIA.place(
+            x=xd_label_L, y=D_Yloc, width=w_label, height=21
+        )
         self.Label_CLEAN_DIA_u = Label(
             vcarve_settings, textvariable=self.units, anchor=W
         )
-        self.Label_CLEAN_DIA_u.place(x=xd_units_L, y=D_Yloc, width=w_units, height=21)
+        self.Label_CLEAN_DIA_u.place(
+            x=xd_units_L, y=D_Yloc, width=w_units, height=21
+        )
         self.Entry_CLEAN_DIA = Entry(vcarve_settings, width="15")
-        self.Entry_CLEAN_DIA.place(x=xd_entry_L, y=D_Yloc, width=w_entry, height=23)
+        self.Entry_CLEAN_DIA.place(
+            x=xd_entry_L, y=D_Yloc, width=w_entry, height=23
+        )
         self.Entry_CLEAN_DIA.configure(textvariable=self.clean_dia)
         self.clean_dia.trace_variable("w", self.Entry_CLEAN_DIA_Callback)
         self.entry_set(self.Entry_CLEAN_DIA, self.Entry_CLEAN_DIA_Check(), 2)
 
         D_Yloc = D_Yloc + D_dY
-        self.Label_STEP_OVER = Label(vcarve_settings, text="Cleanup Cut Step Over")
-        self.Label_STEP_OVER.place(x=xd_label_L, y=D_Yloc, width=w_label, height=21)
+        self.Label_STEP_OVER = Label(
+            vcarve_settings, text="Cleanup Cut Step Over"
+        )
+        self.Label_STEP_OVER.place(
+            x=xd_label_L, y=D_Yloc, width=w_label, height=21
+        )
         self.Label_STEP_OVER_u = Label(vcarve_settings, text="%", anchor=W)
-        self.Label_STEP_OVER_u.place(x=xd_units_L, y=D_Yloc, width=w_units, height=21)
+        self.Label_STEP_OVER_u.place(
+            x=xd_units_L, y=D_Yloc, width=w_units, height=21
+        )
         self.Entry_STEP_OVER = Entry(vcarve_settings, width="15")
-        self.Entry_STEP_OVER.place(x=xd_entry_L, y=D_Yloc, width=w_entry, height=23)
+        self.Entry_STEP_OVER.place(
+            x=xd_entry_L, y=D_Yloc, width=w_entry, height=23
+        )
         self.Entry_STEP_OVER.configure(textvariable=self.clean_step)
         self.clean_step.trace_variable("w", self.Entry_STEP_OVER_Callback)
         self.entry_set(self.Entry_STEP_OVER, self.Entry_STEP_OVER_Check(), 2)
 
         D_Yloc = D_Yloc + 24
         check_delta = 40
-        self.Label_clean_P = Label(vcarve_settings, text="Cleanup Cut Directions")
-        self.Label_clean_P.place(x=xd_label_L, y=D_Yloc, width=w_label, height=21)
+        self.Label_clean_P = Label(
+            vcarve_settings, text="Cleanup Cut Directions"
+        )
+        self.Label_clean_P.place(
+            x=xd_label_L, y=D_Yloc, width=w_label, height=21
+        )
 
         self.Write_Clean = Button(
-            vcarve_settings, text="Save Cleanup\nG-Code", command=self.Write_Clean_Click
+            vcarve_settings,
+            text="Save Cleanup\nG-Code",
+            command=self.Write_Clean_Click,
         )
         self.Write_Clean.place(
-            x=right_but_loc, y=D_Yloc, width=width_cb, height=height_cb, anchor="e"
+            x=right_but_loc,
+            y=D_Yloc,
+            width=width_cb,
+            height=height_cb,
+            anchor="e",
         )
 
-        self.Checkbutton_clean_P = Checkbutton(vcarve_settings, text="P", anchor=W)
+        self.Checkbutton_clean_P = Checkbutton(
+            vcarve_settings, text="P", anchor=W
+        )
         self.Checkbutton_clean_P.configure(variable=self.clean_P)
         self.Checkbutton_clean_P.place(
             x=xd_entry_L, y=D_Yloc, width=w_entry + 40, height=23
         )
-        self.Checkbutton_clean_X = Checkbutton(vcarve_settings, text="X", anchor=W)
+        self.Checkbutton_clean_X = Checkbutton(
+            vcarve_settings, text="X", anchor=W
+        )
         self.Checkbutton_clean_X.configure(variable=self.clean_X)
         self.Checkbutton_clean_X.place(
             x=xd_entry_L + check_delta, y=D_Yloc, width=w_entry + 40, height=23
         )
-        self.Checkbutton_clean_Y = Checkbutton(vcarve_settings, text="Y", anchor=W)
+        self.Checkbutton_clean_Y = Checkbutton(
+            vcarve_settings, text="Y", anchor=W
+        )
         self.Checkbutton_clean_Y.configure(variable=self.clean_Y)
         self.Checkbutton_clean_Y.place(
-            x=xd_entry_L + check_delta * 2, y=D_Yloc, width=w_entry + 40, height=23
+            x=xd_entry_L + check_delta * 2,
+            y=D_Yloc,
+            width=w_entry + 40,
+            height=23,
         )
 
         D_Yloc = D_Yloc + 12
 
         D_Yloc = D_Yloc + D_dY
         self.Label_V_CLEAN = Label(vcarve_settings, text="V-Bit Cleanup Step")
-        self.Label_V_CLEAN.place(x=xd_label_L, y=D_Yloc, width=w_label, height=21)
-        self.Label_V_CLEAN_u = Label(vcarve_settings, textvariable=self.units, anchor=W)
-        self.Label_V_CLEAN_u.place(x=xd_units_L, y=D_Yloc, width=w_units, height=21)
+        self.Label_V_CLEAN.place(
+            x=xd_label_L, y=D_Yloc, width=w_label, height=21
+        )
+        self.Label_V_CLEAN_u = Label(
+            vcarve_settings, textvariable=self.units, anchor=W
+        )
+        self.Label_V_CLEAN_u.place(
+            x=xd_units_L, y=D_Yloc, width=w_units, height=21
+        )
         self.Entry_V_CLEAN = Entry(vcarve_settings, width="15")
-        self.Entry_V_CLEAN.place(x=xd_entry_L, y=D_Yloc, width=w_entry, height=23)
+        self.Entry_V_CLEAN.place(
+            x=xd_entry_L, y=D_Yloc, width=w_entry, height=23
+        )
         self.Entry_V_CLEAN.configure(textvariable=self.clean_v)
         self.clean_v.trace_variable("w", self.Entry_V_CLEAN_Callback)
         self.entry_set(self.Entry_V_CLEAN, self.Entry_V_CLEAN_Check(), 2)
 
         D_Yloc = D_Yloc + 24
-        self.Label_v_clean_P = Label(vcarve_settings, text="V-Bit Cut Directions")
-        self.Label_v_clean_P.place(x=xd_label_L, y=D_Yloc, width=w_label, height=21)
+        self.Label_v_clean_P = Label(
+            vcarve_settings, text="V-Bit Cut Directions"
+        )
+        self.Label_v_clean_P.place(
+            x=xd_label_L, y=D_Yloc, width=w_label, height=21
+        )
 
         self.Write_V_Clean = Button(
             vcarve_settings,
@@ -7217,23 +8419,36 @@ class Application(Frame):
             command=self.Write_V_Clean_Click,
         )
         self.Write_V_Clean.place(
-            x=right_but_loc, y=D_Yloc, width=width_cb, height=height_cb, anchor="e"
+            x=right_but_loc,
+            y=D_Yloc,
+            width=width_cb,
+            height=height_cb,
+            anchor="e",
         )
 
-        self.Checkbutton_v_clean_P = Checkbutton(vcarve_settings, text="P", anchor=W)
+        self.Checkbutton_v_clean_P = Checkbutton(
+            vcarve_settings, text="P", anchor=W
+        )
         self.Checkbutton_v_clean_P.configure(variable=self.v_clean_P)
         self.Checkbutton_v_clean_P.place(
             x=xd_entry_L, y=D_Yloc, width=w_entry + 40, height=23
         )
-        self.Checkbutton_v_clean_X = Checkbutton(vcarve_settings, text="X", anchor=W)
+        self.Checkbutton_v_clean_X = Checkbutton(
+            vcarve_settings, text="X", anchor=W
+        )
         self.Checkbutton_v_clean_X.configure(variable=self.v_clean_X)
         self.Checkbutton_v_clean_X.place(
             x=xd_entry_L + check_delta, y=D_Yloc, width=w_entry + 40, height=23
         )
-        self.Checkbutton_v_clean_Y = Checkbutton(vcarve_settings, text="Y", anchor=W)
+        self.Checkbutton_v_clean_Y = Checkbutton(
+            vcarve_settings, text="Y", anchor=W
+        )
         self.Checkbutton_v_clean_Y.configure(variable=self.v_clean_Y)
         self.Checkbutton_v_clean_Y.place(
-            x=xd_entry_L + check_delta * 2, y=D_Yloc, width=w_entry + 40, height=23
+            x=xd_entry_L + check_delta * 2,
+            y=D_Yloc,
+            width=w_entry + 40,
+            height=23,
         )
 
         ## V-Bit Picture ##
@@ -7270,7 +8485,9 @@ class Application(Frame):
             text="Calculate V-Carve",
             command=self.VCARVE_Recalculate_Click,
         )
-        self.VCARVE_Recalculate.place(x=Xbut, y=Ybut, width=130, height=30, anchor="e")
+        self.VCARVE_Recalculate.place(
+            x=Xbut, y=Ybut, width=130, height=30, anchor="e"
+        )
 
         if self.cut_type.get() == "v-carve":
             self.VCARVE_Recalculate.configure(state="normal", command=None)
@@ -7278,13 +8495,15 @@ class Application(Frame):
             self.VCARVE_Recalculate.configure(state="disabled", command=None)
 
         self.VCARVE_Close = Button(vcarve_settings, text="Close")
-        self.VCARVE_Close.place(x=Xbut, y=Ybut, width=130, height=30, anchor="w")
-        self.VCARVE_Close.bind("<ButtonRelease-1>", self.Close_Current_Window_Click)
+        self.VCARVE_Close.place(
+            x=Xbut, y=Ybut, width=130, height=30, anchor="w"
+        )
+        self.VCARVE_Close.bind(
+            "<ButtonRelease-1>", self.Close_Current_Window_Click
+        )
 
 
-################################################################################
-#                          Start Application                                   #
-################################################################################
+# Start Application
 root = Tk()
 app = Application(root)
 app.master.title("F-Engrave V" + version)
