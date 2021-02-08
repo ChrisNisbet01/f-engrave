@@ -23,7 +23,7 @@ class Gcode(list):
                  arc_fit="none",
                  metric=False,
                  enable_variables=False):
-        super(Gcode, self).__init__()
+        list.__init__(self)
 
         self.lastx = self.lasty = self.lastz = self.lastf = None
         self.feed = None

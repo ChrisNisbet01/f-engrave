@@ -1,6 +1,6 @@
 class SVG(list):
     def __init__(self, units, width, height, view_width, view_height, dpi):
-        super(SVG, self).__init__()
+        list.__init__(self)
 
         self.append('<?xml version="1.0" standalone="no"?>')
         self.append('<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"  ')
