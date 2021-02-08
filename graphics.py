@@ -510,7 +510,7 @@ def find_max_circle(
                         rtmp = xq2 * sq + b
                         if rtmp >= 0.0:
                             rmin = min(rmin, rtmp)
-                except:
+                except: #Divide by zero?
                     pass
 
             if yc1 > Zero:
@@ -529,3 +529,340 @@ def find_max_circle(
                     rmin = 0.0
 
     return rmin
+
+
+def sort_for_v_carve(sort_coords, Acc, status_callback, LN_START=0):
+    # Create ECOORDS
+    ecoords = []
+    Lbeg = []
+    Lend = []
+    cnt = 0
+    for i in range(len(sort_coords)):
+        [x1, y1, x2, y2, dummy1, dummy2] = sort_coords[i]
+        if i == 0:
+            cnt = 0
+            ecoords.append([x1, y1])
+            Lbeg.append(cnt)
+            cnt = cnt + 1
+            ecoords.append([x2, y2])
+            oldx, oldy = x2, y2
+        else:
+            dist = sqrt((oldx - x1) ** 2 + (oldy - y1) ** 2)
+            # check and see if we need to move
+            # to a new discontinuous start point
+            if dist > Zero:
+                Lend.append(cnt)
+                cnt = cnt + 1
+                ecoords.append([x1, y1])
+                Lbeg.append(cnt)
+            cnt = cnt + 1
+            ecoords.append([x2, y2])
+            oldx, oldy = x2, y2
+    Lend.append(cnt)
+
+    status_callback(status="Checking Input Image Data")
+    # Fully close closed loops and remove open loops
+    i = 0
+    LObeg = []
+    LOend = []
+    while i < len(Lbeg):  # for each loop
+        [Xstart, Ystart] = ecoords[Lbeg[i]]
+        [Xend, Yend] = ecoords[Lend[i]]
+
+        dist = sqrt((Xend - Xstart) ** 2 + (Yend - Ystart) ** 2)
+        if dist <= Zero:
+            # if end is the same as the beginning (changed in V1.55: was Acc)
+            ecoords[Lend[i]] = [Xstart, Ystart]
+            i = i + 1
+        else:  # end != to beginning
+            LObeg.append(Lbeg.pop(i))
+            LOend.append(Lend.pop(i))
+
+    LNbeg = []
+    LNend = []
+    LNloop = []
+
+    # For each open loop connect to the next closest
+    # loop end until all of the loops are closed
+    Lcnt = 0
+    while len(LObeg) > 0:  # for each Open Loop
+        Start = LObeg.pop(0)
+        End = LOend.pop(0)
+        Lcnt = Lcnt + 1
+        LNloop.append(Lcnt)
+        LNbeg.append(Start)
+        LNend.append(End)
+        [Xstart, Ystart] = ecoords[Start]
+
+        OPEN = True
+        while OPEN and len(LObeg) > 0:
+            [Xend, Yend] = ecoords[End]
+            dist_beg_min = sqrt((Xend - Xstart) ** 2 + (Yend - Ystart) ** 2)
+            dist_end_min = dist_beg_min
+            k_min_beg = -1
+            k_min_end = -1
+            for k in range(len(LObeg)):
+                [Xkstart, Ykstart] = ecoords[LObeg[k]]
+                [Xkend, Ykend] = ecoords[LOend[k]]
+                dist_beg = sqrt((Xend - Xkstart) ** 2 + (Yend - Ykstart) ** 2)
+                dist_end = sqrt((Xend - Xkend) ** 2 + (Yend - Ykend) ** 2)
+
+                if dist_beg < dist_beg_min:
+                    dist_beg_min = dist_beg
+                    k_min_beg = k
+                if dist_end < dist_end_min:
+                    dist_end_min = dist_end
+                    k_min_end = k
+
+            if k_min_beg == -1 and k_min_end == -1:
+                kbeg = End
+                kend = Start
+                ecoords.append(ecoords[End])
+                ecoords.append(ecoords[Start])
+                LNloop.append(Lcnt)
+                LNbeg.append(len(ecoords) - 2)
+                LNend.append(len(ecoords) - 1)
+                OPEN = False
+
+            elif dist_end_min < dist_beg_min:
+                kend = LObeg.pop(k_min_end)
+                kbeg = LOend.pop(k_min_end)
+
+                ecoords.append(ecoords[End])
+                ecoords.append(ecoords[kbeg])
+
+                LNloop.append(Lcnt)
+                LNbeg.append(len(ecoords) - 2)
+                LNend.append(len(ecoords) - 1)
+                LNloop.append(Lcnt)
+                LNbeg.append(kbeg)
+                LNend.append(kend)
+                End = kend
+            else:
+                kbeg = LObeg.pop(k_min_beg)
+                kend = LOend.pop(k_min_beg)
+
+                ecoords.append(ecoords[End])
+                ecoords.append(ecoords[kbeg])
+
+                LNloop.append(Lcnt)
+                LNbeg.append(len(ecoords) - 2)
+                LNend.append(len(ecoords) - 1)
+                LNloop.append(Lcnt)
+                LNbeg.append(kbeg)
+                LNend.append(kend)
+                End = kend
+
+        if OPEN and len(LObeg) == 0:
+            ecoords.append(ecoords[End])
+            ecoords.append(ecoords[Start])
+            LNloop.append(Lcnt)
+            LNbeg.append(len(ecoords) - 2)
+            LNend.append(len(ecoords) - 1)
+
+    #   Eliminate Tiny Features
+    for k in range(len(Lbeg)):
+        Start = Lbeg[k]
+        End = Lend[k]
+        step = 1
+        [x1, y1] = ecoords[Start + 0]
+        for i in range(Start + 1, End + step, step):
+            [x2, y2] = ecoords[i]
+            Lseg = sqrt((x2 - x1) ** 2 + (y2 - y1) ** 2)
+            if Lseg >= Acc:
+                x1 = float(x2)
+                y1 = float(y2)
+            elif i != End:
+                ecoords[i] = [float(x1), float(y1)]
+            else:
+                [x1, y1] = ecoords[Start]
+                ecoords[End] = [float(x1), float(y1)]
+
+    # Make new sequential ecoords for each new loop
+    Loop_last = -1
+    for k in range(len(LNbeg)):
+        Start = LNbeg[k]
+        End = LNend[k]
+        Loop = LNloop[k]
+        if Loop != Loop_last:
+            Lbeg.append(len(ecoords))
+
+            if Loop_last != -1:
+                Lend.append(len(ecoords) - 1)
+            Loop_last = Loop
+
+        if Start > End:
+            step = -1
+        else:
+            step = 1
+        for i in range(Start, End + step, step):
+            [x1, y1] = ecoords[i]
+            ecoords.append([x1, y1])
+    if len(Lbeg) > len(Lend):
+        Lend.append(len(ecoords) - 1)
+
+    # Determine loop directions CW/CCW
+    status_callback(status="Calculating Initial Loop Directions (CW/CCW)")
+    Lflip = []
+    Lcw = []
+
+    for k in range(len(Lbeg)):
+        Start = Lbeg[k]
+        End = Lend[k]
+        step = 1
+
+        signedArea = 0.0
+
+        [x1, y1] = ecoords[Start]
+        for i in range(Start + 1, End + step, step):
+            [x2, y2] = ecoords[i]
+            signedArea += (x2 - x1) * (y2 + y1)
+            x1 = x2
+            y1 = y2
+        if signedArea > 0.0:
+            Lflip.append(False)
+            Lcw.append(True)
+        else:
+            Lflip.append(True)
+            Lcw.append(False)
+
+    Nloops = len(Lbeg)
+    LoopTree = []
+    Lnum = []
+    for iloop in range(LN_START, Nloops + LN_START):
+        LoopTree.append([iloop, [], []])
+        Lnum.append(iloop)
+
+    # For each loop determine if other loops are inside
+    status_callback(initialize=True)
+    for iloop in range(Nloops):
+        if not status_callback(
+            status="Determining which side of loop to cut: %d of %d"
+            % (iloop + 1, Nloops),
+            check_for_timeout=True
+        ):
+            return []
+
+        ipoly = ecoords[Lbeg[iloop]:Lend[iloop]]
+
+        # Check points in other loops (could just check one)
+        if ipoly != []:
+            for jloop in range(Nloops):
+                # It can take a long time for this tom complete, so check
+                # for cancellation here too.
+                if not status_callback(
+                    status="Determining which side of loop to cut: %d of %d"
+                    % (iloop + 1, Nloops),
+                    check_for_timeout=True
+                ):
+                    return []
+                if jloop != iloop:
+                    inside = 0
+                    jval = Lbeg[jloop]
+                    inside = inside + point_inside_polygon(
+                        ecoords[jval][0], ecoords[jval][1], ipoly
+                    )
+                    if inside > 0:
+                        Lflip[jloop] = not Lflip[jloop]
+                        LoopTree[iloop][1].append(jloop)
+                        LoopTree[jloop][2].append(iloop)
+
+    # Set Loop clockwise flag to the state of each loop #
+    # Could flip cut side here for auto side determination
+    for iloop in range(Nloops):
+        if Lflip[iloop]:
+            Lcw[iloop] = not Lcw[iloop]
+
+    # Find new order based on distance to next beg  #
+    status_callback("Re-Ordering Loops")
+    order_out = []
+    if len(Lflip) > 0:
+        if Lflip[0]:
+            order_out.append([Lend[0], Lbeg[0], Lnum[0]])
+        else:
+            order_out.append([Lbeg[0], Lend[0], Lnum[0]])
+
+    inext = 0
+    total = len(Lbeg)
+    for i in range(total - 1):
+        Lbeg.pop(inext)
+        ii = Lend.pop(inext)
+        Lflip.pop(inext)
+        Lnum.pop(inext)
+
+        Xcur = ecoords[ii][0]
+        Ycur = ecoords[ii][1]
+
+        dx = Xcur - ecoords[Lbeg[0]][0]
+        dy = Ycur - ecoords[Lbeg[0]][1]
+        min_dist = dx * dx + dy * dy
+
+        inext = 0
+        for j in range(1, len(Lbeg)):
+            dx = Xcur - ecoords[Lbeg[j]][0]
+            dy = Ycur - ecoords[Lbeg[j]][1]
+            dist = dx * dx + dy * dy
+            if dist < min_dist:
+                min_dist = dist
+                inext = j
+
+        if Lflip[inext]:
+            order_out.append([Lend[inext], Lbeg[inext], Lnum[inext]])
+        else:
+            order_out.append([Lbeg[inext], Lend[inext], Lnum[inext]])
+
+    temp_coords = []
+    for k in range(len(order_out)):
+        [Start, End, LN] = order_out[k]
+        if Start > End:
+            step = -1
+        else:
+            step = 1
+        xlast = ""
+        ylast = ""
+        xa, ya = ecoords[Start]
+        for i in range(Start + step, End + step, step):
+            if xlast != "" and ylast != "":
+                x1 = xlast
+                y1 = ylast
+            else:
+                [x1, y1] = ecoords[i - step]
+            [x2, y2] = ecoords[i]
+
+            Lseg = sqrt((x2 - x1) ** 2 + (y2 - y1) ** 2)
+            if Lseg >= Zero:
+                temp_coords.append([x1, y1, x2, y2, LN, 0])
+                xlast = ""
+                ylast = ""
+            else:
+                xlast = x1
+                ylast = y1
+
+        if xlast != "" and ylast != "":
+            Llast = sqrt((x1 - xa) * (x1 - xa) + (y1 - ya) * (y1 - ya))
+            if len(temp_coords) > 1:
+                if Llast <= Acc and LN == temp_coords[-1][4]:
+                    temp_coords[-1][2] = xa
+                    temp_coords[-1][3] = ya
+                else:
+                    temp_coords.append([x1, y1, xa, ya, LN, 0])
+
+    cnt = 1
+    if temp_coords != []:
+        loop_last = temp_coords[len(temp_coords) - 1][4]
+        for i in range(len(temp_coords) - 2, -1, -1):
+            loop = temp_coords[i][4]
+            if loop == loop_last:
+                cnt = cnt + 1
+            else:
+                if cnt < 3:
+                    idel = i + 1
+                    while (
+                        idel < len(temp_coords)
+                        and temp_coords[idel][4] == loop_last
+                    ):
+                        temp_coords.pop(idel)
+                cnt = 1
+                loop_last = loop
+
+    return temp_coords
