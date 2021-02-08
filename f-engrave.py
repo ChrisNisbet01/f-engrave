@@ -348,7 +348,7 @@ import getopt
 from graphics import Get_Angle, Transform, Rotn, CoordScale, DetectIntersect
 from graphics import Clean_coords_to_Path_coords
 from graphics import Find_Paths, record_v_carve_data, find_max_circle
-from graphics import sort_for_v_carve
+from graphics import sort_for_v_carve, Sort_Paths
 import font
 from math import sqrt, radians, tan, acos, sin, cos, fabs, floor, ceil
 from math import degrees
@@ -1323,79 +1323,6 @@ class Application(Frame):
             return 0
         return 1
 
-    ################################################################################
-    def Sort_Paths(self, ecoords, i_loop=2):
-        ##########################
-        ###   find loop ends   ###
-        ##########################
-        Lbeg = []
-        Lend = []
-        if len(ecoords) > 0:
-            Lbeg.append(0)
-            loop_old = ecoords[0][i_loop]
-            for i in range(1, len(ecoords)):
-                loop = ecoords[i][i_loop]
-                if loop != loop_old:
-                    Lbeg.append(i)
-                    Lend.append(i - 1)
-                loop_old = loop
-            Lend.append(i)
-
-        #######################################################
-        # Find new order based on distance to next beg or end #
-        #######################################################
-        order_out = []
-        use_beg = 0
-        if len(ecoords) > 0:
-            order_out.append([Lbeg[0], Lend[0]])
-        inext = 0
-        total = len(Lbeg)
-        for i in range(total - 1):
-            if use_beg == 1:
-                ii = Lbeg.pop(inext)
-                Lend.pop(inext)
-            else:
-                ii = Lend.pop(inext)
-                Lbeg.pop(inext)
-
-            Xcur = ecoords[ii][0]
-            Ycur = ecoords[ii][1]
-
-            dx = Xcur - ecoords[Lbeg[0]][0]
-            dy = Ycur - ecoords[Lbeg[0]][1]
-            min_dist = dx * dx + dy * dy
-
-            dxe = Xcur - ecoords[Lend[0]][0]
-            dye = Ycur - ecoords[Lend[0]][1]
-            min_diste = dxe * dxe + dye * dye
-
-            inext = 0
-            inexte = 0
-            for j in range(1, len(Lbeg)):
-                dx = Xcur - ecoords[Lbeg[j]][0]
-                dy = Ycur - ecoords[Lbeg[j]][1]
-                dist = dx * dx + dy * dy
-                if dist < min_dist:
-                    min_dist = dist
-                    inext = j
-
-                dxe = Xcur - ecoords[Lend[j]][0]
-                dye = Ycur - ecoords[Lend[j]][1]
-                diste = dxe * dxe + dye * dye
-                if diste < min_diste:
-                    min_diste = diste
-                    inexte = j
-
-            if min_diste < min_dist:
-                inext = inexte
-                order_out.append([Lend[inexte], Lbeg[inexte]])
-                use_beg = 1
-            else:
-                order_out.append([Lbeg[inext], Lend[inext]])
-                use_beg = 0
-        ###########################################################
-        return order_out
-
     def Write_Config_File(self, event):
         gcode = self.WriteGCode(config_file=True)
         config_file = "config.ngc"
@@ -1719,7 +1646,7 @@ class Application(Frame):
                     ecoords.append([x2, y2, loop])
                     oldx, oldy = x2, y2
 
-            order_out = self.Sort_Paths(ecoords)
+            order_out = Sort_Paths(ecoords)
             ###########################
 
             while rough_again or roughing:
@@ -2018,7 +1945,7 @@ class Application(Frame):
             # The clean coords have already been sorted so we can just write them  #
             ########################################################################
 
-            order_out = self.Sort_Paths(coords_out, 3)
+            order_out = Sort_Paths(coords_out, 3)
             new_coords = []
             for line in order_out:
                 temp = line
@@ -6458,7 +6385,7 @@ class Application(Frame):
             ):
                 x_old = -999
                 y_old = -999
-                order_out = self.Sort_Paths(Xclean_coords)
+                order_out = Sort_Paths(Xclean_coords)
                 loop_old = -1
                 for line in order_out:
                     temp = line
@@ -6488,7 +6415,7 @@ class Application(Frame):
             ):
                 x_old = -999
                 y_old = -999
-                order_out = self.Sort_Paths(Yclean_coords)
+                order_out = Sort_Paths(Yclean_coords)
                 loop_old = -1
                 for line in order_out:
                     temp = line
