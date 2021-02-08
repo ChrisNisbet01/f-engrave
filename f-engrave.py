@@ -460,6 +460,7 @@ if PIL:
 
 
 from bit import bit_from_shape
+from config import Config
 from constants import Zero, IN_AXIS, Plane, NumberCheck
 from constants import MIN_METRIC_STEP_LEN, MIN_IMP_STEP_LEN
 from douglas import douglas
@@ -480,6 +481,7 @@ import struct
 from subprocess import Popen, PIPE
 from svg import SVG
 from time import time
+from tkinter_config import TkStringVar
 from tkinter_extras import ToolTip
 import webbrowser
 from icon import temp_icon
@@ -559,6 +561,9 @@ class Application(Frame):
         self.master.bind("<Control-g>", self.KEY_CTRL_G)
         self.master.bind("<Control-s>", self.KEY_CTRL_S)
 
+        self.config = Config()
+        self.v_bit_angle_test = TkStringVar("60")
+
         self.batch = BooleanVar()
         self.show_axis = BooleanVar()
         self.show_box = BooleanVar()
@@ -618,7 +623,7 @@ class Application(Frame):
         self.input_type = StringVar()
 
         self.bit_shape = StringVar()
-        self.v_bit_angle = StringVar()
+        # self.v_bit_angle = StringVar()
         self.v_bit_dia = StringVar()
         self.v_depth_lim = StringVar()
         self.v_drv_crner = StringVar()
@@ -706,7 +711,7 @@ class Application(Frame):
         self.input_type.set("text")  # Options are "text" and "image"
 
         self.bit_shape.set("VBIT")
-        self.v_bit_angle.set("60")
+        # self.v_bit_angle.set("60")
         self.v_bit_dia.set("0.5")
         self.v_depth_lim.set("0.0")
         self.v_drv_crner.set("135")
@@ -769,7 +774,7 @@ class Application(Frame):
         self.lasty = 0
 
         bit = bit_from_shape(
-            self.bit_shape.get(), self.v_bit_dia.get(), self.v_bit_angle.get()
+            self.bit_shape.get(), self.v_bit_dia.get(), self.v_bit_angle_test.value
         )
 
         # Derived variables
@@ -1759,7 +1764,7 @@ class Application(Frame):
             "fengrave_set bit_shape   %s " % (self.bit_shape.get())
         )
         gcode.append_comment(
-            "fengrave_set v_bit_angle %s " % (self.v_bit_angle.get())
+            "fengrave_set v_bit_angle %s " % (self.v_bit_angle_test.value)
         )
         gcode.append_comment(
             "fengrave_set v_bit_dia   %s " % (self.v_bit_dia.get())
@@ -1865,7 +1870,7 @@ class Application(Frame):
 
     def WriteGCode(self, config_file=False):
         bit = bit_from_shape(
-            self.bit_shape.get(), self.v_bit_dia.get(), self.v_bit_angle.get()
+            self.bit_shape.get(), self.v_bit_dia.get(), self.v_bit_angle_test.value
         )
 
         SafeZ = float(self.ZSAFE.get())
@@ -2212,7 +2217,7 @@ class Application(Frame):
     def WRITE_CLEAN_UP(self, bit_type="straight"):
         SafeZ = float(self.ZSAFE.get())
         bit = bit_from_shape(
-            self.bit_shape.get(), self.v_bit_dia.get(), self.v_bit_angle.get()
+            self.bit_shape.get(), self.v_bit_dia.get(), self.v_bit_angle_test.value
         )
 
         self.calc_depth_limit(bit)
@@ -2908,7 +2913,7 @@ class Application(Frame):
     ######################################
     def Entry_Vbitangle_Check(self):
         try:
-            value = float(self.v_bit_angle.get())
+            value = float(self.v_bit_angle_test.value)
             if value < 0.0 or value > 180.0:
                 self.statusMessage.set(" Angle should be between 0 and 180 ")
                 return NumberCheck.is_invalid
@@ -2919,7 +2924,7 @@ class Application(Frame):
     def Entry_Vbitangle_Callback(self, varName, index, mode):
         self.entry_set(self.Entry_Vbitangle, self.Entry_Vbitangle_Check())
         bit = bit_from_shape(
-            self.bit_shape.get(), self.v_bit_dia.get(), self.v_bit_angle.get()
+            self.bit_shape.get(), self.v_bit_dia.get(), self.v_bit_angle_test.value
         )
         self.calc_depth_limit(bit)
 
@@ -2937,7 +2942,7 @@ class Application(Frame):
     def Entry_Vbitdia_Callback(self, varName, index, mode):
         self.entry_set(self.Entry_Vbitdia, self.Entry_Vbitdia_Check())
         bit = bit_from_shape(
-            self.bit_shape.get(), self.v_bit_dia.get(), self.v_bit_angle.get()
+            self.bit_shape.get(), self.v_bit_dia.get(), self.v_bit_angle_test.value
         )
         self.calc_depth_limit(bit)
 
@@ -2955,7 +2960,7 @@ class Application(Frame):
     def Entry_VDepthLimit_Callback(self, varName, index, mode):
         self.entry_set(self.Entry_VDepthLimit, self.Entry_VDepthLimit_Check())
         bit = bit_from_shape(
-            self.bit_shape.get(), self.v_bit_dia.get(), self.v_bit_angle.get()
+            self.bit_shape.get(), self.v_bit_dia.get(), self.v_bit_angle_test.value
         )
         self.calc_depth_limit(bit)
 
@@ -3128,7 +3133,7 @@ class Application(Frame):
 
     def Entry_Bit_Shape_Check(self):
         bit = bit_from_shape(
-            self.bit_shape.get(), self.v_bit_dia.get(), self.v_bit_angle.get()
+            self.bit_shape.get(), self.v_bit_dia.get(), self.v_bit_angle_test.value
         )
         self.calc_depth_limit(bit)
 
@@ -3431,7 +3436,7 @@ class Application(Frame):
                 pass
 
         bit = bit_from_shape(
-            self.bit_shape.get(), self.v_bit_dia.get(), self.v_bit_angle.get()
+            self.bit_shape.get(), self.v_bit_dia.get(), self.v_bit_angle_test.value
         )
         bit_radius = self.calc_vbit_dia(bit) / 2.0
 
@@ -3797,9 +3802,11 @@ class Application(Frame):
                         line[line.find("bit_shape") :].split()[1]
                     )
                 elif "v_bit_angle" in input_code:
-                    self.v_bit_angle.set(
+                    #self.v_bit_angle.set(
+                    #    line[line.find("v_bit_angle") :].split()[1]
+                    #)
+                    self.v_bit_angle_test.value = \
                         line[line.find("v_bit_angle") :].split()[1]
-                    )
                 elif "v_bit_dia" in input_code:
                     self.v_bit_dia.set(
                         line[line.find("v_bit_dia") :].split()[1]
@@ -3932,7 +3939,7 @@ class Application(Frame):
                         )
 
         bit = bit_from_shape(
-            self.bit_shape.get(), self.v_bit_dia.get(), self.v_bit_angle.get()
+            self.bit_shape.get(), self.v_bit_dia.get(), self.v_bit_angle_test.value
         )
 
         if self.units.get() == "in":
@@ -5187,7 +5194,7 @@ class Application(Frame):
         self.PreviewCanvas.delete(ALL)
         self.segID = []
         bit = bit_from_shape(
-            self.bit_shape.get(), self.v_bit_dia.get(), self.v_bit_angle.get()
+            self.bit_shape.get(), self.v_bit_dia.get(), self.v_bit_angle_test.value
         )
 
         cszw = int(self.PreviewCanvas.cget("width"))
@@ -6220,7 +6227,7 @@ class Application(Frame):
         self.master.unbind("<Configure>")
         self.STOP_CALC = False
         bit = bit_from_shape(
-            self.bit_shape.get(), self.v_bit_dia.get(), self.v_bit_angle.get()
+            self.bit_shape.get(), self.v_bit_dia.get(), self.v_bit_angle_test.value
         )
 
         if self.units.get() == "mm":
@@ -7979,8 +7986,8 @@ class Application(Frame):
         self.Entry_Vbitangle.place(
             x=xd_entry_L, y=D_Yloc, width=w_entry, height=23
         )
-        self.Entry_Vbitangle.configure(textvariable=self.v_bit_angle)
-        self.v_bit_angle.trace_variable("w", self.Entry_Vbitangle_Callback)
+        self.Entry_Vbitangle.configure(textvariable=self.v_bit_angle_test.tkinter)
+        self.v_bit_angle_test.tkinter.trace_variable("w", self.Entry_Vbitangle_Callback)
         self.entry_set(self.Entry_Vbitangle, self.Entry_Vbitangle_Check(), 2)
 
         D_Yloc = D_Yloc + D_dY
