@@ -493,6 +493,240 @@ except NameError:
 
 message = Message(quiet=QUIET or IN_AXIS, debug=DEBUG)
 
+def config_initialise():
+    config = Config()
+
+    config.batch = FeBooleanVar()
+    config.show_axis = FeBooleanVar()
+    config.show_box = FeBooleanVar()
+    config.show_v_path = FeBooleanVar()
+    config.show_v_area = FeBooleanVar()
+    config.show_thick = FeBooleanVar()
+    config.flip = FeBooleanVar()
+    config.mirror = FeBooleanVar()
+    config.outer = FeBooleanVar()
+    config.upper = FeBooleanVar()
+    config.fontdex = FeBooleanVar()
+    config.v_flop = FeBooleanVar()
+    config.v_pplot = FeBooleanVar()
+    config.inlay = FeBooleanVar()
+    config.no_comments = FeBooleanVar()
+    config.ext_char = FeBooleanVar()
+    config.var_dis = FeBooleanVar()
+    config.useIMGsize = FeBooleanVar()
+    config.plotbox = FeBooleanVar()
+
+    config.clean_P = FeBooleanVar()
+    config.clean_X = FeBooleanVar()
+    config.clean_Y = FeBooleanVar()
+    config.v_clean_P = FeBooleanVar()
+    config.v_clean_X = FeBooleanVar()
+    config.v_clean_Y = FeBooleanVar()
+
+    config.arc_fit = FeStringVar()
+    config.YSCALE = FeStringVar()
+    config.XSCALE = FeStringVar()
+    config.LSPACE = FeStringVar()
+    config.CSPACE = FeStringVar()
+    config.WSPACE = FeStringVar()
+    config.TANGLE = FeStringVar()
+    config.TRADIUS = FeStringVar()
+    config.ZSAFE = FeStringVar()
+    config.ZCUT = FeStringVar()
+    config.STHICK = FeStringVar()
+    config.origin = FeStringVar()
+    config.justify = FeStringVar()
+    config.units = FeStringVar()
+
+    config.xorigin = FeStringVar()
+    config.yorigin = FeStringVar()
+    config.segarc = FeStringVar()
+    config.accuracy = FeStringVar()
+
+    config.funits = FeStringVar()
+    config.FEED = FeStringVar()
+    config.PLUNGE = FeStringVar()
+    config.fontfile = FeStringVar()
+    config.H_CALC = FeStringVar()
+    # self.plotbox    = FeStringVar()
+    config.boxgap = FeStringVar()
+    config.fontdir = FeStringVar()
+    config.cut_type = FeStringVar()
+    config.input_type = FeStringVar()
+
+    config.bit_shape = FeStringVar()
+    config.v_bit_angle = FeStringVar()
+    config.v_bit_dia = FeStringVar()
+    config.v_depth_lim = FeStringVar()
+    config.v_drv_crner = FeStringVar()
+    config.v_stp_crner = FeStringVar()
+    config.v_step_len = FeStringVar()
+    config.allowance = FeStringVar()
+    config.v_check_all = FeStringVar()
+    config.v_max_cut = FeStringVar()
+    config.v_rough_stk = FeStringVar()
+
+    config.clean_dia = FeStringVar()
+    config.clean_step = FeStringVar()
+    config.clean_v = FeStringVar()
+    config.clean_name = FeStringVar()
+
+    config.gpre = FeStringVar()
+    config.gpost = FeStringVar()
+
+    config.bmp_turnpol = FeStringVar()
+    config.bmp_turdsize = FeStringVar()
+    config.bmp_alphamax = FeStringVar()
+    config.bmp_opttolerance = FeStringVar()
+    config.bmp_longcurve = BooleanVar()
+
+    config.maxcut = FeStringVar()
+    config.current_input_file = FeStringVar()
+    config.bounding_box = FeStringVar()
+
+    # INITILIZE VARIABLES
+    # If you want to change a default setting this is the place to do it.
+    config.batch.set(0)
+    config.show_axis.set(1)
+    config.show_box.set(1)
+    config.show_v_path.set(1)
+    config.show_v_area.set(1)
+    config.show_thick.set(1)
+    config.flip.set(0)
+    config.mirror.set(0)
+    config.outer.set(1)
+    config.upper.set(1)
+    config.fontdex.set(0)
+    config.useIMGsize.set(0)
+    config.plotbox.set(0)
+
+    config.v_flop.set(0)
+    config.v_pplot.set(0)
+    config.inlay.set(0)
+    config.no_comments.set(1)
+    config.ext_char.set(0)
+    config.var_dis.set(1)
+
+    config.clean_P.set(1)
+    config.clean_X.set(1)
+    config.clean_Y.set(0)
+    config.v_clean_P.set(0)
+    config.v_clean_X.set(0)
+    config.v_clean_Y.set(1)
+
+    config.arc_fit.set("none")  # "none", "center", "radius"
+    config.YSCALE.set("2.0")
+    config.XSCALE.set("100")
+    config.LSPACE.set("1.1")
+    config.CSPACE.set("25")
+    config.WSPACE.set("100")
+    config.TANGLE.set("0.0")
+    config.TRADIUS.set("0.0")
+    config.ZSAFE.set("0.25")
+    config.ZCUT.set("-0.005")
+    config.STHICK.set("0.01")
+    config.origin.set("Default")  # Options are "Default",
+    #             "Top-Left", "Top-Center", "Top-Right",
+    #             "Mid-Left", "Mid-Center", "Mid-Right",
+    #             "Bot-Left", "Bot-Center", "Bot-Right"
+
+    config.justify.set("Left")  # Options are "Left", "Right", "Center"
+    config.units.set("in")  # Options are "in" and "mm"
+    config.FEED.set("5.0")
+    config.PLUNGE.set("0.0")
+    config.fontfile.set(" ")
+    config.H_CALC.set("max_use")
+    # self.plotbox.set("no_box")
+    config.boxgap.set("0.25")
+    config.fontdir.set("fonts")
+    config.cut_type.set("engrave")  # Options are "engrave" and "v-carve"
+    config.input_type.set("text")  # Options are "text" and "image"
+
+    config.bit_shape.set("VBIT")
+    config.v_bit_angle.set("60")
+    config.v_bit_dia.set("0.5")
+    config.v_depth_lim.set("0.0")
+    config.v_drv_crner.set("135")
+    config.v_stp_crner.set("200")
+    config.v_step_len.set("0.01")
+    config.allowance.set("0.0")
+    config.v_check_all.set("all")  # Options are "chr" and "all"
+    config.v_rough_stk.set("0.0")
+    config.v_max_cut.set("-1.0")
+
+    # options: black, white, right, left, minority, majority, or random
+    config.bmp_turnpol.set("minority")
+    config.bmp_turdsize.set("2")  # default 2
+    config.bmp_alphamax.set("1")  # default 1
+    config.bmp_opttolerance.set("0.2")  # default 0.2
+    config.bmp_longcurve.set(1)  # default 1 (True)
+
+    config.xorigin.set("0.0")
+    config.yorigin.set("0.0")
+    config.segarc.set("5.0")
+    config.accuracy.set("0.001")
+
+    config.clean_v.set("0.05")
+    config.clean_dia.set(".25")  # Diameter of clean-up bit
+    # Clean-up step-over as percent of clean-up bit diameter
+    config.clean_step.set("50")
+    config.clean_name.set("_clean")
+
+    config.current_input_file.set(" ")
+    config.bounding_box.set(" ")
+
+    if config.units.get() == "in":
+       config.funits.set("in/min")
+    else:
+       config.units.set("mm")
+       config.funits.set("mm/min")
+
+    # G-Code Default Preamble
+    # G17        ; sets XY plane
+    # G64 P0.003 ; G64 P- (motion blending tolerance set to 0.003) This is
+    #              the default in engrave.py
+    # G64        ; G64 without P option keeps the best speed possible, no
+    #              matter how far away from the programmed point you end
+    #              up.
+    # M3 S3000   ; Spindle start at 3000
+    config.gpre.set("G17 G64 P0.001 M3 S3000")
+
+    # G-Code Default Postamble
+    # M5 ; Stop Spindle
+    # M9 ; Turn all coolant off
+    # M2 ; End Program
+    config.gpost.set("M5|M2")
+
+    return config
+
+
+def calc_vbit_dia(config, bit):
+    bit_dia = bit.diameter(
+        config.v_depth_lim.get(), config.inlay.get(), config.allowance.get()
+    )
+    return bit_dia
+
+
+def calc_depth_limit(config, bit):
+    try:
+        max_cut = bit.max_cut_depth(config.v_depth_lim.get())
+        config.maxcut.set("%.3f" % (max_cut))
+    except:
+        config.maxcut.set("error")
+
+
+def get_flop_status(config, CLEAN_FLAG=False):
+    v_flop = bool(config.v_flop.get())
+
+    if config.input_type.get() == "text" and not CLEAN_FLAG:
+        if config.plotbox.get():
+            v_flop = not (v_flop)
+        if config.mirror.get():
+            v_flop = not (v_flop)
+        if config.flip.get():
+            v_flop = not (v_flop)
+    return v_flop
+
 
 ############################################################################
 class Application(Frame):
@@ -561,209 +795,7 @@ class Application(Frame):
         self.master.bind("<Control-g>", self.KEY_CTRL_G)
         self.master.bind("<Control-s>", self.KEY_CTRL_S)
 
-        self.config = Config()
-        config = self.config
-
-        config.batch = FeBooleanVar()
-        config.show_axis = FeBooleanVar()
-        config.show_box = FeBooleanVar()
-        config.show_v_path = FeBooleanVar()
-        config.show_v_area = FeBooleanVar()
-        config.show_thick = FeBooleanVar()
-        config.flip = FeBooleanVar()
-        config.mirror = FeBooleanVar()
-        config.outer = FeBooleanVar()
-        config.upper = FeBooleanVar()
-        config.fontdex = FeBooleanVar()
-        config.v_flop = FeBooleanVar()
-        config.v_pplot = FeBooleanVar()
-        config.inlay = FeBooleanVar()
-        config.no_comments = FeBooleanVar()
-        config.ext_char = FeBooleanVar()
-        config.var_dis = FeBooleanVar()
-        config.useIMGsize = FeBooleanVar()
-        config.plotbox = FeBooleanVar()
-
-        config.clean_P = FeBooleanVar()
-        config.clean_X = FeBooleanVar()
-        config.clean_Y = FeBooleanVar()
-        config.v_clean_P = FeBooleanVar()
-        config.v_clean_X = FeBooleanVar()
-        config.v_clean_Y = FeBooleanVar()
-
-        config.arc_fit = FeStringVar()
-        config.YSCALE = FeStringVar()
-        config.XSCALE = FeStringVar()
-        config.LSPACE = FeStringVar()
-        config.CSPACE = FeStringVar()
-        config.WSPACE = FeStringVar()
-        config.TANGLE = FeStringVar()
-        config.TRADIUS = FeStringVar()
-        config.ZSAFE = FeStringVar()
-        config.ZCUT = FeStringVar()
-        config.STHICK = FeStringVar()
-        config.origin = FeStringVar()
-        config.justify = FeStringVar()
-        config.units = FeStringVar()
-
-        config.xorigin = FeStringVar()
-        config.yorigin = FeStringVar()
-        config.segarc = FeStringVar()
-        config.accuracy = FeStringVar()
-
-        config.funits = FeStringVar()
-        config.FEED = FeStringVar()
-        config.PLUNGE = FeStringVar()
-        config.fontfile = FeStringVar()
-        config.H_CALC = FeStringVar()
-        # self.plotbox    = FeStringVar()
-        config.boxgap = FeStringVar()
-        config.fontdir = FeStringVar()
-        config.cut_type = FeStringVar()
-        config.input_type = FeStringVar()
-
-        config.bit_shape = FeStringVar()
-        config.v_bit_angle = FeStringVar()
-        config.v_bit_dia = FeStringVar()
-        config.v_depth_lim = FeStringVar()
-        config.v_drv_crner = FeStringVar()
-        config.v_stp_crner = FeStringVar()
-        config.v_step_len = FeStringVar()
-        config.allowance = FeStringVar()
-        config.v_check_all = FeStringVar()
-        config.v_max_cut = FeStringVar()
-        config.v_rough_stk = FeStringVar()
-
-        config.clean_dia = FeStringVar()
-        config.clean_step = FeStringVar()
-        config.clean_v = FeStringVar()
-        config.clean_name = FeStringVar()
-
-        config.gpre = FeStringVar()
-        config.gpost = FeStringVar()
-
-        config.bmp_turnpol = FeStringVar()
-        config.bmp_turdsize = FeStringVar()
-        config.bmp_alphamax = FeStringVar()
-        config.bmp_opttolerance = FeStringVar()
-        config.bmp_longcurve = BooleanVar()
-
-        config.maxcut = FeStringVar()
-        config.current_input_file = FeStringVar()
-        config.bounding_box = FeStringVar()
-
-        # INITILIZE VARIABLES
-        # If you want to change a default setting this is the place to do it.
-        config.batch.set(0)
-        config.show_axis.set(1)
-        config.show_box.set(1)
-        config.show_v_path.set(1)
-        config.show_v_area.set(1)
-        config.show_thick.set(1)
-        config.flip.set(0)
-        config.mirror.set(0)
-        config.outer.set(1)
-        config.upper.set(1)
-        config.fontdex.set(0)
-        config.useIMGsize.set(0)
-        config.plotbox.set(0)
-
-        config.v_flop.set(0)
-        config.v_pplot.set(0)
-        config.inlay.set(0)
-        config.no_comments.set(1)
-        config.ext_char.set(0)
-        config.var_dis.set(1)
-
-        config.clean_P.set(1)
-        config.clean_X.set(1)
-        config.clean_Y.set(0)
-        config.v_clean_P.set(0)
-        config.v_clean_X.set(0)
-        config.v_clean_Y.set(1)
-
-        config.arc_fit.set("none")  # "none", "center", "radius"
-        config.YSCALE.set("2.0")
-        config.XSCALE.set("100")
-        config.LSPACE.set("1.1")
-        config.CSPACE.set("25")
-        config.WSPACE.set("100")
-        config.TANGLE.set("0.0")
-        config.TRADIUS.set("0.0")
-        config.ZSAFE.set("0.25")
-        config.ZCUT.set("-0.005")
-        config.STHICK.set("0.01")
-        config.origin.set("Default")  # Options are "Default",
-        #             "Top-Left", "Top-Center", "Top-Right",
-        #             "Mid-Left", "Mid-Center", "Mid-Right",
-        #             "Bot-Left", "Bot-Center", "Bot-Right"
-
-        config.justify.set("Left")  # Options are "Left", "Right", "Center"
-        config.units.set("in")  # Options are "in" and "mm"
-        config.FEED.set("5.0")
-        config.PLUNGE.set("0.0")
-        config.fontfile.set(" ")
-        config.H_CALC.set("max_use")
-        # self.plotbox.set("no_box")
-        config.boxgap.set("0.25")
-        config.fontdir.set("fonts")
-        config.cut_type.set("engrave")  # Options are "engrave" and "v-carve"
-        config.input_type.set("text")  # Options are "text" and "image"
-
-        config.bit_shape.set("VBIT")
-        config.v_bit_angle.set("60")
-        config.v_bit_dia.set("0.5")
-        config.v_depth_lim.set("0.0")
-        config.v_drv_crner.set("135")
-        config.v_stp_crner.set("200")
-        config.v_step_len.set("0.01")
-        config.allowance.set("0.0")
-        config.v_check_all.set("all")  # Options are "chr" and "all"
-        config.v_rough_stk.set("0.0")
-        config.v_max_cut.set("-1.0")
-
-        # options: black, white, right, left, minority, majority, or random
-        config.bmp_turnpol.set("minority")
-        config.bmp_turdsize.set("2")  # default 2
-        config.bmp_alphamax.set("1")  # default 1
-        config.bmp_opttolerance.set("0.2")  # default 0.2
-        config.bmp_longcurve.set(1)  # default 1 (True)
-
-        config.xorigin.set("0.0")
-        config.yorigin.set("0.0")
-        config.segarc.set("5.0")
-        config.accuracy.set("0.001")
-
-        config.clean_v.set("0.05")
-        config.clean_dia.set(".25")  # Diameter of clean-up bit
-        # Clean-up step-over as percent of clean-up bit diameter
-        config.clean_step.set("50")
-        config.clean_name.set("_clean")
-
-        config.current_input_file.set(" ")
-        config.bounding_box.set(" ")
-
-        if config.units.get() == "in":
-            config.funits.set("in/min")
-        else:
-            config.units.set("mm")
-            config.funits.set("mm/min")
-
-        # G-Code Default Preamble
-        # G17        ; sets XY plane
-        # G64 P0.003 ; G64 P- (motion blending tolerance set to 0.003) This is
-        #              the default in engrave.py
-        # G64        ; G64 without P option keeps the best speed possible, no
-        #              matter how far away from the programmed point you end
-        #              up.
-        # M3 S3000   ; Spindle start at 3000
-        config.gpre.set("G17 G64 P0.001 M3 S3000")
-
-        # G-Code Default Postamble
-        # M5 ; Stop Spindle
-        # M9 ; Turn all coolant off
-        # M2 ; End Program
-        config.gpost.set("M5|M2")
+        config = self.config = config_initialise()
 
         bit = bit_from_shape(
             config.bit_shape.get(),
@@ -772,7 +804,7 @@ class Application(Frame):
         )
 
         # Derived variables
-        self.calc_depth_limit(bit)
+        calc_depth_limit(config, bit)
 
 
         self.segID = []
@@ -1935,7 +1967,7 @@ class Application(Frame):
                 ###   Create Flat Cut ECOORDS   ###
                 ###################################
                 if len(self.vcoords) > 0:
-                    rbit = self.calc_vbit_dia(bit) / 2.0
+                    rbit = calc_vbit_dia(config, bit) / 2.0
                     loopa_old = self.vcoords[0][3]
                     loop = 0
                     for i in range(1, len(self.vcoords)):
@@ -2223,10 +2255,12 @@ class Application(Frame):
         config = self.config
         SafeZ = float(config.ZSAFE.get())
         bit = bit_from_shape(
-            config.bit_shape.get(), config.v_bit_dia.get(), config.v_bit_angle.get()
+            config.bit_shape.get(),
+            config.v_bit_dia.get(),
+            config.v_bit_angle.get()
         )
 
-        self.calc_depth_limit(bit)
+        calc_depth_limit(config, bit)
         try:
             Depth = float(config.maxcut.get())
         except:
@@ -2615,21 +2649,6 @@ class Application(Frame):
     def Stop_Click(self, event):
         self.STOP_CALC = True
 
-    def calc_vbit_dia(self, bit):
-        config = self.config
-        bit_dia = bit.diameter(
-            config.v_depth_lim.get(), config.inlay.get(), config.allowance.get()
-        )
-        return bit_dia
-
-    def calc_depth_limit(self, bit):
-        config = self.config
-        try:
-            max_cut = bit.max_cut_depth(config.v_depth_lim.get())
-            config.maxcut.set("%.3f" % (max_cut))
-        except:
-            config.maxcut.set("error")
-
     def calc_r_inlay_top(self, bit):
         inlay_depth = self.calc_r_inlay_depth()
         r_inlay_top = tan(bit.half_angle) * inlay_depth
@@ -2960,7 +2979,7 @@ class Application(Frame):
         bit = bit_from_shape(
             config.bit_shape.get(), config.v_bit_dia.get(), config.v_bit_angle.get()
         )
-        self.calc_depth_limit(bit)
+        calc_depth_limit(config, bit)
 
     #############################
     def Entry_Vbitdia_Check(self):
@@ -2980,7 +2999,7 @@ class Application(Frame):
         bit = bit_from_shape(
             config.bit_shape.get(), config.v_bit_dia.get(), config.v_bit_angle.get()
         )
-        self.calc_depth_limit(bit)
+        calc_depth_limit(config, bit)
 
     #############################
     def Entry_VDepthLimit_Check(self):
@@ -3000,7 +3019,7 @@ class Application(Frame):
         bit = bit_from_shape(
             config.bit_shape.get(), config.v_bit_dia.get(), config.v_bit_angle.get()
         )
-        self.calc_depth_limit(bit)
+        calc_depth_limit(config, bit)
 
     #############################
     def Entry_InsideAngle_Check(self):
@@ -3184,7 +3203,7 @@ class Application(Frame):
         bit = bit_from_shape(
             config.bit_shape.get(), config.v_bit_dia.get(), config.v_bit_angle.get()
         )
-        self.calc_depth_limit(bit)
+        calc_depth_limit(config, bit)
 
         try:
             if bit.shape == "VBIT":
@@ -3493,7 +3512,7 @@ class Application(Frame):
         bit = bit_from_shape(
             config.bit_shape.get(), config.v_bit_dia.get(), config.v_bit_angle.get()
         )
-        bit_radius = self.calc_vbit_dia(bit) / 2.0
+        bit_radius = calc_vbit_dia(config, bit) / 2.0
 
         self.Clean_Path_Calc(bit_radius, bit_type)
 
@@ -4029,7 +4048,7 @@ class Application(Frame):
             config.units.set("mm")
             config.funits.set("mm/min")
 
-        self.calc_depth_limit(bit)
+        calc_depth_limit(config, bit)
 
         self.delay_calc = 0
         if self.initComplete == 1:
@@ -5423,7 +5442,7 @@ class Application(Frame):
                     r = XY[2]
                     color = "black"
 
-                    rbit = self.calc_vbit_dia(bit) / 2.0
+                    rbit = calc_vbit_dia(config, bit) / 2.0
                     if bit.shape == "FLAT":
                         if r >= rbit:
                             self.Plot_Circ(
@@ -6303,19 +6322,6 @@ class Application(Frame):
         ################
 
     ##################################################
-    def get_flop_staus(self, CLEAN_FLAG=False):
-        config = self.config
-        v_flop = bool(config.v_flop.get())
-
-        if config.input_type.get() == "text" and not CLEAN_FLAG:
-            if config.plotbox.get():
-                v_flop = not (v_flop)
-            if config.mirror.get():
-                v_flop = not (v_flop)
-            if config.flip.get():
-                v_flop = not (v_flop)
-        return v_flop
-
     def V_Carve_It(self, clean_flag=0, DXF_FLAG=False):
         config = self.config
         timestamp = 0
@@ -6358,7 +6364,7 @@ class Application(Frame):
         #########################################
         if config.cut_type.get() == "v-carve" and not config.fontdex.get():
 
-            v_flop = self.get_flop_staus()
+            v_flop = get_flop_status(config)
             if not config.batch.get():
                 cszw = int(self.PreviewCanvas.cget("width"))
                 cszh = int(self.PreviewCanvas.cget("height"))
@@ -6375,7 +6381,7 @@ class Application(Frame):
 
             dline = float(config.v_step_len.get())
             ###############################################################
-            rbit = self.calc_vbit_dia(bit) / 2.0
+            rbit = calc_vbit_dia(config, bit) / 2.0
             clean_dia = float(config.clean_dia.get())
 
             if clean_flag != 1:
@@ -7085,7 +7091,7 @@ class Application(Frame):
 
     def Clean_Path_Calc(self, bit_radius, bit_type="straight"):
         config = self.config
-        v_flop = self.get_flop_staus(CLEAN_FLAG=True)
+        v_flop = get_flop_status(config, CLEAN_FLAG=True)
         if v_flop:
             edge = 1
         else:
