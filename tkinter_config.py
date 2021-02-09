@@ -23,7 +23,7 @@ class FeStringVar(BaseVar):
     def value(self, value):
         if not value:
             value = ""
-        self._tkinter.set(str(value))
+        self._tkinter.set(value)
 
     def set(self, value):
         self.value = value

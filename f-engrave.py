@@ -654,33 +654,33 @@ class Application(Frame):
 
         # INITILIZE VARIABLES
         # If you want to change a default setting this is the place to do it.
-        config.batch.value = False
-        config.show_axis.value = True
-        config.show_box.value = True
-        config.show_v_path.value = True
-        config.show_v_area.value = True
-        config.show_thick.value = True
-        config.flip.value = False
-        config.mirror.value = False
-        config.outer.value = True
-        config.upper.value = True
-        config.fontdex.value = False
-        config.useIMGsize.value = False
-        config.plotbox.value = False
+        config.batch.set(0)
+        config.show_axis.set(1)
+        config.show_box.set(1)
+        config.show_v_path.set(1)
+        config.show_v_area.set(1)
+        config.show_thick.set(1)
+        config.flip.set(0)
+        config.mirror.set(0)
+        config.outer.set(1)
+        config.upper.set(1)
+        config.fontdex.set(0)
+        config.useIMGsize.set(0)
+        config.plotbox.set(0)
 
-        config.v_flop.value = False
-        config.v_pplot.value = False
-        config.inlay.value = False
-        config.no_comments.value = True
-        config.ext_char.value = False
-        config.var_dis.value = True
+        config.v_flop.set(0)
+        config.v_pplot.set(0)
+        config.inlay.set(0)
+        config.no_comments.set(1)
+        config.ext_char.set(0)
+        config.var_dis.set(1)
 
-        config.clean_P.value = True
-        config.clean_X.value = True
-        config.clean_Y.value = False
-        config.v_clean_P.value = False
-        config.v_clean_X.value = False
-        config.v_clean_Y.value = True
+        config.clean_P.set(1)
+        config.clean_X.set(1)
+        config.clean_Y.set(0)
+        config.v_clean_P.set(0)
+        config.v_clean_X.set(0)
+        config.v_clean_Y.set(1)
 
         config.arc_fit.set("none")  # "none", "center", "radius"
         config.YSCALE.set("2.0")
@@ -711,7 +711,7 @@ class Application(Frame):
         config.input_type.set("text")  # Options are "text" and "image"
 
         config.bit_shape.set("VBIT")
-        config.v_bit_angle.value = "60"
+        config.v_bit_angle.set("60")
         config.v_bit_dia.set("0.5")
         config.v_depth_lim.set("0.0")
         config.v_drv_crner.set("135")
@@ -722,9 +722,8 @@ class Application(Frame):
         config.v_rough_stk.set("0.0")
         config.v_max_cut.set("-1.0")
 
-        config.bmp_turnpol.set(
-            "minority"
-        )  # options: black, white, right, left, minority, majority, or random
+        # options: black, white, right, left, minority, majority, or random
+        config.bmp_turnpol.set("minority")
         config.bmp_turdsize.set("2")  # default 2
         config.bmp_alphamax.set("1")  # default 1
         config.bmp_opttolerance.set("0.2")  # default 0.2
@@ -735,49 +734,14 @@ class Application(Frame):
         config.segarc.set("5.0")
         config.accuracy.set("0.001")
 
-        self.segID = []
-        self.coords = []
-        self.vcoords = []
-        self.clean_coords = []
-        self.clean_segment = []
-        self.clean_coords_sort = []
-        self.v_clean_coords_sort = []
-
         config.clean_v.set("0.05")
         config.clean_dia.set(".25")  # Diameter of clean-up bit
         # Clean-up step-over as percent of clean-up bit diameter
         config.clean_step.set("50")
         config.clean_name.set("_clean")
 
-        self.font = {}
-        self.RADIUS_PLOT = 0
-        self.MAXX = 0
-        self.MINX = 0
-        self.MAXY = 0
-        self.MINY = 0
-
-        self.Xzero = float(0.0)
-        self.Yzero = float(0.0)
-        self.default_text = "F-Engrave"
-        self.HOME_DIR = os.path.expanduser("~")
-        self.NGC_FILE = self.HOME_DIR + "/None"
-        self.IMAGE_FILE = self.HOME_DIR + "/None"
         config.current_input_file.set(" ")
         config.bounding_box.set(" ")
-
-        self.pscale = 0
-        # PAN and ZOOM STUFF
-        self.panx = 0
-        self.panx = 0
-        self.lastx = 0
-        self.lasty = 0
-
-        bit = bit_from_shape(
-            config.bit_shape.get(), config.v_bit_dia.get(), config.v_bit_angle.value
-        )
-
-        # Derived variables
-        self.calc_depth_limit(bit)
 
         if config.units.get() == "in":
             config.funits.set("in/min")
@@ -800,6 +764,45 @@ class Application(Frame):
         # M9 ; Turn all coolant off
         # M2 ; End Program
         config.gpost.set("M5|M2")
+
+        bit = bit_from_shape(
+            config.bit_shape.get(),
+            config.v_bit_dia.get(),
+            config.v_bit_angle.get()
+        )
+
+        # Derived variables
+        self.calc_depth_limit(bit)
+
+
+        self.segID = []
+        self.coords = []
+        self.vcoords = []
+        self.clean_coords = []
+        self.clean_segment = []
+        self.clean_coords_sort = []
+        self.v_clean_coords_sort = []
+
+        self.font = {}
+        self.RADIUS_PLOT = 0
+        self.MAXX = 0
+        self.MINX = 0
+        self.MAXY = 0
+        self.MINY = 0
+
+        self.Xzero = float(0.0)
+        self.Yzero = float(0.0)
+        self.default_text = "F-Engrave"
+        self.HOME_DIR = os.path.expanduser("~")
+        self.NGC_FILE = self.HOME_DIR + "/None"
+        self.IMAGE_FILE = self.HOME_DIR + "/None"
+
+        self.pscale = 0
+        # PAN and ZOOM STUFF
+        self.panx = 0
+        self.panx = 0
+        self.lastx = 0
+        self.lasty = 0
 
         # END INITIALIZING VARIABLES
 
@@ -884,9 +887,9 @@ class Application(Frame):
 
                 self.default_text = value
             if option in ("-b", "--batch"):
-                config.batch.value = True
+                config.batch.set(True)
 
-        if config.batch.value:
+        if config.batch.get():
             message.fmessage("(F-Engrave Batch Mode)")
 
             if config.input_type.get() == "text":
@@ -908,11 +911,11 @@ class Application(Frame):
             sys.exit()
 
         # make a Status Bar
-        self.statusMessage = FeStringVar()
+        self.statusMessage = StringVar()
         self.statusMessage.set("")
         self.statusbar = Label(
             self.master,
-            textvariable=self.statusMessage.TK,
+            textvariable=self.statusMessage,
             bd=1,
             relief=SUNKEN,
             height=1,
@@ -1500,6 +1503,7 @@ class Application(Frame):
         self.master.config(menu=self.menuBar)
 
     def entry_set(self, val2, calc_flag=NumberCheck.is_valid, new=0):
+        config = self.config
         if calc_flag == NumberCheck.is_valid and new == 0:
             try:
                 self.statusbar.configure(bg="yellow")
@@ -1635,58 +1639,58 @@ class Application(Frame):
 
         # BOOL
         gcode.append_comment(
-            "fengrave_set show_axis   %s " % (int(config.show_axis.value))
+            "fengrave_set show_axis   %s " % (int(config.show_axis.get()))
         )
         gcode.append_comment(
-            "fengrave_set show_box    %s " % (int(config.show_box.value))
+            "fengrave_set show_box    %s " % (int(config.show_box.get()))
         )
         gcode.append_comment(
-            "fengrave_set show_thick  %s " % (int(config.show_thick.value))
+            "fengrave_set show_thick  %s " % (int(config.show_thick.get()))
         )
         gcode.append_comment(
-            "fengrave_set flip        %s " % (int(config.flip.value))
+            "fengrave_set flip        %s " % (int(config.flip.get()))
         )
         gcode.append_comment(
-            "fengrave_set mirror      %s " % (int(config.mirror.value))
+            "fengrave_set mirror      %s " % (int(config.mirror.get()))
         )
         gcode.append_comment(
-            "fengrave_set outer       %s " % (int(config.outer.value))
+            "fengrave_set outer       %s " % (int(config.outer.get()))
         )
         gcode.append_comment(
-            "fengrave_set upper       %s " % (int(config.upper.value))
+            "fengrave_set upper       %s " % (int(config.upper.get()))
         )
         gcode.append_comment(
-            "fengrave_set v_flop      %s " % (int(config.v_flop.value))
+            "fengrave_set v_flop      %s " % (int(config.v_flop.get()))
         )
         gcode.append_comment(
-            "fengrave_set v_pplot     %s " % (int(config.v_pplot.value))
+            "fengrave_set v_pplot     %s " % (int(config.v_pplot.get()))
         )
         gcode.append_comment(
-            "fengrave_set inlay       %s " % (int(config.inlay.value))
+            "fengrave_set inlay       %s " % (int(config.inlay.get()))
         )
         gcode.append_comment(
             "fengrave_set bmp_long    %s " % (int(config.bmp_longcurve.get()))
         )
         gcode.append_comment(
-            "fengrave_set var_dis     %s " % (int(config.var_dis.value))
+            "fengrave_set var_dis     %s " % (int(config.var_dis.get()))
         )
         gcode.append_comment(
-            "fengrave_set ext_char    %s " % (int(config.ext_char.value))
+            "fengrave_set ext_char    %s " % (int(config.ext_char.get()))
         )
         gcode.append_comment(
-            "fengrave_set useIMGsize  %s " % (int(config.useIMGsize.value))
+            "fengrave_set useIMGsize  %s " % (int(config.useIMGsize.get()))
         )
         gcode.append_comment(
-            "fengrave_set no_comments %s " % (int(config.no_comments.value))
+            "fengrave_set no_comments %s " % (int(config.no_comments.get()))
         )
         gcode.append_comment(
-            "fengrave_set plotbox     %s " % (int(config.plotbox.value))
+            "fengrave_set plotbox     %s " % (int(config.plotbox.get()))
         )
         gcode.append_comment(
-            "fengrave_set show_v_path %s " % (int(config.show_v_path.value))
+            "fengrave_set show_v_path %s " % (int(config.show_v_path.get()))
         )
         gcode.append_comment(
-            "fengrave_set show_v_area %s " % (int(config.show_v_area.value))
+            "fengrave_set show_v_area %s " % (int(config.show_v_area.get()))
         )
 
         # STRING
@@ -1764,7 +1768,7 @@ class Application(Frame):
             "fengrave_set bit_shape   %s " % (config.bit_shape.get())
         )
         gcode.append_comment(
-            "fengrave_set v_bit_angle %s " % (config.v_bit_angle.value)
+            "fengrave_set v_bit_angle %s " % (config.v_bit_angle.get())
         )
         gcode.append_comment(
             "fengrave_set v_bit_dia   %s " % (config.v_bit_dia.get())
@@ -1836,12 +1840,12 @@ class Application(Frame):
             "fengrave_set clean_v     %s " % (config.clean_v.get())
         )
         clean_out = "%d,%d,%d,%d,%d,%d" % (
-            config.clean_P.value,
-            config.clean_X.value,
-            config.clean_Y.value,
-            config.v_clean_P.value,
-            config.v_clean_Y.value,
-            config.v_clean_X.value
+            config.clean_P.get(),
+            config.clean_X.get(),
+            config.clean_Y.get(),
+            config.v_clean_P.get(),
+            config.v_clean_Y.get(),
+            config.v_clean_X.get()
         )
         gcode.append_comment("fengrave_set clean_paths  %s " % (clean_out))
 
@@ -1871,14 +1875,14 @@ class Application(Frame):
     def WriteGCode(self, config_file=False):
         config = self.config
         bit = bit_from_shape(
-            config.bit_shape.get(), config.v_bit_dia.get(), config.v_bit_angle.value
+            config.bit_shape.get(), config.v_bit_dia.get(), config.v_bit_angle.get()
         )
 
         SafeZ = float(config.ZSAFE.get())
         Acc = float(config.accuracy.get())
         Depth = float(config.ZCUT.get())
 
-        if config.batch.value:
+        if config.batch.get():
             String = self.default_text
         else:
             String = self.Input.get(1.0, END)
@@ -1889,10 +1893,10 @@ class Application(Frame):
             tolerance=Acc,
             arc_fit=config.arc_fit.get(),
             metric=config.units.get() != "in",
-            enable_variables=not config.var_dis.value
+            enable_variables=not config.var_dis.get()
         )
 
-        if config_file or not config.no_comments.value:
+        if config_file or not config.no_comments.get():
             self.append_author_to_gcode(g)
             self.append_settings_to_gcode(g, String)
 
@@ -2140,7 +2144,7 @@ class Application(Frame):
                         if config.bit_shape.get() == "VBIT":
                             z1 = -r1 / tan(half_angle)
                             nextz = -nextr / tan(half_angle)
-                            if config.inlay.value:
+                            if config.inlay.get():
                                 inlay_depth = self.calc_r_inlay_depth()
                                 z1 = z1 + inlay_depth
                                 nextz = nextz + inlay_depth
@@ -2219,7 +2223,7 @@ class Application(Frame):
         config = self.config
         SafeZ = float(config.ZSAFE.get())
         bit = bit_from_shape(
-            config.bit_shape.get(), config.v_bit_dia.get(), config.v_bit_angle.value
+            config.bit_shape.get(), config.v_bit_dia.get(), config.v_bit_angle.get()
         )
 
         self.calc_depth_limit(bit)
@@ -2227,7 +2231,7 @@ class Application(Frame):
             Depth = float(config.maxcut.get())
         except:
             Depth = 0.0
-        if config.inlay.value:
+        if config.inlay.get():
             Depth = Depth + float(config.allowance.get())
 
         g = Gcode(
@@ -2236,10 +2240,10 @@ class Application(Frame):
             tolerance=float(config.accuracy.get()),
             arc_fit=config.arc_fit.get(),
             metric=config.units.get() != "in",
-            enable_variables=not config.var_dis.value
+            enable_variables=not config.var_dis.get()
         )
 
-        if not config.no_comments.value:
+        if not config.no_comments.get():
             self.append_author_to_gcode(g)
             self.append_cleanup_comments_to_gcode(
                 g,
@@ -2341,6 +2345,7 @@ class Application(Frame):
         ###################################
 
     def WriteSVG(self):
+        config = self.config
         if config.cut_type.get() == "v-carve":
             Thick = 0.001
         else:
@@ -2496,6 +2501,7 @@ class Application(Frame):
         self.DoIt()
 
     def Settings_ReLoad_Click(self, event, arg1="", arg2=""):
+        config = self.config
         win_id = self.grab_current()
         if config.input_type.get() == "text":
             self.Read_font_file()
@@ -2541,12 +2547,12 @@ class Application(Frame):
         config = self.config
         win_id = self.grab_current()
         if (
-            config.clean_P.value
-            + config.clean_X.value
-            + config.clean_Y.value
-            + config.v_clean_P.value
-            + config.v_clean_Y.value
-            + config.v_clean_X.value
+            config.clean_P.get()
+            + config.clean_X.get()
+            + config.clean_Y.get()
+            + config.v_clean_P.get()
+            + config.v_clean_Y.get()
+            + config.v_clean_X.get()
         ) != 0:
             if self.clean_coords_sort == []:
                 mess = "Calculate Cleanup must be executed\n"
@@ -2572,12 +2578,12 @@ class Application(Frame):
         config = self.config
         win_id = self.grab_current()
         if (
-            config.clean_P.value
-            + config.clean_X.value
-            + config.clean_Y.value
-            + config.v_clean_P.value
-            + config.v_clean_Y.value
-            + config.v_clean_X.value
+            config.clean_P.get()
+            + config.clean_X.get()
+            + config.clean_Y.get()
+            + config.v_clean_P.get()
+            + config.v_clean_Y.get()
+            + config.v_clean_X.get()
         ) != 0:
             if self.v_clean_coords_sort == []:
                 mess = "Calculate Cleanup must be executed\n"
@@ -2612,11 +2618,12 @@ class Application(Frame):
     def calc_vbit_dia(self, bit):
         config = self.config
         bit_dia = bit.diameter(
-            config.v_depth_lim.get(), config.inlay.value, config.allowance.get()
+            config.v_depth_lim.get(), config.inlay.get(), config.allowance.get()
         )
         return bit_dia
 
     def calc_depth_limit(self, bit):
+        config = self.config
         try:
             max_cut = bit.max_cut_depth(config.v_depth_lim.get())
             config.maxcut.set("%.3f" % (max_cut))
@@ -2629,6 +2636,7 @@ class Application(Frame):
         return r_inlay_top
 
     def calc_r_inlay_depth(self):
+        config = self.config
         try:
             inlay_depth = float(config.maxcut.get())
         except:
@@ -2638,6 +2646,7 @@ class Application(Frame):
     # Left Column #
     #############################
     def Entry_Yscale_Check(self):
+        config = self.config
         try:
             value = float(config.YSCALE.get())
             if value <= 0.0:
@@ -2652,6 +2661,7 @@ class Application(Frame):
 
     #############################
     def Entry_Xscale_Check(self):
+        config = self.config
         try:
             value = float(config.XSCALE.get())
             if value <= 0.0:
@@ -2666,6 +2676,7 @@ class Application(Frame):
 
     #############################
     def Entry_Sthick_Check(self):
+        config = self.config
         try:
             value = float(config.STHICK.get())
             if value < 0.0:
@@ -2680,6 +2691,7 @@ class Application(Frame):
 
     #############################
     def Entry_Lspace_Check(self):
+        config = self.config
         try:
             value = float(config.LSPACE.get())
             if value < 0.0:
@@ -2696,6 +2708,7 @@ class Application(Frame):
 
     #############################
     def Entry_Cspace_Check(self):
+        config = self.config
         try:
             value = float(config.CSPACE.get())
             if value < 0.0:
@@ -2712,6 +2725,7 @@ class Application(Frame):
 
     #############################
     def Entry_Wspace_Check(self):
+        config = self.config
         try:
             value = float(config.WSPACE.get())
             if value < 0.0:
@@ -2728,6 +2742,7 @@ class Application(Frame):
 
     #############################
     def Entry_Tangle_Check(self):
+        config = self.config
         try:
             value = float(config.TANGLE.get())
             if value <= -360.0 or value >= 360.0:
@@ -2744,6 +2759,7 @@ class Application(Frame):
 
     #############################
     def Entry_Tradius_Check(self):
+        config = self.config
         try:
             value = float(config.TRADIUS.get())
             if value < 0.0:
@@ -2763,6 +2779,7 @@ class Application(Frame):
     # Right Column #
     #############################
     def Entry_Feed_Check(self):
+        config = self.config
         try:
             value = float(config.FEED.get())
             if value <= 0.0:
@@ -2777,6 +2794,7 @@ class Application(Frame):
 
     #############################
     def Entry_Plunge_Check(self):
+        config = self.config
         try:
             value = float(config.PLUNGE.get())
             if value < 0.0:
@@ -2793,6 +2811,7 @@ class Application(Frame):
 
     #############################
     def Entry_Zsafe_Check(self):
+        config = self.config
         try:
             float(config.ZSAFE.get())
         except:
@@ -2804,6 +2823,7 @@ class Application(Frame):
 
     #############################
     def Entry_Zcut_Check(self):
+        config = self.config
         try:
             float(config.ZCUT.get())
         except:
@@ -2820,6 +2840,7 @@ class Application(Frame):
     #    Settings Window Callbacks      #
     ######################################
     def Entry_Xoffset_Check(self):
+        config = self.config
         try:
             float(config.xorigin.get())
         except:
@@ -2831,6 +2852,7 @@ class Application(Frame):
 
     #############################
     def Entry_Yoffset_Check(self):
+        config = self.config
         try:
             float(config.yorigin.get())
         except:
@@ -2842,6 +2864,7 @@ class Application(Frame):
 
     #############################
     def Entry_ArcAngle_Check(self):
+        config = self.config
         try:
             value = float(config.segarc.get())
             if value <= 0.0:
@@ -2858,6 +2881,7 @@ class Application(Frame):
 
     #############################
     def Entry_Accuracy_Check(self):
+        config = self.config
         try:
             float(config.accuracy.get())
         except:
@@ -2869,6 +2893,7 @@ class Application(Frame):
 
     #############################
     def Entry_BoxGap_Check(self):
+        config = self.config
         try:
             value = float(config.boxgap.get())
             if value <= 0.0:
@@ -2882,7 +2907,7 @@ class Application(Frame):
         config = self.config
         self.entry_set(self.Entry_BoxGap, self.Entry_BoxGap_Check())
         try:
-            if not bool(config.plotbox.value):
+            if not bool(config.plotbox.get()):
                 self.Label_BoxGap.configure(state="disabled")
                 self.Entry_BoxGap.configure(state="disabled")
                 self.Label_BoxGap_u.configure(state="disabled")
@@ -2902,6 +2927,7 @@ class Application(Frame):
 
     #############################
     def Fontdir_Click(self, event):
+        config = self.config
         win_id = self.grab_current()
         newfontdir = askdirectory(mustexist=1, initialdir=config.fontdir.get())
         if newfontdir != "" and newfontdir != ():
@@ -2920,7 +2946,7 @@ class Application(Frame):
     def Entry_Vbitangle_Check(self):
         config = self.config
         try:
-            value = float(config.v_bit_angle.value)
+            value = float(config.v_bit_angle.get())
             if value < 0.0 or value > 180.0:
                 self.statusMessage.set(" Angle should be between 0 and 180 ")
                 return NumberCheck.is_invalid
@@ -2932,12 +2958,13 @@ class Application(Frame):
         config = self.config
         self.entry_set(self.Entry_Vbitangle, self.Entry_Vbitangle_Check())
         bit = bit_from_shape(
-            config.bit_shape.get(), config.v_bit_dia.get(), config.v_bit_angle.value
+            config.bit_shape.get(), config.v_bit_dia.get(), config.v_bit_angle.get()
         )
         self.calc_depth_limit(bit)
 
     #############################
     def Entry_Vbitdia_Check(self):
+        config = self.config
         try:
             value = float(config.v_bit_dia.get())
             if value <= 0.0:
@@ -2951,12 +2978,13 @@ class Application(Frame):
         config = self.config
         self.entry_set(self.Entry_Vbitdia, self.Entry_Vbitdia_Check())
         bit = bit_from_shape(
-            config.bit_shape.get(), config.v_bit_dia.get(), config.v_bit_angle.value
+            config.bit_shape.get(), config.v_bit_dia.get(), config.v_bit_angle.get()
         )
         self.calc_depth_limit(bit)
 
     #############################
     def Entry_VDepthLimit_Check(self):
+        config = self.config
         try:
             value = float(config.v_depth_lim.get())
             if value > 0.0:
@@ -2970,12 +2998,13 @@ class Application(Frame):
         config = self.config
         self.entry_set(self.Entry_VDepthLimit, self.Entry_VDepthLimit_Check())
         bit = bit_from_shape(
-            config.bit_shape.get(), config.v_bit_dia.get(), config.v_bit_angle.value
+            config.bit_shape.get(), config.v_bit_dia.get(), config.v_bit_angle.get()
         )
         self.calc_depth_limit(bit)
 
     #############################
     def Entry_InsideAngle_Check(self):
+        config = self.config
         try:
             value = float(config.v_drv_crner.get())
             if value <= 0.0 or value >= 180.0:
@@ -2990,6 +3019,7 @@ class Application(Frame):
 
     #############################
     def Entry_OutsideAngle_Check(self):
+        config = self.config
         try:
             value = float(config.v_stp_crner.get())
             if value <= 180.0 or value >= 360.0:
@@ -3006,6 +3036,7 @@ class Application(Frame):
 
     #############################
     def Entry_StepSize_Check(self):
+        config = self.config
         try:
             value = float(config.v_step_len.get())
             if value <= 0.0:
@@ -3020,6 +3051,7 @@ class Application(Frame):
 
     #############################
     def Entry_Allowance_Check(self):
+        config = self.config
         try:
             value = float(config.allowance.get())
             if value > 0.0:
@@ -3038,7 +3070,7 @@ class Application(Frame):
     def Entry_Prismatic_Callback(self, varName, index, mode):
         config = self.config
         try:
-            if not bool(config.inlay.value):
+            if not bool(config.inlay.get()):
                 self.Label_Allowance.configure(state="disabled")
                 self.Entry_Allowance.configure(state="disabled")
                 self.Label_Allowance_u.configure(state="disabled")
@@ -3052,6 +3084,7 @@ class Application(Frame):
 
     #############################
     def Entry_v_max_cut_Check(self):
+        config = self.config
         try:
             value = float(config.v_max_cut.get())
             if value >= 0.0:
@@ -3068,6 +3101,7 @@ class Application(Frame):
 
     #############################
     def Entry_v_rough_stk_Check(self):
+        config = self.config
         try:
             value = float(config.v_rough_stk.get())
             if value < 0.0:
@@ -3096,6 +3130,7 @@ class Application(Frame):
 
     #############################
     def Entry_V_CLEAN_Check(self):
+        config = self.config
         try:
             value = float(config.clean_v.get())
             if value < 0.0:
@@ -3110,6 +3145,7 @@ class Application(Frame):
 
     #############################
     def Entry_CLEAN_DIA_Check(self):
+        config = self.config
         try:
             value = float(config.clean_dia.get())
             if value <= 0.0:
@@ -3126,6 +3162,7 @@ class Application(Frame):
 
     #############################
     def Entry_STEP_OVER_Check(self):
+        config = self.config
         try:
             value = float(config.clean_step.get())
             if value <= 0.0:
@@ -3145,7 +3182,7 @@ class Application(Frame):
     def Entry_Bit_Shape_Check(self):
         config = self.config
         bit = bit_from_shape(
-            config.bit_shape.get(), config.v_bit_dia.get(), config.v_bit_angle.value
+            config.bit_shape.get(), config.v_bit_dia.get(), config.v_bit_angle.get()
         )
         self.calc_depth_limit(bit)
 
@@ -3180,6 +3217,7 @@ class Application(Frame):
     # Bitmap Settings Window Callbacks  #
     ######################################
     def Entry_BMPturdsize_Check(self):
+        config = self.config
         try:
             value = float(config.bmp_turdsize.get())
             if value < 1.0:
@@ -3196,6 +3234,7 @@ class Application(Frame):
 
     #############################
     def Entry_BMPalphamax_Check(self):
+        config = self.config
         try:
             value = float(config.bmp_alphamax.get())
             if value < 0.0 or value > 4.0 / 3.0:
@@ -3212,6 +3251,7 @@ class Application(Frame):
 
     #############################
     def Entry_BMPoptTolerance_Check(self):
+        config = self.config
         try:
             value = float(config.bmp_opttolerance.get())
             if value < 0.0:
@@ -3234,7 +3274,7 @@ class Application(Frame):
     ##########################################################################
     def Check_All_Variables(self):
         config = self.config
-        if config.batch.value:
+        if config.batch.get():
             return 0
         MAIN_error_cnt = (
             self.entry_set(self.Entry_Yscale, self.Entry_Yscale_Check(), 2)
@@ -3356,7 +3396,7 @@ class Application(Frame):
 
         self.statusbar2 = Label(
             vcalc_status,
-            textvariable=self.statusMessage.TK,
+            textvariable=self.statusMessage,
             bd=1,
             relief=FLAT,
             height=1,
@@ -3415,7 +3455,7 @@ class Application(Frame):
 
             self.statusbar2 = Label(
                 vcalc_status,
-                textvariable=self.statusMessage.TK,
+                textvariable=self.statusMessage,
                 bd=1,
                 relief=FLAT,
                 height=1,
@@ -3451,7 +3491,7 @@ class Application(Frame):
                 pass
 
         bit = bit_from_shape(
-            config.bit_shape.get(), config.v_bit_dia.get(), config.v_bit_angle.value
+            config.bit_shape.get(), config.v_bit_dia.get(), config.v_bit_angle.get()
         )
         bit_radius = self.calc_vbit_dia(bit) / 2.0
 
@@ -3466,6 +3506,7 @@ class Application(Frame):
         self.Recalc_RQD()
 
     def Entry_units_var_Callback(self):
+        config = self.config
         if (config.units.get() == "in") and (config.funits.get() == "mm/min"):
             self.Scale_Linear_Inputs(1 / 25.4)
             config.funits.set("in/min")
@@ -3518,7 +3559,7 @@ class Application(Frame):
                 image_height = 2
             else:
                 image_height = 50
-        if config.useIMGsize.value:
+        if config.useIMGsize.get():
             config.YSCALE.set(
                 "%.3g" % (100 * float(config.YSCALE.get()) / image_height)
             )
@@ -3531,6 +3572,7 @@ class Application(Frame):
         self.Recalc_RQD()
 
     def Listbox_1_Click(self, event):
+        config = self.config
         labelL = []
         for i in self.Listbox_1.curselection():
             labelL.append(self.Listbox_1.get(i))
@@ -3542,6 +3584,7 @@ class Application(Frame):
         self.DoIt()
 
     def Listbox_Key_Up(self, event):
+        config = self.config
         try:
             select_new = int(self.Listbox_1.curselection()[0]) - 1
         except:
@@ -3556,6 +3599,7 @@ class Application(Frame):
         self.DoIt()
 
     def Listbox_Key_Down(self, event):
+        config = self.config
         try:
             select_new = int(self.Listbox_1.curselection()[0]) + 1
         except:
@@ -3570,6 +3614,7 @@ class Application(Frame):
         self.DoIt()
 
     def Entry_fontdir_Callback(self, varName, index, mode):
+        config = self.config
         self.Listbox_1.delete(0, END)
         self.Listbox_1.configure(bg=self.NormalColor)
         for name in font.available_font_files(config.fontdir.get()):
@@ -3686,43 +3731,43 @@ class Application(Frame):
                             pass
                 # BOOL
                 elif "show_axis" in input_code:
-                    config.show_axis.value = (
+                    config.show_axis.set(
                         line[line.find("show_axis") :].split()[1]
                     )
                 elif "show_box" in input_code:
-                    config.show_box.value = (
+                    config.show_box.set(
                         line[line.find("show_box") :].split()[1]
                     )
                 elif "show_thick" in input_code:
-                    config.show_thick.value = (
+                    config.show_thick.set(
                         line[line.find("show_thick") :].split()[1]
                     )
                 elif "flip" in input_code:
-                    config.flip.value = (
+                    config.flip.set(
                         line[line.find("flip") :].split()[1]
                     )
                 elif "mirror" in input_code:
-                    config.mirror.value = (
+                    config.mirror.set(
                         line[line.find("mirror") :].split()[1]
                     )
                 elif "outer" in input_code:
-                    config.outer.value = (
+                    config.outer.set(
                         line[line.find("outer") :].split()[1]
                     )
                 elif "upper" in input_code:
-                    config.upper.value = (
+                    config.upper.set(
                         line[line.find("upper") :].split()[1]
                     )
                 elif "v_flop" in input_code:
-                    config.v_flop.value = (
+                    config.v_flop.set(
                         line[line.find("v_flop") :].split()[1]
                     )
                 elif "v_pplot" in input_code:
-                    config.v_pplot.value = (
+                    config.v_pplot.set(
                         line[line.find("v_pplot") :].split()[1]
                     )
                 elif "inlay" in input_code:
-                    config.inlay.value = (
+                    config.inlay.set(
                         line[line.find("inlay") :].split()[1]
                     )
                 elif "bmp_long" in input_code:
@@ -3730,33 +3775,33 @@ class Application(Frame):
                         line[line.find("bmp_long") :].split()[1]
                     )
                 elif "ext_char" in input_code:
-                    config.ext_char.value = (
+                    config.ext_char.set(
                         line[line.find("ext_char") :].split()[1]
                     )
                 elif "useIMGsize" in input_code:
-                    config.useIMGsize.value = (
+                    config.useIMGsize.set(
                         line[line.find("useIMGsize") :].split()[1]
                     )
                 elif "no_comments" in input_code:
-                    config.no_comments.value = (
+                    config.no_comments.set(
                         line[line.find("no_comments") :].split()[1]
                     )
                 elif "show_v_path" in input_code:
-                    config.show_v_path.value = (
+                    config.show_v_path.set(
                         line[line.find("show_v_path") :].split()[1]
                     )
                 elif "show_v_area" in input_code:
-                    config.show_v_area.value = (
+                    config.show_v_area.set(
                         line[line.find("show_v_area") :].split()[1]
                     )
 
                 elif "plotbox" in input_code:
                     if line[line.find("plotbox") :].split()[1] == "box":
-                        config.plotbox.value = True
+                        config.plotbox.set(True)
                     elif line[line.find("plotbox") :].split()[1] == "no_box":
-                        config.plotbox.value = False
+                        config.plotbox.set(False)
                     else:
-                        config.plotbox.value = (
+                        config.plotbox.set(
                             line[line.find("plotbox") :].split()[1]
                         )
 
@@ -3838,8 +3883,9 @@ class Application(Frame):
                         line[line.find("bit_shape") :].split()[1]
                     )
                 elif "v_bit_angle" in input_code:
-                    config.v_bit_angle.value = \
+                    config.v_bit_angle.set(
                         line[line.find("v_bit_angle") :].split()[1]
+                    )
                 elif "v_bit_dia" in input_code:
                     config.v_bit_dia.set(
                         line[line.find("v_bit_dia") :].split()[1]
@@ -3869,7 +3915,7 @@ class Application(Frame):
                         line[line.find("v_rough_stk") :].split()[1]
                     )
                 elif "var_dis" in input_code:
-                    config.var_dis.value = (
+                    config.var_dis.set(
                         line[line.find("var_dis") :].split()[1]
                     )
                 elif "v_depth_lim" in input_code:
@@ -3918,12 +3964,12 @@ class Application(Frame):
                     clean_paths = line[line.find("clean_paths") :].split()[1]
                     clean_split = [float(n) for n in clean_paths.split(",")]
                     if len(clean_split) > 5:
-                        config.clean_P.value = bool(clean_split[0])
-                        config.clean_X.value = bool(clean_split[1])
-                        config.clean_Y.value = bool(clean_split[2])
-                        config.v_clean_P.value = bool(clean_split[3])
-                        config.v_clean_Y.value = bool(clean_split[4])
-                        config.v_clean_X.value = bool(clean_split[5])
+                        config.clean_P.set(bool(clean_split[0]))
+                        config.clean_X.set(bool(clean_split[1]))
+                        config.clean_Y.set(bool(clean_split[2]))
+                        config.v_clean_P.set(bool(clean_split[3]))
+                        config.v_clean_Y.set(bool(clean_split[4]))
+                        config.v_clean_X.set(bool(clean_split[5]))
                 elif "NGC_DIR" in input_code:
                     NGC_DIR = line[line.find("NGC_DIR") :].split("\042")[1]
                     self.NGC_FILE = NGC_DIR + "/None"
@@ -3974,7 +4020,7 @@ class Application(Frame):
                         )
 
         bit = bit_from_shape(
-            config.bit_shape.get(), config.v_bit_dia.get(), config.v_bit_angle.value
+            config.bit_shape.get(), config.v_bit_dia.get(), config.v_bit_angle.get()
         )
 
         if config.units.get() == "in":
@@ -3991,6 +4037,7 @@ class Application(Frame):
             self.menu_Mode_Change()
 
     def menu_File_Save_Settings_File(self):
+        config = self.config
         gcode = self.WriteGCode(config_file=True)
         init_dir = os.path.dirname(self.NGC_FILE)
         if not os.path.isdir(init_dir):
@@ -4031,6 +4078,7 @@ class Application(Frame):
             self.statusbar.configure(bg="white")
 
     def menu_File_Save_G_Code_File(self):
+        config = self.config
         if self.Check_All_Variables() > 0:
             return
 
@@ -4143,6 +4191,7 @@ class Application(Frame):
             self.statusbar.configure(bg="white")
 
     def menu_File_Save_SVG_File(self):
+        config = self.config
         svgcode = self.WriteSVG()
 
         init_dir = os.path.dirname(self.NGC_FILE)
@@ -4187,6 +4236,7 @@ class Application(Frame):
         self.menu_File_Save_DXF_File(close_loops=True)
 
     def menu_File_Save_DXF_File(self, close_loops=False):
+        config = self.config
         if close_loops:
             self.V_Carve_It(clean_flag=0, DXF_FLAG=close_loops)
 
@@ -4239,7 +4289,7 @@ class Application(Frame):
     def menu_View_Refresh(self):
         config = self.config
         if (
-            (not config.batch.value)
+            (not config.batch.get())
             and (self.initComplete == 1)
             and (self.delay_calc != 1)
         ):
@@ -4251,6 +4301,7 @@ class Application(Frame):
         self.menu_View_Refresh()
 
     def menu_Mode_Change(self):
+        config = self.config
         self.delay_calc = 1
         dummy_event = Event()
         dummy_event.widget = self.master
@@ -4327,7 +4378,7 @@ class Application(Frame):
         config = self.config
         if event.widget != self.master:
             return
-        if config.batch.value:
+        if config.batch.get():
             return
 
         x = int(self.master.winfo_x())
@@ -4684,7 +4735,7 @@ class Application(Frame):
                 self.Label_Yscale.place(
                     x=x_label_L, y=Yloc, width=w_label, height=21
                 )
-                if config.useIMGsize.value:
+                if config.useIMGsize.get():
                     self.Label_Yscale_u.place_forget()
                     self.Label_Yscale_pct.place(
                         x=x_units_L, y=Yloc, width=w_units, height=21
@@ -4996,7 +5047,7 @@ class Application(Frame):
         file_full = config.fontdir.get() + "/" + config.fontfile.get()
         if not os.path.isfile(file_full):
             return
-        if not config.batch.value:
+        if not config.batch.get():
             self.statusbar.configure(bg="yellow")
             self.statusMessage.set("Reading Font File.........")
             self.master.update_idletasks()
@@ -5004,7 +5055,7 @@ class Application(Frame):
         config.current_input_file.set(os.path.basename(file_full))
 
         self.font = font.parse_font_file(
-            file_full, config.segarc.get(), config.ext_char.value
+            file_full, config.segarc.get(), config.ext_char.get()
         )
 
         if self.font:
@@ -5015,7 +5066,7 @@ class Application(Frame):
             )
             self.statusbar.configure(bg="red")
 
-        if not config.batch.value:
+        if not config.batch.get():
             self.entry_set(self.Entry_ArcAngle, self.Entry_ArcAngle_Check(), 1)
             self.menu_View_Refresh()
 
@@ -5042,7 +5093,7 @@ class Application(Frame):
                         return
         self.IMAGE_FILE = file_full
 
-        if not config.batch.value:
+        if not config.batch.get():
             self.statusbar.configure(bg="yellow")
             self.statusMessage.set(" Reading Image File.........")
             self.master.update_idletasks()
@@ -5208,7 +5259,7 @@ class Application(Frame):
             pass
 
         # Reset Entry Fields in Bitmap Settings
-        if not config.batch.value:
+        if not config.batch.get():
             self.entry_set(
                 self.Entry_BMPoptTolerance,
                 self.Entry_BMPoptTolerance_Check(),
@@ -5235,7 +5286,7 @@ class Application(Frame):
         self.PreviewCanvas.delete(ALL)
         self.segID = []
         bit = bit_from_shape(
-            config.bit_shape.get(), config.v_bit_dia.get(), config.v_bit_angle.value
+            config.bit_shape.get(), config.v_bit_dia.get(), config.v_bit_angle.get()
         )
 
         cszw = int(self.PreviewCanvas.cget("width"))
@@ -5268,7 +5319,7 @@ class Application(Frame):
         self.pscale = PlotScale
 
         Radius_plot = 0
-        if config.plotbox.value and config.cut_type.get() == "engrave":
+        if config.plotbox.get() and config.cut_type.get() == "engrave":
             if Radius_in != 0:
                 Radius_plot = float(self.RADIUS_PLOT)
 
@@ -5277,7 +5328,7 @@ class Application(Frame):
         y_bot = cszh / 2 + (maxy - midy) / PlotScale
         y_top = cszh / 2 + (miny - midy) / PlotScale
 
-        if config.show_box.value:
+        if config.show_box.get():
             self.segID.append(
                 self.PreviewCanvas.create_rectangle(
                     x_lft,
@@ -5307,7 +5358,7 @@ class Application(Frame):
                 )
             )
 
-        if config.show_thick.value:
+        if config.show_thick.get():
             plot_width = Thick / PlotScale
         else:
             plot_width = 1.0
@@ -5364,7 +5415,7 @@ class Application(Frame):
             loop_old = -1
             r_inlay_top = self.calc_r_inlay_top(bit)
 
-            if config.show_v_area.value:
+            if config.show_v_area.get():
                 for line in self.vcoords:
                     XY = line
                     x1 = XY[0]
@@ -5388,7 +5439,7 @@ class Application(Frame):
                                 1,
                             )
                     else:
-                        if config.inlay.value:
+                        if config.inlay.get():
                             self.Plot_Circ(
                                 x1,
                                 y1,
@@ -5418,7 +5469,7 @@ class Application(Frame):
             loop_old = -1
             rold = -1
 
-            if config.show_v_path.value:
+            if config.show_v_path.get():
                 # Avoid pylava warnings
                 rold = 0
                 xold = 0
@@ -5555,7 +5606,7 @@ class Application(Frame):
         # End V-carve Plotting Stuff
         #########################################
 
-        if config.show_axis.value:
+        if config.show_axis.get():
             # Plot coordinate system origin
             self.segID.append(
                 self.PreviewCanvas.create_line(
@@ -5576,7 +5627,7 @@ class Application(Frame):
 
         self.menu_View_Refresh()
 
-        if not config.batch.value:
+        if not config.batch.get():
             if config.cut_type.get() == "v-carve":
                 self.V_Carve_Calc.configure(state="normal", command=None)
             else:
@@ -5585,7 +5636,7 @@ class Application(Frame):
         if self.Check_All_Variables() > 0:
             return
 
-        if not config.batch.value:
+        if not config.batch.get():
             self.statusbar.configure(bg="yellow")
             self.statusMessage.set(" Calculating.........")
             self.master.update_idletasks()
@@ -5602,7 +5653,7 @@ class Application(Frame):
 
         self.RADIUS_PLOT = 0
 
-        if len(self.font) == 0 and (not config.batch.value):
+        if len(self.font) == 0 and (not config.batch.get()):
             self.statusbar.configure(bg="red")
             if config.input_type.get() == "text":
                 self.statusMessage.set("No Font Characters Loaded")
@@ -5611,7 +5662,7 @@ class Application(Frame):
             return
 
         if config.input_type.get() == "text":
-            if not config.batch.value:
+            if not config.batch.get():
                 String = self.Input.get(1.0, END)
             else:
                 String = self.default_text
@@ -5630,7 +5681,7 @@ class Application(Frame):
             Thick = float(config.STHICK.get())
             XOrigin = float(config.xorigin.get())
             YOrigin = float(config.yorigin.get())
-            v_flop = bool(config.v_flop.value)
+            v_flop = bool(config.v_flop.get())
         except:
             self.statusMessage.set(
                 " Unable to create paths.  Check Settings Entry Values."
@@ -5666,11 +5717,11 @@ class Application(Frame):
         ################################
         ##      Font Index Preview    ##
         ################################
-        if config.fontdex.value:
+        if config.fontdex.get():
             Radius_in = 0.0
             String = ""
             for key in self.font:
-                if config.ext_char.value:
+                if config.ext_char.get():
                     String = String + unichr(key)
                 elif int(key) < 256:
                     String = String + unichr(key)
@@ -5679,7 +5730,7 @@ class Application(Frame):
             mcnt = 0
             String = ""
 
-            if config.ext_char.value:
+            if config.ext_char.get():
                 pcols = int(1.5 * sqrt(float(len(self.font))))
             else:
                 pcols = 15
@@ -5720,7 +5771,7 @@ class Application(Frame):
             font_line_depth = font_used_depth
 
         if font_line_height > -INF:
-            if config.useIMGsize.value and config.input_type.get() == "image":
+            if config.useIMGsize.get() and config.input_type.get() == "image":
                 YScale = YScale_in / 100.0
             else:
                 try:
@@ -5732,10 +5783,10 @@ class Application(Frame):
                 if YScale <= Zero:
                     YScale = 0.1
         else:
-            if not config.batch.value:
+            if not config.batch.get():
                 self.statusbar.configure(bg="red")
             if config.H_CALC.get() == "max_all":
-                if not config.batch.value:
+                if not config.batch.get():
                     self.statusMessage.set("No Font Characters Found")
                 else:
                     message.fmessage("(No Font Characters Found)")
@@ -5750,7 +5801,7 @@ class Application(Frame):
                         "Input Characters Were Not Found in the Current Font"
                     )
 
-                if not config.batch.value:
+                if not config.batch.get():
                     self.statusMessage.set(error_text)
                 else:
                     message.fmessage("(" + error_text + ")")
@@ -5762,8 +5813,8 @@ class Application(Frame):
         font_char_space = font_char_width * (CSpaceP / 100.0)
 
         if Radius_in != 0.0:
-            if config.outer.value:
-                if config.upper.value:
+            if config.outer.get():
+                if config.upper.get():
                     Radius = (
                         Radius_in + Thick / 2 + YScale * (-font_line_depth)
                     )
@@ -5772,7 +5823,7 @@ class Application(Frame):
                         -Radius_in - Thick / 2 - YScale * (font_line_height)
                     )
             else:
-                if config.upper.value:
+                if config.upper.get():
                     Radius = (
                         Radius_in - Thick / 2 - YScale * (font_line_height)
                     )
@@ -5935,7 +5986,7 @@ class Application(Frame):
             if config.justify.get() == "Right":
                 for line in self.coords:
                     XY = line
-                    if config.upper.value:
+                    if config.upper.get():
                         XY[0], XY[1] = Transform(XY[0], XY[1], maxa)
                         XY[2], XY[3] = Transform(XY[2], XY[3], maxa)
                     else:
@@ -5945,8 +5996,8 @@ class Application(Frame):
         ##########################################
         #    TEXT FLIP / MIRROR STUFF / ANGLE    #
         ##########################################
-        mirror_flag = config.mirror.value
-        flip_flag = config.flip.value
+        mirror_flag = config.mirror.get()
+        flip_flag = config.flip.get()
 
         maxx = -99991.0
         maxy = -99992.0
@@ -6024,7 +6075,7 @@ class Application(Frame):
         Delta = 0
         Radius_plot = 0
         Delta = Thick / 2 + float(config.boxgap.get())
-        if config.plotbox.value:
+        if config.plotbox.get():
             if Radius_in == 0 or config.cut_type.get() == "v-carve":
                 # Add coords for box
                 # self.coords.append([ minx-Delta, miny-Delta, maxx+Delta, miny-Delta, 0, 0])
@@ -6032,7 +6083,7 @@ class Application(Frame):
                 # self.coords.append([ maxx+Delta, maxy+Delta, minx-Delta, maxy+Delta, 0, 0])
                 # self.coords.append([ minx-Delta, maxy+Delta, minx-Delta, miny-Delta, 0, 0])
 
-                if bool(config.mirror.value) ^ bool(config.flip.value):
+                if bool(config.mirror.get()) ^ bool(config.flip.get()):
                     self.coords.append(
                         [
                             minx - Delta,
@@ -6207,7 +6258,7 @@ class Application(Frame):
         self.Xzero = x_zero
         self.Yzero = y_zero
 
-        if not config.batch.value:
+        if not config.batch.get():
             # Reset Status Bar and Entry Fields
             self.Input.configure(bg="white")
             self.entry_set(self.Entry_Yscale, self.Entry_Yscale_Check(), 1)
@@ -6237,7 +6288,7 @@ class Application(Frame):
             self.statusMessage.set(config.bounding_box.get())
 
         if no_font_record != []:
-            if not config.batch.value:
+            if not config.batch.get():
                 self.statusbar.configure(bg="orange")
             message.fmessage("Characters not found in font file:", False)
             message.fmessage("(", False)
@@ -6245,7 +6296,7 @@ class Application(Frame):
                 message.fmessage("%s," % (entry), False)
             message.fmessage(")")
 
-        if not config.batch.value:
+        if not config.batch.get():
             self.Plot_Data()
         ################
         #   End DoIt   #
@@ -6254,14 +6305,14 @@ class Application(Frame):
     ##################################################
     def get_flop_staus(self, CLEAN_FLAG=False):
         config = self.config
-        v_flop = bool(config.v_flop.value)
+        v_flop = bool(config.v_flop.get())
 
         if config.input_type.get() == "text" and not CLEAN_FLAG:
-            if config.plotbox.value:
+            if config.plotbox.get():
                 v_flop = not (v_flop)
-            if config.mirror.value:
+            if config.mirror.get():
                 v_flop = not (v_flop)
-            if config.flip.value:
+            if config.flip.get():
                 v_flop = not (v_flop)
         return v_flop
 
@@ -6271,7 +6322,7 @@ class Application(Frame):
         self.master.unbind("<Configure>")
         self.STOP_CALC = False
         bit = bit_from_shape(
-            config.bit_shape.get(), config.v_bit_dia.get(), config.v_bit_angle.value
+            config.bit_shape.get(), config.v_bit_dia.get(), config.v_bit_angle.get()
         )
 
         if config.units.get() == "mm":
@@ -6297,7 +6348,7 @@ class Application(Frame):
             self.v_clean_coords_sort = []
             self.Plot_Data()
 
-        if not config.batch.value:
+        if not config.batch.get():
             self.statusbar.configure(bg="yellow")
             self.statusMessage.set("Preparing for V-Carve Calculations")
             self.master.update()
@@ -6305,13 +6356,13 @@ class Application(Frame):
         #########################################
         # V-Carve Stuff
         #########################################
-        if config.cut_type.get() == "v-carve" and not config.fontdex.value:
+        if config.cut_type.get() == "v-carve" and not config.fontdex.get():
 
             v_flop = self.get_flop_staus()
-            if not config.batch.value:
+            if not config.batch.get():
                 cszw = int(self.PreviewCanvas.cget("width"))
                 cszh = int(self.PreviewCanvas.cget("height"))
-                if config.v_pplot.value:
+                if config.v_pplot.get():
                     self.Plot_Data()
 
             PlotScale = self.pscale
@@ -6333,7 +6384,7 @@ class Application(Frame):
                 rmax = rbit + clean_dia / 2
             ###############################################################
             v_stp_crner = float(config.v_stp_crner.get())
-            if config.inlay.value:
+            if config.inlay.get():
                 v_drv_crner = 360 - v_stp_crner
             else:
                 v_drv_crner = float(config.v_drv_crner.get())
@@ -6558,7 +6609,7 @@ class Application(Frame):
             START_TIME = time()
 
             # Update canvas with modified paths
-            if not config.batch.value:
+            if not config.batch.get():
                 self.Plot_Data()
 
             if TOT_LENGTH > 0.0:
@@ -6574,7 +6625,7 @@ class Application(Frame):
                     else:
                         calc_flag = self.clean_segment[CUR_CNT]
 
-                    if not config.batch.value:
+                    if not config.batch.get():
                         stamp = int(3 * time())  # update every 1/3 of a second
                         if stamp != timestamp:
                             timestamp = stamp  # interlock
@@ -6730,8 +6781,8 @@ class Application(Frame):
                                 self.clean_segment[CUR_CNT]
                             ) or bool(clean_seg)
                             if (
-                                config.v_pplot.value
-                                and (not config.batch.value)
+                                config.v_pplot.get()
+                                and (not config.batch.get())
                                 and (clean_flag != 1)
                             ):
                                 self.Plot_Circ(
@@ -6816,8 +6867,8 @@ class Application(Frame):
                             self.clean_segment[CUR_CNT]
                         ) or bool(clean_seg)
                         if (
-                            config.v_pplot.value
-                            and (not config.batch.value)
+                            config.v_pplot.get()
+                            and (not config.batch.get())
                             and (clean_flag != 1)
                         ):
                             self.master.update_idletasks()
@@ -6899,8 +6950,8 @@ class Application(Frame):
                                     self.clean_segment[CUR_CNT]
                                 ) or bool(clean_seg)
                                 if (
-                                    (config.v_pplot.value)
-                                    and (not config.batch.value)
+                                    (config.v_pplot.get())
+                                    and (not config.batch.get())
                                     and (clean_flag != 1)
                                 ):
                                     self.Plot_Circ(
@@ -6956,7 +7007,7 @@ class Application(Frame):
                 # end for line in self coords
 
                 # Reset Entry Fields in V-Carve Settings
-                if not config.batch.value:
+                if not config.batch.get():
                     self.entry_set(
                         self.Entry_Vbitangle, self.Entry_Vbitangle_Check(), 1
                     )
@@ -6997,7 +7048,7 @@ class Application(Frame):
                         self.Entry_V_CLEAN, self.Entry_V_CLEAN_Check(), 1
                     )
 
-            if CUR_CNT == MAX_CNT - 1 and (not config.batch.value):
+            if CUR_CNT == MAX_CNT - 1 and (not config.batch.get()):
                 self.statusMessage.set("Done -- " + config.bounding_box.get())
                 self.statusbar.configure(bg="white")
 
@@ -7010,7 +7061,7 @@ class Application(Frame):
         self, status=None, initialize=False, check_for_timeout=False
     ):
         config = self.config
-        if not config.batch.value:
+        if not config.batch.get():
             if initialize:
                 self.timestamp = time() - 1.0
                 self.STOP_CALC = False
@@ -7033,6 +7084,7 @@ class Application(Frame):
         return True
 
     def Clean_Path_Calc(self, bit_radius, bit_type="straight"):
+        config = self.config
         v_flop = self.get_flop_staus(CLEAN_FLAG=True)
         if v_flop:
             edge = 1
@@ -7045,13 +7097,13 @@ class Application(Frame):
         #######################################
         if bit_type == "straight":
             test_clean = (
-                config.clean_P.value + config.clean_X.value + config.clean_Y.value
+                config.clean_P.get() + config.clean_X.get() + config.clean_Y.get()
             )
         else:
             test_clean = (
-                config.v_clean_P.value
-                + config.v_clean_Y.value
-                + config.v_clean_X.value
+                config.v_clean_P.get()
+                + config.v_clean_Y.get()
+                + config.v_clean_X.get()
             )
 
         check_coords = []
@@ -7182,11 +7234,11 @@ class Application(Frame):
                     y_pmax = max(y_pmax, P_coords[i][1])
                 loop_cnt_out = loop_cnt_out + MaxLoop
 
-                if config.clean_P.value:
+                if config.clean_P.get():
                     clean_coords_out = P_coords
 
                 offset = DX / 2.0
-                if config.clean_X.value:
+                if config.clean_X.get():
                     y_pmax = y_pmax - offset
                     y_pmin = y_pmin + offset
                     Ysize = y_pmax - y_pmin
@@ -7216,7 +7268,7 @@ class Application(Frame):
                                         [x2 - offset, y2, loop_cnt]
                                     )
 
-                if config.clean_Y.value:
+                if config.clean_Y.get():
                     x_pmax = x_pmax - offset
                     x_pmin = x_pmin + offset
                     Xsize = x_pmax - x_pmin
@@ -7263,7 +7315,7 @@ class Application(Frame):
                 #######################################################
                 # Find new order based on distance                    #
                 #######################################################
-                if config.v_clean_P.value:
+                if config.v_clean_P.get():
                     ########################################
                     ecoords = []
                     for line in Xclean_perimeter:
@@ -7345,8 +7397,8 @@ class Application(Frame):
             ###########################################################
             # Now deal with the horizontal line cuts
             ###########################################################
-            if (config.clean_X.value and bit_type != "v-bit") or (
-                config.v_clean_X.value and bit_type == "v-bit"
+            if (config.clean_X.get() and bit_type != "v-bit") or (
+                config.v_clean_X.get() and bit_type == "v-bit"
             ):
                 x_old = -999
                 y_old = -999
@@ -7377,8 +7429,8 @@ class Application(Frame):
             ###########################################################
             # Now deal with the vertical line cuts
             ###########################################################
-            if (config.clean_Y.value and bit_type != "v-bit") or (
-                config.v_clean_Y.value and bit_type == "v-bit"
+            if (config.clean_Y.get() and bit_type != "v-bit") or (
+                config.v_clean_Y.get() and bit_type == "v-bit"
             ):
                 x_old = -999
                 y_old = -999
@@ -7436,9 +7488,11 @@ class Application(Frame):
     # -n, --longcurve            - turn off curve optimization
     # -O, --opttolerance n       - curve optimization tolerance (default 0.2)
     def PBM_Settings_Window(self):
+        config = self.config
         pbm_settings = Toplevel(width=525, height=250)
-        pbm_settings.grab_set()  # Use grab_set to prevent user input in the
-                                 # main window during calculations
+        # Use grab_set to prevent user input in the
+        # main window during calculations
+        pbm_settings.grab_set()
         pbm_settings.resizable(0, 0)
         pbm_settings.title("Bitmap Settings")
         pbm_settings.iconname("Bitmap Settings")
@@ -7586,8 +7640,9 @@ class Application(Frame):
     def GEN_Settings_Window(self):
         config = self.config
         gen_settings = Toplevel(width=600, height=500)
-        gen_settings.grab_set()  # Use grab_set to prevent user input in the
-                                 # main window during calculations
+        # Use grab_set to prevent user input in the
+        # main window during calculations
+        gen_settings.grab_set()
         gen_settings.resizable(0, 0)
         gen_settings.title("Settings")
         gen_settings.iconname("Settings")
@@ -7951,8 +8006,9 @@ class Application(Frame):
     def VCARVE_Settings_Window(self):
         config = self.config
         vcarve_settings = Toplevel(width=580, height=690)
-        vcarve_settings.grab_set()  # Use grab_set to prevent user input in the
-                                    # main window during calculations
+        # Use grab_set to prevent user input in the
+        # main window during calculations
+        vcarve_settings.grab_set()
         vcarve_settings.resizable(0, 0)
         vcarve_settings.title("V-Carve Settings")
         vcarve_settings.iconname("V-Carve Settings")
@@ -8303,7 +8359,7 @@ class Application(Frame):
             self.Label_v_max_cut_u.configure(state="normal")
             self.Entry_v_max_cut.configure(state="normal")
 
-        if not bool(config.inlay.value):
+        if not bool(config.inlay.get()):
             self.Label_Allowance.configure(state="disabled")
             self.Entry_Allowance.configure(state="disabled")
             self.Label_Allowance_u.configure(state="disabled")
@@ -8312,7 +8368,7 @@ class Application(Frame):
             self.Entry_Allowance.configure(state="normal")
             self.Label_Allowance_u.configure(state="normal")
 
-        if not bool(config.plotbox.value):
+        if not bool(config.plotbox.get()):
             self.Label_BoxGap.configure(state="disabled")
             self.Entry_BoxGap.configure(state="disabled")
             self.Label_BoxGap_u.configure(state="disabled")
