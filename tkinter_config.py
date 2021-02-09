@@ -4,25 +4,50 @@ import sys
 VERSION = sys.version_info[0]
 
 if VERSION == 3:
-    from tkinter import StringVar
+    from tkinter import StringVar, BooleanVar
 else:
-    from Tkinter import StringVar
+    from Tkinter import StringVar, BooleanVar
 
 
-class TkStringVar(BaseVar):
-    def __init__(self, initial_value = ""):
+class FeStringVar(BaseVar):
+    def __init__(self, initial_value=""):
         BaseVar.__init__(self)
-        self.tk_string_var = StringVar()
-        self.tk_string_var.set(initial_value)
+        self._tkinter = StringVar()
+        self.value = initial_value
 
     @property
     def value(self):
-        return self.tk_string_var.get()
+        return self.get()
 
     @value.setter
     def value(self, value):
-        self.tk_string_var.set(str(value))
+        if not value:
+            value = ""
+        self.set(str(value))
 
     @property
-    def tkinter(self):
-        return self.tk_string_var
+    def TK(self):
+        return self._tkinter
+
+
+# Note that some f-engrave code assumes that booleans return 0 or 1,
+# so retain this same functionality for backwards compatibility.
+class FeBooleanVar(BaseVar):
+    def __init__(self, initial_value=False):
+        BaseVar.__init__(self)
+        self._tkinter = BooleanVar()
+        self.value = initial_value
+
+    @property
+    def value(self):
+        return self._tkinter.get()
+
+    @value.setter
+    def value(self, value):
+        if not value:
+            value = 0
+        self._tkinter.set(int(value))
+
+    @property
+    def TK(self):
+        return self._tkinter
