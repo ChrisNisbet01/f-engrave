@@ -17,13 +17,19 @@ class FeStringVar(BaseVar):
 
     @property
     def value(self):
-        return self.get()
+        return self._tkinter.get()
 
     @value.setter
     def value(self, value):
         if not value:
             value = ""
-        self.set(str(value))
+        self._tkinter.set(str(value))
+
+    def set(self, value):
+        self.value = value
+
+    def get(self):
+        return self.value
 
     @property
     def TK(self):
@@ -47,6 +53,12 @@ class FeBooleanVar(BaseVar):
         if not value:
             value = 0
         self._tkinter.set(int(value))
+
+    def set(self, value):
+        self.value = value
+
+    def get(self):
+        return self.value
 
     @property
     def TK(self):
